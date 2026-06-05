@@ -1,0 +1,170 @@
+{
+  "id": "retirement",
+  "slug": "retirement-calculator",
+  "name": "Retirement Calculator",
+  "category": "loans",
+  "icon": "👴",
+  "description": "Calculate required retirement corpus and pre-retirement savings needed to maintain your lifestyle.",
+  "tags": [
+    "retirement",
+    "pension",
+    "savings",
+    "wealth planning",
+    "loans"
+  ],
+  "fields": [
+    {
+      "id": "currentAge",
+      "label": "Current Age (years)",
+      "type": "number",
+      "defaultValue": 30,
+      "constraint": {
+        "min": 1,
+        "max": 100,
+        "step": 1
+      }
+    },
+    {
+      "id": "retirementAge",
+      "label": "Retirement Age (years)",
+      "type": "number",
+      "defaultValue": 60,
+      "constraint": {
+        "min": 2,
+        "max": 100,
+        "step": 1
+      }
+    },
+    {
+      "id": "lifeExpectancy",
+      "label": "Life Expectancy (years)",
+      "type": "number",
+      "defaultValue": 85,
+      "constraint": {
+        "min": 3,
+        "max": 120,
+        "step": 1
+      }
+    },
+    {
+      "id": "monthlyExpenses",
+      "label": "Current Monthly Expenses (₹)",
+      "type": "number",
+      "defaultValue": 50000,
+      "constraint": {
+        "min": 1000,
+        "step": 1000
+      }
+    },
+    {
+      "id": "inflationRate",
+      "label": "Annual Inflation Rate (%)",
+      "type": "number",
+      "defaultValue": 6,
+      "constraint": {
+        "min": 0,
+        "max": 20,
+        "step": 0.5
+      }
+    },
+    {
+      "id": "expectedReturnPre",
+      "label": "Expected Return Pre-retirement (%)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "expectedReturnPost",
+      "label": "Expected Return Post-retirement (%)",
+      "type": "number",
+      "defaultValue": 8,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "yearsToRetirement",
+      "label": "Years to Retirement",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "yearsInRetirement",
+      "label": "Years in Retirement",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "inflatedExpense",
+      "label": "Monthly Expense at Retirement (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "targetCorpus",
+      "label": "Target Corpus Required (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "requiredSIP",
+      "label": "Required Monthly SIP (₹)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "currentAge",
+        "retirementAge",
+        "lifeExpectancy",
+        "monthlyExpenses",
+        "inflationRate",
+        "expectedReturnPre",
+        "expectedReturnPost"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "yearsToRetirement",
+        "yearsInRetirement",
+        "inflatedExpense",
+        "targetCorpus",
+        "requiredSIP"
+      ]
+    }
+  ],
+  "formulas": {
+    "yearsToRetirement": "retirementAge - currentAge",
+    "yearsInRetirement": "lifeExpectancy - retirementAge",
+    "inflatedExpense": "monthlyExpenses * (1 + inflationRate/100)^yearsToRetirement",
+    "targetCorpus": "(expectedReturnPost - inflationRate) == 0 ? inflatedExpense * (lifeExpectancy - retirementAge) * 12 : inflatedExpense * (1 - (1 + (expectedReturnPost - inflationRate) / 1200)^(-(lifeExpectancy - retirementAge) * 12)) / ((expectedReturnPost - inflationRate) / 1200)",
+    "requiredSIP": "targetCorpus / (((1 + expectedReturnPre/1200)^(yearsToRetirement * 12) - 1) / (expectedReturnPre/1200) * (1 + expectedReturnPre/1200))"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "currentAge": 30,
+        "retirementAge": 60,
+        "lifeExpectancy": 85,
+        "monthlyExpenses": 50000,
+        "inflationRate": 6,
+        "expectedReturnPre": 12,
+        "expectedReturnPost": 8
+      }
+    }
+  ]
+}

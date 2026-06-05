@@ -1,0 +1,115 @@
+{
+  "id": "step-up-sip",
+  "slug": "step-up-sip-calculator",
+  "name": "Step Up SIP Calculator",
+  "category": "loans",
+  "icon": "📈",
+  "description": "Calculate returns on Systematic Investment Plan (SIP) with annual step-up increments.",
+  "tags": [
+    "step up sip",
+    "sip",
+    "mutual fund",
+    "loans",
+    "India"
+  ],
+  "fields": [
+    {
+      "id": "monthlyAmount",
+      "label": "Initial Monthly Investment (₹)",
+      "type": "number",
+      "defaultValue": 5000,
+      "constraint": {
+        "min": 100,
+        "step": 100
+      }
+    },
+    {
+      "id": "expectedReturn",
+      "label": "Expected Annual Return (%)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "years",
+      "label": "Investment Period (years)",
+      "type": "number",
+      "defaultValue": 10,
+      "constraint": {
+        "min": 1,
+        "max": 50,
+        "step": 1
+      }
+    },
+    {
+      "id": "stepUpPercent",
+      "label": "Annual Step-up (%)",
+      "type": "number",
+      "defaultValue": 10,
+      "constraint": {
+        "min": 0,
+        "max": 100,
+        "step": 1
+      }
+    },
+    {
+      "id": "totalInvested",
+      "label": "Total Amount Invested (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "maturityAmount",
+      "label": "Maturity Amount (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "wealthGain",
+      "label": "Wealth Gained (₹)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "monthlyAmount",
+        "expectedReturn",
+        "years",
+        "stepUpPercent"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "totalInvested",
+        "maturityAmount",
+        "wealthGain"
+      ]
+    }
+  ],
+  "formulas": {
+    "totalInvested": "stepUpPercent == 0 ? monthlyAmount * 12 * years : monthlyAmount * 12 * (((1 + stepUpPercent/100)^years - 1) / (stepUpPercent/100))",
+    "maturityAmount": "abs(1 + stepUpPercent/100 - (1 + expectedReturn/1200)^12) < 0.0001 ? (monthlyAmount * (1 + expectedReturn/1200) * ((1 + expectedReturn/1200)^12 - 1) / (expectedReturn/1200) * years * ((1 + expectedReturn/1200)^12)^(years - 1)) : (monthlyAmount * (1 + expectedReturn/1200) * ((1 + expectedReturn/1200)^12 - 1) / (expectedReturn/1200) * (((1 + stepUpPercent/100)^years - (1 + expectedReturn/1200)^(12 * years)) / (1 + stepUpPercent/100 - (1 + expectedReturn/1200)^12)))",
+    "wealthGain": "maturityAmount - totalInvested"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "monthlyAmount": 5000,
+        "expectedReturn": 12,
+        "years": 10,
+        "stepUpPercent": 10
+      }
+    }
+  ]
+}

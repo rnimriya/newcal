@@ -1,0 +1,135 @@
+{
+  "id": "wealth",
+  "slug": "wealth-calculator",
+  "name": "Wealth Calculator",
+  "category": "finance",
+  "icon": "💰",
+  "description": "Calculate your wealth accumulation until retirement based on current savings and monthly savings.",
+  "tags": [
+    "wealth",
+    "retirement",
+    "savings",
+    "investment",
+    "finance"
+  ],
+  "fields": [
+    {
+      "id": "currentAge",
+      "label": "Current Age (years)",
+      "type": "number",
+      "defaultValue": 30,
+      "constraint": {
+        "min": 1,
+        "max": 100,
+        "step": 1
+      }
+    },
+    {
+      "id": "retirementAge",
+      "label": "Target Retirement Age (years)",
+      "type": "number",
+      "defaultValue": 60,
+      "constraint": {
+        "min": 2,
+        "max": 100,
+        "step": 1
+      }
+    },
+    {
+      "id": "currentSavings",
+      "label": "Current Savings (₹)",
+      "type": "number",
+      "defaultValue": 500000,
+      "constraint": {
+        "min": 0,
+        "step": 1000
+      }
+    },
+    {
+      "id": "monthlySavings",
+      "label": "Monthly Savings (₹)",
+      "type": "number",
+      "defaultValue": 10000,
+      "constraint": {
+        "min": 0,
+        "step": 500
+      }
+    },
+    {
+      "id": "expectedReturn",
+      "label": "Expected Annual Return (%)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "yearsToInvest",
+      "label": "Investment Period (years)",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "totalInvested",
+      "label": "Total Amount Invested (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "wealthAccumulated",
+      "label": "Wealth Accumulated (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "wealthGain",
+      "label": "Wealth Gained (₹)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "currentAge",
+        "retirementAge",
+        "currentSavings",
+        "monthlySavings",
+        "expectedReturn"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "yearsToInvest",
+        "totalInvested",
+        "wealthAccumulated",
+        "wealthGain"
+      ]
+    }
+  ],
+  "formulas": {
+    "yearsToInvest": "retirementAge - currentAge",
+    "totalInvested": "currentSavings + monthlySavings * yearsToInvest * 12",
+    "wealthAccumulated": "currentSavings * (1 + expectedReturn/1200)^(yearsToInvest * 12) + (expectedReturn == 0 ? monthlySavings * yearsToInvest * 12 : monthlySavings * ((1 + expectedReturn/1200)^(yearsToInvest * 12) - 1) / (expectedReturn/1200) * (1 + expectedReturn/1200))",
+    "wealthGain": "wealthAccumulated - totalInvested"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "currentAge": 30,
+        "retirementAge": 60,
+        "currentSavings": 500000,
+        "monthlySavings": 10000,
+        "expectedReturn": 12
+      }
+    }
+  ]
+}

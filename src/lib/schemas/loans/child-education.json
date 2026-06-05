@@ -1,0 +1,143 @@
+{
+  "id": "child-education",
+  "slug": "child-education-calculator",
+  "name": "Child Education Calculator",
+  "category": "loans",
+  "icon": "🎓",
+  "description": "Calculate future higher education costs of your child and the monthly savings required.",
+  "tags": [
+    "child education",
+    "college savings",
+    "inflation",
+    "loans"
+  ],
+  "fields": [
+    {
+      "id": "currentCost",
+      "label": "Education Cost (today's value) (₹)",
+      "type": "number",
+      "defaultValue": 1000000,
+      "constraint": {
+        "min": 1000,
+        "step": 10000
+      }
+    },
+    {
+      "id": "currentAge",
+      "label": "Child's Current Age (years)",
+      "type": "number",
+      "defaultValue": 3,
+      "constraint": {
+        "min": 0,
+        "max": 25,
+        "step": 1
+      }
+    },
+    {
+      "id": "collegeAge",
+      "label": "College Entry Age (years)",
+      "type": "number",
+      "defaultValue": 18,
+      "constraint": {
+        "min": 1,
+        "max": 30,
+        "step": 1
+      }
+    },
+    {
+      "id": "inflationRate",
+      "label": "Education Inflation Rate (%)",
+      "type": "number",
+      "defaultValue": 8,
+      "constraint": {
+        "min": 0,
+        "max": 20,
+        "step": 0.5
+      }
+    },
+    {
+      "id": "expectedReturn",
+      "label": "Expected Annual Return (%)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "yearsToCollege",
+      "label": "Years to College",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "inflatedCost",
+      "label": "Future Education Cost (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "requiredSIP",
+      "label": "Required Monthly SIP (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "totalInvested",
+      "label": "Total Amount Invested (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "wealthGain",
+      "label": "Wealth Gained (₹)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "currentCost",
+        "currentAge",
+        "collegeAge",
+        "inflationRate",
+        "expectedReturn"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "yearsToCollege",
+        "inflatedCost",
+        "requiredSIP",
+        "totalInvested",
+        "wealthGain"
+      ]
+    }
+  ],
+  "formulas": {
+    "yearsToCollege": "collegeAge - currentAge",
+    "inflatedCost": "currentCost * (1 + inflationRate/100)^yearsToCollege",
+    "requiredSIP": "yearsToCollege <= 0 ? 0 : inflatedCost / (((1 + expectedReturn/1200)^(yearsToCollege * 12) - 1) / (expectedReturn/1200) * (1 + expectedReturn/1200))",
+    "totalInvested": "requiredSIP * yearsToCollege * 12",
+    "wealthGain": "inflatedCost - totalInvested"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "currentCost": 1000000,
+        "currentAge": 3,
+        "collegeAge": 18,
+        "inflationRate": 8,
+        "expectedReturn": 12
+      }
+    }
+  ]
+}

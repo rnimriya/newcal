@@ -1,0 +1,130 @@
+{
+  "id": "index-fund",
+  "slug": "index-fund-calculator",
+  "name": "Index Fund Calculator",
+  "category": "loans",
+  "icon": "📈",
+  "description": "Calculate index fund growth and compare returns before and after expense ratio fees.",
+  "tags": [
+    "index fund",
+    "mutual fund",
+    "expense ratio",
+    "loans"
+  ],
+  "fields": [
+    {
+      "id": "monthlyInvestment",
+      "label": "Monthly SIP (₹)",
+      "type": "number",
+      "defaultValue": 5000,
+      "constraint": {
+        "min": 100,
+        "step": 100
+      }
+    },
+    {
+      "id": "expectedReturn",
+      "label": "Expected Market Return (%)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "years",
+      "label": "Period (years)",
+      "type": "number",
+      "defaultValue": 10,
+      "constraint": {
+        "min": 1,
+        "max": 50,
+        "step": 1
+      }
+    },
+    {
+      "id": "expenseRatio",
+      "label": "Expense Ratio (%)",
+      "type": "number",
+      "defaultValue": 0.2,
+      "constraint": {
+        "min": 0,
+        "max": 5,
+        "step": 0.05
+      }
+    },
+    {
+      "id": "netReturn",
+      "label": "Net Return after Fees (%)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "totalInvested",
+      "label": "Total Amount Invested (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "maturityAmount",
+      "label": "Maturity Amount (after fees) (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "wealthGain",
+      "label": "Net Wealth Gained (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "expensePaid",
+      "label": "Total Fees Paid (₹)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "monthlyInvestment",
+        "expectedReturn",
+        "years",
+        "expenseRatio"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "netReturn",
+        "totalInvested",
+        "maturityAmount",
+        "wealthGain",
+        "expensePaid"
+      ]
+    }
+  ],
+  "formulas": {
+    "netReturn": "expectedReturn - expenseRatio",
+    "totalInvested": "monthlyInvestment * years * 12",
+    "maturityAmount": "monthlyInvestment * ((1 + netReturn/1200)^(years*12) - 1) / (netReturn/1200) * (1 + netReturn/1200)",
+    "wealthGain": "maturityAmount - totalInvested",
+    "expensePaid": "(monthlyInvestment * ((1 + expectedReturn/1200)^(years*12) - 1) / (expectedReturn/1200) * (1 + expectedReturn/1200)) - maturityAmount"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "monthlyInvestment": 5000,
+        "expectedReturn": 12,
+        "years": 10,
+        "expenseRatio": 0.2
+      }
+    }
+  ]
+}

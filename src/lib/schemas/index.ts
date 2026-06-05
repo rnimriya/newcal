@@ -750,7 +750,22 @@ import luminousIntensity from "./converters/luminous-intensity.json";
 import magneticFlux from "./converters/magnetic-flux.json";
 import massFlow from "./converters/mass-flow.json";
 
+import stepUpSip from "./loans/step-up-sip.json";
+import wealthSip from "./loans/wealth-sip.json";
+import cagr from "./finance/cagr.json";
+import elss from "./loans/elss.json";
+import stp from "./loans/stp.json";
+import indexFund from "./loans/index-fund.json";
+import investment from "./finance/investment.json";
+import wealth from "./finance/wealth.json";
+import goalBased from "./loans/goal-based.json";
+import retirement from "./loans/retirement.json";
+import childEducation from "./loans/child-education.json";
+import car from "./loans/car.json";
+import dreamHome from "./loans/dream-home.json";
+
 export const schemas: CalculatorSchema[] = [
+  stepUpSip, wealthSip, cagr, elss, stp, indexFund, investment, wealth, goalBased, retirement, childEducation, car, dreamHome,
   bulkModulus, compressiveStrength, creepRate, dataTransferRate, dateToRoman, decimeter, deformation, dyne, elasticModulus, electricConductance, electricConductivity, electricPotential, electricResistivity, electronvolt, exabyte, fahrenheitToDelisle, fahrenheitToNewton, fahrenheitToRankine, fahrenheitToReaumur, fahrenheitToRomer, fatigueStrength, flexuralStrength, footPound, fractureToughness, gigabyte, illuminance, impactStrength, inhg, kelvinToRankine, kilobyte, kilocalorie, kilojoule, kilonewton, kilopascal, luminousIntensity, magneticFlux, massFlow,
   technicalAtmosphere, terabyte, torr, volumeDry, wattHour, yottabyte, zettabyte, tensileStrength, volumeLumber,
   basicStatistics, descriptiveStatistics,

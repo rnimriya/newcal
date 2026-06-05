@@ -1,0 +1,134 @@
+{
+  "id": "stp",
+  "slug": "stp-calculator",
+  "name": "STP Calculator",
+  "category": "loans",
+  "icon": "🔄",
+  "description": "Calculate systematic transfer plan returns between a source fund and a target mutual fund.",
+  "tags": [
+    "stp",
+    "systematic transfer",
+    "mutual fund",
+    "loans"
+  ],
+  "fields": [
+    {
+      "id": "totalInvestment",
+      "label": "Initial Source Investment (₹)",
+      "type": "number",
+      "defaultValue": 500000,
+      "constraint": {
+        "min": 5000,
+        "step": 5000
+      }
+    },
+    {
+      "id": "transferAmount",
+      "label": "Monthly Transfer Amount (₹)",
+      "type": "number",
+      "defaultValue": 10000,
+      "constraint": {
+        "min": 500,
+        "step": 500
+      }
+    },
+    {
+      "id": "sourceReturn",
+      "label": "Source Fund Return (% p.a.)",
+      "type": "number",
+      "defaultValue": 6,
+      "constraint": {
+        "min": 0,
+        "max": 30,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "targetReturn",
+      "label": "Target Fund Return (% p.a.)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 0,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "months",
+      "label": "Duration (months)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 1,
+        "max": 120,
+        "step": 1
+      }
+    },
+    {
+      "id": "sourceBalance",
+      "label": "Final Source Balance (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "targetValue",
+      "label": "Final Target Balance (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "totalValue",
+      "label": "Total Value (Source + Target) (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "totalReturn",
+      "label": "Overall Gain (%)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "totalInvestment",
+        "transferAmount",
+        "sourceReturn",
+        "targetReturn",
+        "months"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "sourceBalance",
+        "targetValue",
+        "totalValue",
+        "totalReturn"
+      ]
+    }
+  ],
+  "formulas": {
+    "sourceBalance": "sourceReturn == 0 ? max(0, totalInvestment - transferAmount * months) : max(0, totalInvestment * (1 + sourceReturn/1200)^months - transferAmount * (1 + sourceReturn/1200) * ((1 + sourceReturn/1200)^months - 1) / (sourceReturn/1200))",
+    "targetValue": "targetReturn == 0 ? transferAmount * months : transferAmount * (1 + targetReturn/1200) * ((1 + targetReturn/1200)^months - 1) / (targetReturn/1200)",
+    "totalValue": "sourceBalance + targetValue",
+    "totalReturn": "((totalValue - totalInvestment) / totalInvestment) * 100"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "totalInvestment": 500000,
+        "transferAmount": 10000,
+        "sourceReturn": 6,
+        "targetReturn": 12,
+        "months": 12
+      }
+    }
+  ]
+}

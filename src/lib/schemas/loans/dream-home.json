@@ -1,0 +1,170 @@
+{
+  "id": "dream-home",
+  "slug": "dream-home-calculator",
+  "name": "Dream Home Calculator",
+  "category": "loans",
+  "icon": "🏠",
+  "description": "Plan future home purchase by saving for down payment and estimating the home loan EMI.",
+  "tags": [
+    "home planner",
+    "home loan",
+    "down payment",
+    "mortgage",
+    "loans"
+  ],
+  "fields": [
+    {
+      "id": "homePrice",
+      "label": "Current House Price (₹)",
+      "type": "number",
+      "defaultValue": 5000000,
+      "constraint": {
+        "min": 500000,
+        "step": 50000
+      }
+    },
+    {
+      "id": "yearsToBuy",
+      "label": "Years until Purchase",
+      "type": "number",
+      "defaultValue": 5,
+      "constraint": {
+        "min": 0,
+        "max": 20,
+        "step": 1
+      }
+    },
+    {
+      "id": "downPaymentPercent",
+      "label": "Down Payment (%)",
+      "type": "number",
+      "defaultValue": 20,
+      "constraint": {
+        "min": 0,
+        "max": 100,
+        "step": 5
+      }
+    },
+    {
+      "id": "savingsReturn",
+      "label": "Savings Expected Return (%)",
+      "type": "number",
+      "defaultValue": 12,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "loanTenure",
+      "label": "Home Loan Tenure (years)",
+      "type": "number",
+      "defaultValue": 20,
+      "constraint": {
+        "min": 5,
+        "max": 30,
+        "step": 1
+      }
+    },
+    {
+      "id": "loanRate",
+      "label": "Loan Interest Rate (%)",
+      "type": "number",
+      "defaultValue": 8.5,
+      "constraint": {
+        "min": 1,
+        "max": 20,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "inflationRate",
+      "label": "Annual Property Inflation (%)",
+      "type": "number",
+      "defaultValue": 5,
+      "constraint": {
+        "min": 0,
+        "max": 15,
+        "step": 0.5
+      }
+    },
+    {
+      "id": "inflatedPrice",
+      "label": "Future Home Price (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "downPaymentNeeded",
+      "label": "Future Down Payment Needed (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "requiredSIP",
+      "label": "Monthly SIP for Down Payment (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "loanAmount",
+      "label": "Loan Amount Required (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "monthlyEMI",
+      "label": "Post-Purchase Monthly EMI (₹)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "homePrice",
+        "yearsToBuy",
+        "downPaymentPercent",
+        "savingsReturn",
+        "loanTenure",
+        "loanRate",
+        "inflationRate"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "inflatedPrice",
+        "downPaymentNeeded",
+        "requiredSIP",
+        "loanAmount",
+        "monthlyEMI"
+      ]
+    }
+  ],
+  "formulas": {
+    "inflatedPrice": "homePrice * (1 + inflationRate/100)^yearsToBuy",
+    "downPaymentNeeded": "inflatedPrice * downPaymentPercent / 100",
+    "requiredSIP": "yearsToBuy <= 0 ? 0 : downPaymentNeeded / (((1 + savingsReturn/1200)^(yearsToBuy * 12) - 1) / (savingsReturn/1200) * (1 + savingsReturn/1200))",
+    "loanAmount": "inflatedPrice - downPaymentNeeded",
+    "monthlyEMI": "loanRate == 0 ? loanAmount / (loanTenure * 12) : loanAmount * (loanRate / 1200) * (1 + loanRate / 1200)^(loanTenure * 12) / ((1 + loanRate / 1200)^(loanTenure * 12) - 1)"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "homePrice": 5000000,
+        "yearsToBuy": 5,
+        "downPaymentPercent": 20,
+        "savingsReturn": 12,
+        "loanTenure": 20,
+        "loanRate": 8.5,
+        "inflationRate": 5
+      }
+    }
+  ]
+}

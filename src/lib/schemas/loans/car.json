@@ -1,0 +1,170 @@
+{
+  "id": "car",
+  "slug": "car-calculator",
+  "name": "Car Calculator",
+  "category": "loans",
+  "icon": "🚗",
+  "description": "Plan future car purchase by saving for a down payment and estimating the loan EMI.",
+  "tags": [
+    "car planner",
+    "car loan",
+    "down payment",
+    "emi",
+    "loans"
+  ],
+  "fields": [
+    {
+      "id": "carPrice",
+      "label": "Current Car Price (₹)",
+      "type": "number",
+      "defaultValue": 1000000,
+      "constraint": {
+        "min": 100000,
+        "step": 10000
+      }
+    },
+    {
+      "id": "yearsToBuy",
+      "label": "Years until Purchase",
+      "type": "number",
+      "defaultValue": 3,
+      "constraint": {
+        "min": 0,
+        "max": 10,
+        "step": 1
+      }
+    },
+    {
+      "id": "downPaymentPercent",
+      "label": "Down Payment (%)",
+      "type": "number",
+      "defaultValue": 20,
+      "constraint": {
+        "min": 0,
+        "max": 100,
+        "step": 5
+      }
+    },
+    {
+      "id": "savingsReturn",
+      "label": "Savings Expected Return (%)",
+      "type": "number",
+      "defaultValue": 10,
+      "constraint": {
+        "min": 0.1,
+        "max": 50,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "loanTenure",
+      "label": "Loan Tenure (years)",
+      "type": "number",
+      "defaultValue": 5,
+      "constraint": {
+        "min": 1,
+        "max": 7,
+        "step": 1
+      }
+    },
+    {
+      "id": "loanRate",
+      "label": "Loan Interest Rate (%)",
+      "type": "number",
+      "defaultValue": 9,
+      "constraint": {
+        "min": 1,
+        "max": 25,
+        "step": 0.1
+      }
+    },
+    {
+      "id": "inflationRate",
+      "label": "Annual Car Inflation (%)",
+      "type": "number",
+      "defaultValue": 6,
+      "constraint": {
+        "min": 0,
+        "max": 20,
+        "step": 0.5
+      }
+    },
+    {
+      "id": "inflatedPrice",
+      "label": "Future Car Price (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "downPaymentNeeded",
+      "label": "Future Down Payment Needed (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "requiredSIP",
+      "label": "Monthly SIP for Down Payment (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "loanAmount",
+      "label": "Loan Amount Required (₹)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "monthlyEMI",
+      "label": "Post-Purchase Monthly EMI (₹)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Details",
+      "fields": [
+        "carPrice",
+        "yearsToBuy",
+        "downPaymentPercent",
+        "savingsReturn",
+        "loanTenure",
+        "loanRate",
+        "inflationRate"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "inflatedPrice",
+        "downPaymentNeeded",
+        "requiredSIP",
+        "loanAmount",
+        "monthlyEMI"
+      ]
+    }
+  ],
+  "formulas": {
+    "inflatedPrice": "carPrice * (1 + inflationRate/100)^yearsToBuy",
+    "downPaymentNeeded": "inflatedPrice * downPaymentPercent / 100",
+    "requiredSIP": "yearsToBuy <= 0 ? 0 : downPaymentNeeded / (((1 + savingsReturn/1200)^(yearsToBuy * 12) - 1) / (savingsReturn/1200) * (1 + savingsReturn/1200))",
+    "loanAmount": "inflatedPrice - downPaymentNeeded",
+    "monthlyEMI": "loanRate == 0 ? loanAmount / (loanTenure * 12) : loanAmount * (loanRate / 1200) * (1 + loanRate / 1200)^(loanTenure * 12) / ((1 + loanRate / 1200)^(loanTenure * 12) - 1)"
+  },
+  "examples": [
+    {
+      "label": "Example Values",
+      "inputs": {
+        "carPrice": 1000000,
+        "yearsToBuy": 3,
+        "downPaymentPercent": 20,
+        "savingsReturn": 10,
+        "loanTenure": 5,
+        "loanRate": 9,
+        "inflationRate": 6
+      }
+    }
+  ]
+}
