@@ -1,0 +1,87 @@
+{
+  "id": "bmi",
+  "slug": "bmi-calculator",
+  "name": "BMI Calculator",
+  "category": "health",
+  "description": "Calculate your Body Mass Index and understand your weight category.",
+  "icon": "🏃",
+  "tags": ["health", "weight", "body", "fitness"],
+  "fields": [
+    {
+      "id": "weight",
+      "label": "Weight",
+      "type": "number",
+      "defaultValue": 70,
+      "placeholder": "Enter weight",
+      "helpText": "Your body weight",
+      "units": [
+        { "label": "Kilograms (kg)", "value": "kg", "toBase": "x", "fromBase": "x" },
+        { "label": "Pounds (lbs)",   "value": "lbs", "toBase": "x * 0.453592", "fromBase": "x / 0.453592" }
+      ],
+      "defaultUnit": "kg",
+      "constraint": { "min": 1, "max": 500, "step": 0.1, "required": true }
+    },
+    {
+      "id": "height",
+      "label": "Height",
+      "type": "number",
+      "defaultValue": 175,
+      "placeholder": "Enter height",
+      "helpText": "Your height in centimeters or feet+inches",
+      "units": [
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100", "fromBase": "x * 100" },
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",        "fromBase": "x" },
+        { "label": "Inches (in)",      "value": "in", "toBase": "x * 0.0254", "fromBase": "x / 0.0254" }
+      ],
+      "defaultUnit": "cm",
+      "constraint": { "min": 50, "max": 300, "step": 0.5, "required": true }
+    },
+    {
+      "id": "bmi",
+      "label": "BMI",
+      "type": "computed",
+      "precision": 1,
+      "helpText": "Body Mass Index — weight / height²",
+      "units": [
+        { "label": "kg/m²", "value": "kgm2", "toBase": "x", "fromBase": "x" }
+      ],
+      "defaultUnit": "kgm2"
+    },
+    {
+      "id": "category",
+      "label": "Weight Category",
+      "type": "computed",
+      "helpText": "WHO classification based on your BMI"
+    },
+    {
+      "id": "idealWeight",
+      "label": "Ideal Weight Range",
+      "type": "computed",
+      "precision": 1,
+      "helpText": "Normal BMI range (18.5–24.9) projected back to weight"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Your Measurements", "fields": ["weight", "height"] },
+    { "id": "outputs", "label": "Results",            "fields": ["bmi", "category", "idealWeight"] }
+  ],
+  "formulas": {
+    "bmi":         "weight / (height / 100) ^ 2",
+    "category":    "bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Normal weight' : bmi < 30 ? 'Overweight' : 'Obese'",
+    "idealWeight": "concat(round(18.5 * (height/100)^2, 1), ' – ', round(24.9 * (height/100)^2, 1), ' kg')"
+  },
+  "explanation": "## What is BMI?\n\nBody Mass Index (BMI) is a simple numerical measure of a person's body size calculated using their **weight** and **height**.\n\nIt is widely used as a screening tool to classify adults as underweight, normal weight, overweight, or obese.\n\n### BMI Categories (WHO)\n| BMI Range | Category |\n|-----------|----------|\n| < 18.5 | Underweight |\n| 18.5–24.9 | Normal weight |\n| 25.0–29.9 | Overweight |\n| ≥ 30.0 | Obese |",
+  "derivation": "## Formula Derivation\n\n$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$\n\n**Step 1:** Convert height to meters: `h_m = h_cm / 100`\n\n**Step 2:** Square the height: `h² = h_m × h_m`\n\n**Step 3:** Divide weight by squared height: `BMI = weight / h²`",
+  "examples": [
+    { "label": "Average adult male",   "inputs": { "weight": 80, "height": 175 } },
+    { "label": "Average adult female", "inputs": { "weight": 65, "height": 163 } },
+    { "label": "Athlete",              "inputs": { "weight": 90, "height": 185 } }
+  ],
+  "chart": {
+    "xAxisField": "height",
+    "yAxisField": "bmi",
+    "xRange": [150, 200],
+    "points": 50,
+    "label": "BMI vs Height (at current weight)"
+  }
+}

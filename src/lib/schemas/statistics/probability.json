@@ -1,0 +1,102 @@
+{
+  "id": "probability-calculator",
+  "slug": "probability-calculator",
+  "name": "Probability Calculator",
+  "category": "statistics",
+  "icon": "🎲",
+  "description": "Calculate basic probability and odds. Find probability of events, complements, and combined events.",
+  "tags": [
+    "probability",
+    "statistics",
+    "odds",
+    "chance"
+  ],
+  "fields": [
+    {
+      "id": "favorable",
+      "label": "Favorable Outcomes",
+      "type": "number",
+      "defaultValue": 3,
+      "constraint": {
+        "min": 0,
+        "step": 1
+      }
+    },
+    {
+      "id": "total",
+      "label": "Total Outcomes",
+      "type": "number",
+      "defaultValue": 10,
+      "constraint": {
+        "min": 1,
+        "step": 1
+      }
+    },
+    {
+      "id": "probability",
+      "label": "Probability P(A)",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "percentage",
+      "label": "Percentage (%)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "complement",
+      "label": "Complement P(not A)",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "odds",
+      "label": "Odds (for:against)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Outcomes",
+      "fields": [
+        "favorable",
+        "total"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Probability",
+      "fields": [
+        "probability",
+        "percentage",
+        "complement",
+        "odds"
+      ]
+    }
+  ],
+  "formulas": {
+    "probability": "favorable/total",
+    "percentage": "(favorable/total)*100",
+    "complement": "1 - favorable/total",
+    "odds": "favorable / (total - favorable)"
+  },
+  "examples": [
+    {
+      "label": "3 out of 10",
+      "inputs": {
+        "favorable": 3,
+        "total": 10
+      }
+    },
+    {
+      "label": "Die roll - getting 1",
+      "inputs": {
+        "favorable": 1,
+        "total": 6
+      }
+    }
+  ]
+}

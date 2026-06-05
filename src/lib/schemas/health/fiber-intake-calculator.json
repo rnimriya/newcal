@@ -1,0 +1,55 @@
+{
+  "id": "fiber-intake-calculator",
+  "slug": "fiber-intake-calculator",
+  "name": "Fiber Intake Calculator",
+  "category": "health",
+  "description": "Calculate daily dietary fiber intake recommendations based on age and gender.",
+  "icon": "🌾",
+  "tags": ["fiber", "dietary fiber", "nutrition", "diet", "health"],
+  "fields": [
+    {
+      "id": "age",
+      "label": "Age (years)",
+      "type": "number",
+      "defaultValue": 30,
+      "placeholder": "Enter age",
+      "constraint": { "min": 1, "max": 120, "step": 1, "required": true }
+    },
+    {
+      "id": "gender",
+      "label": "Gender",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Male",   "value": 1 },
+        { "label": "Female", "value": 2 }
+      ]
+    },
+    {
+      "id": "fiberRec",
+      "label": "Recommended Daily Fiber",
+      "type": "computed",
+      "precision": 0,
+      "suffix": " grams (g)",
+      "helpText": "Based on Institute of Medicine guidelines"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "User Profile", "fields": ["age", "gender"] },
+    { "id": "outputs", "label": "Recommendation", "fields": ["fiberRec"] }
+  ],
+  "formulas": {
+    "fiberRec": "gender == 1 ? (age <= 50 ? 38 : 30) : (age <= 50 ? 25 : 21)"
+  },
+  "examples": [
+    { "label": "Male, 30 years old",   "inputs": { "age": 30, "gender": 1 } },
+    { "label": "Female, 60 years old", "inputs": { "age": 60, "gender": 2 } }
+  ],
+  "chart": {
+    "xAxisField": "age",
+    "yAxisField": "fiberRec",
+    "xRange": [10, 80],
+    "points": 15,
+    "label": "Recommended Fiber vs Age (Male)"
+  }
+}

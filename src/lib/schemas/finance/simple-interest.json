@@ -1,0 +1,38 @@
+{
+  "id": "simple-interest",
+  "slug": "simple-interest-calculator",
+  "name": "Simple Interest Calculator",
+  "category": "finance",
+  "description": "Calculate simple interest, total amount, and return on investment.",
+  "icon": "💵",
+  "tags": ["simple interest", "loan", "savings", "finance"],
+  "fields": [
+    { "id": "principal", "label": "Principal (P)", "type": "number", "defaultValue": 10000, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "rate",      "label": "Annual Rate (R)", "type": "number", "defaultValue": 5,   "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 0.1, "required": true } },
+    { "id": "time",      "label": "Time (T)",         "type": "number", "defaultValue": 3,   "helpText": "Time in years", "constraint": { "min": 0, "step": 0.5, "required": true } },
+    { "id": "interest",  "label": "Interest Earned",  "type": "computed", "precision": 2, "prefix": "$", "helpText": "I = P × R × T / 100" },
+    { "id": "total",     "label": "Total Amount",      "type": "computed", "precision": 2, "prefix": "$", "helpText": "A = P + I" },
+    { "id": "roi",       "label": "ROI",               "type": "computed", "precision": 2, "suffix": "%", "helpText": "Return on Investment" }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Loan/Investment Details", "fields": ["principal", "rate", "time"] },
+    { "id": "outputs", "label": "Results",                 "fields": ["interest", "total", "roi"] }
+  ],
+  "formulas": {
+    "interest": "principal * (rate / 100) * time",
+    "total":    "principal + principal * (rate / 100) * time",
+    "roi":      "(principal * (rate / 100) * time / principal) * 100"
+  },
+  "examples": [
+    { "label": "Short-term loan",    "inputs": { "principal": 5000,  "rate": 6,  "time": 1 } },
+    { "label": "3-year savings",     "inputs": { "principal": 10000, "rate": 4.5,"time": 3 } },
+    { "label": "5-year car loan",    "inputs": { "principal": 25000, "rate": 7,  "time": 5 } }
+  ],
+  "chart": {
+    "xAxisField": "time",
+    "yAxisField": "total",
+    "xRange": [0, 20],
+    "points": 20,
+    "label": "Total Amount Over Time"
+  }
+}

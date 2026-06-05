@@ -1,0 +1,98 @@
+{
+  "id": "percentile-calculator",
+  "slug": "percentile-calculator",
+  "name": "Percentile Calculator",
+  "category": "statistics",
+  "icon": "📊",
+  "description": "Calculate the percentile rank of a score in a dataset. Find what percentage of values fall below a given score.",
+  "tags": [
+    "percentile",
+    "rank",
+    "statistics",
+    "scoring"
+  ],
+  "fields": [
+    {
+      "id": "score",
+      "label": "Your Score (x)",
+      "type": "number",
+      "defaultValue": 75
+    },
+    {
+      "id": "mean",
+      "label": "Mean (μ)",
+      "type": "number",
+      "defaultValue": 65
+    },
+    {
+      "id": "sd",
+      "label": "Standard Deviation (σ)",
+      "type": "number",
+      "defaultValue": 10,
+      "constraint": {
+        "min": 0.001
+      }
+    },
+    {
+      "id": "zScore",
+      "label": "Z-Score",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "belowCount",
+      "label": "Values below (out of 100)",
+      "type": "computed",
+      "precision": 1
+    },
+    {
+      "id": "aboveCount",
+      "label": "Values above (out of 100)",
+      "type": "computed",
+      "precision": 1
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Score & Distribution",
+      "fields": [
+        "score",
+        "mean",
+        "sd"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Percentile",
+      "fields": [
+        "zScore",
+        "belowCount",
+        "aboveCount"
+      ]
+    }
+  ],
+  "formulas": {
+    "zScore": "(score - mean) / sd",
+    "belowCount": "(score - mean) / sd * 10 + 50",
+    "aboveCount": "50 - (score - mean) / sd * 10"
+  },
+  "examples": [
+    {
+      "label": "Score 75, mean 65, SD 10",
+      "inputs": {
+        "score": 75,
+        "mean": 65,
+        "sd": 10
+      }
+    },
+    {
+      "label": "Score 90, mean 100, SD 15",
+      "inputs": {
+        "score": 90,
+        "mean": 100,
+        "sd": 15
+      }
+    }
+  ]
+}

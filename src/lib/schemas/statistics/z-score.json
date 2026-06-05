@@ -1,0 +1,92 @@
+{
+  "id": "z-score-calculator",
+  "slug": "z-score-calculator",
+  "name": "Z-Score Calculator",
+  "category": "statistics",
+  "icon": "Z",
+  "description": "Calculate the Z-score (standard score) for any data point. Shows how many standard deviations a value is from the mean.",
+  "tags": [
+    "z-score",
+    "standard score",
+    "statistics",
+    "normal distribution"
+  ],
+  "fields": [
+    {
+      "id": "x",
+      "label": "Data Point (x)",
+      "type": "number",
+      "defaultValue": 75
+    },
+    {
+      "id": "mean",
+      "label": "Population Mean (μ)",
+      "type": "number",
+      "defaultValue": 70
+    },
+    {
+      "id": "sd",
+      "label": "Standard Deviation (σ)",
+      "type": "number",
+      "defaultValue": 5,
+      "constraint": {
+        "min": 0.001,
+        "step": 0.01
+      }
+    },
+    {
+      "id": "zScore",
+      "label": "Z-Score",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "(x - μ) / σ"
+    },
+    {
+      "id": "xFromZ",
+      "label": "x = μ + z·σ (verification)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Values",
+      "fields": [
+        "x",
+        "mean",
+        "sd"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Z-Score",
+      "fields": [
+        "zScore",
+        "xFromZ"
+      ]
+    }
+  ],
+  "formulas": {
+    "zScore": "(x - mean) / sd",
+    "xFromZ": "mean + ((x - mean) / sd) * sd"
+  },
+  "examples": [
+    {
+      "label": "Score 75, mean 70, SD 5",
+      "inputs": {
+        "x": 75,
+        "mean": 70,
+        "sd": 5
+      }
+    },
+    {
+      "label": "Height 6ft, mean 5.5ft, SD 0.3ft",
+      "inputs": {
+        "x": 6,
+        "mean": 5.5,
+        "sd": 0.3
+      }
+    }
+  ]
+}

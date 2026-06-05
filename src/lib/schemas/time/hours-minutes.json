@@ -1,0 +1,81 @@
+{
+  "id": "hours-minutes-calculator",
+  "slug": "hours-minutes-calculator",
+  "name": "Hours to Minutes Converter",
+  "category": "time",
+  "icon": "⏰",
+  "description": "Convert hours to minutes and seconds. Also convert minutes back to hours.",
+  "tags": [
+    "hours",
+    "minutes",
+    "seconds",
+    "time",
+    "converter"
+  ],
+  "fields": [
+    {
+      "id": "hours",
+      "label": "Hours",
+      "type": "number",
+      "defaultValue": 2
+    },
+    {
+      "id": "minutes",
+      "label": "Minutes",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "hours × 60"
+    },
+    {
+      "id": "seconds",
+      "label": "Seconds",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "hours × 3600"
+    },
+    {
+      "id": "days",
+      "label": "Days",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "hours / 24"
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Hours",
+      "fields": [
+        "hours"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Converted",
+      "fields": [
+        "minutes",
+        "seconds",
+        "days"
+      ]
+    }
+  ],
+  "formulas": {
+    "minutes": "hours * 60",
+    "seconds": "hours * 3600",
+    "days": "hours / 24"
+  },
+  "examples": [
+    {
+      "label": "2 hours",
+      "inputs": {
+        "hours": 2
+      }
+    },
+    {
+      "label": "24 hours (1 day)",
+      "inputs": {
+        "hours": 24
+      }
+    }
+  ]
+}

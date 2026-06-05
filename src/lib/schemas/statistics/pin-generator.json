@@ -1,0 +1,38 @@
+{
+  "id": "pin-generator",
+  "slug": "pin-generator",
+  "name": "PIN Generator Calculator",
+  "category": "statistics",
+  "icon": "🔢",
+  "description": "Calculate how many possible PINs exist for a given length and character set, and estimate the time to brute-force it.",
+  "tags": ["pin", "random", "security", "password", "combinations", "entropy"],
+  "fields": [
+    {"id": "pinLength",   "label": "PIN Length (digits)",         "type": "number", "defaultValue": 4},
+    {"id": "charsetSize", "label": "Character Set Size (10=digits, 26=letters, 36=alphanumeric)", "type": "number", "defaultValue": 10},
+    {"id": "attemptsPerSec", "label": "Brute-Force Attempts / Second", "type": "number", "defaultValue": 1000},
+    {"id": "totalCombinations", "label": "Total Possible PINs",       "type": "computed", "precision": 0},
+    {"id": "entropyBits",       "label": "Entropy (bits)",             "type": "computed", "precision": 2},
+    {"id": "crackSeconds",      "label": "Time to Crack (seconds)",    "type": "computed", "precision": 2},
+    {"id": "crackMinutes",      "label": "Time to Crack (minutes)",    "type": "computed", "precision": 4},
+    {"id": "crackHours",        "label": "Time to Crack (hours)",      "type": "computed", "precision": 6},
+    {"id": "avgCrackSeconds",   "label": "Average Crack Time (50%) sec", "type": "computed", "precision": 2}
+  ],
+  "groups": [
+    {"id": "inputs",    "label": "PIN Parameters",         "fields": ["pinLength","charsetSize","attemptsPerSec"]},
+    {"id": "strength",  "label": "Strength",               "fields": ["totalCombinations","entropyBits"]},
+    {"id": "cracktime", "label": "Brute-Force Time",       "fields": ["avgCrackSeconds","crackSeconds","crackMinutes","crackHours"]}
+  ],
+  "formulas": {
+    "totalCombinations": "charsetSize^pinLength",
+    "entropyBits":       "pinLength * log(charsetSize, 2)",
+    "crackSeconds":      "charsetSize^pinLength / attemptsPerSec",
+    "crackMinutes":      "charsetSize^pinLength / attemptsPerSec / 60",
+    "crackHours":        "charsetSize^pinLength / attemptsPerSec / 3600",
+    "avgCrackSeconds":   "charsetSize^pinLength / attemptsPerSec / 2"
+  },
+  "examples": [
+    {"label": "4-digit ATM PIN",             "inputs": {"pinLength":4,"charsetSize":10,"attemptsPerSec":1000}},
+    {"label": "6-digit app PIN",             "inputs": {"pinLength":6,"charsetSize":10,"attemptsPerSec":1000}},
+    {"label": "8-char alphanumeric password","inputs": {"pinLength":8,"charsetSize":36,"attemptsPerSec":1000000}}
+  ]
+}

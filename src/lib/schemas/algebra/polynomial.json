@@ -1,0 +1,34 @@
+{
+  "id": "polynomial-calculator",
+  "slug": "polynomial-calculator",
+  "name": "Polynomial Calculator",
+  "category": "algebra",
+  "icon": "p(x)",
+  "description": "Evaluate the polynomial p(x) = ax³ + bx² + cx + d at any value of x and compute its first derivative.",
+  "tags": ["polynomial", "algebra", "cubic", "evaluate"],
+  "fields": [
+    {"id": "a", "label": "a  (x³ coefficient)", "type": "number", "defaultValue": 1},
+    {"id": "b", "label": "b  (x² coefficient)", "type": "number", "defaultValue": -6},
+    {"id": "c", "label": "c  (x coefficient)",  "type": "number", "defaultValue": 11},
+    {"id": "d", "label": "d  (constant term)",  "type": "number", "defaultValue": -6},
+    {"id": "xVal", "label": "Evaluate at x =",  "type": "number", "defaultValue": 2},
+    {"id": "result",     "label": "p(x)",        "type": "computed", "precision": 6},
+    {"id": "derivative", "label": "p′(x) at x",  "type": "computed", "precision": 6},
+    {"id": "secondDeriv","label": "p″(x) at x",  "type": "computed", "precision": 6}
+  ],
+  "groups": [
+    {"id": "coeffs",  "label": "Polynomial Coefficients",  "fields": ["a","b","c","d"]},
+    {"id": "evalAt",  "label": "Evaluation Point",         "fields": ["xVal"]},
+    {"id": "outputs", "label": "Results",                   "fields": ["result","derivative","secondDeriv"]}
+  ],
+  "formulas": {
+    "result":      "a*xVal^3 + b*xVal^2 + c*xVal + d",
+    "derivative":  "3*a*xVal^2 + 2*b*xVal + c",
+    "secondDeriv": "6*a*xVal + 2*b"
+  },
+  "examples": [
+    {"label": "x³ − 6x² + 11x − 6  at x = 2", "inputs": {"a":1,"b":-6,"c":11,"d":-6,"xVal":2}},
+    {"label": "2x² + 3x − 5  at x = 1",         "inputs": {"a":0,"b":2,"c":3,"d":-5,"xVal":1}},
+    {"label": "x³  at x = 3",                    "inputs": {"a":1,"b":0,"c":0,"d":0,"xVal":3}}
+  ]
+}

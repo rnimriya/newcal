@@ -1,0 +1,90 @@
+{
+  "id": "fourth-root-calculator",
+  "slug": "fourth-root-calculator",
+  "name": "4th Root Calculator",
+  "category": "algebra",
+  "icon": "⁴√",
+  "description": "Calculate the fourth root (quartic root) of any positive number.",
+  "tags": [
+    "fourth root",
+    "4th root",
+    "radical",
+    "algebra",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "x",
+      "label": "Number (x)",
+      "type": "number",
+      "defaultValue": 81,
+      "constraint": {
+        "min": 0,
+        "step": 0.01
+      }
+    },
+    {
+      "id": "root4",
+      "label": "⁴√x (fourth root)",
+      "type": "computed",
+      "precision": 8,
+      "helpText": "x^(1/4)"
+    },
+    {
+      "id": "root4Squared",
+      "label": "(⁴√x)²",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "Should equal √x"
+    },
+    {
+      "id": "sqrtX",
+      "label": "√x (square root)",
+      "type": "computed",
+      "precision": 8
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Number",
+      "fields": [
+        "x"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Results",
+      "fields": [
+        "root4",
+        "root4Squared",
+        "sqrtX"
+      ]
+    }
+  ],
+  "formulas": {
+    "root4": "x^(1/4)",
+    "root4Squared": "(x^(1/4))^2",
+    "sqrtX": "sqrt(x)"
+  },
+  "examples": [
+    {
+      "label": "⁴√81",
+      "inputs": {
+        "x": 81
+      }
+    },
+    {
+      "label": "⁴√256",
+      "inputs": {
+        "x": 256
+      }
+    },
+    {
+      "label": "⁴√10000",
+      "inputs": {
+        "x": 10000
+      }
+    }
+  ]
+}

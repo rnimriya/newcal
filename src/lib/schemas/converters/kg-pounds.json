@@ -1,0 +1,39 @@
+{
+  "id": "kg-pounds",
+  "slug": "kg-to-pounds",
+  "name": "Kilograms to Pounds",
+  "category": "converters",
+  "description": "Convert kilograms to pounds, ounces, stone, and grams.",
+  "icon": "⚖️",
+  "tags": ["kg", "pounds", "weight", "convert"],
+  "fields": [
+    {
+      "id": "kg",
+      "label": "Kilograms (kg)",
+      "type": "number",
+      "defaultValue": 70,
+      "placeholder": "Enter kilograms",
+      "constraint": { "min": 0, "step": 0.1, "required": true }
+    },
+    { "id": "pounds", "label": "Pounds (lb)",  "type": "computed", "precision": 4, "helpText": "lb = kg × 2.20462" },
+    { "id": "ounces", "label": "Ounces (oz)",  "type": "computed", "precision": 2, "helpText": "oz = kg × 35.274" },
+    { "id": "stone",  "label": "Stone (st)",   "type": "computed", "precision": 4, "helpText": "st = kg × 0.157473" },
+    { "id": "grams",  "label": "Grams (g)",    "type": "computed", "precision": 0, "helpText": "g = kg × 1000" }
+  ],
+  "groups": [
+    { "id": "input",   "label": "Input",   "fields": ["kg"] },
+    { "id": "outputs", "label": "Results", "fields": ["pounds", "ounces", "stone", "grams"] }
+  ],
+  "formulas": {
+    "pounds": "kg * 2.20462",
+    "ounces": "kg * 35.274",
+    "stone":  "kg * 0.157473",
+    "grams":  "kg * 1000"
+  },
+  "examples": [
+    { "label": "Average adult (70 kg)",  "inputs": { "kg": 70  } },
+    { "label": "Newborn (3.5 kg)",       "inputs": { "kg": 3.5 } },
+    { "label": "100 kg athlete",         "inputs": { "kg": 100 } },
+    { "label": "1 kg of flour",          "inputs": { "kg": 1   } }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "factoring-calculator",
+  "slug": "factoring-calculator",
+  "name": "Factoring Calculator",
+  "category": "algebra",
+  "icon": "✕",
+  "description": "Factor a quadratic expression ax² + bx + c, find both roots, and verify with Vieta's formulas.",
+  "tags": ["factoring", "quadratic", "roots", "algebra"],
+  "fields": [
+    {"id": "a", "label": "a  (x² coefficient)", "type": "number", "defaultValue": 1},
+    {"id": "b", "label": "b  (x coefficient)",  "type": "number", "defaultValue": -5},
+    {"id": "c", "label": "c  (constant)",        "type": "number", "defaultValue": 6},
+    {"id": "discriminant",  "label": "Discriminant  b² − 4ac", "type": "computed", "precision": 4},
+    {"id": "root1",         "label": "Root 1  (x₁)",           "type": "computed", "precision": 6},
+    {"id": "root2",         "label": "Root 2  (x₂)",           "type": "computed", "precision": 6},
+    {"id": "sumOfRoots",    "label": "Sum of Roots  (−b/a)",   "type": "computed", "precision": 6},
+    {"id": "productOfRoots","label": "Product of Roots (c/a)", "type": "computed", "precision": 6}
+  ],
+  "groups": [
+    {"id": "coeffs",  "label": "Quadratic Expression",    "fields": ["a","b","c"]},
+    {"id": "roots",   "label": "Roots",                   "fields": ["discriminant","root1","root2"]},
+    {"id": "vieta",   "label": "Vieta's Formulas",        "fields": ["sumOfRoots","productOfRoots"]}
+  ],
+  "formulas": {
+    "discriminant":   "b^2 - 4*a*c",
+    "root1":          "(-b + sqrt(abs(b^2 - 4*a*c))) / (2*a)",
+    "root2":          "(-b - sqrt(abs(b^2 - 4*a*c))) / (2*a)",
+    "sumOfRoots":     "-b / a",
+    "productOfRoots": "c / a"
+  },
+  "examples": [
+    {"label": "x² − 5x + 6", "inputs": {"a":1,"b":-5,"c":6}},
+    {"label": "2x² − 7x + 3","inputs": {"a":2,"b":-7,"c":3}},
+    {"label": "x² − 4",      "inputs": {"a":1,"b":0,"c":-4}}
+  ]
+}

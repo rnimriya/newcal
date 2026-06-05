@@ -1,0 +1,64 @@
+{
+  "id": "free-fall-calculator",
+  "slug": "free-fall-calculator",
+  "name": "Free Fall Calculator",
+  "category": "physics",
+  "description": "Calculate fall distance, velocity, and time for an object under free fall gravity.",
+  "icon": "🎯",
+  "tags": ["free fall", "gravity", "velocity", "distance", "time", "physics"],
+  "fields": [
+    {
+      "id": "time",
+      "label": "Fall Time (t)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter time",
+      "suffix": " s",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "gravity",
+      "label": "Gravitational Acceleration (g)",
+      "type": "number",
+      "defaultValue": 9.80665,
+      "placeholder": "e.g. 9.80665",
+      "suffix": " m/s²",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "distance",
+      "label": "Fall Distance (d)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m",
+      "helpText": "d = ½ * g * t²"
+    },
+    {
+      "id": "finalV",
+      "label": "Terminal Velocity (v)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m/s",
+      "helpText": "v = g * t"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["time", "gravity"] },
+    { "id": "outputs", "label": "Results",    "fields": ["distance", "finalV"] }
+  ],
+  "formulas": {
+    "distance": "0.5 * gravity * time^2",
+    "finalV": "gravity * time"
+  },
+  "examples": [
+    { "label": "3 seconds on Earth", "inputs": { "time": 3, "gravity": 9.80665 } },
+    { "label": "3 seconds on Moon",  "inputs": { "time": 3, "gravity": 1.62 } }
+  ],
+  "chart": {
+    "xAxisField": "time",
+    "yAxisField": "distance",
+    "xRange": [0.1, 10],
+    "points": 30,
+    "label": "Fall Distance vs Time (Earth Gravity)"
+  }
+}

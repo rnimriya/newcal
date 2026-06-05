@@ -1,0 +1,53 @@
+{
+  "id": "combinations-calculator",
+  "slug": "combinations-calculator",
+  "name": "Combinations Calculator (nCr)",
+  "category": "math",
+  "description": "Calculate the number of ways to choose r elements from a set of n elements without regard to order.",
+  "icon": "🔢",
+  "tags": ["combinations", "ncr", "factorial", "probability", "combinatorics"],
+  "fields": [
+    {
+      "id": "n",
+      "label": "Total Items (n)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter total items (n)",
+      "constraint": { "min": 0, "max": 100, "step": 1, "required": true }
+    },
+    {
+      "id": "r",
+      "label": "Chosen Items (r)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter chosen items (r)",
+      "constraint": { "min": 0, "max": 100, "step": 1, "required": true }
+    },
+    {
+      "id": "combinations",
+      "label": "Combinations C(n, r)",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "C(n, r) = n! / (r! * (n - r)!)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Inputs",  "fields": ["n", "r"] },
+    { "id": "outputs", "label": "Result",  "fields": ["combinations"] }
+  ],
+  "formulas": {
+    "combinations": "factorial(n) / (factorial(r) * factorial(n - r))"
+  },
+  "examples": [
+    { "label": "Choose 3 from 10 (10C3)", "inputs": { "n": 10, "r": 3 } },
+    { "label": "Choose 2 from 5 (5C2)",   "inputs": { "n": 5, "r": 2 } },
+    { "label": "Choose 5 from 49 (49C5)",  "inputs": { "n": 49, "r": 5 } }
+  ],
+  "chart": {
+    "xAxisField": "n",
+    "yAxisField": "combinations",
+    "xRange": [3, 20],
+    "points": 18,
+    "label": "Combinations vs n (fixed r=3)"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "id": "logarithm-equation-calculator",
+  "slug": "logarithm-equation-calculator",
+  "name": "Logarithm Calculator",
+  "category": "algebra",
+  "icon": "㏒",
+  "description": "Calculate log base b of x, natural log, and log base 10. Solve for base, argument, or result.",
+  "tags": [
+    "logarithm",
+    "log",
+    "ln",
+    "algebra",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "base",
+      "label": "Base (b)",
+      "type": "number",
+      "defaultValue": 10,
+      "constraint": {
+        "min": 0.001,
+        "step": 0.001
+      }
+    },
+    {
+      "id": "argument",
+      "label": "Argument (x)",
+      "type": "number",
+      "defaultValue": 1000,
+      "constraint": {
+        "min": 0.0001,
+        "step": 0.001
+      }
+    },
+    {
+      "id": "result",
+      "label": "log_b(x)",
+      "type": "computed",
+      "precision": 8,
+      "helpText": "log(x) / log(b)"
+    },
+    {
+      "id": "logNatural",
+      "label": "ln(x)",
+      "type": "computed",
+      "precision": 8,
+      "helpText": "Natural log of x"
+    },
+    {
+      "id": "log10",
+      "label": "log₁₀(x)",
+      "type": "computed",
+      "precision": 8,
+      "helpText": "Common log of x"
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Input",
+      "fields": [
+        "base",
+        "argument"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Results",
+      "fields": [
+        "result",
+        "logNatural",
+        "log10"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "log(argument, base)",
+    "logNatural": "log(argument)",
+    "log10": "log10(argument)"
+  },
+  "examples": [
+    {
+      "label": "log₁₀(1000)",
+      "inputs": {
+        "base": 10,
+        "argument": 1000
+      }
+    },
+    {
+      "label": "log₂(64)",
+      "inputs": {
+        "base": 2,
+        "argument": 64
+      }
+    },
+    {
+      "label": "ln(e³ = 20.09)",
+      "inputs": {
+        "base": 2.71828,
+        "argument": 20.0855
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "sleep-calculator",
+  "slug": "sleep-calculator",
+  "name": "Sleep Cycle Calculator",
+  "category": "health",
+  "description": "Calculate ideal wakeup times based on natural 90-minute sleep cycles and bedtime.",
+  "icon": "😴",
+  "tags": ["sleep", "sleep cycle", "wake up", "circadian rhythm", "health"],
+  "fields": [
+    {
+      "id": "hour",
+      "label": "Bedtime Hour (24h format)",
+      "type": "number",
+      "defaultValue": 22,
+      "placeholder": "e.g. 22",
+      "constraint": { "min": 0, "max": 23, "step": 1, "required": true }
+    },
+    {
+      "id": "minute",
+      "label": "Bedtime Minute",
+      "type": "number",
+      "defaultValue": 30,
+      "placeholder": "e.g. 30",
+      "constraint": { "min": 0, "max": 59, "step": 1, "required": true }
+    },
+    {
+      "id": "sleepHours",
+      "label": "Sleep Duration",
+      "type": "select",
+      "defaultValue": 7.5,
+      "helpText": "We add an extra 15 minutes to account for the time to fall asleep.",
+      "selectOptions": [
+        { "label": "3 Cycles (4.5 hours)", "value": 4.5 },
+        { "label": "4 Cycles (6.0 hours)", "value": 6.0 },
+        { "label": "5 Cycles (7.5 hours)", "value": 7.5 },
+        { "label": "6 Cycles (9.0 hours)", "value": 9.0 }
+      ]
+    },
+    {
+      "id": "wakeupHour",
+      "label": "Ideal Wakeup Hour",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "Computed wakeup hour (24-hour style)"
+    },
+    {
+      "id": "wakeupMinute",
+      "label": "Ideal Wakeup Minute",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "Computed wakeup minute"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Bedtime & Target Duration", "fields": ["hour", "minute", "sleepHours"] },
+    { "id": "outputs", "label": "Optimal Wakeup Time",      "fields": ["wakeupHour", "wakeupMinute"] }
+  ],
+  "formulas": {
+    "wakeupHour": "floor(mod(hour * 60 + minute + 15 + sleepHours * 60, 1440) / 60)",
+    "wakeupMinute": "mod(hour * 60 + minute + 15 + sleepHours * 60, 60)"
+  },
+  "examples": [
+    { "label": "Bedtime at 10:30 PM (7.5h sleep)", "inputs": { "hour": 22, "minute": 30, "sleepHours": 7.5 } },
+    { "label": "Bedtime at midnight (6.0h sleep)",   "inputs": { "hour": 0,  "minute": 0,  "sleepHours": 6.0 } }
+  ]
+}

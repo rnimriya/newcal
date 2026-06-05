@@ -1,0 +1,33 @@
+{
+  "id": "xirr-calculator",
+  "slug": "xirr-calculator",
+  "name": "XIRR Calculator",
+  "category": "loans",
+  "icon": "📊",
+  "description": "Estimate the annualised return (XIRR / CAGR) from an initial investment and its final value over a holding period.",
+  "tags": ["xirr", "cagr", "irr", "returns", "investment"],
+  "fields": [
+    {"id": "initialInvestment", "label": "Initial Investment (₹ / $)", "type": "number", "defaultValue": 100000},
+    {"id": "finalValue",        "label": "Final / Current Value",       "type": "number", "defaultValue": 180000},
+    {"id": "years",             "label": "Holding Period (years)",      "type": "number", "defaultValue": 5},
+    {"id": "annualReturn",  "label": "Annual Return (XIRR %)", "type": "computed", "precision": 2, "suffix": "%"},
+    {"id": "absoluteGain",  "label": "Absolute Gain",           "type": "computed", "precision": 2},
+    {"id": "totalReturn",   "label": "Total Return %",          "type": "computed", "precision": 2, "suffix": "%"},
+    {"id": "doublingYears", "label": "Doubling Time (years)",   "type": "computed", "precision": 2}
+  ],
+  "groups": [
+    {"id": "inputs",  "label": "Investment Details",  "fields": ["initialInvestment","finalValue","years"]},
+    {"id": "outputs", "label": "Returns",             "fields": ["annualReturn","absoluteGain","totalReturn","doublingYears"]}
+  ],
+  "formulas": {
+    "annualReturn":  "((finalValue / initialInvestment)^(1 / years) - 1) * 100",
+    "absoluteGain":  "finalValue - initialInvestment",
+    "totalReturn":   "(finalValue - initialInvestment) / initialInvestment * 100",
+    "doublingYears": "log(2) / log(1 + ((finalValue / initialInvestment)^(1 / years) - 1))"
+  },
+  "examples": [
+    {"label": "₹1 L → ₹1.8 L in 5 years", "inputs": {"initialInvestment":100000,"finalValue":180000,"years":5}},
+    {"label": "$5000 → $12000 in 8 years",   "inputs": {"initialInvestment":5000,"finalValue":12000,"years":8}},
+    {"label": "₹50 K → ₹2 L in 10 years",   "inputs": {"initialInvestment":50000,"finalValue":200000,"years":10}}
+  ]
+}

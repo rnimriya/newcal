@@ -1,0 +1,82 @@
+{
+  "id": "projectile-motion",
+  "slug": "projectile-motion",
+  "name": "Projectile Motion Calculator",
+  "category": "physics",
+  "description": "Calculate range, maximum height, and flight duration of a projectile launched at an angle.",
+  "icon": "🚀",
+  "tags": ["projectile", "range", "trajectory", "angle", "velocity", "physics"],
+  "fields": [
+    {
+      "id": "velocity",
+      "label": "Launch Velocity (v0)",
+      "type": "number",
+      "defaultValue": 20,
+      "placeholder": "Enter velocity",
+      "suffix": " m/s",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "angle",
+      "label": "Launch Angle (θ)",
+      "type": "number",
+      "defaultValue": 45,
+      "placeholder": "Enter angle",
+      "suffix": " ° (degrees)",
+      "constraint": { "min": 0, "max": 90, "required": true }
+    },
+    {
+      "id": "gravity",
+      "label": "Gravitational Acceleration (g)",
+      "type": "number",
+      "defaultValue": 9.80665,
+      "placeholder": "e.g. 9.80665",
+      "suffix": " m/s²",
+      "constraint": { "min": 0.0001, "required": true }
+    },
+    {
+      "id": "range",
+      "label": "Horizontal Range (R)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m",
+      "helpText": "R = (v0² * sin(2θ)) / g"
+    },
+    {
+      "id": "maxHeight",
+      "label": "Maximum Height (H)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m",
+      "helpText": "H = (v0² * sin(θ)²) / (2g)"
+    },
+    {
+      "id": "timeOfFlight",
+      "label": "Total Time of Flight (t)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " s",
+      "helpText": "t = (2 * v0 * sin(θ)) / g"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Launch Parameters", "fields": ["velocity", "angle", "gravity"] },
+    { "id": "outputs", "label": "Results",           "fields": ["range", "maxHeight", "timeOfFlight"] }
+  ],
+  "formulas": {
+    "range": "(velocity^2 * sin(2 * angle * PI / 180)) / gravity",
+    "maxHeight": "(velocity^2 * sin(angle * PI / 180)^2) / (2 * gravity)",
+    "timeOfFlight": "(2 * velocity * sin(angle * PI / 180)) / gravity"
+  },
+  "examples": [
+    { "label": "20 m/s at 45° (Earth)", "inputs": { "velocity": 20, "angle": 45, "gravity": 9.80665 } },
+    { "label": "50 m/s at 30° (Earth)", "inputs": { "velocity": 50, "angle": 30, "gravity": 9.80665 } }
+  ],
+  "chart": {
+    "xAxisField": "angle",
+    "yAxisField": "range",
+    "xRange": [0, 90],
+    "points": 30,
+    "label": "Range vs Launch Angle"
+  }
+}

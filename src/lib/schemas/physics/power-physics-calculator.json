@@ -1,0 +1,55 @@
+{
+  "id": "power-physics-calculator",
+  "slug": "power-physics-calculator",
+  "name": "Power Calculator (Physics)",
+  "category": "physics",
+  "description": "Calculate mechanical power from work done and time elapsed (P = W / t).",
+  "icon": "⚡",
+  "tags": ["power", "watt", "work", "time", "physics"],
+  "fields": [
+    {
+      "id": "work",
+      "label": "Work Done (W)",
+      "type": "number",
+      "defaultValue": 100,
+      "placeholder": "Enter work",
+      "suffix": " J",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "time",
+      "label": "Time (t)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter time",
+      "suffix": " s",
+      "constraint": { "min": 0.0001, "required": true }
+    },
+    {
+      "id": "power",
+      "label": "Power (P)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " W (Watts)",
+      "helpText": "P = W / t"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["work", "time"] },
+    { "id": "outputs", "label": "Result",     "fields": ["power"] }
+  ],
+  "formulas": {
+    "power": "work / time"
+  },
+  "examples": [
+    { "label": "100 J in 5 seconds", "inputs": { "work": 100, "time": 5 } },
+    { "label": "500 J in 2 seconds", "inputs": { "work": 500, "time": 2 } }
+  ],
+  "chart": {
+    "xAxisField": "time",
+    "yAxisField": "power",
+    "xRange": [1, 20],
+    "points": 30,
+    "label": "Power vs Time (fixed Work = 100 J)"
+  }
+}

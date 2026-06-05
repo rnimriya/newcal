@@ -1,0 +1,81 @@
+{
+  "id": "fifth-root-calculator",
+  "slug": "fifth-root-calculator",
+  "name": "5th Root Calculator",
+  "category": "algebra",
+  "icon": "⁵√",
+  "description": "Calculate the fifth root (quintic root) of any number, including negative values.",
+  "tags": [
+    "fifth root",
+    "5th root",
+    "radical",
+    "algebra",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "x",
+      "label": "Number (x)",
+      "type": "number",
+      "defaultValue": 32,
+      "constraint": {
+        "step": 0.01
+      }
+    },
+    {
+      "id": "root5",
+      "label": "⁵√x (fifth root)",
+      "type": "computed",
+      "precision": 8,
+      "helpText": "Handles negative numbers"
+    },
+    {
+      "id": "check",
+      "label": "(⁵√x)⁵ ≈ x",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Verification"
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Number",
+      "fields": [
+        "x"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Results",
+      "fields": [
+        "root5",
+        "check"
+      ]
+    }
+  ],
+  "formulas": {
+    "root5": "x >= 0 ? x^(1/5) : -(abs(x)^(1/5))",
+    "check": "(x >= 0 ? x^(1/5) : -(abs(x)^(1/5)))^5"
+  },
+  "examples": [
+    {
+      "label": "⁵√32",
+      "inputs": {
+        "x": 32
+      }
+    },
+    {
+      "label": "⁵√-243",
+      "inputs": {
+        "x": -243
+      }
+    },
+    {
+      "label": "⁵√100000",
+      "inputs": {
+        "x": 100000
+      }
+    }
+  ]
+}

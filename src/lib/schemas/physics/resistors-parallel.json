@@ -1,0 +1,64 @@
+{
+  "id": "resistors-parallel",
+  "slug": "resistors-parallel",
+  "name": "Resistors in Parallel",
+  "category": "physics",
+  "description": "Calculate total equivalent resistance for up to three resistors connected in parallel.",
+  "icon": "⋕",
+  "tags": ["resistors", "parallel", "resistance", "electricity", "physics"],
+  "fields": [
+    {
+      "id": "r1",
+      "label": "Resistor 1 (R1)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "R1 value",
+      "suffix": " Ω",
+      "constraint": { "min": 0.0001, "required": true }
+    },
+    {
+      "id": "r2",
+      "label": "Resistor 2 (R2)",
+      "type": "number",
+      "defaultValue": 20,
+      "placeholder": "R2 value",
+      "suffix": " Ω",
+      "constraint": { "min": 0.0001, "required": true }
+    },
+    {
+      "id": "r3",
+      "label": "Resistor 3 (R3, optional)",
+      "type": "number",
+      "defaultValue": 30,
+      "placeholder": "R3 value (enter 0 to exclude)",
+      "suffix": " Ω",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "totalR",
+      "label": "Total Equivalent Resistance (Req)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " Ω",
+      "helpText": "1 / Req = 1/R1 + 1/R2 + 1/R3"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Resistor Values", "fields": ["r1", "r2", "r3"] },
+    { "id": "outputs", "label": "Result",          "fields": ["totalR"] }
+  ],
+  "formulas": {
+    "totalR": "r3 > 0 ? 1 / (1/r1 + 1/r2 + 1/r3) : 1 / (1/r1 + 1/r2)"
+  },
+  "examples": [
+    { "label": "10Ω, 20Ω, 30Ω in parallel", "inputs": { "r1": 10, "r2": 20, "r3": 30 } },
+    { "label": "100Ω and 220Ω in parallel", "inputs": { "r1": 100, "r2": 220, "r3": 0 } }
+  ],
+  "chart": {
+    "xAxisField": "r1",
+    "yAxisField": "totalR",
+    "xRange": [1, 100],
+    "points": 30,
+    "label": "Equivalent Resistance vs R1"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "CalcHub — Dynamic Calculator Platform",
+  "short_name": "CalcHub",
+  "description": "Schema-driven calculators for Finance, Health, Math & Physics. Works offline.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f4f4f5",
+  "theme_color": "#6366f1",
+  "categories": ["utilities", "education", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "BMI Calculator",
+      "url": "/health/bmi-calculator",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Compound Interest",
+      "url": "/finance/compound-interest-calculator",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

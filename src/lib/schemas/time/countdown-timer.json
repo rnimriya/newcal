@@ -1,0 +1,41 @@
+{
+  "id": "countdown-timer",
+  "slug": "countdown-timer",
+  "name": "Countdown Timer",
+  "category": "time",
+  "icon": "⏲️",
+  "description": "Calculate the exact time remaining until any future event — in days, hours, minutes, and weeks.",
+  "tags": ["countdown", "timer", "event", "days remaining", "date"],
+  "fields": [
+    {"id": "startYear",  "label": "Today — Year",    "type": "number", "defaultValue": 2026},
+    {"id": "startMonth", "label": "Today — Month",   "type": "number", "defaultValue": 6},
+    {"id": "startDay",   "label": "Today — Day",     "type": "number", "defaultValue": 5},
+    {"id": "startHour",  "label": "Current Hour",    "type": "number", "defaultValue": 12},
+    {"id": "targetYear",  "label": "Event — Year",   "type": "number", "defaultValue": 2027},
+    {"id": "targetMonth", "label": "Event — Month",  "type": "number", "defaultValue": 1},
+    {"id": "targetDay",   "label": "Event — Day",    "type": "number", "defaultValue": 1},
+    {"id": "targetHour",  "label": "Event — Hour",   "type": "number", "defaultValue": 0},
+    {"id": "daysLeft",    "label": "Days Remaining",    "type": "computed", "precision": 0},
+    {"id": "hoursLeft",   "label": "Hours Remaining",   "type": "computed", "precision": 0},
+    {"id": "minutesLeft", "label": "Minutes Remaining", "type": "computed", "precision": 0},
+    {"id": "weeksLeft",   "label": "Weeks Remaining",   "type": "computed", "precision": 2},
+    {"id": "totalHours",  "label": "Total Hours Left",  "type": "computed", "precision": 1}
+  ],
+  "groups": [
+    {"id": "today",  "label": "Today",       "fields": ["startYear","startMonth","startDay","startHour"]},
+    {"id": "event",  "label": "Event Date",  "fields": ["targetYear","targetMonth","targetDay","targetHour"]},
+    {"id": "result", "label": "Countdown",   "fields": ["daysLeft","hoursLeft","minutesLeft","weeksLeft","totalHours"]}
+  ],
+  "formulas": {
+    "daysLeft":    "max(0, floor(((targetYear*525960 + targetMonth*43800 + targetDay*1440 + targetHour*60) - (startYear*525960 + startMonth*43800 + startDay*1440 + startHour*60)) / 1440))",
+    "hoursLeft":   "max(0, floor(mod(abs((targetYear*525960 + targetMonth*43800 + targetDay*1440 + targetHour*60) - (startYear*525960 + startMonth*43800 + startDay*1440 + startHour*60)), 1440) / 60))",
+    "minutesLeft": "max(0, mod(abs((targetYear*525960 + targetMonth*43800 + targetDay*1440 + targetHour*60) - (startYear*525960 + startMonth*43800 + startDay*1440 + startHour*60)), 60))",
+    "weeksLeft":   "max(0, ((targetYear*525960 + targetMonth*43800 + targetDay*1440 + targetHour*60) - (startYear*525960 + startMonth*43800 + startDay*1440 + startHour*60)) / 10080)",
+    "totalHours":  "max(0, ((targetYear*525960 + targetMonth*43800 + targetDay*1440 + targetHour*60) - (startYear*525960 + startMonth*43800 + startDay*1440 + startHour*60)) / 60)"
+  },
+  "examples": [
+    {"label": "New Year 2027",        "inputs": {"startYear":2026,"startMonth":6,"startDay":5,"startHour":12,"targetYear":2027,"targetMonth":1,"targetDay":1,"targetHour":0}},
+    {"label": "Christmas 2026",       "inputs": {"startYear":2026,"startMonth":6,"startDay":5,"startHour":9,"targetYear":2026,"targetMonth":12,"targetDay":25,"targetHour":0}},
+    {"label": "One week from today",  "inputs": {"startYear":2026,"startMonth":6,"startDay":5,"startHour":0,"targetYear":2026,"targetMonth":6,"targetDay":12,"targetHour":0}}
+  ]
+}

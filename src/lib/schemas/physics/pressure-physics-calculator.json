@@ -1,0 +1,55 @@
+{
+  "id": "pressure-physics-calculator",
+  "slug": "pressure-physics-calculator",
+  "name": "Pressure Calculator",
+  "category": "physics",
+  "description": "Calculate physical pressure exerted by a force over an area (P = F / A).",
+  "icon": "🔧",
+  "tags": ["pressure", "force", "area", "physics", "pascal"],
+  "fields": [
+    {
+      "id": "force",
+      "label": "Applied Force (F)",
+      "type": "number",
+      "defaultValue": 100,
+      "placeholder": "Enter force",
+      "suffix": " N",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "area",
+      "label": "Area (A)",
+      "type": "number",
+      "defaultValue": 2,
+      "placeholder": "Enter area",
+      "suffix": " m²",
+      "constraint": { "min": 0.0001, "required": true }
+    },
+    {
+      "id": "pressure",
+      "label": "Pressure (P)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " Pa (Pascals)",
+      "helpText": "P = F / A"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["force", "area"] },
+    { "id": "outputs", "label": "Result",     "fields": ["pressure"] }
+  ],
+  "formulas": {
+    "pressure": "force / area"
+  },
+  "examples": [
+    { "label": "100 N over 2 m²", "inputs": { "force": 100, "area": 2 } },
+    { "label": "500 N over 0.5 m²", "inputs": { "force": 500, "area": 0.5 } }
+  ],
+  "chart": {
+    "xAxisField": "area",
+    "yAxisField": "pressure",
+    "xRange": [0.1, 10],
+    "points": 40,
+    "label": "Pressure vs Area (fixed Force = 100 N)"
+  }
+}

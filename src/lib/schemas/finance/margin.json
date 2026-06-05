@@ -1,0 +1,30 @@
+{
+  "id": "margin",
+  "slug": "margin-calculator",
+  "name": "Margin Calculator",
+  "category": "finance",
+  "description": "Calculate gross profit margin, markup, and revenue from cost and selling price.",
+  "icon": "📊",
+  "tags": ["margin", "profit", "markup", "revenue", "business"],
+  "fields": [
+    { "id": "cost",        "label": "Cost Price",     "type": "number", "defaultValue": 60,  "prefix": "$", "constraint": { "min": 0, "step": 1 } },
+    { "id": "salePrice",   "label": "Selling Price",  "type": "number", "defaultValue": 100, "prefix": "$", "constraint": { "min": 0, "step": 1 } },
+    { "id": "grossProfit", "label": "Gross Profit",   "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "margin",      "label": "Profit Margin",  "type": "computed", "precision": 2, "suffix": "%", "helpText": "(Revenue - Cost) / Revenue × 100" },
+    { "id": "markup",      "label": "Markup",         "type": "computed", "precision": 2, "suffix": "%", "helpText": "(Revenue - Cost) / Cost × 100" }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Prices",   "fields": ["cost", "salePrice"] },
+    { "id": "outputs", "label": "Margins",  "fields": ["grossProfit", "margin", "markup"] }
+  ],
+  "formulas": {
+    "grossProfit": "salePrice - cost",
+    "margin":      "((salePrice - cost) / salePrice) * 100",
+    "markup":      "((salePrice - cost) / cost) * 100"
+  },
+  "examples": [
+    { "label": "Retail product",    "inputs": { "cost": 60,  "salePrice": 100 } },
+    { "label": "Restaurant dish",   "inputs": { "cost": 8,   "salePrice": 25  } },
+    { "label": "Software license",  "inputs": { "cost": 500, "salePrice": 2000} }
+  ]
+}

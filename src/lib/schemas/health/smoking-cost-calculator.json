@@ -1,0 +1,72 @@
+{
+  "id": "smoking-cost-calculator",
+  "slug": "smoking-cost-calculator",
+  "name": "Smoking Cost Calculator",
+  "category": "health",
+  "description": "Calculate the financial and long-term cost of smoking based on pack price and habits.",
+  "icon": "🚬",
+  "tags": ["smoking", "cost", "financial", "health"],
+  "fields": [
+    {
+      "id": "pricePerPack",
+      "label": "Price Per Pack",
+      "type": "number",
+      "defaultValue": 8,
+      "prefix": "$",
+      "placeholder": "Enter price per pack",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "packsPerDay",
+      "label": "Packs Smoked Per Day",
+      "type": "number",
+      "defaultValue": 1,
+      "placeholder": "Enter packs per day",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "weeklyCost",
+      "label": "Weekly Cost",
+      "type": "computed",
+      "precision": 2,
+      "prefix": "$",
+      "helpText": "Price * Packs/day * 7"
+    },
+    {
+      "id": "monthlyCost",
+      "label": "Monthly Cost (Avg)",
+      "type": "computed",
+      "precision": 2,
+      "prefix": "$",
+      "helpText": "Price * Packs/day * 30.44"
+    },
+    {
+      "id": "yearlyCost",
+      "label": "Yearly Cost",
+      "type": "computed",
+      "precision": 2,
+      "prefix": "$",
+      "helpText": "Price * Packs/day * 365"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Smoking Habits",   "fields": ["pricePerPack", "packsPerDay"] },
+    { "id": "outputs", "label": "Financial Impact", "fields": ["weeklyCost", "monthlyCost", "yearlyCost"] }
+  ],
+  "formulas": {
+    "weeklyCost": "pricePerPack * packsPerDay * 7",
+    "monthlyCost": "pricePerPack * packsPerDay * 30.4375",
+    "yearlyCost": "pricePerPack * packsPerDay * 365"
+  },
+  "examples": [
+    { "label": "Pack-a-day ($8/pack)",  "inputs": { "pricePerPack": 8, "packsPerDay": 1 } },
+    { "label": "Half pack ($10/pack)", "inputs": { "pricePerPack": 10, "packsPerDay": 0.5 } }
+  ],
+  "chart": {
+    "xAxisField": "packsPerDay",
+    "yAxisField": "yearlyCost",
+    "xRange": [0.1, 3],
+    "points": 30,
+    "label": "Yearly Cost vs Packs Smoked Per Day"
+  }
+}

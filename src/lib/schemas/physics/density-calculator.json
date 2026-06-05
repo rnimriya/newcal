@@ -1,0 +1,69 @@
+{
+  "id": "density-calculator",
+  "slug": "density-calculator",
+  "name": "Density Calculator",
+  "category": "physics",
+  "description": "Calculate density, mass, or volume using the physical formula ρ = m / V.",
+  "icon": "⚖️",
+  "tags": ["density", "mass", "volume", "physics"],
+  "fields": [
+    {
+      "id": "mode",
+      "label": "Calculate",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Density (ρ = m / V)", "value": 1 },
+        { "label": "Mass (m = ρ * V)",   "value": 2 },
+        { "label": "Volume (V = m / ρ)", "value": 3 }
+      ]
+    },
+    {
+      "id": "density",
+      "label": "Density (ρ)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter density",
+      "suffix": " kg/m³",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "mass",
+      "label": "Mass (m)",
+      "type": "number",
+      "defaultValue": 50,
+      "placeholder": "Enter mass",
+      "suffix": " kg",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "volume",
+      "label": "Volume (V)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter volume",
+      "suffix": " m³",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "result",
+      "label": "Computed Value",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Calculated value based on selected mode"
+    }
+  ],
+  "groups": [
+    { "id": "config",  "label": "Mode Selection", "fields": ["mode"] },
+    { "id": "inputs",  "label": "Inputs",         "fields": ["density", "mass", "volume"] },
+    { "id": "outputs", "label": "Result",         "fields": ["result"] }
+  ],
+  "formulas": {
+    "result": "mode == 1 ? mass / volume : (mode == 2 ? density * volume : mass / density)"
+  },
+  "examples": [
+    { "label": "Calculate Density (m=50kg, V=10m³)", "inputs": { "mode": 1, "mass": 50, "volume": 10 } },
+    { "label": "Calculate Mass (ρ=5kg/m³, V=10m³)",   "inputs": { "mode": 2, "density": 5, "volume": 10 } },
+    { "label": "Calculate Volume (m=50kg, ρ=5kg/m³)", "inputs": { "mode": 3, "mass": 50, "density": 5 } }
+  ]
+}

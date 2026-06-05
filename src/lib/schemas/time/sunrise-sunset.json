@@ -1,0 +1,38 @@
+{
+  "id": "sunrise-sunset",
+  "slug": "sunrise-sunset",
+  "name": "Sunrise Sunset Calculator",
+  "category": "time",
+  "icon": "🌅",
+  "description": "Estimate sunrise and sunset times for any location using latitude and day of year via solar declination formulas.",
+  "tags": ["sunrise", "sunset", "solar", "solar position", "daylight"],
+  "fields": [
+    {"id": "latitude",   "label": "Latitude (°N positive, °S negative)", "type": "number", "defaultValue": 40.7},
+    {"id": "dayOfYear",  "label": "Day of Year (1–365)",                  "type": "number", "defaultValue": 172},
+    {"id": "utcOffset",  "label": "UTC Offset (hours)",                   "type": "number", "defaultValue": -5},
+    {"id": "declination",   "label": "Solar Declination (°)",    "type": "computed", "precision": 4},
+    {"id": "hourAngle",     "label": "Hour Angle at Sunrise (°)", "type": "computed", "precision": 4},
+    {"id": "sunriseHour",   "label": "Sunrise (decimal hour)",   "type": "computed", "precision": 4},
+    {"id": "sunsetHour",    "label": "Sunset (decimal hour)",    "type": "computed", "precision": 4},
+    {"id": "daylightHours", "label": "Daylight Duration (hours)","type": "computed", "precision": 4},
+    {"id": "solarNoon",     "label": "Solar Noon (decimal hour)","type": "computed", "precision": 4}
+  ],
+  "groups": [
+    {"id": "inputs",  "label": "Location & Date",   "fields": ["latitude","dayOfYear","utcOffset"]},
+    {"id": "solar",   "label": "Solar Position",    "fields": ["declination","hourAngle","solarNoon"]},
+    {"id": "times",   "label": "Sunrise & Sunset",  "fields": ["sunriseHour","sunsetHour","daylightHours"]}
+  ],
+  "formulas": {
+    "declination":   "-23.45 * cos((360 / 365) * (dayOfYear + 10) * pi / 180)",
+    "hourAngle":     "acos(-tan(latitude * pi / 180) * tan(-23.45 * cos((360 / 365) * (dayOfYear + 10) * pi / 180) * pi / 180)) * 180 / pi",
+    "solarNoon":     "12 - utcOffset",
+    "sunriseHour":   "12 - acos(-tan(latitude * pi / 180) * tan(-23.45 * cos((360 / 365) * (dayOfYear + 10) * pi / 180) * pi / 180)) * 180 / pi / 15 - utcOffset",
+    "sunsetHour":    "12 + acos(-tan(latitude * pi / 180) * tan(-23.45 * cos((360 / 365) * (dayOfYear + 10) * pi / 180) * pi / 180)) * 180 / pi / 15 - utcOffset",
+    "daylightHours": "2 * acos(-tan(latitude * pi / 180) * tan(-23.45 * cos((360 / 365) * (dayOfYear + 10) * pi / 180) * pi / 180)) * 180 / pi / 15"
+  },
+  "examples": [
+    {"label": "New York, summer solstice",   "inputs": {"latitude":40.7,"dayOfYear":172,"utcOffset":-4}},
+    {"label": "London, winter solstice",     "inputs": {"latitude":51.5,"dayOfYear":355,"utcOffset":0}},
+    {"label": "Sydney, equinox",             "inputs": {"latitude":-33.9,"dayOfYear":80,"utcOffset":11}}
+  ]
+}

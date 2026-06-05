@@ -1,0 +1,68 @@
+{
+  "id": "geometric-sequence",
+  "slug": "geometric-sequence",
+  "name": "Geometric Sequence Calculator",
+  "category": "math",
+  "description": "Calculate the Nth term and the sum of the first N terms of a geometric progression.",
+  "icon": "🔢",
+  "tags": ["geometric sequence", "progression", "math", "series"],
+  "fields": [
+    {
+      "id": "a1",
+      "label": "First Term (a1)",
+      "type": "number",
+      "defaultValue": 1,
+      "placeholder": "Enter a1",
+      "constraint": { "required": true }
+    },
+    {
+      "id": "r",
+      "label": "Common Ratio (r)",
+      "type": "number",
+      "defaultValue": 2,
+      "placeholder": "Enter common ratio r",
+      "constraint": { "required": true }
+    },
+    {
+      "id": "n",
+      "label": "Number of Terms (n)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter term position n",
+      "constraint": { "min": 1, "step": 1, "required": true }
+    },
+    {
+      "id": "an",
+      "label": "Nth Term (an)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "a_n = a_1 * r^(n-1)"
+    },
+    {
+      "id": "sum",
+      "label": "Sum of N Terms (Sn)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "S_n = a_1 * (1 - r^n) / (1 - r)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["a1", "r", "n"] },
+    { "id": "outputs", "label": "Results",    "fields": ["an", "sum"] }
+  ],
+  "formulas": {
+    "an": "a1 * r^(n - 1)",
+    "sum": "r == 1 ? a1 * n : a1 * (1 - r^n) / (1 - r)"
+  },
+  "examples": [
+    { "label": "Doubling sequence (1, 2, 4...) up to 5th term", "inputs": { "a1": 1, "r": 2, "n": 5 } },
+    { "label": "Half-life sequence (100, 50, 25...) up to 8th term", "inputs": { "a1": 100, "r": 0.5, "n": 8 } }
+  ],
+  "chart": {
+    "xAxisField": "n",
+    "yAxisField": "an",
+    "xRange": [1, 10],
+    "points": 10,
+    "label": "Term Value vs Position n"
+  }
+}

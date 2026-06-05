@@ -1,0 +1,102 @@
+{
+  "id": "completing-square-calculator",
+  "slug": "completing-square-calculator",
+  "name": "Completing the Square Calculator",
+  "category": "math",
+  "icon": "□",
+  "description": "Convert a quadratic from standard form to vertex form by completing the square.",
+  "tags": [
+    "completing the square",
+    "quadratic",
+    "vertex form",
+    "algebra",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "a (coefficient of x²)",
+      "type": "number",
+      "defaultValue": 1,
+      "constraint": {
+        "step": 0.01
+      }
+    },
+    {
+      "id": "b",
+      "label": "b (coefficient of x)",
+      "type": "number",
+      "defaultValue": -6
+    },
+    {
+      "id": "c",
+      "label": "c (constant)",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "h",
+      "label": "h (x of vertex)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "h = -b / (2a)"
+    },
+    {
+      "id": "k",
+      "label": "k (y of vertex)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "k = c - b²/(4a)"
+    },
+    {
+      "id": "halfB",
+      "label": "(b/2a)²",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Complete the square term"
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Standard Form: ax² + bx + c",
+      "fields": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Vertex Form: a(x-h)² + k",
+      "fields": [
+        "h",
+        "k",
+        "halfB"
+      ]
+    }
+  ],
+  "formulas": {
+    "h": "-b/(2*a)",
+    "k": "c - b^2/(4*a)",
+    "halfB": "(b/(2*a))^2"
+  },
+  "examples": [
+    {
+      "label": "x² - 6x + 5",
+      "inputs": {
+        "a": 1,
+        "b": -6,
+        "c": 5
+      }
+    },
+    {
+      "label": "2x² + 8x + 3",
+      "inputs": {
+        "a": 2,
+        "b": 8,
+        "c": 3
+      }
+    }
+  ]
+}

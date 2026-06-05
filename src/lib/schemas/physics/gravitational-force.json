@@ -1,0 +1,64 @@
+{
+  "id": "gravitational-force",
+  "slug": "gravitational-force",
+  "name": "Gravitational Force Calculator",
+  "category": "physics",
+  "description": "Calculate the attractive gravitational force between two masses at a distance (F = G * m1 * m2 / r²).",
+  "icon": "🌍",
+  "tags": ["gravity", "gravitational force", "newton", "mass", "physics"],
+  "fields": [
+    {
+      "id": "m1",
+      "label": "Mass 1 (m1)",
+      "type": "number",
+      "defaultValue": 5.972e24,
+      "placeholder": "Enter mass 1",
+      "suffix": " kg",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "m2",
+      "label": "Mass 2 (m2)",
+      "type": "number",
+      "defaultValue": 7.348e22,
+      "placeholder": "Enter mass 2",
+      "suffix": " kg",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "distance",
+      "label": "Distance (r)",
+      "type": "number",
+      "defaultValue": 3.844e8,
+      "placeholder": "Enter distance",
+      "suffix": " m",
+      "constraint": { "min": 0.0001, "required": true }
+    },
+    {
+      "id": "force",
+      "label": "Gravitational Force (F)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " N",
+      "helpText": "F = G * m1 * m2 / r² (where G = 6.6743 × 10⁻¹¹ N·m²/kg²)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["m1", "m2", "distance"] },
+    { "id": "outputs", "label": "Result",     "fields": ["force"] }
+  ],
+  "formulas": {
+    "force": "(6.6743e-11 * m1 * m2) / distance^2"
+  },
+  "examples": [
+    { "label": "Earth and Moon", "inputs": { "m1": 5.972e24, "m2": 7.348e22, "distance": 3.844e8 } },
+    { "label": "Two people (70kg & 80kg at 1m)", "inputs": { "m1": 70, "m2": 80, "distance": 1 } }
+  ],
+  "chart": {
+    "xAxisField": "distance",
+    "yAxisField": "force",
+    "xRange": [100000, 1000000000],
+    "points": 40,
+    "label": "Force vs Distance (Earth & Moon masses)"
+  }
+}

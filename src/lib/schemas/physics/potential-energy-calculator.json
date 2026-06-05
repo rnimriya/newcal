@@ -1,0 +1,72 @@
+{
+  "id": "potential-energy-calculator",
+  "slug": "potential-energy-calculator",
+  "name": "Potential Energy Calculator",
+  "category": "physics",
+  "description": "Calculate the gravitational potential energy of an object based on its mass, height, and gravity.",
+  "icon": "🏔️",
+  "tags": ["potential energy", "gravity", "mass", "height", "physics", "energy"],
+  "fields": [
+    {
+      "id": "mass",
+      "label": "Mass (m)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter mass",
+      "units": [
+        { "label": "Kilograms (kg)", "value": "kg", "toBase": "x",        "fromBase": "x" },
+        { "label": "Pounds (lbs)",   "value": "lbs", "toBase": "x * 0.453592","fromBase": "x / 0.453592" }
+      ],
+      "defaultUnit": "kg",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "height",
+      "label": "Height (h)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter height",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "gravity",
+      "label": "Gravitational Acceleration (g)",
+      "type": "number",
+      "defaultValue": 9.80665,
+      "placeholder": "e.g. 9.80665",
+      "suffix": " m/s²",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "pe",
+      "label": "Potential Energy (PE)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " J",
+      "helpText": "PE = m * g * h"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["mass", "height", "gravity"] },
+    { "id": "outputs", "label": "Result",     "fields": ["pe"] }
+  ],
+  "formulas": {
+    "pe": "mass * gravity * height"
+  },
+  "examples": [
+    { "label": "10 kg at 5m height (Earth)", "inputs": { "mass": 10, "height": 5, "gravity": 9.80665 } },
+    { "label": "10 kg at 5m height (Moon)",  "inputs": { "mass": 10, "height": 5, "gravity": 1.62 } }
+  ],
+  "chart": {
+    "xAxisField": "height",
+    "yAxisField": "pe",
+    "xRange": [0.1, 20],
+    "points": 40,
+    "label": "Potential Energy vs Height (fixed mass=10kg, Earth gravity)"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "percent-error-stat",
+  "slug": "percent-error-stat",
+  "name": "Percent Error Calculator",
+  "category": "statistics",
+  "icon": "⚠️",
+  "description": "Calculate the percentage error between an experimental (observed) value and the theoretical (accepted) value.",
+  "tags": ["percent error", "accuracy", "experimental", "statistics", "measurement"],
+  "fields": [
+    {"id": "observed", "label": "Observed (Experimental) Value", "type": "number", "defaultValue": 9.8,  "helpText": "Your measured value"},
+    {"id": "actual",   "label": "Actual (Theoretical) Value",    "type": "number", "defaultValue": 10,   "helpText": "The accepted true value"},
+    {"id": "error",        "label": "Absolute Error",   "type": "computed", "precision": 4},
+    {"id": "percentError", "label": "Percent Error",    "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "relativeError","label": "Relative Error",   "type": "computed", "precision": 6}
+  ],
+  "groups": [
+    {"id": "inputs",  "label": "Values",  "fields": ["observed","actual"]},
+    {"id": "outputs", "label": "Error",   "fields": ["error","percentError","relativeError"]}
+  ],
+  "formulas": {
+    "error":         "abs(observed - actual)",
+    "percentError":  "(abs(observed - actual) / abs(actual)) * 100",
+    "relativeError": "abs(observed - actual) / abs(actual)"
+  },
+  "examples": [
+    {"label": "Physics lab (g)",      "inputs": {"observed":9.8,"actual":10}},
+    {"label": "Chemistry titration",  "inputs": {"observed":4.85,"actual":5}},
+    {"label": "Measurement reading",  "inputs": {"observed":102,"actual":100}}
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "percentage-change",
+  "slug": "percentage-change-calculator",
+  "name": "Percentage Change Calculator",
+  "category": "math",
+  "description": "Find the percentage increase or decrease between two values.",
+  "icon": "📈",
+  "tags": ["percentage change", "percent increase", "percent decrease"],
+  "fields": [
+    {
+      "id": "oldValue",
+      "label": "Original Value",
+      "type": "number",
+      "defaultValue": 100,
+      "placeholder": "e.g. 100",
+      "helpText": "The starting value (before the change)"
+    },
+    {
+      "id": "newValue",
+      "label": "New Value",
+      "type": "number",
+      "defaultValue": 125,
+      "placeholder": "e.g. 125",
+      "helpText": "The ending value (after the change)"
+    },
+    {
+      "id": "change",
+      "label": "Absolute Change",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "New Value - Old Value"
+    },
+    {
+      "id": "percentChange",
+      "label": "Percentage Change",
+      "type": "computed",
+      "precision": 2,
+      "suffix": "%",
+      "helpText": "Positive = increase, Negative = decrease"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Values",  "fields": ["oldValue", "newValue"] },
+    { "id": "outputs", "label": "Change",  "fields": ["change", "percentChange"] }
+  ],
+  "formulas": {
+    "change":        "newValue - oldValue",
+    "percentChange": "((newValue - oldValue) / oldValue) * 100"
+  },
+  "examples": [
+    { "label": "Stock price increase", "inputs": { "oldValue": 50,  "newValue": 75  } },
+    { "label": "Salary raise",         "inputs": { "oldValue": 60000, "newValue": 65000 } },
+    { "label": "Price reduction",      "inputs": { "oldValue": 200, "newValue": 160 } }
+  ]
+}

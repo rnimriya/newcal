@@ -1,0 +1,64 @@
+{
+  "id": "body-surface-area",
+  "slug": "body-surface-area",
+  "name": "Body Surface Area Calculator",
+  "category": "health",
+  "description": "Estimate your total body surface area (BSA) using the Mosteller formula.",
+  "icon": "📐",
+  "tags": ["body surface area", "bsa", "health", "medical", "mosteller"],
+  "fields": [
+    {
+      "id": "height",
+      "label": "Height",
+      "type": "number",
+      "defaultValue": 175,
+      "placeholder": "Enter height",
+      "units": [
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x",        "fromBase": "x" },
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x * 100",  "fromBase": "x / 100" },
+        { "label": "Inches (in)",      "value": "in", "toBase": "x * 2.54",  "fromBase": "x / 2.54" }
+      ],
+      "defaultUnit": "cm",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "weight",
+      "label": "Weight",
+      "type": "number",
+      "defaultValue": 70,
+      "placeholder": "Enter weight",
+      "units": [
+        { "label": "Kilograms (kg)", "value": "kg", "toBase": "x",          "fromBase": "x" },
+        { "label": "Pounds (lbs)",   "value": "lbs", "toBase": "x * 0.453592","fromBase": "x / 0.453592" }
+      ],
+      "defaultUnit": "kg",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "bsa",
+      "label": "Body Surface Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "BSA = √((Height in cm * Weight in kg) / 3600)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Body Metrics", "fields": ["height", "weight"] },
+    { "id": "outputs", "label": "Result",       "fields": ["bsa"] }
+  ],
+  "formulas": {
+    "bsa": "sqrt((height * weight) / 3600)"
+  },
+  "examples": [
+    { "label": "Average Adult Male",   "inputs": { "height": 175, "weight": 78 } },
+    { "label": "Average Adult Female", "inputs": { "height": 162, "weight": 65 } }
+  ],
+  "chart": {
+    "xAxisField": "weight",
+    "yAxisField": "bsa",
+    "xRange": [40, 120],
+    "points": 30,
+    "label": "BSA vs Weight (at fixed Height = 175cm)"
+  }
+}

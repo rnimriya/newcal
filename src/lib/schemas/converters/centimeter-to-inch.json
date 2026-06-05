@@ -1,0 +1,31 @@
+{
+  "id": "centimeter-to-inch",
+  "slug": "centimeter-to-inch",
+  "name": "Centimeter to Inch",
+  "category": "converters",
+  "icon": "📏",
+  "description": "Convert centimeters to inches and other imperial length units instantly.",
+  "tags": ["centimeter", "inch", "cm", "length", "convert"],
+  "fields": [
+    {"id": "cm",    "label": "Centimeters (cm)", "type": "number", "defaultValue": 30},
+    {"id": "inches","label": "Inches (in)",      "type": "computed", "precision": 6},
+    {"id": "feet",  "label": "Feet (ft)",         "type": "computed", "precision": 6},
+    {"id": "mm",    "label": "Millimeters (mm)",  "type": "computed", "precision": 4},
+    {"id": "meters","label": "Meters (m)",        "type": "computed", "precision": 6}
+  ],
+  "groups": [
+    {"id": "input",  "label": "Input",   "fields": ["cm"]},
+    {"id": "output", "label": "Output",  "fields": ["inches","feet","mm","meters"]}
+  ],
+  "formulas": {
+    "inches": "cm * 0.393701",
+    "feet":   "cm * 0.0328084",
+    "mm":     "cm * 10",
+    "meters": "cm / 100"
+  },
+  "examples": [
+    {"label": "30 cm (ruler)",      "inputs": {"cm": 30}},
+    {"label": "180 cm (6 ft tall)", "inputs": {"cm": 180}},
+    {"label": "2.54 cm (1 inch)",   "inputs": {"cm": 2.54}}
+  ]
+}

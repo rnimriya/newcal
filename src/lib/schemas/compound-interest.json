@@ -1,0 +1,143 @@
+{
+  "id": "compound-interest",
+  "slug": "compound-interest-calculator",
+  "name": "Compound Interest",
+  "category": "finance",
+  "description": "Calculate how your investment grows with the power of compounding interest over time.",
+  "icon": "📈",
+  "tags": ["finance", "investment", "savings", "interest", "growth"],
+  "fields": [
+    {
+      "id": "principal",
+      "label": "Initial Investment",
+      "type": "number",
+      "defaultValue": 10000,
+      "placeholder": "e.g. 10000",
+      "helpText": "The starting amount of money you invest or deposit",
+      "prefix": "$",
+      "units": [
+        { "label": "USD ($)", "value": "usd", "toBase": "x", "fromBase": "x" },
+        { "label": "EUR (€)", "value": "eur", "toBase": "x * 1.08", "fromBase": "x / 1.08" },
+        { "label": "GBP (£)", "value": "gbp", "toBase": "x * 1.27", "fromBase": "x / 1.27" }
+      ],
+      "defaultUnit": "usd",
+      "constraint": { "min": 0, "step": 100, "required": true }
+    },
+    {
+      "id": "rate",
+      "label": "Annual Interest Rate",
+      "type": "number",
+      "defaultValue": 8,
+      "placeholder": "e.g. 8",
+      "helpText": "Annual interest rate as a percentage",
+      "suffix": "%",
+      "units": [
+        { "label": "Percent (%)", "value": "pct", "toBase": "x / 100", "fromBase": "x * 100" }
+      ],
+      "defaultUnit": "pct",
+      "constraint": { "min": 0, "max": 100, "step": 0.1, "required": true }
+    },
+    {
+      "id": "years",
+      "label": "Investment Period",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "e.g. 10",
+      "helpText": "How long you plan to keep the investment",
+      "units": [
+        { "label": "Years",  "value": "years",  "toBase": "x",       "fromBase": "x" },
+        { "label": "Months", "value": "months", "toBase": "x / 12",  "fromBase": "x * 12" }
+      ],
+      "defaultUnit": "years",
+      "constraint": { "min": 0, "max": 100, "step": 1, "required": true }
+    },
+    {
+      "id": "compoundFrequency",
+      "label": "Compounding Frequency",
+      "type": "select",
+      "defaultValue": 12,
+      "helpText": "How often interest is compounded per year",
+      "selectOptions": [
+        { "label": "Daily (365×/yr)",    "value": 365 },
+        { "label": "Monthly (12×/yr)",   "value": 12  },
+        { "label": "Quarterly (4×/yr)",  "value": 4   },
+        { "label": "Semi-Annual (2×/yr)","value": 2   },
+        { "label": "Annually (1×/yr)",   "value": 1   }
+      ]
+    },
+    {
+      "id": "monthlyContribution",
+      "label": "Monthly Contribution",
+      "type": "number",
+      "defaultValue": 0,
+      "placeholder": "e.g. 200",
+      "helpText": "Additional amount added each month (optional)",
+      "prefix": "$",
+      "constraint": { "min": 0, "step": 50 }
+    },
+    {
+      "id": "futureValue",
+      "label": "Future Value",
+      "type": "computed",
+      "precision": 2,
+      "prefix": "$",
+      "helpText": "Total value of investment at end of period"
+    },
+    {
+      "id": "totalInterest",
+      "label": "Total Interest Earned",
+      "type": "computed",
+      "precision": 2,
+      "prefix": "$",
+      "helpText": "Total interest gained over the investment period"
+    },
+    {
+      "id": "totalContributions",
+      "label": "Total Contributions",
+      "type": "computed",
+      "precision": 2,
+      "prefix": "$",
+      "helpText": "Sum of all contributions including initial principal"
+    },
+    {
+      "id": "effectiveRate",
+      "label": "Effective Annual Rate",
+      "type": "computed",
+      "precision": 3,
+      "suffix": "%",
+      "helpText": "True annual rate accounting for compounding frequency"
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Investment Parameters",
+      "fields": ["principal", "rate", "years", "compoundFrequency", "monthlyContribution"]
+    },
+    {
+      "id": "outputs",
+      "label": "Growth Results",
+      "fields": ["futureValue", "totalInterest", "totalContributions", "effectiveRate"]
+    }
+  ],
+  "formulas": {
+    "futureValue":        "principal * (1 + rate/compoundFrequency)^(compoundFrequency * years) + monthlyContribution * (((1 + rate/compoundFrequency)^(compoundFrequency * years) - 1) / (rate/compoundFrequency))",
+    "totalContributions": "principal + monthlyContribution * 12 * years",
+    "totalInterest":      "futureValue - totalContributions",
+    "effectiveRate":      "((1 + rate / compoundFrequency) ^ compoundFrequency - 1) * 100"
+  },
+  "explanation": "## The Power of Compound Interest\n\nAlbert Einstein allegedly called compound interest *\"the eighth wonder of the world.\"* Unlike simple interest, compounding means **you earn interest on your interest**, creating exponential growth over time.\n\n### Simple vs. Compound\n- **Simple:** \\$10,000 at 8% for 10 years = \\$8,000 interest\n- **Compound (monthly):** \\$10,000 at 8% for 10 years = \\$12,194 interest",
+  "derivation": "## Formula Derivation\n\nFor principal *P*, rate *r*, frequency *n*, and time *t*:\n\n$$A = P \\left(1 + \\frac{r}{n}\\right)^{nt}$$\n\nWith monthly contributions *M*:\n\n$$A = P\\left(1+\\frac{r}{n}\\right)^{nt} + M\\cdot\\frac{\\left(1+\\frac{r}{n}\\right)^{nt}-1}{r/n}$$",
+  "examples": [
+    { "label": "Retirement savings",  "inputs": { "principal": 5000,  "rate": 7,  "years": 30, "compoundFrequency": 12, "monthlyContribution": 300 } },
+    { "label": "College fund",        "inputs": { "principal": 10000, "rate": 6,  "years": 18, "compoundFrequency": 12, "monthlyContribution": 200 } },
+    { "label": "High-yield savings",  "inputs": { "principal": 25000, "rate": 4.5,"years": 5,  "compoundFrequency": 365,"monthlyContribution": 0   } }
+  ],
+  "chart": {
+    "xAxisField": "years",
+    "yAxisField": "futureValue",
+    "xRange": [0, 30],
+    "points": 30,
+    "label": "Portfolio Growth Over Time"
+  }
+}

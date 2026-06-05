@@ -1,0 +1,68 @@
+{
+  "id": "capacitor-charge",
+  "slug": "capacitor-charge",
+  "name": "Capacitor Charge Calculator",
+  "category": "physics",
+  "description": "Calculate charge, capacitance, or voltage for a capacitor (Q = C * V).",
+  "icon": "🔋",
+  "tags": ["capacitor", "charge", "capacitance", "voltage", "electricity", "physics"],
+  "fields": [
+    {
+      "id": "mode",
+      "label": "Calculate",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Charge (Q = C * V)",      "value": 1 },
+        { "label": "Capacitance (C = Q / V)", "value": 2 },
+        { "label": "Voltage (V = Q / C)",     "value": 3 }
+      ]
+    },
+    {
+      "id": "charge",
+      "label": "Charge (Q)",
+      "type": "number",
+      "defaultValue": 0.0012,
+      "placeholder": "Enter charge",
+      "suffix": " C (Coulombs)",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "capacitance",
+      "label": "Capacitance (C)",
+      "type": "number",
+      "defaultValue": 0.0001,
+      "placeholder": "Enter capacitance",
+      "suffix": " F (Farads)",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "voltage",
+      "label": "Voltage (V)",
+      "type": "number",
+      "defaultValue": 12,
+      "placeholder": "Enter voltage",
+      "suffix": " V",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "result",
+      "label": "Computed Value",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "Calculated value based on selected mode"
+    }
+  ],
+  "groups": [
+    { "id": "config",  "label": "Mode Selection", "fields": ["mode"] },
+    { "id": "inputs",  "label": "Inputs",         "fields": ["charge", "capacitance", "voltage"] },
+    { "id": "outputs", "label": "Result",         "fields": ["result"] }
+  ],
+  "formulas": {
+    "result": "mode == 1 ? capacitance * voltage : (mode == 2 ? charge / voltage : charge / capacitance)"
+  },
+  "examples": [
+    { "label": "Calculate Charge (C=100µF, V=12V)",   "inputs": { "mode": 1, "capacitance": 0.0001, "voltage": 12 } },
+    { "label": "Calculate Capacitance (Q=1.2mC, V=12V)", "inputs": { "mode": 2, "charge": 0.0012, "voltage": 12 } }
+  ]
+}

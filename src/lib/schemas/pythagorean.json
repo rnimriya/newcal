@@ -1,0 +1,80 @@
+{
+  "id": "pythagorean",
+  "slug": "pythagorean-theorem",
+  "name": "Pythagorean Theorem",
+  "category": "math",
+  "description": "Solve for any side of a right triangle given the other two sides.",
+  "icon": "📐",
+  "tags": ["math", "geometry", "triangle", "right-angle"],
+  "fields": [
+    {
+      "id": "a",
+      "label": "Side A (leg)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter side a",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m"
+    },
+    {
+      "id": "b",
+      "label": "Side B (leg)",
+      "type": "number",
+      "defaultValue": 4,
+      "placeholder": "Enter side b",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m"
+    },
+    {
+      "id": "c",
+      "label": "Hypotenuse (C)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "The longest side, opposite the right angle",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m"
+    },
+    {
+      "id": "area",
+      "label": "Triangle Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²"
+    },
+    {
+      "id": "perimeter",
+      "label": "Perimeter",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Known Sides",    "fields": ["a", "b"] },
+    { "id": "outputs", "label": "Computed Values", "fields": ["c", "area", "perimeter"] }
+  ],
+  "formulas": {
+    "c":         "sqrt(a^2 + b^2)",
+    "area":      "(a * b) / 2",
+    "perimeter": "a + b + sqrt(a^2 + b^2)"
+  },
+  "chart": {
+    "xAxisField": "a",
+    "yAxisField": "c",
+    "xRange": [1, 20],
+    "points": 40,
+    "label": "Hypotenuse vs Side A (fixed B)"
+  }
+}

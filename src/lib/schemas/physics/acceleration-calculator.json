@@ -1,0 +1,75 @@
+{
+  "id": "acceleration-calculator",
+  "slug": "acceleration-calculator",
+  "name": "Acceleration Calculator",
+  "category": "physics",
+  "description": "Calculate average acceleration based on change in velocity over time (a = (v_f - v_i) / t).",
+  "icon": "📈",
+  "tags": ["acceleration", "velocity", "time", "speed", "physics"],
+  "fields": [
+    {
+      "id": "initialV",
+      "label": "Initial Velocity (vi)",
+      "type": "number",
+      "defaultValue": 0,
+      "placeholder": "Enter initial velocity",
+      "units": [
+        { "label": "Meters/sec (m/s)",  "value": "m/s",  "toBase": "x",       "fromBase": "x" },
+        { "label": "Kilometers/hr (km/h)", "value": "km/h", "toBase": "x / 3.6", "fromBase": "x * 3.6" }
+      ],
+      "defaultUnit": "m/s",
+      "constraint": { "required": true }
+    },
+    {
+      "id": "finalV",
+      "label": "Final Velocity (vf)",
+      "type": "number",
+      "defaultValue": 20,
+      "placeholder": "Enter final velocity",
+      "units": [
+        { "label": "Meters/sec (m/s)",  "value": "m/s",  "toBase": "x",       "fromBase": "x" },
+        { "label": "Kilometers/hr (km/h)", "value": "km/h", "toBase": "x / 3.6", "fromBase": "x * 3.6" }
+      ],
+      "defaultUnit": "m/s",
+      "constraint": { "required": true }
+    },
+    {
+      "id": "time",
+      "label": "Time (t)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter time",
+      "units": [
+        { "label": "Seconds (s)", "value": "s", "toBase": "x", "fromBase": "x" }
+      ],
+      "defaultUnit": "s",
+      "constraint": { "min": 0.0001, "required": true }
+    },
+    {
+      "id": "acceleration",
+      "label": "Average Acceleration (a)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m/s²",
+      "helpText": "a = (v_f - v_i) / t"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["initialV", "finalV", "time"] },
+    { "id": "outputs", "label": "Result",     "fields": ["acceleration"] }
+  ],
+  "formulas": {
+    "acceleration": "(finalV - initialV) / time"
+  },
+  "examples": [
+    { "label": "0 to 20 m/s in 5s",   "inputs": { "initialV": 0, "finalV": 20, "time": 5 } },
+    { "label": "10 to 30 m/s in 4s",   "inputs": { "initialV": 10, "finalV": 30, "time": 4 } }
+  ],
+  "chart": {
+    "xAxisField": "time",
+    "yAxisField": "acceleration",
+    "xRange": [1, 20],
+    "points": 30,
+    "label": "Acceleration vs Time (fixed velocities)"
+  }
+}

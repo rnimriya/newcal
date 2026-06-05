@@ -1,0 +1,133 @@
+{
+  "id": "foil-method-calculator",
+  "slug": "foil-method-calculator",
+  "name": "FOIL Method Calculator",
+  "category": "algebra",
+  "icon": "🧮",
+  "description": "Expand binomials using FOIL: (ax + b)(cx + d) step by step.",
+  "tags": [
+    "FOIL",
+    "binomial",
+    "expand",
+    "algebra",
+    "multiplication"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "a (first coefficient)",
+      "type": "number",
+      "defaultValue": 1,
+      "constraint": {
+        "step": 0.01
+      }
+    },
+    {
+      "id": "b",
+      "label": "b (first constant)",
+      "type": "number",
+      "defaultValue": 3
+    },
+    {
+      "id": "c",
+      "label": "c (second coefficient)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "d",
+      "label": "d (second constant)",
+      "type": "number",
+      "defaultValue": 4
+    },
+    {
+      "id": "first",
+      "label": "First: a×c (x² term)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "outer",
+      "label": "Outer: a×d",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "inner",
+      "label": "Inner: b×c",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "last",
+      "label": "Last: b×d",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "midTerm",
+      "label": "Middle term (outer+inner)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "constTerm",
+      "label": "Constant (b×d)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "(ax + b)(cx + d)",
+      "fields": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "FOIL Steps",
+      "fields": [
+        "first",
+        "outer",
+        "inner",
+        "last",
+        "midTerm",
+        "constTerm"
+      ]
+    }
+  ],
+  "formulas": {
+    "first": "a*c",
+    "outer": "a*d",
+    "inner": "b*c",
+    "last": "b*d",
+    "midTerm": "a*d + b*c",
+    "constTerm": "b*d"
+  },
+  "explanation": "## FOIL Method\n\n**(ax + b)(cx + d) = (a·c)x² + (a·d + b·c)x + b·d**\n\n- **F**irst: a × c\n- **O**uter: a × d\n- **I**nner: b × c\n- **L**ast: b × d",
+  "examples": [
+    {
+      "label": "(x+3)(x+4)",
+      "inputs": {
+        "a": 1,
+        "b": 3,
+        "c": 1,
+        "d": 4
+      }
+    },
+    {
+      "label": "(2x-5)(3x+1)",
+      "inputs": {
+        "a": 2,
+        "b": -5,
+        "c": 3,
+        "d": 1
+      }
+    }
+  ]
+}

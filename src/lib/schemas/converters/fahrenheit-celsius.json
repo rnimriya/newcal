@@ -1,0 +1,38 @@
+{
+  "id": "fahrenheit-celsius",
+  "slug": "fahrenheit-to-celsius",
+  "name": "Fahrenheit to Celsius",
+  "category": "converters",
+  "description": "Convert temperatures from Fahrenheit (°F) to Celsius (°C).",
+  "icon": "🌡️",
+  "tags": ["fahrenheit", "celsius", "temperature", "convert"],
+  "fields": [
+    {
+      "id": "fahrenheit",
+      "label": "Fahrenheit (°F)",
+      "type": "number",
+      "defaultValue": 212,
+      "placeholder": "Enter °F",
+      "suffix": "°F",
+      "constraint": { "min": -459.67, "step": 0.1, "required": true }
+    },
+    { "id": "celsius", "label": "Celsius (°C)",  "type": "computed", "precision": 2, "suffix": "°C", "helpText": "°C = (°F - 32) × 5/9" },
+    { "id": "kelvin",  "label": "Kelvin (K)",    "type": "computed", "precision": 2, "suffix": " K" },
+    { "id": "rankine", "label": "Rankine (°R)",  "type": "computed", "precision": 2, "suffix": "°R" }
+  ],
+  "groups": [
+    { "id": "input",   "label": "Input",   "fields": ["fahrenheit"] },
+    { "id": "outputs", "label": "Results", "fields": ["celsius", "kelvin", "rankine"] }
+  ],
+  "formulas": {
+    "celsius": "(fahrenheit - 32) * 5 / 9",
+    "kelvin":  "(fahrenheit - 32) * 5 / 9 + 273.15",
+    "rankine": "fahrenheit + 459.67"
+  },
+  "examples": [
+    { "label": "Boiling water (212°F)", "inputs": { "fahrenheit": 212 } },
+    { "label": "Body temp (98.6°F)",    "inputs": { "fahrenheit": 98.6 } },
+    { "label": "Freezing (32°F)",       "inputs": { "fahrenheit": 32  } },
+    { "label": "Cold winter (-4°F)",    "inputs": { "fahrenheit": -4  } }
+  ]
+}

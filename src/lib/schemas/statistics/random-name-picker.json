@@ -1,0 +1,35 @@
+{
+  "id": "random-name-picker",
+  "slug": "random-name-picker",
+  "name": "Random Name Picker",
+  "category": "statistics",
+  "icon": "🎰",
+  "description": "Calculate the probability of any name being picked from a list, plus expected frequency in repeated draws.",
+  "tags": ["random", "name picker", "raffle", "probability", "selection"],
+  "fields": [
+    {"id": "listSize",    "label": "Total Names in List",       "type": "number", "defaultValue": 30},
+    {"id": "pickCount",   "label": "Names to Pick",             "type": "number", "defaultValue": 1},
+    {"id": "drawRounds",  "label": "Number of Rounds",          "type": "number", "defaultValue": 10},
+    {"id": "probability",    "label": "Probability of Being Picked (%)",    "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "oddsFor",        "label": "Odds For (1 in N)",                  "type": "computed", "precision": 2},
+    {"id": "notPickedProb",  "label": "Probability NOT Picked (%)",         "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "expectedPicks",  "label": "Expected Times Picked in Rounds",    "type": "computed", "precision": 4},
+    {"id": "probAtLeastOnce","label": "Prob. Picked at Least Once in Rounds (%)", "type": "computed", "precision": 4, "suffix": "%"}
+  ],
+  "groups": [
+    {"id": "inputs",  "label": "Raffle / Draw Setup",  "fields": ["listSize","pickCount","drawRounds"]},
+    {"id": "outputs", "label": "Probability Results",  "fields": ["probability","oddsFor","notPickedProb","expectedPicks","probAtLeastOnce"]}
+  ],
+  "formulas": {
+    "probability":     "(pickCount / listSize) * 100",
+    "oddsFor":         "listSize / pickCount",
+    "notPickedProb":   "(1 - pickCount / listSize) * 100",
+    "expectedPicks":   "drawRounds * (pickCount / listSize)",
+    "probAtLeastOnce": "(1 - (1 - pickCount / listSize)^drawRounds) * 100"
+  },
+  "examples": [
+    {"label": "Class of 30, pick 1 winner",     "inputs": {"listSize":30,"pickCount":1,"drawRounds":10}},
+    {"label": "50 entries, pick 3 prizes",      "inputs": {"listSize":50,"pickCount":3,"drawRounds":5}},
+    {"label": "10 participants, 1 winner/week", "inputs": {"listSize":10,"pickCount":1,"drawRounds":52}}
+  ]
+}

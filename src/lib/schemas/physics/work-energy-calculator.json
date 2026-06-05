@@ -1,0 +1,64 @@
+{
+  "id": "work-energy-calculator",
+  "slug": "work-energy-calculator",
+  "name": "Work & Energy Calculator",
+  "category": "physics",
+  "description": "Calculate the work done by a force applied over a distance (W = F * d * cos(θ)).",
+  "icon": "🔨",
+  "tags": ["work", "force", "distance", "angle", "physics", "energy"],
+  "fields": [
+    {
+      "id": "force",
+      "label": "Applied Force (F)",
+      "type": "number",
+      "defaultValue": 50,
+      "placeholder": "Enter force",
+      "suffix": " N",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "distance",
+      "label": "Distance (d)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter distance",
+      "suffix": " m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "theta",
+      "label": "Angle (θ)",
+      "type": "number",
+      "defaultValue": 0,
+      "placeholder": "Enter angle",
+      "suffix": " ° (degrees)",
+      "constraint": { "min": -360, "max": 360, "required": true }
+    },
+    {
+      "id": "work",
+      "label": "Work Done (W)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " J",
+      "helpText": "W = F * d * cos(θ)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["force", "distance", "theta"] },
+    { "id": "outputs", "label": "Result",     "fields": ["work"] }
+  ],
+  "formulas": {
+    "work": "force * distance * cos(theta * PI / 180)"
+  },
+  "examples": [
+    { "label": "Force in direction of motion (0°)", "inputs": { "force": 50, "distance": 10, "theta": 0 } },
+    { "label": "Force at 45° angle",                "inputs": { "force": 50, "distance": 10, "theta": 45 } }
+  ],
+  "chart": {
+    "xAxisField": "theta",
+    "yAxisField": "work",
+    "xRange": [0, 90],
+    "points": 30,
+    "label": "Work Done vs Angle (fixed Force & Distance)"
+  }
+}

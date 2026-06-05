@@ -1,0 +1,47 @@
+{
+  "id": "volume-sphere",
+  "slug": "volume-of-sphere-calculator",
+  "name": "Volume of Sphere Calculator",
+  "category": "math",
+  "description": "Calculate the volume and surface area of a sphere from its radius.",
+  "icon": "🌐",
+  "tags": ["sphere", "volume", "surface area", "geometry"],
+  "fields": [
+    {
+      "id": "radius",
+      "label": "Radius (r)",
+      "type": "number",
+      "defaultValue": 5,
+      "constraint": { "min": 0, "step": 0.1, "required": true },
+      "units": [
+        { "label": "Meters (m)", "value": "m", "toBase": "x", "fromBase": "x" },
+        { "label": "cm",         "value": "cm","toBase": "x / 100","fromBase": "x * 100" }
+      ],
+      "defaultUnit": "m"
+    },
+    { "id": "volume",      "label": "Volume",        "type": "computed", "precision": 4, "suffix": " m³", "helpText": "V = (4/3)πr³" },
+    { "id": "surfaceArea", "label": "Surface Area",  "type": "computed", "precision": 4, "suffix": " m²", "helpText": "SA = 4πr²" },
+    { "id": "diameter",    "label": "Diameter",      "type": "computed", "precision": 4, "suffix": " m",  "helpText": "d = 2r" }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Input",      "fields": ["radius"] },
+    { "id": "outputs", "label": "Properties", "fields": ["volume", "surfaceArea", "diameter"] }
+  ],
+  "formulas": {
+    "volume":      "(4/3) * pi * radius^3",
+    "surfaceArea": "4 * pi * radius^2",
+    "diameter":    "2 * radius"
+  },
+  "examples": [
+    { "label": "Basketball (r=0.12m)", "inputs": { "radius": 0.12 } },
+    { "label": "Earth (r=6371km scale)", "inputs": { "radius": 10 } },
+    { "label": "Unit sphere (r=1)",   "inputs": { "radius": 1 } }
+  ],
+  "chart": {
+    "xAxisField": "radius",
+    "yAxisField": "volume",
+    "xRange": [0.1, 10],
+    "points": 40,
+    "label": "Volume vs Radius"
+  }
+}

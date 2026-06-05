@@ -1,0 +1,39 @@
+{
+  "id": "random-card-generator",
+  "slug": "random-card-generator",
+  "name": "Random Card Generator",
+  "category": "statistics",
+  "icon": "🃏",
+  "description": "Calculate probabilities of drawing any card, suit, rank, or hand type from a standard 52-card deck.",
+  "tags": ["random card", "playing card", "probability", "poker", "deck"],
+  "fields": [
+    {"id": "deckSize",    "label": "Cards in Deck",       "type": "number", "defaultValue": 52},
+    {"id": "drawCount",   "label": "Cards Drawn",         "type": "number", "defaultValue": 1},
+    {"id": "probSpecificCard",  "label": "P(exact card) %",      "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "probSpecificSuit",  "label": "P(specific suit) %",   "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "probSpecificRank",  "label": "P(specific rank) %",   "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "probFaceCard",      "label": "P(face card J/Q/K) %", "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "probAce",           "label": "P(ace) %",             "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "probRed",           "label": "P(red card) %",        "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "totalCombinations", "label": "Possible Hands (C(deck,draw))", "type": "computed", "precision": 0}
+  ],
+  "groups": [
+    {"id": "setup",  "label": "Deck Setup",         "fields": ["deckSize","drawCount"]},
+    {"id": "probs",  "label": "Draw Probabilities", "fields": ["probSpecificCard","probSpecificSuit","probSpecificRank","probFaceCard","probAce","probRed"]},
+    {"id": "combo",  "label": "Combinations",       "fields": ["totalCombinations"]}
+  ],
+  "formulas": {
+    "probSpecificCard":  "(1 / deckSize) * 100",
+    "probSpecificSuit":  "(floor(deckSize / 4) / deckSize) * 100",
+    "probSpecificRank":  "(4 / deckSize) * 100",
+    "probFaceCard":      "(12 / deckSize) * 100",
+    "probAce":           "(4 / deckSize) * 100",
+    "probRed":           "50",
+    "totalCombinations": "factorial(deckSize) / (factorial(drawCount) * factorial(deckSize - drawCount))"
+  },
+  "examples": [
+    {"label": "Standard 52-card, draw 1",    "inputs": {"deckSize":52,"drawCount":1}},
+    {"label": "Standard deck, draw 5 (poker)","inputs": {"deckSize":52,"drawCount":5}},
+    {"label": "Pinochle 48-card deck",        "inputs": {"deckSize":48,"drawCount":1}}
+  ]
+}

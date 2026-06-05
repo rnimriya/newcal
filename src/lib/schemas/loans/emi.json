@@ -1,0 +1,33 @@
+{
+  "id": "emi-calculator",
+  "slug": "emi-calculator",
+  "name": "EMI Calculator",
+  "category": "loans",
+  "icon": "📆",
+  "description": "Calculate your Equated Monthly Installment (EMI) for any loan — home, car, or personal.",
+  "tags": ["emi", "loan", "monthly payment", "equated monthly installment"],
+  "fields": [
+    {"id": "principal",    "label": "Loan Amount (₹)",               "type": "number", "defaultValue": 1000000},
+    {"id": "annualRate",   "label": "Annual Interest Rate (%)",      "type": "number", "defaultValue": 8.5},
+    {"id": "tenureMonths", "label": "Loan Tenure (months)",          "type": "number", "defaultValue": 240},
+    {"id": "emi",          "label": "Monthly EMI",                   "type": "computed", "precision": 2},
+    {"id": "totalPayment", "label": "Total Payment",                 "type": "computed", "precision": 2},
+    {"id": "totalInterest","label": "Total Interest",                "type": "computed", "precision": 2},
+    {"id": "interestPct",  "label": "Interest as % of Principal",   "type": "computed", "precision": 2, "suffix": "%"}
+  ],
+  "groups": [
+    {"id": "inputs",  "label": "Loan Details",   "fields": ["principal","annualRate","tenureMonths"]},
+    {"id": "outputs", "label": "EMI Breakdown",  "fields": ["emi","totalPayment","totalInterest","interestPct"]}
+  ],
+  "formulas": {
+    "emi":          "principal * (annualRate/1200) * (1 + annualRate/1200)^tenureMonths / ((1 + annualRate/1200)^tenureMonths - 1)",
+    "totalPayment": "principal * (annualRate/1200) * (1 + annualRate/1200)^tenureMonths / ((1 + annualRate/1200)^tenureMonths - 1) * tenureMonths",
+    "totalInterest":"principal * (annualRate/1200) * (1 + annualRate/1200)^tenureMonths / ((1 + annualRate/1200)^tenureMonths - 1) * tenureMonths - principal",
+    "interestPct":  "(principal * (annualRate/1200) * (1 + annualRate/1200)^tenureMonths / ((1 + annualRate/1200)^tenureMonths - 1) * tenureMonths - principal) / principal * 100"
+  },
+  "examples": [
+    {"label": "Home loan ₹10L, 8.5%, 20yr",  "inputs": {"principal":1000000,"annualRate":8.5,"tenureMonths":240}},
+    {"label": "Car loan ₹5L, 10%, 5yr",       "inputs": {"principal":500000,"annualRate":10,"tenureMonths":60}},
+    {"label": "Personal loan ₹2L, 14%, 3yr",  "inputs": {"principal":200000,"annualRate":14,"tenureMonths":36}}
+  ]
+}

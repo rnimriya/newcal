@@ -1,0 +1,79 @@
+{
+  "id": "trapezoid-area",
+  "slug": "trapezoid-area",
+  "name": "Area of Trapezoid Calculator",
+  "category": "math",
+  "description": "Calculate the area of a trapezoid (trapezium) given its parallel bases and height.",
+  "icon": "📐",
+  "tags": ["trapezoid", "area", "geometry", "quadrilateral"],
+  "fields": [
+    {
+      "id": "baseA",
+      "label": "Base A (top base)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter base a length",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "baseB",
+      "label": "Base B (bottom base)",
+      "type": "number",
+      "defaultValue": 7,
+      "placeholder": "Enter base b length",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "height",
+      "label": "Height (h)",
+      "type": "number",
+      "defaultValue": 4,
+      "placeholder": "Enter height",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "A = ((a + b) / 2) * h"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Dimensions", "fields": ["baseA", "baseB", "height"] },
+    { "id": "outputs", "label": "Result",     "fields": ["area"] }
+  ],
+  "formulas": {
+    "area": "((baseA + baseB) / 2) * height"
+  },
+  "examples": [
+    { "label": "a = 5, b = 7, h = 4", "inputs": { "baseA": 5, "baseB": 7, "height": 4 } },
+    { "label": "a = 10, b = 15, h = 8", "inputs": { "baseA": 10, "baseB": 15, "height": 8 } }
+  ],
+  "chart": {
+    "xAxisField": "height",
+    "yAxisField": "area",
+    "xRange": [0.1, 15],
+    "points": 40,
+    "label": "Area vs Height (fixed bases)"
+  }
+}

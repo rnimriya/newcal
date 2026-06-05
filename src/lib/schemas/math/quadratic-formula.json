@@ -1,0 +1,80 @@
+{
+  "id": "quadratic-formula",
+  "slug": "quadratic-formula-calculator",
+  "name": "Quadratic Formula Calculator",
+  "category": "math",
+  "description": "Solve any quadratic equation ax² + bx + c = 0 and find both roots.",
+  "icon": "📐",
+  "tags": ["quadratic", "algebra", "equation", "roots"],
+  "fields": [
+    {
+      "id": "a",
+      "label": "Coefficient a (x²)",
+      "type": "number",
+      "defaultValue": 1,
+      "placeholder": "e.g. 1",
+      "helpText": "The coefficient of x². Cannot be zero.",
+      "constraint": { "required": true }
+    },
+    {
+      "id": "b",
+      "label": "Coefficient b (x)",
+      "type": "number",
+      "defaultValue": -5,
+      "placeholder": "e.g. -5",
+      "helpText": "The coefficient of x."
+    },
+    {
+      "id": "c",
+      "label": "Constant c",
+      "type": "number",
+      "defaultValue": 6,
+      "placeholder": "e.g. 6",
+      "helpText": "The constant term."
+    },
+    {
+      "id": "discriminant",
+      "label": "Discriminant (b² - 4ac)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Positive = 2 real roots, Zero = 1 root, Negative = complex roots"
+    },
+    {
+      "id": "x1",
+      "label": "Root x₁",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "First solution: (-b + √discriminant) / 2a"
+    },
+    {
+      "id": "x2",
+      "label": "Root x₂",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "Second solution: (-b - √discriminant) / 2a"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Equation Coefficients", "fields": ["a", "b", "c"] },
+    { "id": "outputs", "label": "Solutions",             "fields": ["discriminant", "x1", "x2"] }
+  ],
+  "formulas": {
+    "discriminant": "b^2 - 4*a*c",
+    "x1": "(-b + sqrt(max(0, b^2 - 4*a*c))) / (2*a)",
+    "x2": "(-b - sqrt(max(0, b^2 - 4*a*c))) / (2*a)"
+  },
+  "explanation": "## The Quadratic Formula\n\nFor any equation **ax² + bx + c = 0**, the solutions are:\n\n$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$\n\n### The Discriminant\n| b² - 4ac | Solutions |\n|----------|-----------|\n| > 0 | Two distinct real roots |\n| = 0 | One repeated real root |\n| < 0 | Two complex roots |",
+  "derivation": "## Derivation by Completing the Square\n\nStart with ax² + bx + c = 0\n\n**Step 1:** Divide by a: x² + (b/a)x + c/a = 0\n\n**Step 2:** Move constant: x² + (b/a)x = -c/a\n\n**Step 3:** Add (b/2a)² to both sides: x² + (b/a)x + (b/2a)² = (b/2a)² - c/a\n\n**Step 4:** Factor left: (x + b/2a)² = (b² - 4ac) / 4a²\n\n**Step 5:** Take square root and solve for x",
+  "examples": [
+    { "label": "x² - 5x + 6 = 0 (integer roots)", "inputs": { "a": 1, "b": -5, "c": 6 } },
+    { "label": "x² - 2x + 1 = 0 (repeated root)", "inputs": { "a": 1, "b": -2, "c": 1 } },
+    { "label": "2x² + 3x - 2 = 0 (fractional roots)", "inputs": { "a": 2, "b": 3, "c": -2 } }
+  ],
+  "chart": {
+    "xAxisField": "a",
+    "yAxisField": "discriminant",
+    "xRange": [0.1, 5],
+    "points": 40,
+    "label": "Discriminant vs Coefficient a"
+  }
+}

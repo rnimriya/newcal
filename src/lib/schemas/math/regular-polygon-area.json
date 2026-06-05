@@ -1,0 +1,69 @@
+{
+  "id": "regular-polygon-area",
+  "slug": "regular-polygon-area",
+  "name": "Area of Regular Polygon Calculator",
+  "category": "math",
+  "description": "Calculate the area and perimeter of any regular polygon given its number of sides and side length.",
+  "icon": "📐",
+  "tags": ["polygon", "regular polygon", "area", "perimeter", "geometry"],
+  "fields": [
+    {
+      "id": "sides",
+      "label": "Number of Sides (n)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter number of sides",
+      "constraint": { "min": 3, "step": 1, "required": true }
+    },
+    {
+      "id": "length",
+      "label": "Side Length (s)",
+      "type": "number",
+      "defaultValue": 4,
+      "placeholder": "Enter side length",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "A = (n * s²) / (4 * tan(π/n))"
+    },
+    {
+      "id": "perimeter",
+      "label": "Perimeter",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m",
+      "helpText": "P = n * s"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Polygon Parameters", "fields": ["sides", "length"] },
+    { "id": "outputs", "label": "Results",            "fields": ["area", "perimeter"] }
+  ],
+  "formulas": {
+    "area": "(sides * length^2) / (4 * tan(PI / sides))",
+    "perimeter": "sides * length"
+  },
+  "examples": [
+    { "label": "Regular Pentagon (n=5, s=4)", "inputs": { "sides": 5, "length": 4 } },
+    { "label": "Regular Hexagon (n=6, s=5)",  "inputs": { "sides": 6, "length": 5 } },
+    { "label": "Equilateral Triangle (n=3, s=6)", "inputs": { "sides": 3, "length": 6 } }
+  ],
+  "chart": {
+    "xAxisField": "length",
+    "yAxisField": "area",
+    "xRange": [1, 15],
+    "points": 30,
+    "label": "Area vs Side Length (fixed sides=5)"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "miles-km",
+  "slug": "miles-to-km",
+  "name": "Miles to Kilometers",
+  "category": "converters",
+  "description": "Convert miles to kilometers and other distance units.",
+  "icon": "🛣️",
+  "tags": ["miles", "km", "distance", "convert"],
+  "fields": [
+    { "id": "miles",  "label": "Miles (mi)",        "type": "number", "defaultValue": 100, "constraint": { "min": 0, "step": 0.01, "required": true } },
+    { "id": "km",     "label": "Kilometers (km)",    "type": "computed", "precision": 4, "helpText": "km = mi × 1.60934" },
+    { "id": "meters", "label": "Meters (m)",         "type": "computed", "precision": 1 },
+    { "id": "feet",   "label": "Feet (ft)",          "type": "computed", "precision": 1 }
+  ],
+  "groups": [
+    { "id": "input",   "label": "Input",   "fields": ["miles"] },
+    { "id": "outputs", "label": "Results", "fields": ["km", "meters", "feet"] }
+  ],
+  "formulas": {
+    "km":     "miles * 1.60934",
+    "meters": "miles * 1609.34",
+    "feet":   "miles * 5280"
+  },
+  "examples": [
+    { "label": "1 mile",     "inputs": { "miles": 1   } },
+    { "label": "Marathon",   "inputs": { "miles": 26.2} },
+    { "label": "100 miles",  "inputs": { "miles": 100 } }
+  ]
+}

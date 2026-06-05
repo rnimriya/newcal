@@ -1,0 +1,66 @@
+{
+  "id": "celsius-fahrenheit",
+  "slug": "celsius-to-fahrenheit",
+  "name": "Celsius to Fahrenheit",
+  "category": "converters",
+  "description": "Convert temperatures from Celsius (°C) to Fahrenheit (°F) instantly.",
+  "icon": "🌡️",
+  "tags": ["celsius", "fahrenheit", "temperature", "convert"],
+  "fields": [
+    {
+      "id": "celsius",
+      "label": "Celsius (°C)",
+      "type": "number",
+      "defaultValue": 100,
+      "placeholder": "Enter °C",
+      "suffix": "°C",
+      "constraint": { "min": -273.15, "step": 0.1, "required": true }
+    },
+    {
+      "id": "fahrenheit",
+      "label": "Fahrenheit (°F)",
+      "type": "computed",
+      "precision": 2,
+      "suffix": "°F",
+      "helpText": "°F = (°C × 9/5) + 32"
+    },
+    {
+      "id": "kelvin",
+      "label": "Kelvin (K)",
+      "type": "computed",
+      "precision": 2,
+      "suffix": " K",
+      "helpText": "K = °C + 273.15"
+    },
+    {
+      "id": "rankine",
+      "label": "Rankine (°R)",
+      "type": "computed",
+      "precision": 2,
+      "suffix": "°R",
+      "helpText": "°R = (°C + 273.15) × 9/5"
+    }
+  ],
+  "groups": [
+    { "id": "input",   "label": "Input Temperature",  "fields": ["celsius"] },
+    { "id": "outputs", "label": "Converted Values",   "fields": ["fahrenheit", "kelvin", "rankine"] }
+  ],
+  "formulas": {
+    "fahrenheit": "(celsius * 9 / 5) + 32",
+    "kelvin":     "celsius + 273.15",
+    "rankine":    "(celsius + 273.15) * 9 / 5"
+  },
+  "examples": [
+    { "label": "Boiling point of water", "inputs": { "celsius": 100  } },
+    { "label": "Freezing point",         "inputs": { "celsius": 0    } },
+    { "label": "Body temperature",       "inputs": { "celsius": 37   } },
+    { "label": "Room temperature",       "inputs": { "celsius": 21   } }
+  ],
+  "chart": {
+    "xAxisField": "celsius",
+    "yAxisField": "fahrenheit",
+    "xRange": [-50, 150],
+    "points": 50,
+    "label": "Celsius vs Fahrenheit"
+  }
+}

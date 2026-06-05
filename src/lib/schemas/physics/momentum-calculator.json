@@ -1,0 +1,55 @@
+{
+  "id": "momentum-calculator",
+  "slug": "momentum-calculator",
+  "name": "Momentum Calculator",
+  "category": "physics",
+  "description": "Calculate momentum from mass and velocity (p = m * v).",
+  "icon": "🏈",
+  "tags": ["momentum", "mass", "velocity", "physics"],
+  "fields": [
+    {
+      "id": "mass",
+      "label": "Mass (m)",
+      "type": "number",
+      "defaultValue": 8,
+      "placeholder": "Enter mass",
+      "suffix": " kg",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "velocity",
+      "label": "Velocity (v)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter velocity",
+      "suffix": " m/s",
+      "constraint": { "required": true }
+    },
+    {
+      "id": "momentum",
+      "label": "Momentum (p)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " kg·m/s",
+      "helpText": "p = m * v"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["mass", "velocity"] },
+    { "id": "outputs", "label": "Result",     "fields": ["momentum"] }
+  ],
+  "formulas": {
+    "momentum": "mass * velocity"
+  },
+  "examples": [
+    { "label": "8 kg at 3 m/s",   "inputs": { "mass": 8, "velocity": 3 } },
+    { "label": "100 kg at 15 m/s", "inputs": { "mass": 100, "velocity": 15 } }
+  ],
+  "chart": {
+    "xAxisField": "velocity",
+    "yAxisField": "momentum",
+    "xRange": [-10, 10],
+    "points": 30,
+    "label": "Momentum vs Velocity (fixed mass = 8kg)"
+  }
+}

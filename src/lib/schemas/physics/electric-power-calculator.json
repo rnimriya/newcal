@@ -1,0 +1,70 @@
+{
+  "id": "electric-power-calculator",
+  "slug": "electric-power-calculator",
+  "name": "Electric Power Calculator",
+  "category": "physics",
+  "description": "Calculate electrical power using voltage, current, and resistance relations (P = V * I = I² * R = V² / R).",
+  "icon": "💡",
+  "tags": ["electric power", "watt", "voltage", "current", "resistance", "physics"],
+  "fields": [
+    {
+      "id": "mode",
+      "label": "Formula Mode",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "P = V * I (Voltage & Current)",      "value": 1 },
+        { "label": "P = I² * R (Current & Resistance)",    "value": 2 },
+        { "label": "P = V² / R (Voltage & Resistance)",    "value": 3 }
+      ]
+    },
+    {
+      "id": "v",
+      "label": "Voltage (V)",
+      "type": "number",
+      "defaultValue": 12,
+      "placeholder": "Enter voltage",
+      "suffix": " V",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "i",
+      "label": "Current (I)",
+      "type": "number",
+      "defaultValue": 2,
+      "placeholder": "Enter current",
+      "suffix": " A",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "r",
+      "label": "Resistance (R)",
+      "type": "number",
+      "defaultValue": 6,
+      "placeholder": "Enter resistance",
+      "suffix": " Ω",
+      "constraint": { "min": 0.0001 }
+    },
+    {
+      "id": "power",
+      "label": "Electric Power (P)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " W",
+      "helpText": "Calculated power in Watts"
+    }
+  ],
+  "groups": [
+    { "id": "config",  "label": "Mode Selection", "fields": ["mode"] },
+    { "id": "inputs",  "label": "Inputs",         "fields": ["v", "i", "r"] },
+    { "id": "outputs", "label": "Result",         "fields": ["power"] }
+  ],
+  "formulas": {
+    "power": "mode == 1 ? v * i : (mode == 2 ? i^2 * r : v^2 / r)"
+  },
+  "examples": [
+    { "label": "12V and 2A (P = V * I)",     "inputs": { "mode": 1, "v": 12, "i": 2 } },
+    { "label": "2A and 6Ω (P = I² * R)",      "inputs": { "mode": 2, "i": 2, "r": 6 } },
+    { "label": "12V and 6Ω (P = V² / R)",     "inputs": { "mode": 3, "v": 12, "r": 6 } }
+  ]
+}

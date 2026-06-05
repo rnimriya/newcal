@@ -1,0 +1,46 @@
+{
+  "id": "km-miles",
+  "slug": "km-to-miles",
+  "name": "Kilometers to Miles",
+  "category": "converters",
+  "description": "Convert kilometers to miles and other distance units instantly.",
+  "icon": "🛣️",
+  "tags": ["km", "miles", "distance", "convert"],
+  "fields": [
+    {
+      "id": "km",
+      "label": "Kilometers (km)",
+      "type": "number",
+      "defaultValue": 100,
+      "placeholder": "Enter km",
+      "constraint": { "min": 0, "step": 0.1, "required": true }
+    },
+    { "id": "miles",  "label": "Miles (mi)",  "type": "computed", "precision": 6, "helpText": "mi = km × 0.621371" },
+    { "id": "meters", "label": "Meters (m)",  "type": "computed", "precision": 1, "helpText": "m = km × 1000" },
+    { "id": "feet",   "label": "Feet (ft)",   "type": "computed", "precision": 1, "helpText": "ft = km × 3280.84" },
+    { "id": "yards",  "label": "Yards (yd)",  "type": "computed", "precision": 1, "helpText": "yd = km × 1093.61" }
+  ],
+  "groups": [
+    { "id": "input",   "label": "Input",   "fields": ["km"] },
+    { "id": "outputs", "label": "Results", "fields": ["miles", "meters", "feet", "yards"] }
+  ],
+  "formulas": {
+    "miles":  "km * 0.621371",
+    "meters": "km * 1000",
+    "feet":   "km * 3280.84",
+    "yards":  "km * 1093.61"
+  },
+  "examples": [
+    { "label": "5K run",        "inputs": { "km": 5    } },
+    { "label": "Half marathon", "inputs": { "km": 21.1 } },
+    { "label": "Marathon",      "inputs": { "km": 42.195} },
+    { "label": "100 km",        "inputs": { "km": 100  } }
+  ],
+  "chart": {
+    "xAxisField": "km",
+    "yAxisField": "miles",
+    "xRange": [0, 200],
+    "points": 50,
+    "label": "Kilometers vs Miles"
+  }
+}

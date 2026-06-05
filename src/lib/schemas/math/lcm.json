@@ -1,0 +1,28 @@
+{
+  "id": "lcm",
+  "slug": "lcm-calculator",
+  "name": "LCM Calculator",
+  "category": "math",
+  "description": "Find the Least Common Multiple of two integers.",
+  "icon": "🔢",
+  "tags": ["lcm", "least common multiple", "number theory"],
+  "fields": [
+    { "id": "a",   "label": "Number A", "type": "number", "defaultValue": 12, "placeholder": "e.g. 12", "constraint": { "min": 1, "step": 1, "required": true } },
+    { "id": "b",   "label": "Number B", "type": "number", "defaultValue": 18, "placeholder": "e.g. 18", "constraint": { "min": 1, "step": 1, "required": true } },
+    { "id": "gcd", "label": "GCD (a, b)",  "type": "computed", "precision": 0, "helpText": "Greatest Common Divisor, used to compute LCM" },
+    { "id": "lcm", "label": "LCM (a, b)",  "type": "computed", "precision": 0, "helpText": "Least Common Multiple = |a × b| / GCD(a, b)" }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Numbers", "fields": ["a", "b"] },
+    { "id": "outputs", "label": "Results", "fields": ["gcd", "lcm"] }
+  ],
+  "formulas": {
+    "gcd": "gcd(a, b)",
+    "lcm": "abs(a * b) / gcd(a, b)"
+  },
+  "examples": [
+    { "label": "12 and 18",   "inputs": { "a": 12, "b": 18 } },
+    { "label": "7 and 5",     "inputs": { "a": 7,  "b": 5  } },
+    { "label": "100 and 75",  "inputs": { "a": 100,"b": 75 } }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "torque-calculator",
+  "slug": "torque-calculator",
+  "name": "Torque Calculator",
+  "category": "physics",
+  "description": "Calculate rotational torque produced by a force applied at a distance from a pivot (τ = F * r * sin(θ)).",
+  "icon": "🔩",
+  "tags": ["torque", "force", "radius", "rotation", "physics"],
+  "fields": [
+    {
+      "id": "force",
+      "label": "Applied Force (F)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter force",
+      "suffix": " N",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "radius",
+      "label": "Lever Arm Radius (r)",
+      "type": "number",
+      "defaultValue": 0.5,
+      "placeholder": "Enter radius",
+      "suffix": " m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "theta",
+      "label": "Angle of Application (θ)",
+      "type": "number",
+      "defaultValue": 90,
+      "placeholder": "Enter angle",
+      "suffix": " ° (degrees)",
+      "constraint": { "min": -360, "max": 360, "required": true }
+    },
+    {
+      "id": "torque",
+      "label": "Torque (τ)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " N·m",
+      "helpText": "τ = F * r * sin(θ)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["force", "radius", "theta"] },
+    { "id": "outputs", "label": "Result",     "fields": ["torque"] }
+  ],
+  "formulas": {
+    "torque": "force * radius * sin(theta * PI / 180)"
+  },
+  "examples": [
+    { "label": "Perpendicular force (90°)", "inputs": { "force": 10, "radius": 0.5, "theta": 90 } },
+    { "label": "Angled force (45°)",         "inputs": { "force": 10, "radius": 0.5, "theta": 45 } }
+  ],
+  "chart": {
+    "xAxisField": "theta",
+    "yAxisField": "torque",
+    "xRange": [0, 180],
+    "points": 30,
+    "label": "Torque vs Angle (fixed Force & Radius)"
+  }
+}

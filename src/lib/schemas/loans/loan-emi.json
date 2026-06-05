@@ -1,0 +1,50 @@
+{
+  "id": "loan-emi",
+  "slug": "loan-calculator",
+  "name": "Loan Calculator",
+  "category": "loans",
+  "description": "Calculate monthly EMI, total interest, and total repayment for any loan.",
+  "icon": "🏦",
+  "tags": ["loan", "emi", "mortgage", "monthly payment", "interest"],
+  "fields": [
+    { "id": "principal",  "label": "Loan Amount",    "type": "number", "defaultValue": 250000, "prefix": "$", "constraint": { "min": 1, "step": 1000, "required": true } },
+    { "id": "annualRate", "label": "Annual Rate",    "type": "number", "defaultValue": 6.5,    "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.1, "required": true } },
+    {
+      "id": "tenureYears",
+      "label": "Loan Term",
+      "type": "number",
+      "defaultValue": 20,
+      "helpText": "In years",
+      "units": [
+        { "label": "Years",  "value": "years",  "toBase": "x * 12", "fromBase": "x / 12" },
+        { "label": "Months", "value": "months", "toBase": "x",       "fromBase": "x" }
+      ],
+      "defaultUnit": "years",
+      "constraint": { "min": 1, "step": 1, "required": true }
+    },
+    { "id": "emi",          "label": "Monthly EMI",          "type": "computed", "precision": 2, "prefix": "$", "helpText": "Equated Monthly Installment" },
+    { "id": "totalPayment", "label": "Total Payment",         "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest","label": "Total Interest Paid",   "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Loan Details", "fields": ["principal", "annualRate", "tenureYears"] },
+    { "id": "outputs", "label": "Repayment",    "fields": ["emi", "totalPayment", "totalInterest"] }
+  ],
+  "formulas": {
+    "emi":           "principal * (annualRate/1200) * (1 + annualRate/1200)^(tenureYears*12) / ((1 + annualRate/1200)^(tenureYears*12) - 1)",
+    "totalPayment":  "principal * (annualRate/1200) * (1 + annualRate/1200)^(tenureYears*12) / ((1 + annualRate/1200)^(tenureYears*12) - 1) * tenureYears * 12",
+    "totalInterest": "principal * (annualRate/1200) * (1 + annualRate/1200)^(tenureYears*12) / ((1 + annualRate/1200)^(tenureYears*12) - 1) * tenureYears * 12 - principal"
+  },
+  "examples": [
+    { "label": "Home loan $250k",    "inputs": { "principal": 250000, "annualRate": 6.5, "tenureYears": 20 } },
+    { "label": "Car loan $30k",      "inputs": { "principal": 30000,  "annualRate": 8,   "tenureYears": 5  } },
+    { "label": "Personal loan $15k", "inputs": { "principal": 15000,  "annualRate": 12,  "tenureYears": 3  } }
+  ],
+  "chart": {
+    "xAxisField": "tenureYears",
+    "yAxisField": "totalInterest",
+    "xRange": [1, 30],
+    "points": 30,
+    "label": "Total Interest vs Loan Term"
+  }
+}

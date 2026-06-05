@@ -1,0 +1,63 @@
+{
+  "id": "surface-area-sphere",
+  "slug": "surface-area-sphere",
+  "name": "Surface Area of Sphere Calculator",
+  "category": "math",
+  "description": "Calculate the surface area and volume of a sphere given its radius.",
+  "icon": "⚽",
+  "tags": ["sphere", "surface area", "volume", "geometry"],
+  "fields": [
+    {
+      "id": "radius",
+      "label": "Radius (r)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter radius",
+      "helpText": "Distance from center to edge",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" },
+        { "label": "Inches (in)",      "value": "in", "toBase": "x * 0.0254","fromBase": "x / 0.0254" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "surfaceArea",
+      "label": "Surface Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "A = 4 π r²"
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m³",
+      "helpText": "V = (4/3) π r³"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Input Radius",   "fields": ["radius"] },
+    { "id": "outputs", "label": "Sphere Properties", "fields": ["surfaceArea", "volume"] }
+  ],
+  "formulas": {
+    "surfaceArea": "4 * PI * radius^2",
+    "volume": "(4/3) * PI * radius^3"
+  },
+  "examples": [
+    { "label": "Unit sphere (r=1)", "inputs": { "radius": 1 } },
+    { "label": "r = 5m",            "inputs": { "radius": 5 } },
+    { "label": "Large sphere r=10", "inputs": { "radius": 10 } }
+  ],
+  "chart": {
+    "xAxisField": "radius",
+    "yAxisField": "surfaceArea",
+    "xRange": [0.1, 15],
+    "points": 40,
+    "label": "Surface Area vs Radius"
+  }
+}

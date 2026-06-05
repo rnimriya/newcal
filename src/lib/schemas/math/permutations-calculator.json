@@ -1,0 +1,52 @@
+{
+  "id": "permutations-calculator",
+  "slug": "permutations-calculator",
+  "name": "Permutations Calculator (nPr)",
+  "category": "math",
+  "description": "Calculate the number of ways to arrange r elements from a set of n elements in order.",
+  "icon": "🔢",
+  "tags": ["permutations", "npr", "factorial", "probability", "combinatorics"],
+  "fields": [
+    {
+      "id": "n",
+      "label": "Total Items (n)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter total items (n)",
+      "constraint": { "min": 0, "max": 20, "step": 1, "required": true }
+    },
+    {
+      "id": "r",
+      "label": "Arranged Items (r)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter arranged items (r)",
+      "constraint": { "min": 0, "max": 20, "step": 1, "required": true }
+    },
+    {
+      "id": "permutations",
+      "label": "Permutations P(n, r)",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "P(n, r) = n! / (n - r)!"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Inputs",  "fields": ["n", "r"] },
+    { "id": "outputs", "label": "Result",  "fields": ["permutations"] }
+  ],
+  "formulas": {
+    "permutations": "factorial(n) / factorial(n - r)"
+  },
+  "examples": [
+    { "label": "Arrange 3 from 10 (10P3)", "inputs": { "n": 10, "r": 3 } },
+    { "label": "Arrange 2 from 5 (5P2)",   "inputs": { "n": 5, "r": 2 } }
+  ],
+  "chart": {
+    "xAxisField": "n",
+    "yAxisField": "permutations",
+    "xRange": [3, 12],
+    "points": 10,
+    "label": "Permutations vs n (fixed r=3)"
+  }
+}

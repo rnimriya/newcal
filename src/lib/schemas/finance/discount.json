@@ -1,0 +1,30 @@
+{
+  "id": "discount",
+  "slug": "discount-calculator",
+  "name": "Discount Calculator",
+  "category": "finance",
+  "description": "Calculate the sale price after a discount and find how much you save.",
+  "icon": "🏷️",
+  "tags": ["discount", "sale", "price", "savings", "shopping"],
+  "fields": [
+    { "id": "originalPrice", "label": "Original Price", "type": "number", "defaultValue": 100, "prefix": "$", "constraint": { "min": 0, "step": 1, "required": true } },
+    { "id": "discountRate",  "label": "Discount",        "type": "number", "defaultValue": 20,  "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 0.5, "required": true } },
+    { "id": "salePrice",     "label": "Sale Price",      "type": "computed", "precision": 2, "prefix": "$", "helpText": "What you pay" },
+    { "id": "savings",       "label": "You Save",        "type": "computed", "precision": 2, "prefix": "$", "helpText": "Dollar amount saved" },
+    { "id": "finalPercent",  "label": "You Pay",         "type": "computed", "precision": 1, "suffix": "%", "helpText": "Percentage of original price paid" }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Price & Discount",  "fields": ["originalPrice", "discountRate"] },
+    { "id": "outputs", "label": "Deal Breakdown",    "fields": ["salePrice", "savings", "finalPercent"] }
+  ],
+  "formulas": {
+    "salePrice":    "originalPrice * (1 - discountRate / 100)",
+    "savings":      "originalPrice * (discountRate / 100)",
+    "finalPercent": "100 - discountRate"
+  },
+  "examples": [
+    { "label": "20% off $85",      "inputs": { "originalPrice": 85,   "discountRate": 20 } },
+    { "label": "Black Friday 50%", "inputs": { "originalPrice": 200,  "discountRate": 50 } },
+    { "label": "5% early-pay",     "inputs": { "originalPrice": 1500, "discountRate": 5  } }
+  ]
+}

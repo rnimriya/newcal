@@ -1,0 +1,65 @@
+{
+  "id": "percentage",
+  "slug": "percentage-calculator",
+  "name": "Percentage Calculator",
+  "category": "math",
+  "description": "Calculate percentages of numbers, find what percent X is of Y, and more.",
+  "icon": "%",
+  "tags": ["percentage", "percent", "ratio", "math"],
+  "fields": [
+    {
+      "id": "percentage",
+      "label": "Percentage (%)",
+      "type": "number",
+      "defaultValue": 20,
+      "placeholder": "e.g. 20",
+      "suffix": "%",
+      "helpText": "The percentage value",
+      "constraint": { "min": 0, "step": 0.1, "required": true }
+    },
+    {
+      "id": "number",
+      "label": "Of Number",
+      "type": "number",
+      "defaultValue": 150,
+      "placeholder": "e.g. 150",
+      "helpText": "The base number",
+      "constraint": { "required": true }
+    },
+    {
+      "id": "result",
+      "label": "Result",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Percentage of the number"
+    },
+    {
+      "id": "remainder",
+      "label": "Remainder (100% - x%)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "What is left after removing the percentage"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "What is X% of Y?", "fields": ["percentage", "number"] },
+    { "id": "outputs", "label": "Results",           "fields": ["result", "remainder"] }
+  ],
+  "formulas": {
+    "result":    "(percentage / 100) * number",
+    "remainder": "number - (percentage / 100) * number"
+  },
+  "explanation": "## Percentage Basics\n\nA percentage is a ratio expressed as a fraction of 100. The word comes from Latin *per centum*, meaning \"by the hundred.\"\n\n### Three core problems:\n\n1. **What is P% of X?** → Result = (P/100) × X\n2. **X is what % of Y?** → Percent = (X/Y) × 100\n3. **P% of what is X?** → Total = X / (P/100)",
+  "examples": [
+    { "label": "20% of 150",  "inputs": { "percentage": 20,  "number": 150  } },
+    { "label": "15% tip on $60", "inputs": { "percentage": 15, "number": 60 } },
+    { "label": "7.5% sales tax on $200", "inputs": { "percentage": 7.5, "number": 200 } }
+  ],
+  "chart": {
+    "xAxisField": "percentage",
+    "yAxisField": "result",
+    "xRange": [0, 100],
+    "points": 50,
+    "label": "Result vs Percentage (base = current number)"
+  }
+}

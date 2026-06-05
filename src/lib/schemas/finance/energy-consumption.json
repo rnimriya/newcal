@@ -1,0 +1,125 @@
+{
+  "id": "energy-consumption-calculator",
+  "slug": "energy-consumption-calculator",
+  "name": "Energy Consumption Calculator",
+  "category": "finance",
+  "icon": "💡",
+  "description": "Calculate electricity usage cost for any appliance based on wattage, usage hours, and rate.",
+  "tags": [
+    "energy",
+    "electricity",
+    "bill",
+    "kWh",
+    "finance"
+  ],
+  "fields": [
+    {
+      "id": "watts",
+      "label": "Power (Watts)",
+      "type": "number",
+      "defaultValue": 100,
+      "constraint": {
+        "min": 0,
+        "step": 1
+      }
+    },
+    {
+      "id": "hoursPerDay",
+      "label": "Usage (hours/day)",
+      "type": "number",
+      "defaultValue": 8,
+      "constraint": {
+        "min": 0,
+        "max": 24,
+        "step": 0.5
+      }
+    },
+    {
+      "id": "ratePerKwh",
+      "label": "Rate ($/kWh)",
+      "type": "number",
+      "defaultValue": 0.12,
+      "constraint": {
+        "min": 0,
+        "step": 0.001
+      }
+    },
+    {
+      "id": "dailyKwh",
+      "label": "Daily kWh",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "monthlyKwh",
+      "label": "Monthly kWh",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "dailyCost",
+      "label": "Daily Cost ($)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "monthlyCost",
+      "label": "Monthly Cost ($)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "annualCost",
+      "label": "Annual Cost ($)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Appliance",
+      "fields": [
+        "watts",
+        "hoursPerDay",
+        "ratePerKwh"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Consumption & Cost",
+      "fields": [
+        "dailyKwh",
+        "monthlyKwh",
+        "dailyCost",
+        "monthlyCost",
+        "annualCost"
+      ]
+    }
+  ],
+  "formulas": {
+    "dailyKwh": "watts * hoursPerDay / 1000",
+    "monthlyKwh": "watts * hoursPerDay * 30 / 1000",
+    "dailyCost": "watts * hoursPerDay / 1000 * ratePerKwh",
+    "monthlyCost": "watts * hoursPerDay * 30 / 1000 * ratePerKwh",
+    "annualCost": "watts * hoursPerDay * 365 / 1000 * ratePerKwh"
+  },
+  "examples": [
+    {
+      "label": "100W bulb, 8 hrs/day at $0.12",
+      "inputs": {
+        "watts": 100,
+        "hoursPerDay": 8,
+        "ratePerKwh": 0.12
+      }
+    },
+    {
+      "label": "1500W heater, 4 hrs/day",
+      "inputs": {
+        "watts": 1500,
+        "hoursPerDay": 4,
+        "ratePerKwh": 0.12
+      }
+    }
+  ]
+}

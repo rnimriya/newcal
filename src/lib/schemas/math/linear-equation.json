@@ -1,0 +1,41 @@
+{
+  "id": "linear-equation",
+  "slug": "linear-equation-solver",
+  "name": "Linear Equation Solver",
+  "category": "algebra",
+  "description": "Solve linear equations of the form ax + b = c for x.",
+  "icon": "=",
+  "tags": ["linear equation", "algebra", "solve", "x"],
+  "fields": [
+    { "id": "a", "label": "Coefficient a (of x)", "type": "number", "defaultValue": 3, "helpText": "Must not be zero", "constraint": { "required": true } },
+    { "id": "b", "label": "Constant b (added)",   "type": "number", "defaultValue": 4,  "helpText": "Constant on the left side" },
+    { "id": "c", "label": "Right side (c)",        "type": "number", "defaultValue": 19, "helpText": "Value the equation equals" },
+    {
+      "id": "x",
+      "label": "Solution (x)",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "x = (c - b) / a"
+    },
+    {
+      "id": "verification",
+      "label": "Verification (a·x + b)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Should equal c if the solution is correct"
+    }
+  ],
+  "groups": [
+    { "id": "equation",   "label": "Equation: ax + b = c", "fields": ["a", "b", "c"] },
+    { "id": "solution",   "label": "Solution",             "fields": ["x", "verification"] }
+  ],
+  "formulas": {
+    "x":            "(c - b) / a",
+    "verification": "a * ((c - b) / a) + b"
+  },
+  "examples": [
+    { "label": "3x + 4 = 19",  "inputs": { "a": 3,  "b": 4,  "c": 19 } },
+    { "label": "5x - 2 = 13",  "inputs": { "a": 5,  "b": -2, "c": 13 } },
+    { "label": "2x + 10 = 0",  "inputs": { "a": 2,  "b": 10, "c": 0  } }
+  ]
+}

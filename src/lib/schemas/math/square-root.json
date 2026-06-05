@@ -1,0 +1,64 @@
+{
+  "id": "square-root",
+  "slug": "square-root-calculator",
+  "name": "Square Root Calculator",
+  "category": "math",
+  "description": "Calculate the square root of any positive number instantly.",
+  "icon": "√",
+  "tags": ["square root", "radical", "math"],
+  "fields": [
+    {
+      "id": "x",
+      "label": "Number (x)",
+      "type": "number",
+      "defaultValue": 144,
+      "placeholder": "Enter any positive number",
+      "helpText": "The number to find the square root of",
+      "constraint": { "min": 0, "step": 1, "required": true }
+    },
+    {
+      "id": "sqrt",
+      "label": "Square Root (√x)",
+      "type": "computed",
+      "precision": 10,
+      "helpText": "The principal square root of x"
+    },
+    {
+      "id": "sqrtRounded",
+      "label": "Rounded (6 decimal places)",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "Square root rounded to 6 decimal places"
+    },
+    {
+      "id": "xSquared",
+      "label": "x² (verification)",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Squaring the result confirms the answer"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Input",   "fields": ["x"] },
+    { "id": "outputs", "label": "Results", "fields": ["sqrt", "sqrtRounded", "xSquared"] }
+  ],
+  "formulas": {
+    "sqrt":        "sqrt(x)",
+    "sqrtRounded": "round(sqrt(x) * 1000000) / 1000000",
+    "xSquared":    "sqrt(x) * sqrt(x)"
+  },
+  "explanation": "## What is a Square Root?\n\nThe square root of a number **x** is the value that, when multiplied by itself, equals x.\n\nFor example: √16 = 4 because 4 × 4 = 16.\n\n### Perfect Squares\nPerfect squares are numbers whose square roots are whole numbers:\n1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225...",
+  "derivation": "## The Square Root Formula\n\n$$\\sqrt{x} = x^{1/2}$$\n\n**Newton's Method (iterative):**\n\nStarting with estimate x₀, each step improves it:\n$$x_{n+1} = \\frac{x_n + x/x_n}{2}$$\n\nThis converges very quickly — usually 4-5 iterations gives 10+ decimal places.",
+  "examples": [
+    { "label": "Perfect square: 144", "inputs": { "x": 144 } },
+    { "label": "Irrational: 2",       "inputs": { "x": 2   } },
+    { "label": "Large number: 10000","inputs": { "x": 10000} }
+  ],
+  "chart": {
+    "xAxisField": "x",
+    "yAxisField": "sqrt",
+    "xRange": [0, 100],
+    "points": 50,
+    "label": "√x curve"
+  }
+}

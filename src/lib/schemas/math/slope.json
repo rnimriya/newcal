@@ -1,0 +1,59 @@
+{
+  "id": "slope",
+  "slug": "slope-calculator",
+  "name": "Slope Calculator",
+  "category": "math",
+  "description": "Find the slope, equation, and angle of a line through two points.",
+  "icon": "📉",
+  "tags": ["slope", "gradient", "line", "algebra", "geometry"],
+  "fields": [
+    { "id": "x1", "label": "Point 1 — X₁", "type": "number", "defaultValue": 0,  "placeholder": "x₁" },
+    { "id": "y1", "label": "Point 1 — Y₁", "type": "number", "defaultValue": 0,  "placeholder": "y₁" },
+    { "id": "x2", "label": "Point 2 — X₂", "type": "number", "defaultValue": 4,  "placeholder": "x₂" },
+    { "id": "y2", "label": "Point 2 — Y₂", "type": "number", "defaultValue": 8,  "placeholder": "y₂" },
+    {
+      "id": "slope",
+      "label": "Slope (m)",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "Rise over run: (y₂-y₁)/(x₂-x₁)"
+    },
+    {
+      "id": "yIntercept",
+      "label": "Y-Intercept (b)",
+      "type": "computed",
+      "precision": 6,
+      "helpText": "Where the line crosses the y-axis"
+    },
+    {
+      "id": "distance",
+      "label": "Distance Between Points",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Euclidean distance between the two points"
+    },
+    {
+      "id": "angle",
+      "label": "Angle (degrees)",
+      "type": "computed",
+      "precision": 2,
+      "suffix": "°",
+      "helpText": "Angle the line makes with the horizontal"
+    }
+  ],
+  "groups": [
+    { "id": "points",  "label": "Two Points",     "fields": ["x1", "y1", "x2", "y2"] },
+    { "id": "outputs", "label": "Line Properties","fields": ["slope", "yIntercept", "distance", "angle"] }
+  ],
+  "formulas": {
+    "slope":      "(y2 - y1) / (x2 - x1)",
+    "yIntercept": "y1 - ((y2 - y1) / (x2 - x1)) * x1",
+    "distance":   "sqrt((x2 - x1)^2 + (y2 - y1)^2)",
+    "angle":      "atan((y2 - y1) / (x2 - x1)) * (180 / pi)"
+  },
+  "examples": [
+    { "label": "Positive slope", "inputs": { "x1": 0, "y1": 0, "x2": 4, "y2": 8 } },
+    { "label": "Negative slope", "inputs": { "x1": 0, "y1": 5, "x2": 5, "y2": 0 } },
+    { "label": "Zero slope (horizontal)", "inputs": { "x1": 1, "y1": 3, "x2": 5, "y2": 3 } }
+  ]
+}

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Priority pages for crawlers
+Sitemap: https://calcunit.net/sitemap.xml
+
+# Block non-useful routes
+Disallow: /api/
+Disallow: /_next/
+Disallow: /saved
+Disallow: /settings

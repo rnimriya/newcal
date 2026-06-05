@@ -1,0 +1,83 @@
+{
+  "id": "surface-area-cylinder",
+  "slug": "surface-area-cylinder",
+  "name": "Surface Area of Cylinder Calculator",
+  "category": "math",
+  "description": "Calculate the surface area and volume of a cylinder given its radius and height.",
+  "icon": "🥫",
+  "tags": ["cylinder", "surface area", "volume", "geometry"],
+  "fields": [
+    {
+      "id": "radius",
+      "label": "Radius (r)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter radius",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "height",
+      "label": "Height (h)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter height",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "surfaceArea",
+      "label": "Total Surface Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "A = 2πrh + 2πr²"
+    },
+    {
+      "id": "lateralArea",
+      "label": "Lateral Surface Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "A_L = 2πrh"
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m³",
+      "helpText": "V = πr²h"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Dimensions",       "fields": ["radius", "height"] },
+    { "id": "outputs", "label": "Calculated Areas & Volume", "fields": ["surfaceArea", "lateralArea", "volume"] }
+  ],
+  "formulas": {
+    "surfaceArea": "2 * PI * radius * height + 2 * PI * radius^2",
+    "lateralArea": "2 * PI * radius * height",
+    "volume": "PI * radius^2 * height"
+  },
+  "examples": [
+    { "label": "r = 3, h = 5", "inputs": { "radius": 3, "height": 5 } },
+    { "label": "r = 1, h = 2", "inputs": { "radius": 1, "height": 2 } }
+  ],
+  "chart": {
+    "xAxisField": "radius",
+    "yAxisField": "surfaceArea",
+    "xRange": [0.1, 10],
+    "points": 40,
+    "label": "Surface Area vs Radius (at fixed Height)"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "id": "acre-to-square-meter",
+  "slug": "acre-to-square-meter",
+  "name": "Acres to Square Meters Converter",
+  "category": "converters",
+  "icon": "🌾",
+  "description": "Convert acres to square meters, square feet, and hectares. 1 acre = 4046.86 m².",
+  "tags": [
+    "acres",
+    "square meters",
+    "area",
+    "converter",
+    "land"
+  ],
+  "fields": [
+    {
+      "id": "acres",
+      "label": "Acres (ac)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "sqm",
+      "label": "Square Meters (m²)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "sqft",
+      "label": "Square Feet (ft²)",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "hectares",
+      "label": "Hectares (ha)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Acres",
+      "fields": [
+        "acres"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Converted",
+      "fields": [
+        "sqm",
+        "sqft",
+        "hectares"
+      ]
+    }
+  ],
+  "formulas": {
+    "sqm": "acres * 4046.86",
+    "sqft": "acres * 43560",
+    "hectares": "acres * 0.404686"
+  },
+  "examples": [
+    {
+      "label": "1 acre",
+      "inputs": {
+        "acres": 1
+      }
+    },
+    {
+      "label": "Football field: ~1.32 acres",
+      "inputs": {
+        "acres": 1.32
+      }
+    }
+  ]
+}

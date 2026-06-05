@@ -1,0 +1,37 @@
+{
+  "id": "p-value-calculator",
+  "slug": "p-value-calculator",
+  "name": "P Value Calculator",
+  "category": "statistics",
+  "icon": "p",
+  "description": "Calculate the p-value from a Z-score for one-tailed and two-tailed hypothesis tests using the standard normal distribution.",
+  "tags": ["p value", "hypothesis test", "z-score", "statistics", "significance"],
+  "fields": [
+    {"id": "zScore",        "label": "Z-Score",                    "type": "number", "defaultValue": 1.96},
+    {"id": "alpha",         "label": "Significance Level α",       "type": "number", "defaultValue": 0.05},
+    {"id": "pOneTailed",  "label": "P-Value (one-tailed)",  "type": "computed", "precision": 6},
+    {"id": "pTwoTailed",  "label": "P-Value (two-tailed)",  "type": "computed", "precision": 6},
+    {"id": "sig95",       "label": "Significant at 95%?",   "type": "computed", "precision": 0, "helpText": "1 = yes, 0 = no"},
+    {"id": "sig99",       "label": "Significant at 99%?",   "type": "computed", "precision": 0, "helpText": "1 = yes, 0 = no"},
+    {"id": "critZ95",     "label": "Critical Z (95%)",      "type": "computed", "precision": 4},
+    {"id": "critZ99",     "label": "Critical Z (99%)",      "type": "computed", "precision": 4}
+  ],
+  "groups": [
+    {"id": "inputs",  "label": "Test Parameters",  "fields": ["zScore","alpha"]},
+    {"id": "pvals",   "label": "P-Values",          "fields": ["pOneTailed","pTwoTailed"]},
+    {"id": "sig",     "label": "Significance",      "fields": ["sig95","sig99","critZ95","critZ99"]}
+  ],
+  "formulas": {
+    "pOneTailed": "(1 - erf(abs(zScore) / sqrt(2))) / 2",
+    "pTwoTailed": "1 - erf(abs(zScore) / sqrt(2))",
+    "sig95":      "abs(zScore) >= 1.959964 ? 1 : 0",
+    "sig99":      "abs(zScore) >= 2.575829 ? 1 : 0",
+    "critZ95":    "1.959964",
+    "critZ99":    "2.575829"
+  },
+  "examples": [
+    {"label": "Z = 1.96  (classic 95% threshold)",  "inputs": {"zScore":1.96,"alpha":0.05}},
+    {"label": "Z = 2.576 (99% threshold)",           "inputs": {"zScore":2.576,"alpha":0.01}},
+    {"label": "Z = 1.0   (not significant)",         "inputs": {"zScore":1.0,"alpha":0.05}}
+  ]
+}

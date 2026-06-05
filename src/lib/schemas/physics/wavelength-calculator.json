@@ -1,0 +1,68 @@
+{
+  "id": "wavelength-calculator",
+  "slug": "wavelength-calculator",
+  "name": "Wavelength Calculator",
+  "category": "physics",
+  "description": "Calculate wavelength, frequency, or wave speed (λ = v / f).",
+  "icon": "〰️",
+  "tags": ["wavelength", "frequency", "wave speed", "sound", "light", "physics"],
+  "fields": [
+    {
+      "id": "mode",
+      "label": "Calculate",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Wavelength (λ = v / f)", "value": 1 },
+        { "label": "Frequency (f = v / λ)",  "value": 2 },
+        { "label": "Wave Speed (v = λ * f)", "value": 3 }
+      ]
+    },
+    {
+      "id": "wavelength",
+      "label": "Wavelength (λ)",
+      "type": "number",
+      "defaultValue": 0.7795,
+      "placeholder": "Enter wavelength",
+      "suffix": " m",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "frequency",
+      "label": "Frequency (f)",
+      "type": "number",
+      "defaultValue": 440,
+      "placeholder": "Enter frequency",
+      "suffix": " Hz",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "velocity",
+      "label": "Wave Speed (v)",
+      "type": "number",
+      "defaultValue": 343,
+      "placeholder": "Enter wave speed",
+      "suffix": " m/s",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "result",
+      "label": "Computed Value",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Calculated value based on selected mode"
+    }
+  ],
+  "groups": [
+    { "id": "config",  "label": "Mode Selection", "fields": ["mode"] },
+    { "id": "inputs",  "label": "Inputs",         "fields": ["wavelength", "frequency", "velocity"] },
+    { "id": "outputs", "label": "Result",         "fields": ["result"] }
+  ],
+  "formulas": {
+    "result": "mode == 1 ? velocity / frequency : (mode == 2 ? velocity / wavelength : wavelength * frequency)"
+  },
+  "examples": [
+    { "label": "Sound Wavelength at 440Hz (v=343m/s)", "inputs": { "mode": 1, "velocity": 343, "frequency": 440 } },
+    { "label": "Light Frequency of 650nm red light",    "inputs": { "mode": 2, "velocity": 299792458, "wavelength": 0.00000065 } }
+  ]
+}

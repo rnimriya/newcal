@@ -1,0 +1,41 @@
+{
+  "id": "stopwatch-lap-timer",
+  "slug": "stopwatch-lap-timer",
+  "name": "Stopwatch Lap Timer",
+  "category": "time",
+  "icon": "🏁",
+  "description": "Analyze up to 5 lap times — compute total time, average lap, fastest and slowest splits, and lap variance.",
+  "tags": ["stopwatch", "timer", "lap", "split", "race", "athletics"],
+  "fields": [
+    {"id": "lap1", "label": "Lap 1 (seconds)", "type": "number", "defaultValue": 62.4},
+    {"id": "lap2", "label": "Lap 2 (seconds)", "type": "number", "defaultValue": 61.8},
+    {"id": "lap3", "label": "Lap 3 (seconds)", "type": "number", "defaultValue": 63.1},
+    {"id": "lap4", "label": "Lap 4 (seconds)", "type": "number", "defaultValue": 60.9},
+    {"id": "lap5", "label": "Lap 5 (seconds)", "type": "number", "defaultValue": 62.0},
+    {"id": "totalTime",   "label": "Total Time (sec)",       "type": "computed", "precision": 2},
+    {"id": "avgLap",      "label": "Average Lap (sec)",      "type": "computed", "precision": 4},
+    {"id": "fastestLap",  "label": "Fastest Lap (sec)",      "type": "computed", "precision": 4},
+    {"id": "slowestLap",  "label": "Slowest Lap (sec)",      "type": "computed", "precision": 4},
+    {"id": "lapRange",    "label": "Lap Range (sec)",        "type": "computed", "precision": 4},
+    {"id": "totalMin",    "label": "Total Time (MM:SS)",     "type": "computed", "precision": 0, "helpText": "Minutes part"},
+    {"id": "totalSec",    "label": "Remaining Seconds",      "type": "computed", "precision": 2}
+  ],
+  "groups": [
+    {"id": "laps",    "label": "Lap Times",         "fields": ["lap1","lap2","lap3","lap4","lap5"]},
+    {"id": "results", "label": "Analysis",          "fields": ["totalTime","avgLap","fastestLap","slowestLap","lapRange","totalMin","totalSec"]}
+  ],
+  "formulas": {
+    "totalTime":  "lap1 + lap2 + lap3 + lap4 + lap5",
+    "avgLap":     "(lap1 + lap2 + lap3 + lap4 + lap5) / 5",
+    "fastestLap": "min(lap1, lap2, lap3, lap4, lap5)",
+    "slowestLap": "max(lap1, lap2, lap3, lap4, lap5)",
+    "lapRange":   "max(lap1, lap2, lap3, lap4, lap5) - min(lap1, lap2, lap3, lap4, lap5)",
+    "totalMin":   "floor((lap1 + lap2 + lap3 + lap4 + lap5) / 60)",
+    "totalSec":   "mod(lap1 + lap2 + lap3 + lap4 + lap5, 60)"
+  },
+  "examples": [
+    {"label": "400 m track laps",       "inputs": {"lap1":62.4,"lap2":61.8,"lap3":63.1,"lap4":60.9,"lap5":62.0}},
+    {"label": "Pool swim laps (50 m)",  "inputs": {"lap1":45.2,"lap2":44.8,"lap3":46.1,"lap4":45.5,"lap5":44.6}},
+    {"label": "Cycling time trial",     "inputs": {"lap1":210,"lap2":208,"lap3":215,"lap4":207,"lap5":212}}
+  ]
+}

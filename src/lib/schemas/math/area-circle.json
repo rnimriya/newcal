@@ -1,0 +1,72 @@
+{
+  "id": "area-circle",
+  "slug": "area-of-circle-calculator",
+  "name": "Area of Circle Calculator",
+  "category": "math",
+  "description": "Calculate the area, circumference, and diameter of a circle from any input.",
+  "icon": "⭕",
+  "tags": ["circle", "area", "circumference", "geometry"],
+  "fields": [
+    {
+      "id": "radius",
+      "label": "Radius (r)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter radius",
+      "helpText": "Distance from center to edge",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" },
+        { "label": "Inches (in)",      "value": "in", "toBase": "x * 0.0254","fromBase": "x / 0.0254" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "step": 0.1, "required": true }
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 6,
+      "suffix": " m²",
+      "helpText": "A = π r²"
+    },
+    {
+      "id": "circumference",
+      "label": "Circumference",
+      "type": "computed",
+      "precision": 6,
+      "suffix": " m",
+      "helpText": "C = 2πr"
+    },
+    {
+      "id": "diameter",
+      "label": "Diameter",
+      "type": "computed",
+      "precision": 6,
+      "suffix": " m",
+      "helpText": "d = 2r"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Circle Input",  "fields": ["radius"] },
+    { "id": "outputs", "label": "Measurements",  "fields": ["area", "circumference", "diameter"] }
+  ],
+  "formulas": {
+    "area":          "pi * radius^2",
+    "circumference": "2 * pi * radius",
+    "diameter":      "2 * radius"
+  },
+  "examples": [
+    { "label": "Unit circle (r=1)", "inputs": { "radius": 1 } },
+    { "label": "r = 5m",           "inputs": { "radius": 5 } },
+    { "label": "Large circle r=10","inputs": { "radius": 10} }
+  ],
+  "chart": {
+    "xAxisField": "radius",
+    "yAxisField": "area",
+    "xRange": [0.1, 20],
+    "points": 40,
+    "label": "Area vs Radius"
+  }
+}

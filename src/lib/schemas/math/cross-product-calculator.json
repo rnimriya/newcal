@@ -1,0 +1,103 @@
+{
+  "id": "cross-product-calculator",
+  "slug": "cross-product-calculator",
+  "name": "Vector Cross Product Calculator",
+  "category": "math",
+  "description": "Calculate the cross product of two 3D vectors A and B, including the resulting vector's magnitude.",
+  "icon": "📐",
+  "tags": ["cross product", "vector product", "linear algebra", "geometry"],
+  "fields": [
+    {
+      "id": "ax",
+      "label": "Vector A - x component (Ax)",
+      "type": "number",
+      "defaultValue": 1,
+      "placeholder": "Ax"
+    },
+    {
+      "id": "ay",
+      "label": "Vector A - y component (Ay)",
+      "type": "number",
+      "defaultValue": 2,
+      "placeholder": "Ay"
+    },
+    {
+      "id": "az",
+      "label": "Vector A - z component (Az)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Az"
+    },
+    {
+      "id": "bx",
+      "label": "Vector B - x component (Bx)",
+      "type": "number",
+      "defaultValue": 4,
+      "placeholder": "Bx"
+    },
+    {
+      "id": "by",
+      "label": "Vector B - y component (By)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "By"
+    },
+    {
+      "id": "bz",
+      "label": "Vector B - z component (Bz)",
+      "type": "number",
+      "defaultValue": 6,
+      "placeholder": "Bz"
+    },
+    {
+      "id": "cx",
+      "label": "Cross Product - Cx",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Cx = Ay*Bz - Az*By"
+    },
+    {
+      "id": "cy",
+      "label": "Cross Product - Cy",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Cy = Az*Bx - Ax*Bz"
+    },
+    {
+      "id": "cz",
+      "label": "Cross Product - Cz",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Cz = Ax*By - Ay*Bx"
+    },
+    {
+      "id": "magnitude",
+      "label": "Magnitude |A × B|",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "√(Cx² + Cy² + Cz²)"
+    }
+  ],
+  "groups": [
+    { "id": "vectorA",  "label": "Vector A Components",   "fields": ["ax", "ay", "az"] },
+    { "id": "vectorB",  "label": "Vector B Components",   "fields": ["bx", "by", "bz"] },
+    { "id": "outputs",  "label": "Cross Product Result", "fields": ["cx", "cy", "cz", "magnitude"] }
+  ],
+  "formulas": {
+    "cx": "ay * bz - az * by",
+    "cy": "az * bx - ax * bz",
+    "cz": "ax * by - ay * bx",
+    "magnitude": "sqrt((ay * bz - az * by)^2 + (az * bx - ax * bz)^2 + (ax * by - ay * bx)^2)"
+  },
+  "examples": [
+    { "label": "A = [1, 2, 3], B = [4, 5, 6]", "inputs": { "ax": 1, "ay": 2, "az": 3, "bx": 4, "by": 5, "bz": 6 } },
+    { "label": "Orthogonal vectors (X & Y axes)", "inputs": { "ax": 1, "ay": 0, "az": 0, "bx": 0, "by": 1, "bz": 0 } }
+  ],
+  "chart": {
+    "xAxisField": "ax",
+    "yAxisField": "magnitude",
+    "xRange": [-5, 5],
+    "points": 30,
+    "label": "Resulting Magnitude vs Ax (fixed others)"
+  }
+}

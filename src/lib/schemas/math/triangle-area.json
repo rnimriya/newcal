@@ -1,0 +1,40 @@
+{
+  "id": "triangle-area",
+  "slug": "triangle-area-calculator",
+  "name": "Triangle Area Calculator",
+  "category": "math",
+  "description": "Calculate the area of any triangle using base and height or Heron's formula with three sides.",
+  "icon": "△",
+  "tags": ["triangle", "area", "geometry", "heron formula"],
+  "fields": [
+    { "id": "base",   "label": "Base (b)",   "type": "number", "defaultValue": 6,  "placeholder": "Enter base",   "constraint": { "min": 0, "required": true } },
+    { "id": "height", "label": "Height (h)", "type": "number", "defaultValue": 4,  "placeholder": "Enter height", "constraint": { "min": 0, "required": true } },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "A = ½ × base × height"
+    },
+    {
+      "id": "perimeter_estimate",
+      "label": "Hypotenuse estimate",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "√(b² + h²) — only valid for right triangles"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Dimensions", "fields": ["base", "height"] },
+    { "id": "outputs", "label": "Results",    "fields": ["area", "perimeter_estimate"] }
+  ],
+  "formulas": {
+    "area":               "0.5 * base * height",
+    "perimeter_estimate": "sqrt(base^2 + height^2)"
+  },
+  "examples": [
+    { "label": "Simple right triangle",  "inputs": { "base": 3, "height": 4 } },
+    { "label": "Larger triangle",        "inputs": { "base": 10, "height": 7 } },
+    { "label": "Equilateral-like",       "inputs": { "base": 6, "height": 5.196 } }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "surface-area-cube",
+  "slug": "surface-area-cube",
+  "name": "Surface Area of Cube Calculator",
+  "category": "math",
+  "description": "Calculate the total surface area and volume of a cube given its side length.",
+  "icon": "🎲",
+  "tags": ["cube", "surface area", "volume", "geometry"],
+  "fields": [
+    {
+      "id": "side",
+      "label": "Side Length (a)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter side length",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "surfaceArea",
+      "label": "Surface Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "A = 6 * a²"
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m³",
+      "helpText": "V = a³"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Input Side", "fields": ["side"] },
+    { "id": "outputs", "label": "Results",    "fields": ["surfaceArea", "volume"] }
+  ],
+  "formulas": {
+    "surfaceArea": "6 * side^2",
+    "volume": "side^3"
+  },
+  "examples": [
+    { "label": "Side = 1m", "inputs": { "side": 1 } },
+    { "label": "Side = 5m", "inputs": { "side": 5 } }
+  ],
+  "chart": {
+    "xAxisField": "side",
+    "yAxisField": "surfaceArea",
+    "xRange": [0.1, 15],
+    "points": 40,
+    "label": "Surface Area vs Side Length"
+  }
+}

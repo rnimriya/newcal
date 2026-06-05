@@ -1,0 +1,69 @@
+{
+  "id": "force-calculator",
+  "slug": "force-calculator",
+  "name": "Force Calculator",
+  "category": "physics",
+  "description": "Calculate force, mass, or acceleration using Newton's second law (F = m * a).",
+  "icon": "💥",
+  "tags": ["force", "mass", "acceleration", "newton", "physics"],
+  "fields": [
+    {
+      "id": "mode",
+      "label": "Calculate",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Force (F = m * a)",          "value": 1 },
+        { "label": "Mass (m = F / a)",           "value": 2 },
+        { "label": "Acceleration (a = F / m)",   "value": 3 }
+      ]
+    },
+    {
+      "id": "force",
+      "label": "Force (F)",
+      "type": "number",
+      "defaultValue": 20,
+      "placeholder": "Enter force",
+      "suffix": " N",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "mass",
+      "label": "Mass (m)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter mass",
+      "suffix": " kg",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "acceleration",
+      "label": "Acceleration (a)",
+      "type": "number",
+      "defaultValue": 2,
+      "placeholder": "Enter acceleration",
+      "suffix": " m/s²",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "result",
+      "label": "Computed Value",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Calculated value based on selected mode"
+    }
+  ],
+  "groups": [
+    { "id": "config",  "label": "Mode Selection", "fields": ["mode"] },
+    { "id": "inputs",  "label": "Inputs",         "fields": ["force", "mass", "acceleration"] },
+    { "id": "outputs", "label": "Result",         "fields": ["result"] }
+  ],
+  "formulas": {
+    "result": "mode == 1 ? mass * acceleration : (mode == 2 ? force / acceleration : force / mass)"
+  },
+  "examples": [
+    { "label": "Calculate Force (m=10kg, a=2m/s²)", "inputs": { "mode": 1, "mass": 10, "acceleration": 2 } },
+    { "label": "Calculate Mass (F=20N, a=2m/s²)",  "inputs": { "mode": 2, "force": 20, "acceleration": 2 } },
+    { "label": "Calculate Acceleration (F=20N, m=10kg)", "inputs": { "mode": 3, "force": 20, "mass": 10 } }
+  ]
+}

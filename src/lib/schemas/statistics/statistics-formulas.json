@@ -1,0 +1,40 @@
+{
+  "id": "statistics-formulas",
+  "slug": "statistics-formulas",
+  "name": "Statistics Formulas Sheet",
+  "category": "statistics",
+  "icon": "📋",
+  "description": "Interactive reference for key statistics formulas — enter your data and compute mean, variance, standard deviation, standard error, CV, and z-score instantly.",
+  "tags": ["statistics", "formulas", "reference", "mean", "variance", "standard deviation"],
+  "fields": [
+    {"id": "n",       "label": "Sample Size (n)",        "type": "number", "defaultValue": 20},
+    {"id": "sumX",    "label": "Sum of Values (Σx)",     "type": "number", "defaultValue": 340},
+    {"id": "sumX2",   "label": "Sum of Squares (Σx²)",   "type": "number", "defaultValue": 6200},
+    {"id": "xObs",    "label": "Observed Value (for z)", "type": "number", "defaultValue": 20},
+    {"id": "mean",        "label": "Mean (x̄ = Σx/n)",                       "type": "computed", "precision": 6},
+    {"id": "variance",    "label": "Sample Variance (s² = (Σx²−nȳ²)/(n−1))","type": "computed", "precision": 6},
+    {"id": "sd",          "label": "Std Deviation (s)",                       "type": "computed", "precision": 6},
+    {"id": "se",          "label": "Std Error (SE = s/√n)",                   "type": "computed", "precision": 6},
+    {"id": "cv",          "label": "Coeff. of Variation (CV = s/x̄ × 100%)",  "type": "computed", "precision": 4, "suffix": "%"},
+    {"id": "zScore",      "label": "Z-Score  z = (x − x̄) / s",              "type": "computed", "precision": 4},
+    {"id": "rangeEst",    "label": "95% Range  x̄ ± 2s",                      "type": "computed", "precision": 4}
+  ],
+  "groups": [
+    {"id": "inputs",  "label": "Summary Statistics Input", "fields": ["n","sumX","sumX2","xObs"]},
+    {"id": "outputs", "label": "Computed Formulas",        "fields": ["mean","variance","sd","se","cv","zScore","rangeEst"]}
+  ],
+  "formulas": {
+    "mean":     "sumX / n",
+    "variance": "(sumX2 - n * (sumX/n)^2) / (n - 1)",
+    "sd":       "sqrt((sumX2 - n * (sumX/n)^2) / (n - 1))",
+    "se":       "sqrt((sumX2 - n * (sumX/n)^2) / (n - 1)) / sqrt(n)",
+    "cv":       "(sqrt((sumX2 - n * (sumX/n)^2) / (n - 1)) / (sumX/n)) * 100",
+    "zScore":   "(xObs - sumX/n) / sqrt((sumX2 - n * (sumX/n)^2) / (n - 1))",
+    "rangeEst": "2 * sqrt((sumX2 - n * (sumX/n)^2) / (n - 1))"
+  },
+  "examples": [
+    {"label": "Small dataset n=20",   "inputs": {"n":20,"sumX":340,"sumX2":6200,"xObs":20}},
+    {"label": "Test scores n=30",     "inputs": {"n":30,"sumX":2250,"sumX2":171500,"xObs":80}},
+    {"label": "Heights n=50 (cm)",    "inputs": {"n":50,"sumX":8750,"sumX2":1535050,"xObs":180}}
+  ]
+}

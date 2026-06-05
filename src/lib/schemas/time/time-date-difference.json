@@ -1,0 +1,45 @@
+{
+  "id": "time-date-difference",
+  "slug": "time-date-difference",
+  "name": "Time Date Difference",
+  "category": "time",
+  "icon": "⏳",
+  "description": "Calculate the exact difference between two date-time values in days, hours, and minutes.",
+  "tags": ["time difference", "date time", "duration", "days between"],
+  "fields": [
+    {"id": "year1",  "label": "Start Year",   "type": "number", "defaultValue": 2024},
+    {"id": "month1", "label": "Start Month",  "type": "number", "defaultValue": 1},
+    {"id": "day1",   "label": "Start Day",    "type": "number", "defaultValue": 1},
+    {"id": "hour1",  "label": "Start Hour",   "type": "number", "defaultValue": 9},
+    {"id": "min1",   "label": "Start Minute", "type": "number", "defaultValue": 0},
+    {"id": "year2",  "label": "End Year",     "type": "number", "defaultValue": 2025},
+    {"id": "month2", "label": "End Month",    "type": "number", "defaultValue": 6},
+    {"id": "day2",   "label": "End Day",      "type": "number", "defaultValue": 15},
+    {"id": "hour2",  "label": "End Hour",     "type": "number", "defaultValue": 17},
+    {"id": "min2",   "label": "End Minute",   "type": "number", "defaultValue": 30},
+    {"id": "totalDiffMin", "label": "Total Minutes Apart", "type": "computed", "precision": 0},
+    {"id": "diffDays",     "label": "Days",                "type": "computed", "precision": 0},
+    {"id": "diffHours",    "label": "Remaining Hours",     "type": "computed", "precision": 0},
+    {"id": "diffMinutes",  "label": "Remaining Minutes",   "type": "computed", "precision": 0},
+    {"id": "totalHours",   "label": "Total Hours",         "type": "computed", "precision": 2},
+    {"id": "totalWeeks",   "label": "Total Weeks",         "type": "computed", "precision": 2}
+  ],
+  "groups": [
+    {"id": "start", "label": "Start Date & Time", "fields": ["year1","month1","day1","hour1","min1"]},
+    {"id": "end",   "label": "End Date & Time",   "fields": ["year2","month2","day2","hour2","min2"]},
+    {"id": "result","label": "Difference",         "fields": ["diffDays","diffHours","diffMinutes","totalHours","totalWeeks","totalDiffMin"]}
+  ],
+  "formulas": {
+    "totalDiffMin": "abs((year2*525960 + month2*43800 + day2*1440 + hour2*60 + min2) - (year1*525960 + month1*43800 + day1*1440 + hour1*60 + min1))",
+    "diffDays":     "floor(abs((year2*525960 + month2*43800 + day2*1440 + hour2*60 + min2) - (year1*525960 + month1*43800 + day1*1440 + hour1*60 + min1)) / 1440)",
+    "diffHours":    "floor(mod(abs((year2*525960 + month2*43800 + day2*1440 + hour2*60 + min2) - (year1*525960 + month1*43800 + day1*1440 + hour1*60 + min1)), 1440) / 60)",
+    "diffMinutes":  "mod(abs((year2*525960 + month2*43800 + day2*1440 + hour2*60 + min2) - (year1*525960 + month1*43800 + day1*1440 + hour1*60 + min1)), 60)",
+    "totalHours":   "abs((year2*525960 + month2*43800 + day2*1440 + hour2*60 + min2) - (year1*525960 + month1*43800 + day1*1440 + hour1*60 + min1)) / 60",
+    "totalWeeks":   "abs((year2*525960 + month2*43800 + day2*1440 + hour2*60 + min2) - (year1*525960 + month1*43800 + day1*1440 + hour1*60 + min1)) / 10080"
+  },
+  "examples": [
+    {"label": "Jan 2024 → Jun 2025",     "inputs": {"year1":2024,"month1":1,"day1":1,"hour1":9,"min1":0,"year2":2025,"month2":6,"day2":15,"hour2":17,"min2":30}},
+    {"label": "Same-day time gap",       "inputs": {"year1":2025,"month1":3,"day1":10,"hour1":8,"min1":0,"year2":2025,"month2":3,"day2":10,"hour2":17,"min2":45}},
+    {"label": "New Year countdown",      "inputs": {"year1":2025,"month1":12,"day1":25,"hour1":0,"min1":0,"year2":2026,"month2":1,"day2":1,"hour2":0,"min2":0}}
+  ]
+}

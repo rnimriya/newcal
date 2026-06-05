@@ -1,0 +1,69 @@
+{
+  "id": "velocity-calculator",
+  "slug": "velocity-calculator",
+  "name": "Velocity Calculator",
+  "category": "physics",
+  "description": "Calculate velocity, distance, or time for uniform motion (v = d / t).",
+  "icon": "🚀",
+  "tags": ["velocity", "speed", "distance", "time", "physics"],
+  "fields": [
+    {
+      "id": "mode",
+      "label": "Calculate",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Velocity (v = d / t)", "value": 1 },
+        { "label": "Distance (d = v * t)", "value": 2 },
+        { "label": "Time (t = d / v)",     "value": 3 }
+      ]
+    },
+    {
+      "id": "velocity",
+      "label": "Velocity (v)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter velocity",
+      "suffix": " m/s",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "distance",
+      "label": "Distance (d)",
+      "type": "number",
+      "defaultValue": 100,
+      "placeholder": "Enter distance",
+      "suffix": " m",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "time",
+      "label": "Time (t)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter time",
+      "suffix": " s",
+      "constraint": { "min": 0 }
+    },
+    {
+      "id": "result",
+      "label": "Computed Value",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Calculated value based on selected mode"
+    }
+  ],
+  "groups": [
+    { "id": "config",  "label": "Mode Selection", "fields": ["mode"] },
+    { "id": "inputs",  "label": "Inputs",         "fields": ["velocity", "distance", "time"] },
+    { "id": "outputs", "label": "Result",         "fields": ["result"] }
+  ],
+  "formulas": {
+    "result": "mode == 1 ? distance / time : (mode == 2 ? velocity * time : distance / velocity)"
+  },
+  "examples": [
+    { "label": "Calculate Velocity (d=100m, t=10s)", "inputs": { "mode": 1, "distance": 100, "time": 10 } },
+    { "label": "Calculate Distance (v=10m/s, t=10s)", "inputs": { "mode": 2, "velocity": 10, "time": 10 } },
+    { "label": "Calculate Time (d=100m, v=10m/s)",   "inputs": { "mode": 3, "distance": 100, "velocity": 10 } }
+  ]
+}

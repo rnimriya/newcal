@@ -1,0 +1,46 @@
+{
+  "id": "fibonacci-calculator",
+  "slug": "fibonacci-calculator",
+  "name": "Fibonacci Calculator",
+  "category": "math",
+  "description": "Find the Fibonacci number at any position n and explore the golden spiral sequence.",
+  "icon": "🌀",
+  "tags": ["fibonacci", "sequence", "golden ratio", "math"],
+  "fields": [
+    {
+      "id": "n",
+      "label": "Term Position (n)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter term position n",
+      "constraint": { "min": 0, "max": 40, "step": 1, "required": true }
+    },
+    {
+      "id": "value",
+      "label": "Fibonacci Number (Fn)",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "Fn = round((φ^n - (1-φ)^n) / √5)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Input Position", "fields": ["n"] },
+    { "id": "outputs", "label": "Result",         "fields": ["value"] }
+  ],
+  "formulas": {
+    "value": "round((((1 + sqrt(5)) / 2)^n - ((1 - sqrt(5)) / 2)^n) / sqrt(5))"
+  },
+  "examples": [
+    { "label": "F0", "inputs": { "n": 0 } },
+    { "label": "F1", "inputs": { "n": 1 } },
+    { "label": "F10", "inputs": { "n": 10 } },
+    { "label": "F20", "inputs": { "n": 20 } }
+  ],
+  "chart": {
+    "xAxisField": "n",
+    "yAxisField": "value",
+    "xRange": [0, 15],
+    "points": 16,
+    "label": "Fibonacci Number Fn vs Position n"
+  }
+}

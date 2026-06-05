@@ -1,0 +1,74 @@
+{
+  "id": "ellipse-area",
+  "slug": "ellipse-area",
+  "name": "Area of Ellipse Calculator",
+  "category": "math",
+  "description": "Calculate the area and perimeter approximation of an ellipse given its semi-major and semi-minor axes.",
+  "icon": "📐",
+  "tags": ["ellipse", "area", "perimeter", "geometry"],
+  "fields": [
+    {
+      "id": "semiMajor",
+      "label": "Semi-major Axis (a)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter semi-major axis",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "semiMinor",
+      "label": "Semi-minor Axis (b)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter semi-minor axis",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m²",
+      "helpText": "A = π * a * b"
+    },
+    {
+      "id": "perimeter",
+      "label": "Perimeter (Ramanujan Approximation)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m",
+      "helpText": "P ≈ π * [3(a+b) - √((3a+b)(a+3b))]"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Axes Dimensions", "fields": ["semiMajor", "semiMinor"] },
+    { "id": "outputs", "label": "Results",         "fields": ["area", "perimeter"] }
+  ],
+  "formulas": {
+    "area": "PI * semiMajor * semiMinor",
+    "perimeter": "PI * (3 * (semiMajor + semiMinor) - sqrt((3 * semiMajor + semiMinor) * (semiMajor + 3 * semiMinor)))"
+  },
+  "examples": [
+    { "label": "a = 5, b = 3", "inputs": { "semiMajor": 5, "semiMinor": 3 } },
+    { "label": "a = 10, b = 5", "inputs": { "semiMajor": 10, "semiMinor": 5 } }
+  ],
+  "chart": {
+    "xAxisField": "semiMajor",
+    "yAxisField": "area",
+    "xRange": [0.1, 15],
+    "points": 40,
+    "label": "Area vs Semi-major Axis (fixed Semi-minor Axis)"
+  }
+}

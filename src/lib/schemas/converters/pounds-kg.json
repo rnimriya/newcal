@@ -1,0 +1,31 @@
+{
+  "id": "pounds-kg",
+  "slug": "pounds-to-kg",
+  "name": "Pounds to Kilograms",
+  "category": "converters",
+  "description": "Convert pounds (lbs) to kilograms and other weight units.",
+  "icon": "⚖️",
+  "tags": ["pounds", "kg", "weight", "convert"],
+  "fields": [
+    { "id": "pounds", "label": "Pounds (lb)",     "type": "number", "defaultValue": 150, "constraint": { "min": 0, "step": 0.1, "required": true } },
+    { "id": "kg",     "label": "Kilograms (kg)",  "type": "computed", "precision": 4, "helpText": "kg = lb / 2.20462" },
+    { "id": "grams",  "label": "Grams (g)",       "type": "computed", "precision": 0 },
+    { "id": "stone",  "label": "Stone (st)",      "type": "computed", "precision": 4 },
+    { "id": "ounces", "label": "Ounces (oz)",     "type": "computed", "precision": 2 }
+  ],
+  "groups": [
+    { "id": "input",   "label": "Input",   "fields": ["pounds"] },
+    { "id": "outputs", "label": "Results", "fields": ["kg", "grams", "stone", "ounces"] }
+  ],
+  "formulas": {
+    "kg":     "pounds / 2.20462",
+    "grams":  "(pounds / 2.20462) * 1000",
+    "stone":  "pounds / 14",
+    "ounces": "pounds * 16"
+  },
+  "examples": [
+    { "label": "150 lbs",     "inputs": { "pounds": 150 } },
+    { "label": "1 pound",     "inputs": { "pounds": 1   } },
+    { "label": "200 pounds",  "inputs": { "pounds": 200 } }
+  ]
+}

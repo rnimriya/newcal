@@ -1,0 +1,79 @@
+{
+  "id": "volume-pyramid",
+  "slug": "volume-pyramid",
+  "name": "Volume of Pyramid Calculator",
+  "category": "math",
+  "description": "Calculate the volume of a right rectangular pyramid given its base length, width, and height.",
+  "icon": "📐",
+  "tags": ["pyramid", "volume", "geometry", "solid"],
+  "fields": [
+    {
+      "id": "length",
+      "label": "Base Length (l)",
+      "type": "number",
+      "defaultValue": 4,
+      "placeholder": "Enter base length",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "width",
+      "label": "Base Width (w)",
+      "type": "number",
+      "defaultValue": 3,
+      "placeholder": "Enter base width",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "height",
+      "label": "Height (h)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter height",
+      "units": [
+        { "label": "Meters (m)",       "value": "m",  "toBase": "x",         "fromBase": "x" },
+        { "label": "Centimeters (cm)", "value": "cm", "toBase": "x / 100",   "fromBase": "x * 100" },
+        { "label": "Feet (ft)",        "value": "ft", "toBase": "x * 0.3048","fromBase": "x / 0.3048" }
+      ],
+      "defaultUnit": "m",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " m³",
+      "helpText": "V = (l * w * h) / 3"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Dimensions", "fields": ["length", "width", "height"] },
+    { "id": "outputs", "label": "Result",     "fields": ["volume"] }
+  ],
+  "formulas": {
+    "volume": "(length * width * height) / 3"
+  },
+  "examples": [
+    { "label": "l = 4, w = 3, h = 5", "inputs": { "length": 4, "width": 3, "height": 5 } },
+    { "label": "l = 10, w = 10, h = 12", "inputs": { "length": 10, "width": 10, "height": 12 } }
+  ],
+  "chart": {
+    "xAxisField": "length",
+    "yAxisField": "volume",
+    "xRange": [0.1, 15],
+    "points": 40,
+    "label": "Volume vs Base Length (fixed Width & Height)"
+  }
+}

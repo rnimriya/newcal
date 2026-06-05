@@ -1,0 +1,65 @@
+{
+  "id": "kinetic-energy-calculator",
+  "slug": "kinetic-energy-calculator",
+  "name": "Kinetic Energy Calculator",
+  "category": "physics",
+  "description": "Calculate the kinetic energy of an object based on its mass and velocity.",
+  "icon": "⚡",
+  "tags": ["kinetic energy", "mass", "velocity", "physics", "energy"],
+  "fields": [
+    {
+      "id": "mass",
+      "label": "Mass (m)",
+      "type": "number",
+      "defaultValue": 10,
+      "placeholder": "Enter mass",
+      "units": [
+        { "label": "Kilograms (kg)", "value": "kg", "toBase": "x",        "fromBase": "x" },
+        { "label": "Grams (g)",      "value": "g",  "toBase": "x / 1000", "fromBase": "x * 1000" },
+        { "label": "Pounds (lbs)",   "value": "lbs", "toBase": "x * 0.453592","fromBase": "x / 0.453592" }
+      ],
+      "defaultUnit": "kg",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "velocity",
+      "label": "Velocity (v)",
+      "type": "number",
+      "defaultValue": 5,
+      "placeholder": "Enter velocity",
+      "units": [
+        { "label": "Meters/sec (m/s)",  "value": "m/s",  "toBase": "x",       "fromBase": "x" },
+        { "label": "Kilometers/hr (km/h)", "value": "km/h", "toBase": "x / 3.6", "fromBase": "x * 3.6" },
+        { "label": "Miles/hr (mph)",     "value": "mph",  "toBase": "x * 0.44704","fromBase": "x / 0.44704" }
+      ],
+      "defaultUnit": "m/s",
+      "constraint": { "min": 0, "required": true }
+    },
+    {
+      "id": "ke",
+      "label": "Kinetic Energy (KE)",
+      "type": "computed",
+      "precision": 4,
+      "suffix": " J",
+      "helpText": "KE = ½ * m * v²"
+    }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Parameters", "fields": ["mass", "velocity"] },
+    { "id": "outputs", "label": "Result",     "fields": ["ke"] }
+  ],
+  "formulas": {
+    "ke": "0.5 * mass * velocity^2"
+  },
+  "examples": [
+    { "label": "10 kg at 5 m/s",   "inputs": { "mass": 10, "velocity": 5 } },
+    { "label": "80 kg runner at 8 m/s", "inputs": { "mass": 80, "velocity": 8 } }
+  ],
+  "chart": {
+    "xAxisField": "velocity",
+    "yAxisField": "ke",
+    "xRange": [0.1, 20],
+    "points": 40,
+    "label": "Kinetic Energy vs Velocity (fixed mass = 10kg)"
+  }
+}

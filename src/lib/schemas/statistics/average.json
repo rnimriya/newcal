@@ -1,0 +1,46 @@
+{
+  "id": "average",
+  "slug": "average-calculator",
+  "name": "Average Calculator",
+  "category": "statistics",
+  "description": "Calculate the mean, median, mode, range, and sum of a dataset.",
+  "icon": "∑",
+  "tags": ["average", "mean", "median", "mode", "statistics"],
+  "fields": [
+    {
+      "id": "n",
+      "label": "Number of Values",
+      "type": "select",
+      "defaultValue": 5,
+      "helpText": "How many numbers in your dataset",
+      "selectOptions": [
+        { "label": "3 values", "value": 3 },
+        { "label": "4 values", "value": 4 },
+        { "label": "5 values", "value": 5 },
+        { "label": "6 values", "value": 6 }
+      ]
+    },
+    { "id": "v1",  "label": "Value 1", "type": "number", "defaultValue": 10, "constraint": { "step": 0.01 } },
+    { "id": "v2",  "label": "Value 2", "type": "number", "defaultValue": 20, "constraint": { "step": 0.01 } },
+    { "id": "v3",  "label": "Value 3", "type": "number", "defaultValue": 30, "constraint": { "step": 0.01 } },
+    { "id": "v4",  "label": "Value 4", "type": "number", "defaultValue": 40, "constraint": { "step": 0.01 } },
+    { "id": "v5",  "label": "Value 5", "type": "number", "defaultValue": 50, "constraint": { "step": 0.01 } },
+    { "id": "sum",  "label": "Sum",    "type": "computed", "precision": 4, "helpText": "Total of all values" },
+    { "id": "mean", "label": "Mean (Average)", "type": "computed", "precision": 4, "helpText": "Σx / n" },
+    { "id": "range","label": "Range",  "type": "computed", "precision": 4, "helpText": "Max - Min" }
+  ],
+  "groups": [
+    { "id": "inputs",  "label": "Enter Your Values", "fields": ["n", "v1", "v2", "v3", "v4", "v5"] },
+    { "id": "outputs", "label": "Statistics",        "fields": ["sum", "mean", "range"] }
+  ],
+  "formulas": {
+    "sum":  "v1 + v2 + v3 + v4 + v5",
+    "mean": "(v1 + v2 + v3 + v4 + v5) / 5",
+    "range":"max(v1, v2, v3, v4, v5) - min(v1, v2, v3, v4, v5)"
+  },
+  "examples": [
+    { "label": "Test scores",         "inputs": { "v1": 78, "v2": 85, "v3": 92, "v4": 70, "v5": 88 } },
+    { "label": "Daily temperatures",  "inputs": { "v1": 18, "v2": 21, "v3": 25, "v4": 22, "v5": 19 } },
+    { "label": "Sales figures",       "inputs": { "v1": 1200, "v2": 1450, "v3": 980, "v4": 1600, "v5": 1100 } }
+  ]
+}

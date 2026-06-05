@@ -1,0 +1,56 @@
+{
+  "id": "stem-leaf-plot",
+  "slug": "stem-leaf-plot",
+  "name": "Stem and Leaf Plot Generator",
+  "category": "statistics",
+  "icon": "📊",
+  "description": "Enter up to 5 two-digit numbers to generate stem-and-leaf values, plus summary statistics.",
+  "tags": ["stem leaf", "data visualization", "statistics", "plot"],
+  "fields": [
+    {"id": "n1", "label": "Value 1", "type": "number", "defaultValue": 23},
+    {"id": "n2", "label": "Value 2", "type": "number", "defaultValue": 35},
+    {"id": "n3", "label": "Value 3", "type": "number", "defaultValue": 42},
+    {"id": "n4", "label": "Value 4", "type": "number", "defaultValue": 58},
+    {"id": "n5", "label": "Value 5", "type": "number", "defaultValue": 61},
+    {"id": "stem1", "label": "Stem | Leaf  (n1)", "type": "computed", "precision": 0},
+    {"id": "leaf1", "label": "Leaf (n1)",          "type": "computed", "precision": 0},
+    {"id": "stem2", "label": "Stem | Leaf  (n2)", "type": "computed", "precision": 0},
+    {"id": "leaf2", "label": "Leaf (n2)",          "type": "computed", "precision": 0},
+    {"id": "stem3", "label": "Stem | Leaf  (n3)", "type": "computed", "precision": 0},
+    {"id": "leaf3", "label": "Leaf (n3)",          "type": "computed", "precision": 0},
+    {"id": "stem4", "label": "Stem | Leaf  (n4)", "type": "computed", "precision": 0},
+    {"id": "leaf4", "label": "Leaf (n4)",          "type": "computed", "precision": 0},
+    {"id": "stem5", "label": "Stem | Leaf  (n5)", "type": "computed", "precision": 0},
+    {"id": "leaf5", "label": "Leaf (n5)",          "type": "computed", "precision": 0},
+    {"id": "minVal",  "label": "Minimum",  "type": "computed", "precision": 2},
+    {"id": "maxVal",  "label": "Maximum",  "type": "computed", "precision": 2},
+    {"id": "meanVal", "label": "Mean",     "type": "computed", "precision": 4},
+    {"id": "rangeVal","label": "Range",    "type": "computed", "precision": 2}
+  ],
+  "groups": [
+    {"id": "dataset", "label": "Dataset (enter values)", "fields": ["n1","n2","n3","n4","n5"]},
+    {"id": "plot1",   "label": "Stems & Leaves",          "fields": ["stem1","leaf1","stem2","leaf2","stem3","leaf3","stem4","leaf4","stem5","leaf5"]},
+    {"id": "summary", "label": "Summary Statistics",       "fields": ["minVal","maxVal","meanVal","rangeVal"]}
+  ],
+  "formulas": {
+    "stem1": "floor(abs(n1) / 10)",
+    "leaf1": "mod(abs(floor(n1)), 10)",
+    "stem2": "floor(abs(n2) / 10)",
+    "leaf2": "mod(abs(floor(n2)), 10)",
+    "stem3": "floor(abs(n3) / 10)",
+    "leaf3": "mod(abs(floor(n3)), 10)",
+    "stem4": "floor(abs(n4) / 10)",
+    "leaf4": "mod(abs(floor(n4)), 10)",
+    "stem5": "floor(abs(n5) / 10)",
+    "leaf5": "mod(abs(floor(n5)), 10)",
+    "minVal":  "min(n1, n2, n3, n4, n5)",
+    "maxVal":  "max(n1, n2, n3, n4, n5)",
+    "meanVal": "(n1 + n2 + n3 + n4 + n5) / 5",
+    "rangeVal":"max(n1, n2, n3, n4, n5) - min(n1, n2, n3, n4, n5)"
+  },
+  "examples": [
+    {"label": "Mixed 20s–60s", "inputs": {"n1":23,"n2":35,"n3":42,"n4":58,"n5":61}},
+    {"label": "Scores",        "inputs": {"n1":72,"n2":85,"n3":91,"n4":78,"n5":88}},
+    {"label": "Ages",          "inputs": {"n1":14,"n2":17,"n3":22,"n4":19,"n5":25}}
+  ]
+}
