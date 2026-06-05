@@ -1,0 +1,79 @@
+{
+  "id": "electronvolt",
+  "slug": "electronvolt-converter",
+  "name": "Electronvolt Converter",
+  "category": "converters",
+  "description": "Converts energy values from Electronvolts (eV) to Joules (J), Kiloelectronvolts (keV), Megaelectronvolts (MeV), and Gigaelectronvolts (GeV).",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "electronvolt",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "ev",
+      "label": "Electronvolts (eV)",
+      "type": "number",
+      "defaultValue": 1000000
+    },
+    {
+      "id": "joule",
+      "label": "Joules (J)",
+      "type": "computed",
+      "precision": 25
+    },
+    {
+      "id": "kev",
+      "label": "Kiloelectronvolts (keV)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "mev",
+      "label": "Megaelectronvolts (MeV)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "gev",
+      "label": "Gigaelectronvolts (GeV)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "ev"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "joule",
+        "kev",
+        "mev",
+        "gev"
+      ]
+    }
+  ],
+  "formulas": {
+    "joule": "ev * 1.602176634e-19",
+    "kev": "ev / 1000",
+    "mev": "ev / 1000000",
+    "gev": "ev / 1000000000"
+  },
+  "explanation": "## Electronvolt Converter\n\nConverts energy values from Electronvolts (eV) to Joules (J), Kiloelectronvolts (keV), Megaelectronvolts (MeV), and Gigaelectronvolts (GeV).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "ev": 1000000
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "electric-conductance",
+  "slug": "electric-conductance-converter",
+  "name": "Electric Conductance Converter",
+  "category": "converters",
+  "description": "Converts electrical conductance between Siemens (S), Mhos (℧), Microsiemens, and Millisiemens.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "electric conductance",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "siemens",
+      "label": "Siemens (S)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "mho",
+      "label": "Mho (℧)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "micro_siemens",
+      "label": "Microsiemens (µS)",
+      "type": "computed",
+      "precision": 1
+    },
+    {
+      "id": "milli_siemens",
+      "label": "Millisiemens (mS)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "siemens"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "mho",
+        "micro_siemens",
+        "milli_siemens"
+      ]
+    }
+  ],
+  "formulas": {
+    "mho": "siemens",
+    "micro_siemens": "siemens * 1000000",
+    "milli_siemens": "siemens * 1000"
+  },
+  "explanation": "## Electric Conductance Converter\n\nConverts electrical conductance between Siemens (S), Mhos (℧), Microsiemens, and Millisiemens.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "siemens": 1
+      }
+    }
+  ]
+}

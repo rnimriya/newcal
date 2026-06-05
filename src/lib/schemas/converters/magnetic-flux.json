@@ -1,0 +1,63 @@
+{
+  "id": "magnetic-flux",
+  "slug": "magnetic-flux-converter",
+  "name": "Magnetic Flux Converter",
+  "category": "converters",
+  "description": "Converts magnetic flux between standard Weber (Wb), CGS Maxwell (Mx), and electromagnetic unit of flux (emu).",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "magnetic flux",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "weber",
+      "label": "Weber (Wb)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "maxwell",
+      "label": "Maxwell (Mx)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "unit_flux",
+      "label": "Unit Flux (emu)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "weber"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "maxwell",
+        "unit_flux"
+      ]
+    }
+  ],
+  "formulas": {
+    "maxwell": "weber * 100000000",
+    "unit_flux": "weber * 100000000"
+  },
+  "explanation": "## Magnetic Flux Converter\n\nConverts magnetic flux between standard Weber (Wb), CGS Maxwell (Mx), and electromagnetic unit of flux (emu).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "weber": 1
+      }
+    }
+  ]
+}

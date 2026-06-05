@@ -1,0 +1,71 @@
+{
+  "id": "foot-pound",
+  "slug": "foot-pound-converter",
+  "name": "Foot Pound Converter",
+  "category": "converters",
+  "description": "Converts work or torque from Foot-pounds (ft·lb) to Joules (J), Newton-meters (N·m), and Calories (cal).",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "foot pound",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "ftp",
+      "label": "Foot-pounds (ft·lb)",
+      "type": "number",
+      "defaultValue": 100
+    },
+    {
+      "id": "joule",
+      "label": "Joules (J)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "nm",
+      "label": "Newton-meters (N·m)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "cal",
+      "label": "Calories (cal)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "ftp"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "joule",
+        "nm",
+        "cal"
+      ]
+    }
+  ],
+  "formulas": {
+    "joule": "ftp * 1.35581795",
+    "nm": "ftp * 1.35581795",
+    "cal": "ftp * 0.32383155"
+  },
+  "explanation": "## Foot Pound Converter\n\nConverts work or torque from Foot-pounds (ft·lb) to Joules (J), Newton-meters (N·m), and Calories (cal).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "ftp": 100
+      }
+    }
+  ]
+}

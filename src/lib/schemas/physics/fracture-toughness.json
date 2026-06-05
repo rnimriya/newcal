@@ -1,0 +1,71 @@
+{
+  "id": "fracture-toughness",
+  "slug": "fracture-toughness-calculator",
+  "name": "Fracture Toughness Calculator",
+  "category": "physics",
+  "description": "Calculates the fracture toughness (K_Ic) of a material containing a crack under load stress.",
+  "icon": "⚛️",
+  "tags": [
+    "physics",
+    "fracture toughness",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "stress",
+      "label": "Applied Stress (σ, MPa)",
+      "type": "number",
+      "defaultValue": 150
+    },
+    {
+      "id": "crack_length",
+      "label": "Crack Length (a, mm)",
+      "type": "number",
+      "defaultValue": 2
+    },
+    {
+      "id": "geo_factor",
+      "label": "Geometry Factor (Y)",
+      "type": "number",
+      "defaultValue": 1.12
+    },
+    {
+      "id": "toughness",
+      "label": "Fracture Toughness (K_Ic, MPa·m^0.5)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "stress",
+        "crack_length",
+        "geo_factor"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "toughness"
+      ]
+    }
+  ],
+  "formulas": {
+    "toughness": "geo_factor * stress * sqrt(PI * (crack_length / 1000))"
+  },
+  "explanation": "## Fracture Toughness Calculator\n\nCalculates the fracture toughness (K_Ic) of a material containing a crack under load stress.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "stress": 150,
+        "crack_length": 2,
+        "geo_factor": 1.12
+      }
+    }
+  ]
+}

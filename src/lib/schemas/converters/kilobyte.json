@@ -1,0 +1,71 @@
+{
+  "id": "kilobyte",
+  "slug": "kilobyte-converter",
+  "name": "Kilobyte Converter",
+  "category": "converters",
+  "description": "Converts digital data size from Kilobytes (KB) to Bytes, Megabytes, and Gigabytes.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "kilobyte",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "kb",
+      "label": "Kilobytes (KB)",
+      "type": "number",
+      "defaultValue": 1024
+    },
+    {
+      "id": "bytes",
+      "label": "Bytes (B)",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "mb",
+      "label": "Megabytes (MB)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "gb",
+      "label": "Gigabytes (GB)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "kb"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "bytes",
+        "mb",
+        "gb"
+      ]
+    }
+  ],
+  "formulas": {
+    "bytes": "kb * 1024",
+    "mb": "kb / 1024",
+    "gb": "kb / 1048576"
+  },
+  "explanation": "## Kilobyte Converter\n\nConverts digital data size from Kilobytes (KB) to Bytes, Megabytes, and Gigabytes.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "kb": 1024
+      }
+    }
+  ]
+}

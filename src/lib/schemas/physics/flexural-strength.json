@@ -1,0 +1,79 @@
+{
+  "id": "flexural-strength",
+  "slug": "flexural-strength-calculator",
+  "name": "Flexural Strength Calculator",
+  "category": "physics",
+  "description": "Calculates the flexural strength (ultimate bending strength) of a rectangular specimen under a three-point transverse bending load.",
+  "icon": "⚛️",
+  "tags": [
+    "physics",
+    "flexural strength",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "load",
+      "label": "Failure Load (F, N)",
+      "type": "number",
+      "defaultValue": 1200
+    },
+    {
+      "id": "length",
+      "label": "Support Span Length (L, mm)",
+      "type": "number",
+      "defaultValue": 50
+    },
+    {
+      "id": "width",
+      "label": "Specimen Width (b, mm)",
+      "type": "number",
+      "defaultValue": 15
+    },
+    {
+      "id": "thickness",
+      "label": "Specimen Thickness (d, mm)",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "strength",
+      "label": "Flexural Strength (MPa)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "load",
+        "length",
+        "width",
+        "thickness"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "strength"
+      ]
+    }
+  ],
+  "formulas": {
+    "strength": "(3 * load * length) / (2 * width * (thickness ^ 2))"
+  },
+  "explanation": "## Flexural Strength Calculator\n\nCalculates the flexural strength (ultimate bending strength) of a rectangular specimen under a three-point transverse bending load.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "load": 1200,
+        "length": 50,
+        "width": 15,
+        "thickness": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "creep-rate",
+  "slug": "creep-rate-calculator",
+  "name": "Creep Rate Calculator",
+  "category": "physics",
+  "description": "Calculates the steady-state creep rate (deformation rate under constant stress and temperature over time).",
+  "icon": "⚛️",
+  "tags": [
+    "physics",
+    "creep rate",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "strain_initial",
+      "label": "Initial Strain (ε₀)",
+      "type": "number",
+      "defaultValue": 0.001
+    },
+    {
+      "id": "strain_final",
+      "label": "Final Strain (εₜ)",
+      "type": "number",
+      "defaultValue": 0.005
+    },
+    {
+      "id": "time",
+      "label": "Time Elapsed (hours)",
+      "type": "number",
+      "defaultValue": 100
+    },
+    {
+      "id": "creep_rate",
+      "label": "Creep Rate (per hour)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "strain_initial",
+        "strain_final",
+        "time"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "creep_rate"
+      ]
+    }
+  ],
+  "formulas": {
+    "creep_rate": "(strain_final - strain_initial) / time"
+  },
+  "explanation": "## Creep Rate Calculator\n\nCalculates the steady-state creep rate (deformation rate under constant stress and temperature over time).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "strain_initial": 0.001,
+        "strain_final": 0.005,
+        "time": 100
+      }
+    }
+  ]
+}

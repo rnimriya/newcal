@@ -1,0 +1,71 @@
+{
+  "id": "kilonewton",
+  "slug": "kilonewton-converter",
+  "name": "Kilonewton Converter",
+  "category": "converters",
+  "description": "Converts force measurements from Kilonewtons (kN) to standard Newtons, Pounds-force, and Kilograms-force.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "kilonewton",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "kn",
+      "label": "Kilonewtons (kN)",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "n",
+      "label": "Newtons (N)",
+      "type": "computed",
+      "precision": 1
+    },
+    {
+      "id": "lbf",
+      "label": "Pounds-force (lbf)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "kgf",
+      "label": "Kilograms-force (kgf)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "kn"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "n",
+        "lbf",
+        "kgf"
+      ]
+    }
+  ],
+  "formulas": {
+    "n": "kn * 1000",
+    "lbf": "kn * 224.808943",
+    "kgf": "kn * 101.971621"
+  },
+  "explanation": "## Kilonewton Converter\n\nConverts force measurements from Kilonewtons (kN) to standard Newtons, Pounds-force, and Kilograms-force.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "kn": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "fatigue-strength",
+  "slug": "fatigue-strength-calculator",
+  "name": "Fatigue Strength Calculator",
+  "category": "physics",
+  "description": "Calculates the endurance limit or fatigue strength of a material based on its ultimate tensile strength.",
+  "icon": "⚛️",
+  "tags": [
+    "physics",
+    "fatigue strength",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "tensile_strength",
+      "label": "Tensile Strength (S_ut, MPa)",
+      "type": "number",
+      "defaultValue": 500
+    },
+    {
+      "id": "factor",
+      "label": "Fatigue limit factor",
+      "type": "number",
+      "defaultValue": 0.5
+    },
+    {
+      "id": "fatigue_limit",
+      "label": "Fatigue Limit / Strength (MPa)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "tensile_strength",
+        "factor"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "fatigue_limit"
+      ]
+    }
+  ],
+  "formulas": {
+    "fatigue_limit": "tensile_strength * factor"
+  },
+  "explanation": "## Fatigue Strength Calculator\n\nCalculates the endurance limit or fatigue strength of a material based on its ultimate tensile strength.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "tensile_strength": 500,
+        "factor": 0.5
+      }
+    }
+  ]
+}

@@ -712,7 +712,46 @@ import zettabyte from "./converters/zettabyte.json";
 import tensileStrength from "./physics/tensile-strength.json";
 import volumeLumber from "./physics/volume-lumber.json";
 
+import bulkModulus from "./physics/bulk-modulus.json";
+import compressiveStrength from "./physics/compressive-strength.json";
+import creepRate from "./physics/creep-rate.json";
+import dataTransferRate from "./converters/data-transfer-rate.json";
+import dateToRoman from "./math/date-to-roman.json";
+import decimeter from "./converters/decimeter.json";
+import deformation from "./converters/deformation.json";
+import dyne from "./converters/dyne.json";
+import elasticModulus from "./physics/elastic-modulus.json";
+import electricConductance from "./converters/electric-conductance.json";
+import electricConductivity from "./converters/electric-conductivity.json";
+import electricPotential from "./converters/electric-potential.json";
+import electricResistivity from "./converters/electric-resistivity.json";
+import electronvolt from "./converters/electronvolt.json";
+import exabyte from "./converters/exabyte.json";
+import fahrenheitToDelisle from "./converters/fahrenheit-to-delisle.json";
+import fahrenheitToNewton from "./converters/fahrenheit-to-newton.json";
+import fahrenheitToRankine from "./converters/fahrenheit-to-rankine.json";
+import fahrenheitToReaumur from "./converters/fahrenheit-to-reaumur.json";
+import fahrenheitToRomer from "./converters/fahrenheit-to-romer.json";
+import fatigueStrength from "./physics/fatigue-strength.json";
+import flexuralStrength from "./physics/flexural-strength.json";
+import footPound from "./converters/foot-pound.json";
+import fractureToughness from "./physics/fracture-toughness.json";
+import gigabyte from "./converters/gigabyte.json";
+import illuminance from "./converters/illuminance.json";
+import impactStrength from "./physics/impact-strength.json";
+import inhg from "./converters/inhg.json";
+import kelvinToRankine from "./converters/kelvin-to-rankine.json";
+import kilobyte from "./converters/kilobyte.json";
+import kilocalorie from "./converters/kilocalorie.json";
+import kilojoule from "./converters/kilojoule.json";
+import kilonewton from "./converters/kilonewton.json";
+import kilopascal from "./converters/kilopascal.json";
+import luminousIntensity from "./converters/luminous-intensity.json";
+import magneticFlux from "./converters/magnetic-flux.json";
+import massFlow from "./converters/mass-flow.json";
+
 export const schemas: CalculatorSchema[] = [
+  bulkModulus, compressiveStrength, creepRate, dataTransferRate, dateToRoman, decimeter, deformation, dyne, elasticModulus, electricConductance, electricConductivity, electricPotential, electricResistivity, electronvolt, exabyte, fahrenheitToDelisle, fahrenheitToNewton, fahrenheitToRankine, fahrenheitToReaumur, fahrenheitToRomer, fatigueStrength, flexuralStrength, footPound, fractureToughness, gigabyte, illuminance, impactStrength, inhg, kelvinToRankine, kilobyte, kilocalorie, kilojoule, kilonewton, kilopascal, luminousIntensity, magneticFlux, massFlow,
   technicalAtmosphere, terabyte, torr, volumeDry, wattHour, yottabyte, zettabyte, tensileStrength, volumeLumber,
   basicStatistics, descriptiveStatistics,
   megabyte, megajoule, megapascal, micrometer, millibar, mmhg, molarFlow, nanometer, nauticalMile, parsec, percentToFraction, permeability, petabyte, poundal, shearModulus, specificHeatCapacity, specificVolume,

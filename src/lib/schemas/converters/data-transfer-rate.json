@@ -1,0 +1,71 @@
+{
+  "id": "data-transfer-rate",
+  "slug": "data-transfer-rate-calculator",
+  "name": "Data Transfer Rate Calculator",
+  "category": "converters",
+  "description": "Calculates the digital data transfer rate in Megabits per second (Mbps) and Megabytes per second (MB/s) based on file size and transfer duration.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "data transfer rate",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "size",
+      "label": "Data Size (GB)",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "time",
+      "label": "Transfer Time (seconds)",
+      "type": "number",
+      "defaultValue": 60
+    },
+    {
+      "id": "speed_mbps",
+      "label": "Speed (Mbps)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "speed_mbytes_s",
+      "label": "Speed (MB/s)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "size",
+        "time"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "speed_mbps",
+        "speed_mbytes_s"
+      ]
+    }
+  ],
+  "formulas": {
+    "speed_mbps": "(size * 8000) / time",
+    "speed_mbytes_s": "(size * 1024) / time"
+  },
+  "explanation": "## Data Transfer Rate Calculator\n\nCalculates the digital data transfer rate in Megabits per second (Mbps) and Megabytes per second (MB/s) based on file size and transfer duration.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "size": 10,
+        "time": 60
+      }
+    }
+  ]
+}

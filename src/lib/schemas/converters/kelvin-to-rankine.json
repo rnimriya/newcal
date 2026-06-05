@@ -1,0 +1,55 @@
+{
+  "id": "kelvin-to-rankine",
+  "slug": "kelvin-to-rankine-converter",
+  "name": "Kelvin to Rankine Converter",
+  "category": "converters",
+  "description": "Converts thermodynamic temperature values from Kelvin (K) to Rankine scale (°R).",
+  "icon": "🌡️",
+  "tags": [
+    "converters",
+    "kelvin to rankine",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "k",
+      "label": "Kelvin (K)",
+      "type": "number",
+      "defaultValue": 300
+    },
+    {
+      "id": "r",
+      "label": "Rankine (°R)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "k"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "r"
+      ]
+    }
+  ],
+  "formulas": {
+    "r": "k * 1.8"
+  },
+  "explanation": "## Kelvin to Rankine Converter\n\nConverts thermodynamic temperature values from Kelvin (K) to Rankine scale (°R).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "k": 300
+      }
+    }
+  ]
+}

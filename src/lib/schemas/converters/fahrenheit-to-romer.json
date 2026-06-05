@@ -1,0 +1,55 @@
+{
+  "id": "fahrenheit-to-romer",
+  "slug": "fahrenheit-to-romer-converter",
+  "name": "Fahrenheit to Romer Converter",
+  "category": "converters",
+  "description": "Converts temperature from Fahrenheit (°F) to the historical Rømer temperature scale (°Rø).",
+  "icon": "🌡️",
+  "tags": [
+    "converters",
+    "fahrenheit to romer",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "f",
+      "label": "Fahrenheit (°F)",
+      "type": "number",
+      "defaultValue": 32
+    },
+    {
+      "id": "ro",
+      "label": "Rømer (°Rø)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "f"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "ro"
+      ]
+    }
+  ],
+  "formulas": {
+    "ro": "(f - 32) * 7/24 + 7.5"
+  },
+  "explanation": "## Fahrenheit to Romer Converter\n\nConverts temperature from Fahrenheit (°F) to the historical Rømer temperature scale (°Rø).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "f": 32
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "id": "inhg",
+  "slug": "inhg-converter",
+  "name": "Inhg Converter",
+  "category": "converters",
+  "description": "Converts pressure measurements from Inches of Mercury (inHg, standard in meteorology and aviation) to Pascals, PSI, Bar, and mmHg.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "inhg",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "inhg",
+      "label": "Inches of Mercury (inHg)",
+      "type": "number",
+      "defaultValue": 29.92
+    },
+    {
+      "id": "pa",
+      "label": "Pascals (Pa)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "psi",
+      "label": "PSI (psi)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "bar",
+      "label": "Bar",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "mmhg",
+      "label": "mmHg (Torr)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "inhg"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "pa",
+        "psi",
+        "bar",
+        "mmhg"
+      ]
+    }
+  ],
+  "formulas": {
+    "pa": "inhg * 3386.38867",
+    "psi": "inhg * 0.491154",
+    "bar": "inhg * 0.03386389",
+    "mmhg": "inhg * 25.4"
+  },
+  "explanation": "## Inhg Converter\n\nConverts pressure measurements from Inches of Mercury (inHg, standard in meteorology and aviation) to Pascals, PSI, Bar, and mmHg.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "inhg": 29.92
+      }
+    }
+  ]
+}

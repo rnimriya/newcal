@@ -1,0 +1,79 @@
+{
+  "id": "exabyte",
+  "slug": "exabyte-converter",
+  "name": "Exabyte Converter",
+  "category": "converters",
+  "description": "Converts digital data size from Exabytes (EB) to Zettabytes, Petabytes, Terabytes, and Gigabytes.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "exabyte",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "eb",
+      "label": "Exabytes (EB)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "pb",
+      "label": "Petabytes (PB)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "tb",
+      "label": "Terabytes (TB)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "gb",
+      "label": "Gigabytes (GB)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "zb",
+      "label": "Zettabytes (ZB)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "eb"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "pb",
+        "tb",
+        "gb",
+        "zb"
+      ]
+    }
+  ],
+  "formulas": {
+    "pb": "eb * 1024",
+    "tb": "eb * 1048576",
+    "gb": "eb * 1073741824",
+    "zb": "eb / 1024"
+  },
+  "explanation": "## Exabyte Converter\n\nConverts digital data size from Exabytes (EB) to Zettabytes, Petabytes, Terabytes, and Gigabytes.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "eb": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "date-to-roman",
+  "slug": "date-to-roman-converter",
+  "name": "Date to Roman Converter",
+  "category": "math",
+  "description": "Converts any standard Gregorian date (day, month, and year) into classical Roman numerals format.",
+  "icon": "📅",
+  "tags": [
+    "math",
+    "date to roman",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "day",
+      "label": "Day (1-31)",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "month",
+      "label": "Month (1-12)",
+      "type": "number",
+      "defaultValue": 6
+    },
+    {
+      "id": "year",
+      "label": "Year (1-3999)",
+      "type": "number",
+      "defaultValue": 2026
+    },
+    {
+      "id": "roman_day",
+      "label": "Roman Day",
+      "type": "computed"
+    },
+    {
+      "id": "month_str",
+      "label": "Roman Month",
+      "type": "computed"
+    },
+    {
+      "id": "y_thousands",
+      "label": "Year Thousands",
+      "type": "computed"
+    },
+    {
+      "id": "y_hundreds",
+      "label": "Year Hundreds",
+      "type": "computed"
+    },
+    {
+      "id": "y_tens",
+      "label": "Year Tens",
+      "type": "computed"
+    },
+    {
+      "id": "y_ones",
+      "label": "Year Ones",
+      "type": "computed"
+    },
+    {
+      "id": "th_str",
+      "label": "Year Thousands Str",
+      "type": "computed"
+    },
+    {
+      "id": "hu_str",
+      "label": "Year Hundreds Str",
+      "type": "computed"
+    },
+    {
+      "id": "te_str",
+      "label": "Year Tens Str",
+      "type": "computed"
+    },
+    {
+      "id": "on_str",
+      "label": "Year Ones Str",
+      "type": "computed"
+    },
+    {
+      "id": "roman_year",
+      "label": "Roman Year",
+      "type": "computed"
+    },
+    {
+      "id": "roman_date",
+      "label": "Roman Numeral Date",
+      "type": "computed"
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Date (Gregorian)",
+      "fields": [
+        "day",
+        "month",
+        "year"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Roman Representation",
+      "fields": [
+        "roman_date"
+      ]
+    }
+  ],
+  "formulas": {
+    "roman_day": "(floor(day / 10) == 3 ? \"XXX\" : (floor(day / 10) == 2 ? \"XX\" : (floor(day / 10) == 1 ? \"X\" : \"\"))) + (mod(day, 10) == 9 ? \"IX\" : (mod(day, 10) == 8 ? \"VIII\" : (mod(day, 10) == 7 ? \"VII\" : (mod(day, 10) == 6 ? \"VI\" : (mod(day, 10) == 5 ? \"V\" : (mod(day, 10) == 4 ? \"IV\" : (mod(day, 10) == 3 ? \"III\" : (mod(day, 10) == 2 ? \"II\" : (mod(day, 10) == 1 ? \"I\" : \"\")))))))))",
+    "month_str": "(month == 12 ? \"XII\" : (month == 11 ? \"XI\" : (month == 10 ? \"X\" : (month == 9 ? \"IX\" : (month == 8 ? \"VIII\" : (month == 7 ? \"VII\" : (month == 6 ? \"VI\" : (month == 5 ? \"V\" : (month == 4 ? \"IV\" : (month == 3 ? \"III\" : (month == 2 ? \"II\" : \"I\")))))))))))",
+    "y_thousands": "floor(year / 1000)",
+    "y_hundreds": "floor(mod(year, 1000) / 100)",
+    "y_tens": "floor(mod(year, 100) / 10)",
+    "y_ones": "mod(year, 10)",
+    "th_str": "y_thousands == 3 ? \"MMM\" : (y_thousands == 2 ? \"MM\" : (y_thousands == 1 ? \"M\" : \"\"))",
+    "hu_str": "y_hundreds == 9 ? \"CM\" : (y_hundreds == 8 ? \"DCCC\" : (y_hundreds == 7 ? \"DCC\" : (y_hundreds == 6 ? \"DC\" : (y_hundreds == 5 ? \"D\" : (y_hundreds == 4 ? \"CD\" : (y_hundreds == 3 ? \"CCC\" : (y_hundreds == 2 ? \"CC\" : (y_hundreds == 1 ? \"C\" : \"\"))))))))",
+    "te_str": "y_tens == 9 ? \"XC\" : (y_tens == 8 ? \"LXXX\" : (y_tens == 7 ? \"LXX\" : (y_tens == 6 ? \"LX\" : (y_tens == 5 ? \"L\" : (y_tens == 4 ? \"XL\" : (y_tens == 3 ? \"XXX\" : (y_tens == 2 ? \"XX\" : (y_tens == 1 ? \"X\" : \"\"))))))))",
+    "on_str": "y_ones == 9 ? \"IX\" : (y_ones == 8 ? \"VIII\" : (y_ones == 7 ? \"VII\" : (y_ones == 6 ? \"VI\" : (y_ones == 5 ? \"V\" : (y_ones == 4 ? \"IV\" : (y_ones == 3 ? \"III\" : (y_ones == 2 ? \"II\" : (y_ones == 1 ? \"I\" : \"\"))))))))",
+    "roman_year": "th_str + hu_str + te_str + on_str",
+    "roman_date": "roman_day + \" - \" + month_str + \" - \" + roman_year"
+  },
+  "explanation": "## Date to Roman Converter\n\nConverts any standard Gregorian date (day, month, and year) into classical Roman numerals format.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "day": 5,
+        "month": 6,
+        "year": 2026
+      }
+    }
+  ]
+}

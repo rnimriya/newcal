@@ -1,0 +1,71 @@
+{
+  "id": "mass-flow",
+  "slug": "mass-flow-converter",
+  "name": "Mass Flow Converter",
+  "category": "converters",
+  "description": "Converts mass flow rate between kilograms per second, kilograms per hour, pounds per second, and pounds per hour.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "mass flow",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "kg_s",
+      "label": "Kg per second (kg/s)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "kg_h",
+      "label": "Kg per hour (kg/h)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "lb_s",
+      "label": "Lbs per second (lb/s)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "lb_h",
+      "label": "Lbs per hour (lb/h)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "kg_s"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "kg_h",
+        "lb_s",
+        "lb_h"
+      ]
+    }
+  ],
+  "formulas": {
+    "kg_h": "kg_s * 3600",
+    "lb_s": "kg_s * 2.20462262",
+    "lb_h": "kg_s * 7936.64144"
+  },
+  "explanation": "## Mass Flow Converter\n\nConverts mass flow rate between kilograms per second, kilograms per hour, pounds per second, and pounds per hour.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "kg_s": 1
+      }
+    }
+  ]
+}

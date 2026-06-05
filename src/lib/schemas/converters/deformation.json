@@ -1,0 +1,79 @@
+{
+  "id": "deformation",
+  "slug": "deformation-converter",
+  "name": "Deformation Converter",
+  "category": "converters",
+  "description": "Converts structural or material deformation from meters to millimeters, micrometers, inches, and mils.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "deformation",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "m",
+      "label": "Deformation (m)",
+      "type": "number",
+      "defaultValue": 0.001
+    },
+    {
+      "id": "mm",
+      "label": "Millimeters (mm)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "micrometer",
+      "label": "Micrometers (µm)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "inch",
+      "label": "Inches (in)",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "mil",
+      "label": "Mils (thou)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "m"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "mm",
+        "micrometer",
+        "inch",
+        "mil"
+      ]
+    }
+  ],
+  "formulas": {
+    "mm": "m * 1000",
+    "micrometer": "m * 1000000",
+    "inch": "m * 39.3700787",
+    "mil": "m * 39370.0787"
+  },
+  "explanation": "## Deformation Converter\n\nConverts structural or material deformation from meters to millimeters, micrometers, inches, and mils.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "m": 0.001
+      }
+    }
+  ]
+}
