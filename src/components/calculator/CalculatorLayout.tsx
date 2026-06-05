@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import type { CalculatorSchema } from "@/types/calculator";
 import { useCalculator } from "@/lib/hooks/useCalculator";
 import { ExplanationPanel } from "./ExplanationPanel";
+import { InfoGraphic } from "./InfoGraphic";
+import { YouTubeSection } from "./YouTubeSection";
 import { getCategoryTheme } from "./theme";
 
 interface Props {
@@ -29,20 +31,29 @@ export function CalculatorLayout({ schema }: Props) {
   const theme = getCategoryTheme(schema.category);
 
   return (
-    <div className={`${isMobile ? "flex flex-col gap-6" : "grid grid-cols-2 gap-8 items-start"}`}>
-      {/* Left: Calculator Form */}
-      <div className="min-w-0">
-        <CalculatorFormConnected
-          schema={schema}
-          state={calculatorState}
-          isMobile={isMobile}
-          theme={theme}
-        />
+    <div className="space-y-8">
+      {/* Top 2-column: Form + Explanation */}
+      <div className={`${isMobile ? "flex flex-col gap-6" : "grid grid-cols-2 gap-8 items-start"}`}>
+        {/* Left: Calculator Form */}
+        <div className="min-w-0">
+          <CalculatorFormConnected
+            schema={schema}
+            state={calculatorState}
+            isMobile={isMobile}
+            theme={theme}
+          />
+        </div>
+
+        {/* Right: Explanation + Chart */}
+        <div className={`min-w-0 ${isMobile ? "" : "sticky top-24"}`}>
+          <ExplanationPanel schema={schema} fields={calculatorState.fields} theme={theme} />
+        </div>
       </div>
 
-      {/* Right: Explanation + Chart */}
-      <div className={`min-w-0 ${isMobile ? "" : "sticky top-24"}`}>
-        <ExplanationPanel schema={schema} fields={calculatorState.fields} theme={theme} />
+      {/* Bottom: Infographic + YouTube side by side (stacked on mobile) */}
+      <div className={`${isMobile ? "flex flex-col gap-6" : "grid grid-cols-2 gap-6"}`}>
+        <InfoGraphic schema={schema} fields={calculatorState.fields} theme={theme} />
+        <YouTubeSection calcName={schema.name} category={schema.category} theme={theme} />
       </div>
     </div>
   );
