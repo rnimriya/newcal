@@ -183,7 +183,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 text-sm">
               {[
-                { label: "Interactive Sitemap", href: "/sitemap.xml" },
+                { label: "HTML Sitemap", href: "/sitemap" },
                 { label: "Keyboard Shortcuts", href: "/settings" },
                 { label: "Calculators Directory", href: "/categories" },
               ].map((link) => (
@@ -207,10 +207,12 @@ export function Footer() {
               Disclaimer: Calculations are computed locally in the browser. Values should be double-checked for critical professional, financial, or academic decisions.
             </p>
           </div>
-          <div className="flex gap-4 shrink-0">
-            <Link href="/settings" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Privacy Policy</Link>
+          <div className="flex gap-4 shrink-0 flex-wrap justify-center md:justify-end">
+            <Link href="/privacy" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Privacy Policy</Link>
             <span>•</span>
-            <Link href="/settings" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Terms of Use</Link>
+            <Link href="/terms" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Terms of Use</Link>
+            <span>•</span>
+            <Link href="/disclaimer" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Disclaimer</Link>
           </div>
         </div>
 
