@@ -13,6 +13,7 @@ import { ReferenceTable } from "@/components/calculator/ReferenceTable";
 import { JsonLD } from "@/components/seo/JsonLD";
 import { CheckCircle2, HelpCircle } from "lucide-react";
 import { generateDynamicContent } from "@/lib/seo/dynamic-content";
+import { ShareButtons } from "@/components/calculator/ShareButtons";
 
 interface Props {
   params: Promise<{ category: string; calculator: string }>;
@@ -258,31 +259,35 @@ export default async function CalculatorPage({ params }: Props) {
           </section>
 
           {/* ── SECTION 9: Key facts (featured snippet bait) ─────────────── */}
-          <section className="calc-card p-5 bg-indigo-50 border-indigo-100">
-            <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-indigo-600" />
+          <section className="calc-card p-5 bg-indigo-50 border-indigo-100 dark:bg-zinc-900/35 dark:border-zinc-800">
+            <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2 dark:text-zinc-100">
+              <CheckCircle2 size={16} className="text-indigo-600 dark:text-indigo-400" />
               Quick Facts
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 pb-2">
               {entry.formula && (
-                <li className="text-sm text-slate-600">
-                  <span className="font-semibold text-slate-800">Formula:</span>{" "}
-                  <code className="bg-white px-2 py-0.5 rounded text-indigo-700 text-xs">{entry.formula}</code>
+                <li className="text-sm text-slate-600 dark:text-zinc-400">
+                  <span className="font-semibold text-slate-800 dark:text-zinc-200">Formula:</span>{" "}
+                  <code className="bg-white px-2 py-0.5 rounded text-indigo-700 text-xs dark:bg-zinc-800 dark:text-indigo-300">{entry.formula}</code>
                 </li>
               )}
-              <li className="text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">Category:</span>{" "}
+              <li className="text-sm text-slate-600 dark:text-zinc-400">
+                <span className="font-semibold text-slate-800 dark:text-zinc-200">Category:</span>{" "}
                 <span className="capitalize">{entry.category}</span>
               </li>
-              <li className="text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">Uses:</span>{" "}
+              <li className="text-sm text-slate-600 dark:text-zinc-400">
+                <span className="font-semibold text-slate-800 dark:text-zinc-200">Uses:</span>{" "}
                 {entry.tags.slice(0, 4).join(", ")}
               </li>
-              <li className="text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">Price:</span>{" "}
+              <li className="text-sm text-slate-600 dark:text-zinc-400">
+                <span className="font-semibold text-slate-800 dark:text-zinc-200">Price:</span>{" "}
                 Free — no account needed
               </li>
             </ul>
+            <ShareButtons
+              url={`https://calcunit.net/${entry.category}/${entry.slug}`}
+              title={`Check out the ${entry.name} on CalcUnit!`}
+            />
           </section>
 
           {/* ── SECTION 10: FAQ ────────────────────────────────────────────── */}

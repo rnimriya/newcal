@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { RotateCcw, Bookmark, BookmarkCheck } from "lucide-react";
 import { CalculatorIcon } from "@/components/ui/FlatIcon";
 import type { CalculatorSchema } from "@/types/calculator";
