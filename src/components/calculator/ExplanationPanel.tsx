@@ -29,14 +29,140 @@ interface Props {
 export function ExplanationPanel({ schema, fields, theme }: Props) {
   const [tab, setTab] = useState<Tab>("explanation");
 
-  const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
-    { id: "explanation", label: "How it works", icon: BookOpen },
-    { id: "derivation",  label: "Formula",      icon: FlaskConical },
-    { id: "chart",       label: "Chart",         icon: BarChart2 },
+  const inputs = schema.fields.filter((f) => f.type !== "computed");
+  const outputs = schema.fields.filter((f) => f.type === "computed");
+
+  // Determine dynamic chart configuration if missing
+  let min = 0;
+  let max = 10;
+  if (inputs.length > 0) {
+    const targetInput = inputs[0];
+    const defVal = targetInput.defaultValue;
+    let defNum = 1;
+    if (typeof defVal === "number") {
+      defNum = defVal;
+    } else if (typeof defVal === "string") {
+      const parsed = parseFloat(defVal);
+      if (!isNaN(parsed)) defNum = parsed;
+    }
+    
+    max = defNum * 2;
+    if (defNum < 0) {
+      min = defNum * 2;
+      max = 0;
+    } else if (defNum === 0) {
+      min = 0;
+      max = 10;
+    }
+    const constraint = targetInput.constraint;
+    if (constraint?.min !== undefined) min = constraint.min;
+    if (constraint?.max !== undefined) max = constraint.max;
+  }
+
+  const enhancedChart = schema.chart || (inputs.length > 0 && outputs.length > 0 ? {
+    xAxisField: inputs[0].id,
+    yAxisField: outputs[0].id,
+    xRange: [min, max] as [number, number],
+    points: 50,
+    label: `${outputs[0].label.split(" (")[0]} vs ${inputs[0].label.split(" (")[0]}`,
+  } : undefined);
+
+  const enhancedSchema: CalculatorSchema = {
+    ...schema,
+    chart: enhancedChart,
+  };
+
+  const isGenericExplanation = (text?: string) => {
+    if (!text) return true;
+    const clean = text.toLowerCase().trim();
+    return (
+      clean.includes("performs mathematical evaluation") ||
+      (clean.includes("calculates the") && clean.includes("standard mathematical model.")) ||
+      clean === ""
+    );
+  };
+
+  const isGenericDerivation = (text?: string) => {
+    if (!text) return true;
+    const clean = text.toLowerCase().trim();
+    return (
+      clean.includes("standard mathematical model.") ||
+      clean === "" ||
+      clean.includes("_no derivation provided_") ||
+      clean.includes("no derivation")
+    );
+  };
+
+  const getEnhancedExplanation = () => {
+    if (!isGenericExplanation(schema.explanation)) {
+      return schema.explanation!;
+    }
+
+    const inputDesc = inputs
+      .map((f) => `- **${f.label.split(" (")[0]}**: ${f.helpText || `Input value representing ${f.label.toLowerCase()}`}`)
+      .join("\n");
+    const outputDesc = outputs
+      .map((f) => `- **${f.label.split(" (")[0]}**: ${f.helpText || `Calculated outcome representing ${f.label.toLowerCase()}`}`)
+      .join("\n");
+
+    const steps = inputs
+      .map((f, i) => `${i + 1}. Enter the value for **${f.label.split(" (")[0]}** (default value is \`${f.defaultValue ?? 1}\`).`)
+      .join("\n");
+    const solveStep = `${inputs.length + 1}. The calculator will immediately apply the corresponding formula to compute the **${outputs[0]?.label.split(" (")[0]}**.`;
+
+    return `## How it works
+
+The **${schema.name}** is designed to resolve equations dynamically based on standard mathematical principles.
+
+### Key Parameters Explained
+#### Inputs
+${inputDesc}
+
+#### Outputs
+${outputDesc}
+
+---
+
+### Step-by-Step Calculation Guide
+${steps}
+${solveStep}
+
+The calculation results are updated in real time as you adjust the fields.`;
+  };
+
+  const getEnhancedDerivation = () => {
+    if (!isGenericDerivation(schema.derivation)) {
+      return schema.derivation!;
+    }
+
+    const formulasBlock = Object.entries(schema.formulas)
+      .map(([id, expr]) => {
+        const field = schema.fields.find((f) => f.id === id);
+        return `#### ${field?.label || id}\n$$\n${expr}\n$$`;
+      })
+      .join("\n\n");
+
+    return `## Formula & Derivation
+
+The mathematical relationship used to solve this calculation is structured as follows:
+
+${formulasBlock}
+
+### Derivation Steps
+1. **Inputs Collection**: Standard variables are populated by the user in standard formats.
+2. **Topological Order Evaluation**: Equations are processed in dependency order to prevent circular errors.
+3. **Precision Application**: Outcoming values are computed and rounded according to the specified decimals.`;
+  };
+
+  const hasChart = !!enhancedChart;
+  const tabs = [
+    { id: "explanation" as const, label: "How it works", icon: BookOpen },
+    { id: "derivation" as const,  label: "Formula",      icon: FlaskConical },
+    ...(hasChart ? [{ id: "chart" as const, label: "Chart", icon: BarChart2 }] : []),
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       {/* Tab bar */}
       <div className="flex gap-1 rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
         {tabs.map(({ id, label, icon: Icon }) => (
@@ -56,18 +182,14 @@ export function ExplanationPanel({ schema, fields, theme }: Props) {
       </div>
 
       {/* Tab content */}
-      {tab === "chart" && schema.chart && (
-        <FormulaChart schema={schema} fields={fields} />
+      {tab === "chart" && hasChart && (
+        <FormulaChart schema={enhancedSchema} fields={fields} />
       )}
 
       {tab !== "chart" && (
         <div className={`rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}>
           <MarkdownRenderer
-            content={
-              tab === "explanation"
-                ? schema.explanation ?? "_No explanation provided._"
-                : schema.derivation ?? "_No derivation provided._"
-            }
+            content={tab === "explanation" ? getEnhancedExplanation() : getEnhancedDerivation()}
             theme={theme}
           />
         </div>
@@ -87,7 +209,9 @@ function MarkdownRenderer({ content, theme }: { content: string; theme: Category
         if (line.startsWith("## "))
           return <h2 key={i} className="text-base font-bold mt-4 mb-2 text-zinc-900 dark:text-white">{line.slice(3)}</h2>;
         if (line.startsWith("### "))
-          return <h3 key={i} className="text-sm font-semibold mt-3 mb-1.5 text-zinc-800 dark:text-zinc-200">{line.slice(4)}</h3>;
+          return <h3 key={i} className="text-sm font-semibold mt-3 mb-1.5 text-zinc-850 dark:text-zinc-200">{line.slice(4)}</h3>;
+        if (line.startsWith("#### "))
+          return <h4 key={i} className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mt-2.5 mb-1">{line.slice(5)}</h4>;
         if (line.startsWith("| ")) {
           // Simple table row
           const cells = line.split("|").filter((c) => c.trim() !== "");
@@ -102,8 +226,8 @@ function MarkdownRenderer({ content, theme }: { content: string; theme: Category
             </div>
           );
         }
-        if (line.startsWith("- "))
-          return <li key={i} className="ml-4 list-disc text-sm text-zinc-600 my-0.5">{parseBold(line.slice(2))}</li>;
+        if (line.startsWith("- ") || line.startsWith("* "))
+          return <li key={i} className="ml-4 list-disc text-sm text-zinc-600 dark:text-zinc-400 my-0.5">{parseBold(line.slice(2))}</li>;
         if (line.startsWith("$$"))
           return <div key={i} className={`my-2 rounded-xl px-4 py-3.5 font-mono text-sm shadow-sm ${theme.mathBlock}`}>{line.replace(/\$\$/g, "")}</div>;
         if (line.trim() === "") return <br key={i} />;
@@ -117,7 +241,7 @@ function parseBold(text: string): React.ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
-      return <strong key={i} className="font-semibold text-zinc-855 dark:text-zinc-100">{part.slice(2, -2)}</strong>;
+      return <strong key={i} className="font-semibold text-zinc-850 dark:text-zinc-100">{part.slice(2, -2)}</strong>;
     }
     return part;
   });
