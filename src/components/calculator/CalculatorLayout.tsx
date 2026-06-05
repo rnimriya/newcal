@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import type { CalculatorSchema } from "@/types/calculator";
 import { useCalculator } from "@/lib/hooks/useCalculator";
 import { ExplanationPanel } from "./ExplanationPanel";
+import { getCategoryTheme } from "./theme";
 
 interface Props {
   schema: CalculatorSchema;
@@ -24,19 +25,24 @@ export function CalculatorLayout({ schema }: Props) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // We need to share field state between both panels, so lift it here
   const calculatorState = useCalculator(schema);
+  const theme = getCategoryTheme(schema.category);
 
   return (
     <div className={`${isMobile ? "flex flex-col gap-6" : "grid grid-cols-2 gap-8 items-start"}`}>
       {/* Left: Calculator Form */}
       <div className="min-w-0">
-        <CalculatorFormConnected schema={schema} state={calculatorState} isMobile={isMobile} />
+        <CalculatorFormConnected
+          schema={schema}
+          state={calculatorState}
+          isMobile={isMobile}
+          theme={theme}
+        />
       </div>
 
       {/* Right: Explanation + Chart */}
       <div className={`min-w-0 ${isMobile ? "" : "sticky top-24"}`}>
-        <ExplanationPanel schema={schema} fields={calculatorState.fields} />
+        <ExplanationPanel schema={schema} fields={calculatorState.fields} theme={theme} />
       </div>
     </div>
   );
@@ -49,14 +55,16 @@ import { CalculatorIcon } from "@/components/ui/FlatIcon";
 import { useCalcStore } from "@/store/calculatorStore";
 import { FieldRenderer } from "./FieldRenderer";
 import type { UseCalculatorReturn } from "@/lib/hooks/useCalculator";
+import type { CategoryTheme } from "./theme";
 
 interface ConnectedProps {
   schema: CalculatorSchema;
   state: UseCalculatorReturn;
   isMobile: boolean;
+  theme: CategoryTheme;
 }
 
-function CalculatorFormConnected({ schema, state, isMobile }: ConnectedProps) {
+function CalculatorFormConnected({ schema, state, isMobile, theme }: ConnectedProps) {
   const { fields, setValue, setUnit, loadExample, reset } = state;
   const { savedCalculators, saveCalculator, removeCalculator } = useCalcStore();
   const isSaved = savedCalculators.includes(schema.slug);
@@ -66,45 +74,47 @@ function CalculatorFormConnected({ schema, state, isMobile }: ConnectedProps) {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Header card */}
-      <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+      <div className={`rounded-2xl border border-zinc-200 border-t-4 ${theme.accentBorder} bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}>
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="shrink-0 text-indigo-600">
-              <CalculatorIcon slug={schema.slug} category={schema.category} size={28} />
-            </span>
+            <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${theme.iconBg} font-bold`}>
+              <CalculatorIcon slug={schema.slug} category={schema.category} size={20} />
+            </div>
             <div>
               <h1 className="font-bold text-zinc-900 dark:text-white text-xl leading-tight">
                 {schema.name}
               </h1>
-              <p className="text-sm text-zinc-500 mt-0.5 leading-snug">{schema.description}</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 leading-snug">{schema.description}</p>
             </div>
           </div>
           <div className="flex items-center gap-1 shrink-0">
             <button
               onClick={() => isSaved ? removeCalculator(schema.slug) : saveCalculator(schema.slug)}
-              className="rounded-lg p-2 text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950 transition-colors"
+              className={`rounded-xl p-2 text-zinc-400 hover:text-zinc-650 ${theme.hoverBg} transition-all duration-200 active:scale-90 cursor-pointer`}
+              title={isSaved ? "Saved" : "Save Calculator"}
             >
-              {isSaved ? <BookmarkCheck size={18} className="text-indigo-600" /> : <Bookmark size={18} />}
+              {isSaved ? <BookmarkCheck size={19} className={theme.textAccent} /> : <Bookmark size={19} />}
             </button>
             <button
               onClick={reset}
-              className="rounded-lg p-2 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="rounded-xl p-2 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-150 dark:hover:text-zinc-200 dark:hover:bg-zinc-800 transition-all duration-200 active:scale-90 cursor-pointer"
+              title="Reset Fields"
             >
-              <RotateCcw size={18} />
+              <RotateCcw size={19} />
             </button>
           </div>
         </div>
 
         {schema.examples && schema.examples.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            <span className="text-xs text-zinc-400 self-center">Examples:</span>
+          <div className="mt-4 flex flex-wrap gap-2 pt-3 border-t border-zinc-100 dark:border-zinc-800">
+            <span className="text-xs text-zinc-400 dark:text-zinc-500 self-center font-bold">Try Examples:</span>
             {schema.examples.map((ex) => (
               <button
                 key={ex.label}
                 onClick={() => loadExample(ex.inputs)}
-                className="rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-600 hover:border-indigo-300 hover:text-indigo-600 hover:bg-indigo-50 transition-colors dark:border-zinc-700 dark:text-zinc-400"
+                className={`rounded-xl border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-bold text-zinc-600 ${theme.hoverBorder} ${theme.textAccent} ${theme.hoverBg} transition-all dark:border-zinc-700 dark:bg-zinc-800/40 dark:text-zinc-400 dark:hover:border-zinc-500 cursor-pointer`}
               >
                 {ex.label}
               </button>
@@ -119,9 +129,9 @@ function CalculatorFormConnected({ schema, state, isMobile }: ConnectedProps) {
         return (
           <div
             key={group.id}
-            className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+            className={`rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}
           >
-            <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+            <h2 className={`mb-4 text-xs font-black uppercase tracking-wider border-b border-zinc-100 pb-2 dark:border-zinc-800 ${theme.textAccent}`}>
               {group.label}
             </h2>
             <div className="space-y-5">
@@ -135,6 +145,7 @@ function CalculatorFormConnected({ schema, state, isMobile }: ConnectedProps) {
                     state={fieldState}
                     onValueChange={(v) => setValue(field.id, v)}
                     onUnitChange={(u) => setUnit(field.id, u)}
+                    theme={theme}
                     isMobile={isMobile}
                   />
                 );

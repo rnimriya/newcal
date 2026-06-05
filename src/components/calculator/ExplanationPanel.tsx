@@ -4,13 +4,14 @@ import { useState } from "react";
 import type { CalculatorSchema, FieldState } from "@/types/calculator";
 import dynamic from "next/dynamic";
 import { BookOpen, FlaskConical, BarChart2 } from "lucide-react";
+import type { CategoryTheme } from "./theme";
 
 const FormulaChart = dynamic(
   () => import("@/components/charts/FormulaChart").then((mod) => mod.FormulaChart),
   {
     ssr: false,
     loading: () => (
-      <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 h-[240px] flex items-center justify-center text-sm text-zinc-400">
+      <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 h-[240px] flex items-center justify-center text-sm text-zinc-400 animate-pulse">
         Loading chart...
       </div>
     ),
@@ -22,9 +23,10 @@ type Tab = "explanation" | "derivation" | "chart";
 interface Props {
   schema: CalculatorSchema;
   fields: Record<string, FieldState>;
+  theme: CategoryTheme;
 }
 
-export function ExplanationPanel({ schema, fields }: Props) {
+export function ExplanationPanel({ schema, fields, theme }: Props) {
   const [tab, setTab] = useState<Tab>("explanation");
 
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
@@ -41,9 +43,9 @@ export function ExplanationPanel({ schema, fields }: Props) {
           <button
             key={id}
             onClick={() => setTab(id)}
-            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all ${
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition-all cursor-pointer ${
               tab === id
-                ? "bg-white text-indigo-700 shadow-sm dark:bg-zinc-700 dark:text-indigo-300"
+                ? theme.tabActive
                 : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
             }`}
           >
@@ -59,13 +61,14 @@ export function ExplanationPanel({ schema, fields }: Props) {
       )}
 
       {tab !== "chart" && (
-        <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div className={`rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}>
           <MarkdownRenderer
             content={
               tab === "explanation"
                 ? schema.explanation ?? "_No explanation provided._"
                 : schema.derivation ?? "_No derivation provided._"
             }
+            theme={theme}
           />
         </div>
       )}
@@ -75,7 +78,7 @@ export function ExplanationPanel({ schema, fields }: Props) {
 
 // ─── Minimal Markdown renderer (headings, bold, lists, code, tables) ──────────
 
-function MarkdownRenderer({ content }: { content: string }) {
+function MarkdownRenderer({ content, theme }: { content: string; theme: CategoryTheme }) {
   const lines = content.split("\n");
 
   return (
@@ -100,9 +103,9 @@ function MarkdownRenderer({ content }: { content: string }) {
           );
         }
         if (line.startsWith("- "))
-          return <li key={i} className="ml-4 list-disc text-sm text-zinc-600 dark:text-zinc-400 my-0.5">{parseBold(line.slice(2))}</li>;
+          return <li key={i} className="ml-4 list-disc text-sm text-zinc-600 my-0.5">{parseBold(line.slice(2))}</li>;
         if (line.startsWith("$$"))
-          return <div key={i} className="my-2 rounded-lg bg-zinc-50 px-4 py-3 font-mono text-sm text-indigo-700 dark:bg-zinc-800 dark:text-indigo-300">{line.replace(/\$\$/g, "")}</div>;
+          return <div key={i} className={`my-2 rounded-xl px-4 py-3.5 font-mono text-sm shadow-sm ${theme.mathBlock}`}>{line.replace(/\$\$/g, "")}</div>;
         if (line.trim() === "") return <br key={i} />;
         return <p key={i} className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed my-1">{parseBold(line)}</p>;
       })}
@@ -114,7 +117,7 @@ function parseBold(text: string): React.ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
-      return <strong key={i} className="font-semibold text-zinc-800 dark:text-zinc-200">{part.slice(2, -2)}</strong>;
+      return <strong key={i} className="font-semibold text-zinc-855 dark:text-zinc-100">{part.slice(2, -2)}</strong>;
     }
     return part;
   });
