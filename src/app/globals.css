@@ -45,7 +45,7 @@
 :root {
   --text-sm:       0.98rem;
   --text-xs:       0.95rem;
-  --bg-page:       #FAF9F6;
+  --bg-page:       #F5F3FF;
   --bg-card:       #FFFFFF;
   --bg-muted:      #F2F0EB;
   --text-primary:  #1C1917;
@@ -70,7 +70,16 @@ html {
 }
 
 body {
-  background-color: var(--bg-page);
+  background: linear-gradient(
+    135deg,
+    #eef2ff 0%,       /* soft indigo */
+    #f5f3ff 20%,      /* lavender */
+    #faf5ff 40%,      /* pale violet */
+    #fdf4ff 55%,      /* light pink-white */
+    #fff7ed 75%,      /* warm peach */
+    #fefce8 100%      /* cream yellow */
+  );
+  background-attachment: fixed;
   color: var(--text-primary);
   font-family: var(--font-inter, ui-sans-serif, system-ui, -apple-system, sans-serif);
   -webkit-font-smoothing: antialiased;
