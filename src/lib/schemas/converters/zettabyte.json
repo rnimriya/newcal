@@ -1,0 +1,79 @@
+{
+  "id": "zettabyte",
+  "slug": "zettabyte-converter",
+  "name": "Zettabyte Converter",
+  "category": "converters",
+  "description": "Converts digital data size from Zettabytes (ZB) to Yottabytes, Exabytes, Petabytes, and Terabytes.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "zettabyte",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "zb",
+      "label": "Zettabytes (ZB)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "yb",
+      "label": "Yottabytes (YB)",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "eb",
+      "label": "Exabytes (EB)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "pb",
+      "label": "Petabytes (PB)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "tb",
+      "label": "Terabytes (TB)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "zb"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "yb",
+        "eb",
+        "pb",
+        "tb"
+      ]
+    }
+  ],
+  "formulas": {
+    "yb": "zb / 1024",
+    "eb": "zb * 1024",
+    "pb": "zb * 1048576",
+    "tb": "zb * 1073741824"
+  },
+  "explanation": "## Zettabyte Converter\n\nConverts digital data size from Zettabytes (ZB) to Yottabytes, Exabytes, Petabytes, and Terabytes.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "zb": 1
+      }
+    }
+  ]
+}

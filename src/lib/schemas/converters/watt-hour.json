@@ -1,0 +1,79 @@
+{
+  "id": "watt-hour",
+  "slug": "watt-hour-converter",
+  "name": "Watt Hour Converter",
+  "category": "converters",
+  "description": "Converts electrical energy from Watt-hours (Wh) to Kilowatt-hours, Joules, Megajoules, and BTUs.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "watt hour",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "wh",
+      "label": "Watt-hours (Wh)",
+      "type": "number",
+      "defaultValue": 100
+    },
+    {
+      "id": "kwh",
+      "label": "Kilowatt-hours (kWh)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "joules",
+      "label": "Joules (J)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "mj",
+      "label": "Megajoules (MJ)",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "btu",
+      "label": "BTUs",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "wh"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "kwh",
+        "joules",
+        "mj",
+        "btu"
+      ]
+    }
+  ],
+  "formulas": {
+    "kwh": "wh / 1000",
+    "joules": "wh * 3600",
+    "mj": "wh * 0.0036",
+    "btu": "wh * 3.412141"
+  },
+  "explanation": "## Watt Hour Converter\n\nConverts electrical energy from Watt-hours (Wh) to Kilowatt-hours, Joules, Megajoules, and BTUs.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "wh": 100
+      }
+    }
+  ]
+}

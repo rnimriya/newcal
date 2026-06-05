@@ -1,0 +1,79 @@
+{
+  "id": "technical-atmosphere",
+  "slug": "technical-atmosphere-converter",
+  "name": "Technical Atmosphere Converter",
+  "category": "converters",
+  "description": "Converts pressure units from Technical Atmospheres (at, kgf/cm²) to standard Pascals, Bar, PSI, and Atmospheres.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "technical atmosphere",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "at",
+      "label": "Technical Atmospheres (at)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "pa",
+      "label": "Pascals (Pa)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "bar",
+      "label": "Bar",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "psi",
+      "label": "PSI",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "atm",
+      "label": "Physical Atmospheres (atm)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "at"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "pa",
+        "bar",
+        "psi",
+        "atm"
+      ]
+    }
+  ],
+  "formulas": {
+    "pa": "at * 98066.5",
+    "bar": "at * 0.980665",
+    "psi": "at * 14.22334",
+    "atm": "at * 0.967841"
+  },
+  "explanation": "## Technical Atmosphere Converter\n\nConverts pressure units from Technical Atmospheres (at, kgf/cm²) to standard Pascals, Bar, PSI, and Atmospheres.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "at": 1
+      }
+    }
+  ]
+}
