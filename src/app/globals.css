@@ -5,6 +5,7 @@
 
 @theme {
   --font-size-sm: 0.98rem;
+  --font-size-xs: 0.95rem;
   --color-indigo-50:  #EBF2FA;
   --color-indigo-100: #D7E5F4;
   --color-indigo-200: #BBD2EC;
@@ -43,6 +44,7 @@
 /* ─── Design tokens ─────────────────────────────────────────────────────────── */
 :root {
   --text-sm:       0.98rem;
+  --text-xs:       0.95rem;
   --bg-page:       #FAF9F6;
   --bg-card:       #FFFFFF;
   --bg-muted:      #F2F0EB;
