@@ -14,198 +14,213 @@ export interface SEOContent {
   relatedHeading?: string;
 }
 
-// Built-in content for top 30 calculators
+// Built-in content for top calculators, fully compliant with readability guidelines
 const CUSTOM_CONTENT: Record<string, Partial<SEOContent>> = {
-  "bmi-calculator": {
-    description: `Your BMI — Body Mass Index — is a simple number that tells you where your weight sits relative to a healthy range for your height. It does not measure body fat directly, but it's a good screening tool that doctors have used for decades. You calculate it by dividing your weight in kilograms by the square of your height in meters.
+  "algebraic-expression-calculator": {
+    description: `Use this tool to simplify or evaluate algebraic expressions. It helps you factor polynomials and expand brackets. Type your mathematical expression in the box. The tool displays the answer in real time. 
 
-Knowing your BMI takes 10 seconds and gives you a concrete starting point. A result under 18.5 is underweight. Between 18.5 and 24.9 is the normal range. Between 25 and 29.9 is overweight. Above 30 is classified as obese. These are World Health Organization benchmarks used globally.
-
-BMI has limits. Muscular people can score "overweight" even with very low body fat. For children or the elderly, different charts apply. Use it as a data point, not a verdict.`,
+You can use the calculator to check your homework or solve school equations. It runs offline on your mobile phone or computer. The solver is free to use.`,
     howToSteps: [
-      "Enter your weight. Switch between kilograms and pounds using the unit selector.",
-      "Enter your height. You can use centimeters, meters, or inches.",
-      "Your BMI score and weight category appear instantly.",
-      "Check your ideal weight range — that's the weight you'd need to be in the 'Normal' zone.",
-      "Try the example presets to see how results change for different body types.",
+      "Type your algebraic expression in the input box.",
+      "Choose to simplify, expand, or factor the expression.",
+      "Enter variable values if you want to evaluate the expression.",
+      "Read the step by step output to understand the rules.",
+      "Bookmark this page to solve math equations quickly later.",
     ],
     faqs: [
-      { q: "What is a healthy BMI for adults?", a: "A healthy BMI is between 18.5 and 24.9. This range is associated with the lowest risk of weight-related health conditions for most adults." },
-      { q: "Is BMI accurate for athletes?", a: "Not always. Muscle weighs more than fat, so athletes often have a BMI in the overweight range even with low body fat. BMI doesn't distinguish between muscle and fat." },
-      { q: "How often should I calculate my BMI?", a: "Once a month is enough for general tracking. If you're actively working on weight loss or gain, calculate it every two weeks to see trends." },
-      { q: "Can children use this BMI calculator?", a: "No. Children use age and sex-specific BMI charts called BMI-for-age. This calculator uses the adult formula only." },
-      { q: "What happens if my BMI is over 30?", a: "A BMI over 30 is classified as obese and increases the risk of conditions like type 2 diabetes, heart disease, and joint problems. Talk to a healthcare professional about next steps." },
-      { q: "Does BMI differ for men and women?", a: "The formula is the same, but body fat distribution differs between sexes. Women naturally carry slightly more body fat than men at the same BMI." },
+      { q: "What is an algebraic expression?", a: "It is a math phrase with numbers, variables, and operators. An example is 3x + 5. It does not have an equals sign." },
+      { q: "Can I evaluate expressions with negative numbers?", a: "Yes. The calculator handles positive and negative numbers. Use brackets around negative values to avoid mistakes." },
+      { q: "How do I simplify fractions?", a: "Type the fraction using a slash. The calculator reduces the numerator and denominator factors automatically." },
+      { q: "Is this algebra solver free?", a: "Yes. It is completely free with no usage limits and no accounts to create." },
     ],
-    sqrtTable: undefined,
+  },
+
+  "bmi-calculator": {
+    description: `Your BMI (Body Mass Index) is a simple number. It tells you if your weight is in a healthy range for your height. It does not measure body fat directly. Doctors have used it as a screening tool for decades. Calculate it by dividing your weight in kilograms by the square of your height in meters.
+
+Finding your BMI takes ten seconds. A result under 18.5 is underweight. Between 18.5 and 24.9 is the normal range. Between 25 and 29.9 is overweight. A score above 30 means obesity.
+
+BMI has limits. Muscular people can score high even with low body fat. Different charts apply to children and the elderly. Use it as one simple data point.`,
+    howToSteps: [
+      "Type your weight in the weight field. Switch between kilograms and pounds if needed.",
+      "Type your height in the height field. You can use centimeters, meters, or inches.",
+      "Read your BMI score and weight category instantly on the screen.",
+      "Check the normal weight range displayed below the result.",
+      "Click the preset buttons to see typical values for different body types.",
+    ],
+    faqs: [
+      { q: "What is a healthy BMI for adults?", a: "A healthy BMI is between 18.5 and 24.9. This range has the lowest risk of health issues for most adults." },
+      { q: "Is BMI accurate for athletes?", a: "Not always. Muscle weighs more than fat. Athletes often score high even with low body fat." },
+      { q: "How often should I check my BMI?", a: "Once a month is enough for most people. If you are changing your weight, check it every two weeks." },
+      { q: "Can children use this BMI calculator?", a: "No. Children need different charts based on age and sex. This calculator is for adults only." },
+      { q: "What happens if my BMI is over 30?", a: "A score over 30 is classified as obese. This increases the risk of heart disease and diabetes. Consult a doctor for advice." },
+    ],
   },
 
   "compound-interest-calculator": {
-    description: `Compound interest is what happens when you earn interest on your interest, not just on your original investment. That small difference creates an enormous gap over time between simple and compound growth.
+    description: `Compound interest means you earn interest on your interest. It is different from simple interest, which only pays on the original deposit. This makes your money grow much faster over time.
 
-Put in $10,000 at 8% annual interest for 30 years. With simple interest, you earn $24,000 in interest. With compound interest (monthly), you earn about $90,000. Same money, same rate, very different outcome.
+For example, deposit $10,000 at 8% interest for 30 years. Simple interest pays you $24,000 in total. Compound interest compounded monthly pays you about $90,000. 
 
-The three levers are rate, time, and compounding frequency. Time is the most powerful. Starting 10 years earlier often matters more than picking a higher interest rate. Monthly compounding beats annual compounding because interest compounds on interest twelve times a year instead of once.`,
+Your growth depends on the rate, time, and compounding frequency. Time is the most powerful factor. Starting early is better than finding a high rate. Monthly compounding beats annual compounding because it calculates interest twelve times a year.`,
     howToSteps: [
-      "Enter your starting investment amount (the principal).",
-      "Set the annual interest rate as a percentage.",
-      "Choose how many years you will keep the investment.",
-      "Select the compounding frequency — monthly is standard for savings accounts.",
-      "Optionally add a monthly contribution to see how regular additions affect growth.",
-      "Your future value, total interest earned, and effective annual rate appear in real time.",
+      "Type your starting deposit amount in the principal box.",
+      "Type your annual interest rate as a percentage.",
+      "Select the total investment time in years.",
+      "Choose the compounding frequency from the dropdown list.",
+      "Add a monthly contribution amount to see how extra savings help.",
+      "View your future value and total interest updates instantly.",
     ],
     faqs: [
-      { q: "What does compounding frequency mean?", a: "It's how many times per year interest is calculated and added to your balance. Monthly (12x) compounds more often than annually (1x), so you earn slightly more at the same nominal rate." },
-      { q: "What is the effective annual rate?", a: "The effective annual rate (EAR) accounts for compounding and shows your true yearly return. A 12% nominal rate compounded monthly gives an EAR of about 12.68%." },
-      { q: "How does monthly contribution change the result?", a: "Adding even $100 per month can dramatically increase the final amount. Regular contributions let compounding work on a larger balance every cycle." },
-      { q: "What's the Rule of 72?", a: "Divide 72 by your annual interest rate to get the approximate number of years it takes for your money to double. At 8%, your money doubles roughly every 9 years." },
-      { q: "Is compound interest calculated daily or monthly in savings accounts?", a: "Most US savings accounts compound daily but credit monthly. Online high-yield accounts often compound and credit daily." },
+      { q: "What does compounding frequency mean?", a: "It is how many times per year interest is calculated. Monthly compounding means twelve times a year. This earns more than annual compounding." },
+      { q: "What is the effective annual rate?", a: "It shows your true yearly return including compounding. A 12% nominal rate compounded monthly has a true rate of 12.68%." },
+      { q: "How do extra monthly savings help?", a: "Even small additions increase the principal. Interest then compounds on a larger balance every month." },
+      { q: "What is the Rule of 72?", a: "Divide 72 by your interest rate to see when your money doubles. At 8% interest, money doubles in roughly 9 years." },
     ],
   },
 
   "celsius-to-fahrenheit": {
-    description: `Converting Celsius to Fahrenheit is one of the most common unit conversions in everyday life. You need it when checking weather apps in different countries, following recipes from American cookbooks, or understanding medical temperature readings.
+    description: `Converting Celsius to Fahrenheit is a common daily conversion. You need it when checking international weather reports. It is also useful for foreign recipes or reading medical thermometers.
 
-The formula is simple: multiply the Celsius temperature by 9/5, then add 32. So 0°C equals 32°F (freezing point of water), and 100°C equals 212°F (boiling point). Body temperature is 37°C, which is 98.6°F.
+The math is simple. Multiply the Celsius temperature by 1.8, then add 32. Water freezes at 0°C (which is 32°F). Water boils at 100°C (which is 212°F). Normal body temperature is 37°C (which is 98.6°F).
 
-The US is one of only three countries that still uses Fahrenheit officially. The rest of the world uses Celsius. If you travel internationally or read foreign weather reports, this conversion comes up constantly.`,
+Only a few countries use Fahrenheit officially. Most of the world uses Celsius. If you travel or read international news, this tool helps you understand temperatures quickly.`,
     howToSteps: [
-      "Type your temperature value in the Celsius field.",
-      "The Fahrenheit result appears instantly as you type.",
-      "To reverse it — Fahrenheit to Celsius — just clear the Celsius field and type in the Fahrenheit field.",
-      "Use the common reference table below for quick lookups.",
+      "Type your temperature value in the Celsius input box.",
+      "Read the Fahrenheit result instantly as you type.",
+      "Type in the Fahrenheit box to convert in the opposite direction.",
+      "Look at the common temperature list below for quick checks.",
     ],
     faqs: [
-      { q: "At what temperature are Celsius and Fahrenheit the same?", a: "At -40 degrees. Both scales meet at -40°C = -40°F. It's the only point where they're identical." },
-      { q: "Why does the US use Fahrenheit?", a: "The US adopted Fahrenheit before the Celsius scale was standardized internationally. Switching now would require massive infrastructure changes, so it has remained." },
-      { q: "What is normal body temperature in Fahrenheit?", a: "Normal body temperature is 98.6°F (37°C). A fever is generally above 100.4°F (38°C)." },
-      { q: "What is room temperature in Fahrenheit?", a: "Comfortable room temperature is typically between 68°F and 72°F, which is 20°C to 22°C." },
+      { q: "At what point are Celsius and Fahrenheit the same?", a: "They are equal at -40 degrees. So -40°C equals -40°F." },
+      { q: "Which countries use Fahrenheit?", a: "The United States, Liberia, and the Bahamas use Fahrenheit officially. Most other countries use Celsius." },
+      { q: "What is a normal body temperature?", a: "Normal body temperature is 98.6°F (which is 37°C). A fever is typically above 100.4°F (which is 38°C)." },
     ],
   },
 
   "quadratic-formula-calculator": {
-    description: `A quadratic equation is any equation in the form ax² + bx + c = 0. The quadratic formula gives you the exact solutions (called roots) every time, without guessing or trial and error.
+    description: `A quadratic equation has the format ax² + bx + c = 0. The quadratic formula gives you the exact solutions every time. You do not need to guess or try different factors.
 
-The formula always works. Factoring works sometimes, completing the square works always but takes longer. The quadratic formula is your reliable fallback for any quadratic.
+The formula always works. Factoring only works for simple numbers. Completing the square works but takes more time. The formula is the most reliable method.
 
-The discriminant (b² - 4ac) tells you what kind of answers to expect before you solve. Positive discriminant: two real solutions. Zero: one repeated solution (a perfect square). Negative: two complex solutions with imaginary numbers.`,
+The discriminant (b² - 4ac) tells you what solutions to expect. A positive value means two real answers. A zero value means one repeating answer. A negative value means two complex answers with imaginary parts.`,
     howToSteps: [
-      "Enter the coefficient a (the number in front of x²). It cannot be zero.",
-      "Enter the coefficient b (the number in front of x).",
-      "Enter the constant c.",
-      "Both values of x appear instantly, along with the discriminant.",
-      "If the discriminant is negative, the solutions are complex numbers.",
+      "Type coefficient a in the first box. It cannot be zero.",
+      "Type coefficient b in the second box.",
+      "Type constant c in the third box.",
+      "Read the values of x and the discriminant instantly.",
+      "Check the step by step breakdown to see the roots.",
     ],
     faqs: [
-      { q: "What if a equals zero?", a: "If a = 0, it's not a quadratic equation — it's linear. The quadratic formula doesn't apply. Solve it as ax + b = 0 instead." },
-      { q: "What is the discriminant?", a: "The discriminant is the part under the square root: b² - 4ac. It tells you how many real solutions exist before you calculate them." },
-      { q: "Can a quadratic have no real solutions?", a: "Yes. When the discriminant is negative, the square root of a negative number gives imaginary solutions. The parabola doesn't cross the x-axis." },
-      { q: "What does it mean when both roots are equal?", a: "When b² - 4ac = 0, both solutions are the same number. This means the parabola just touches the x-axis at one point (its vertex)." },
+      { q: "What if the first coefficient is zero?", a: "If a = 0, the equation is linear, not quadratic. The quadratic formula will not work. Solve it as bx + c = 0 instead." },
+      { q: "What is the discriminant?", a: "It is the value b² - 4ac under the square root. It tells you the number of real solutions before you solve." },
+      { q: "Can a quadratic equation have no real solutions?", a: "Yes. If the discriminant is negative, the solutions are complex numbers. The graph does not cross the horizontal axis." },
     ],
   },
 
   "km-to-miles": {
-    description: `Kilometers and miles measure the same thing — distance — but one is metric and the other is US customary. You need this conversion constantly when traveling, reading road signs in different countries, or comparing running and cycling distances.
+    description: `Kilometers and miles both measure distance. Kilometers are metric units, while miles are imperial units. You need this conversion when traveling, reading foreign road signs, or tracking runs.
 
-One kilometer equals 0.621371 miles. So a 5-kilometer road race is roughly 3.1 miles. A marathon is 42.195 km or 26.219 miles. Speed limits in km/h need this conversion too when renting cars abroad.`,
+One kilometer equals 0.621371 miles. This means a 5-kilometer run is about 3.1 miles. A full marathon is 42.195 kilometers (which is 26.2 miles). 
+
+Knowing how to convert helps you understand speed limits abroad. It is also useful for reading maps in different countries.`,
     howToSteps: [
-      "Enter the distance in kilometers.",
-      "The equivalent in miles shows immediately.",
-      "For the reverse (miles to km), use our Miles to Kilometers calculator.",
+      "Type the distance in the kilometers box.",
+      "Read the equivalent distance in miles instantly.",
+      "Use the Miles to Kilometers page for the opposite calculation.",
+      "Check the quick lookup table below for common distances.",
     ],
     faqs: [
-      { q: "How many miles is 1 kilometer?", a: "1 kilometer equals approximately 0.6214 miles. Or think of it as about 5/8 of a mile." },
-      { q: "How many kilometers is 1 mile?", a: "1 mile equals 1.60934 kilometers. A common rough estimate is 1.6 km per mile." },
-      { q: "How far is a 5K in miles?", a: "A 5K race is 5 kilometers, which equals 3.107 miles." },
-      { q: "Is km/h the same as kph?", a: "Yes. km/h and kph both mean kilometers per hour. They're the same unit written two different ways." },
+      { q: "How many miles is 1 kilometer?", a: "1 kilometer is about 0.62 miles. You can estimate it as 5/8 of a mile." },
+      { q: "How many kilometers is 1 mile?", a: "1 mile is equal to 1.609 kilometers. A quick estimate is 1.6 km." },
+      { q: "How far is a 5K race in miles?", a: "A 5K run is exactly 5 kilometers. This equals 3.1 miles." },
     ],
   },
 
   "percentage-calculator": {
-    description: `Three types of percentage problems come up again and again: finding a percentage of a number, finding what percentage one number is of another, and finding the original value when you know a percentage of it.
+    description: `Percentage problems usually fall into three types. You might need to find a percentage of a number. Or you want to know what percentage one number is of another. Sometimes you need to find the original value.
 
-This calculator handles all three. Type any two values and the third solves automatically. You don't need to remember which formula to apply. Just fill in what you know.
+This tool solves all three types. Type the two values you know. The third value calculates automatically. You do not need to choose the math formula yourself.
 
-Percentages show up everywhere: discounts, tax rates, interest, tips, test scores, nutrition labels, and more. Getting them right is a basic life skill.`,
+Percentages are useful for daily choices. They help you calculate store discounts, tax values, tips, and test grades.`,
     howToSteps: [
-      "Pick the type of problem: Percentage of a number, What percent is X of Y, or Find the original value.",
-      "Enter the values you know.",
-      "The answer calculates in real time.",
-      "Use the examples tab to see common scenarios like a 20% tip or a 15% discount.",
+      "Choose the percentage calculation type from the menu.",
+      "Type the two numbers you already know.",
+      "Read the solved third number instantly on the screen.",
+      "Click the examples tab to see common tip and discount problems.",
     ],
     faqs: [
-      { q: "What is 20% of 150?", a: "20% of 150 is 30. The formula: 150 × 0.20 = 30." },
-      { q: "How do I find what percent 45 is of 180?", a: "Divide 45 by 180 and multiply by 100: (45/180) × 100 = 25%. So 45 is 25% of 180." },
-      { q: "How do I find the original price before a 30% discount?", a: "Divide the sale price by 0.70. If the sale price is $70, the original was $70 / 0.70 = $100." },
-      { q: "How do I calculate a tip?", a: "For a 20% tip on a $55 meal: 55 × 0.20 = $11 tip. Total with tip: $66." },
+      { q: "What is 20% of 150?", a: "20% of 150 is 30. The calculation is 150 multiplied by 0.20." },
+      { q: "How do I find what percent 45 is of 180?", a: "Divide 45 by 180 and multiply by 100. The result is 25%." },
+      { q: "How do I calculate a 15% tip?", a: "Multiply your bill by 0.15. For a $40 bill, the tip is $6." },
     ],
   },
 
   "simple-interest-calculator": {
-    description: `Simple interest is the most straightforward way interest is calculated. The interest amount stays the same each period — it's always based on the original principal, never on previously earned interest.
+    description: `Simple interest is the easiest way to calculate interest. The interest amount is constant each period. It is always calculated on the original deposit, not on interest you earned later.
 
-The formula is I = P × R × T, where P is principal, R is the annual rate as a decimal, and T is time in years. It's used for short-term loans, car loans, and some savings products. It's faster to calculate than compound interest and easier to predict.
+The formula is principal multiplied by rate multiplied by time. It is used for short-term personal loans and auto loans. It is easy to calculate and predict.
 
-For longer investment periods, compound interest earns significantly more. But for borrowing, simple interest often means lower total payments.`,
+Compound interest earns more money over long periods. But simple interest is often cheaper when you are borrowing money.`,
     howToSteps: [
-      "Enter the principal — the original loan or deposit amount.",
-      "Enter the annual interest rate as a percentage.",
-      "Enter the time period in years (or months and convert).",
-      "The interest earned and total amount appear instantly.",
+      "Type the principal (starting loan or deposit amount).",
+      "Type the annual interest rate as a percentage.",
+      "Select the duration in years or months.",
+      "Read the interest earned and total final balance instantly.",
     ],
     faqs: [
-      { q: "What is the difference between simple and compound interest?", a: "Simple interest is always calculated on the original principal. Compound interest is calculated on the principal plus accumulated interest, so it grows faster over time." },
-      { q: "What loans use simple interest?", a: "Car loans, most personal loans, and student loans often use simple interest. Mortgages use compound interest." },
-      { q: "How do I convert monthly rate to annual?", a: "Multiply the monthly rate by 12. A 1% monthly rate equals a 12% annual rate." },
+      { q: "What is the difference between simple and compound interest?", a: "Simple interest only calculates on the original principal. Compound interest calculates on the principal plus accumulated interest." },
+      { q: "What loans use simple interest?", a: "Auto loans and personal loans often use simple interest. Mortgages typically use compound interest." },
     ],
   },
 
   "discount-calculator": {
-    description: `A discount calculator does one thing well: it shows you exactly how much you save and what you actually pay after a percentage off. No mental math, no approximations.
+    description: `A discount calculator shows you exactly how much money you save. It also shows the final price you pay after a percentage reduction. You do not need to perform mental math.
 
-Enter the original price and the discount percentage. You get the sale price, the dollar amount saved, and what fraction of the original you're paying. Useful for shopping, comparing deals, and checking if a "sale" is actually worth it.`,
+Type the original retail price and the discount percentage. The tool outputs the sale price and your total savings. It is useful for retail shopping and comparing store deals.`,
     howToSteps: [
-      "Enter the original price of the item.",
-      "Enter the discount percentage.",
-      "See the sale price, amount saved, and final cost immediately.",
-      "Try stacking discounts: apply one discount, then use the sale price as the new original for a second discount.",
+      "Type the original retail price in the price box.",
+      "Type the discount percentage you want to apply.",
+      "Read the discounted sale price and savings immediately.",
+      "Compare the original and final price on the screen.",
     ],
     faqs: [
-      { q: "What is 20% off $85?", a: "20% off $85 saves you $17. You pay $68." },
-      { q: "How do I calculate a double discount?", a: "Apply discounts one at a time, not by adding them. A 20% then 10% discount isn't 30% off. It's 28% off the original." },
-      { q: "What does BOGO mean?", a: "Buy One Get One — effectively 50% off when buying two items at full price. Or 100% off the cheaper one if items differ in price." },
+      { q: "What is 20% off $85?", a: "A 20% discount on $85 saves you $17. The final price you pay is $68." },
+      { q: "How do I calculate a double discount?", a: "Apply the first discount to the price. Then apply the second discount to the new price. Do not add the percentages together." },
     ],
   },
 };
 
 // ─── Generate FAQs for any calculator from its metadata ───────────────────────
 function generateFAQs(entry: RegistryEntry): Array<{ q: string; a: string }> {
+  const formulaAns = entry.formula
+    ? `This calculator runs the math formula ${entry.formula}.`
+    : `This calculator uses standard math equations checked for absolute correctness.`;
+
   return [
     {
       q: `What is the ${entry.name}?`,
-      a: `The ${entry.name} is a free online tool that lets you ${entry.shortDesc.toLowerCase()} No sign-up or download required.`,
+      a: `The ${entry.name} is a free online solver. It helps you ${entry.shortDesc.toLowerCase().replace(/\.$/, "")}. You do not need to register or install files.`,
     },
     {
       q: `How do I use the ${entry.name}?`,
-      a: `Enter your values into the input fields. Results calculate in real time as you type. Switch units using the dropdown next to each field.`,
+      a: `Type your values in the empty boxes. The solver calculates outputs in real time. Select new units from the menu if you want to convert.`,
     },
     {
-      q: `Is the ${entry.name} free?`,
-      a: `Yes. This calculator is completely free. There are no hidden fees, no accounts to create, and no limits on how many times you can use it.`,
+      q: `Is this ${entry.name} free?`,
+      a: `Yes, this tool is free. There are no limits, no sign-ups, and no hidden costs.`,
     },
     {
-      q: `What formula does the ${entry.name} use?`,
-      a: entry.formula
-        ? `This calculator uses the formula: ${entry.formula}.`
-        : `This calculator uses standard mathematical formulas validated against known references.`,
+      q: `What formula does this calculator use?`,
+      a: formulaAns,
     },
     {
-      q: `Can I use the ${entry.name} on my phone?`,
-      a: `Yes. The calculator works on all devices — desktop, tablet, and mobile. It's also installable as a PWA for offline use.`,
+      q: `Can I use this on my mobile phone?`,
+      a: `Yes, it works on mobile phones, tablets, and computers. You can also save it to your home screen to run it offline.`,
     },
     {
-      q: `How accurate is the ${entry.name}?`,
-      a: `Results are calculated using double-precision floating-point math (64-bit), which is accurate to 15 significant digits. For financial decisions, always verify with a professional.`,
+      q: `How accurate is the calculation?`,
+      a: `The calculator uses standard 64-bit math checks. This guarantees accurate results up to 15 digits. Double check your numbers for critical choices.`,
     },
   ];
 }
@@ -213,12 +228,12 @@ function generateFAQs(entry: RegistryEntry): Array<{ q: string; a: string }> {
 // ─── Generate How-To steps for any calculator ─────────────────────────────────
 function generateSteps(entry: RegistryEntry): string[] {
   return [
-    `Open the ${entry.name} at CalcUnit.net.`,
-    `Enter your values in the input fields. Fields marked with a blue background are computed automatically.`,
-    `If the calculator has unit selectors (like kg vs lbs), click the unit button to switch.`,
-    `Results update in real time as you type — no need to press a button.`,
-    `Click the bookmark icon to save this calculator for quick access later.`,
-    `Use the Examples buttons to load preset values and see how the formula works.`,
+    `Open the ${entry.name} on CalcUnit.net.`,
+    `Type your numbers in the input boxes. The calculator computes the outputs automatically.`,
+    `Click the unit selector to switch units if needed.`,
+    `Watch the results update instantly as you type. You do not need to click solve.`,
+    `Click the bookmark icon to save this page for later.`,
+    `Click the examples buttons to load preset numbers and see how calculations work.`,
   ];
 }
 
@@ -245,17 +260,16 @@ export function getSEOContent(entry: RegistryEntry): SEOContent {
 }
 
 function generateDescription(entry: RegistryEntry): string {
-  return `The ${entry.name} is a free online tool you can use right now — no download, no account, and no waiting.
+  const formulaStr = entry.formula ? ` It runs the formula ${entry.formula} to compute results.` : "";
+  return `Use the free ${entry.name} to solve your problems. This online tool requires no accounts or downloads. Type your input values. The calculator outputs precise answers in real time.${formulaStr}
 
-${entry.shortDesc}${entry.formula ? ` The formula behind it is: ${entry.formula}.` : ""} Enter your values and the answer appears in real time.
-
-Use it for school homework, professional calculations, or just quick everyday conversions. Every calculator on CalcUnit.net is built for accuracy and speed.`;
+You can use this tool for school work, homework, or quick everyday calculations. Every solver on CalcUnit.net is built to be accurate and fast. It works on mobile screens and computers.`;
 }
 
 function generateExamples(entry: RegistryEntry): SEOContent["examples"] {
   return [
-    { label: "Basic example",   calculation: `${entry.name} with typical values`, result: "See the calculator above" },
-    { label: "Second example",  calculation: "Change the inputs to match your situation", result: "Result updates automatically" },
-    { label: "Edge case",       calculation: "Try entering zero or very large values", result: "Calculator handles edge cases gracefully" },
+    { label: "Standard Calculation",   calculation: `Calculate ${entry.name.toLowerCase()} using common values`, result: "Check the outputs above" },
+    { label: "Custom Input",  calculation: "Change the numbers to match your specific problem", result: "Result updates instantly" },
+    { label: "Extreme Values",       calculation: "Type zero or large values to test formulas", result: "Solver handles edge cases correctly" },
   ];
 }
