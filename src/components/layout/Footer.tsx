@@ -1,43 +1,70 @@
 "use client";
 
 import Link from "next/link";
-import { Zap, Activity, Calculator } from "lucide-react";
+import { WifiOff, Calculator, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-zinc-200 bg-[#F2F0EB] text-[#4E4844] mt-16 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-          
-          {/* Column 1: Info & Branding */}
-          <div className="md:col-span-5 space-y-4 text-left">
-            <Link href="/" className="flex items-center gap-2 text-[#1C1917] dark:text-white font-extrabold text-lg">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 text-white">
-                <Calculator size={16} />
+    <footer className="bg-zinc-900 text-zinc-300 border-t border-zinc-800 mt-16 dark:bg-zinc-950 dark:border-zinc-900">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        
+        {/* ─── TOP SECTION: Trust Badges & Tagline ────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-12 border-b border-zinc-800 items-center">
+          <div className="lg:col-span-5 space-y-3">
+            <Link href="/" className="flex items-center gap-2.5 text-white font-extrabold text-lg tracking-tight">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/20">
+                <Calculator size={17} />
               </span>
-              <span>CalcUnit<span className="text-indigo-600 font-bold">.net</span></span>
+              <span>CalcUnit<span className="text-indigo-400 font-bold">.net</span></span>
             </Link>
-            <p className="text-sm leading-relaxed text-[#706A65] dark:text-zinc-400 max-w-sm">
-              CalcUnit.net is a comprehensive, free online calculator platform offering 1,000+ interactive tools for math, algebra, finance, health, physics, statistics, and unit conversion. Engineered for speed and utility, our platform features real-time, bi-directional calculations and works completely offline as an installable Progressive Web App (PWA).
+            <p className="text-sm text-zinc-400 leading-relaxed max-w-md">
+              A premium, comprehensive calculator engine hosting 1,000+ specialized conversion and mathematical solvers. Free, offline-first, and ad-free.
             </p>
-            <div className="flex items-center gap-3 pt-2 text-xs text-[#706A65] dark:text-zinc-500">
-              <span className="flex items-center gap-1">
-                <Zap size={11} className="text-indigo-600" /> Fast solving
-              </span>
-              <span className="flex items-center gap-1">
-                <Activity size={11} className="text-indigo-600" /> No ads / sign-up
-              </span>
-            </div>
           </div>
 
-          {/* Column 2: Categories */}
-          <div className="md:col-span-2.5 sm:col-span-4 text-left">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-[#1C1917] dark:text-white mb-4">
-              Categories
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* PWA offline badge */}
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-zinc-800/40 border border-zinc-800/80 hover:border-zinc-700 transition-colors">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400">
+                <WifiOff size={18} />
+              </span>
+              <div>
+                <h4 className="text-sm font-semibold text-white flex items-center gap-1.5">
+                  100% Offline PWAs
+                </h4>
+                <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                  Install CalcUnit to your desktop or mobile screen. Fully functional without an internet connection.
+                </p>
+              </div>
+            </div>
+
+            {/* Zero Ads / Privacy badge */}
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-zinc-800/40 border border-zinc-800/80 hover:border-zinc-700 transition-colors">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400">
+                <ShieldCheck size={18} />
+              </span>
+              <div>
+                <h4 className="text-sm font-semibold text-white">
+                  Zero Ads & Tracking
+                </h4>
+                <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                  Fast, clean experience with no pop-ups, logins, or cookies. All calculations run strictly in your browser.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── MIDDLE SECTION: Organized Links ────────────────────────────────────── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-8 py-16">
+          
+          <div className="lg:col-span-3 space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
+              <Sparkles size={12} className="text-indigo-400" /> Categories
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-3 text-sm">
               {[
                 { label: "Math Calculators", href: "/math" },
                 { label: "Algebra Solver", href: "/algebra" },
@@ -47,23 +74,20 @@ export function Footer() {
                 { label: "Physics Tools", href: "/physics" },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="hover:text-indigo-600 transition-colors"
-                  >
-                    {link.label}
+                  <Link href={link.href} className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1 group">
+                    <span>{link.label}</span>
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-400" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 3: Featured Tools */}
-          <div className="md:col-span-2.5 sm:col-span-4 text-left">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-[#1C1917] dark:text-white mb-4">
+          <div className="lg:col-span-3 space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
               Featured Tools
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-3 text-sm">
               {[
                 { label: "Scientific Calculator", href: "/" },
                 { label: "BMI Calculator", href: "/health/bmi-calculator" },
@@ -73,34 +97,49 @@ export function Footer() {
                 { label: "Kilograms to Pounds", href: "/converters/kg-to-pounds" },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="hover:text-indigo-600 transition-colors"
-                  >
-                    {link.label}
+                  <Link href={link.href} className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1 group">
+                    <span>{link.label}</span>
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-400" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 4: Platform */}
-          <div className="md:col-span-2 sm:col-span-4 text-left">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-[#1C1917] dark:text-white mb-4">
+          <div className="lg:col-span-3 space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
               Platform
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-3 text-sm">
               {[
                 { label: "All Categories", href: "/categories" },
                 { label: "Saved Tools", href: "/saved" },
                 { label: "Preferences", href: "/settings" },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="hover:text-indigo-600 transition-colors"
-                  >
-                    {link.label}
+                  <Link href={link.href} className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1 group">
+                    <span>{link.label}</span>
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-400" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3 space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+              Resources
+            </h3>
+            <ul className="space-y-3 text-sm">
+              {[
+                { label: "Interactive Sitemap", href: "/sitemap.xml" },
+                { label: "Keyboard Shortcuts", href: "/settings" },
+                { label: "Calculators Directory", href: "/categories" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1 group">
+                    <span>{link.label}</span>
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-400" />
                   </Link>
                 </li>
               ))}
@@ -109,14 +148,23 @@ export function Footer() {
 
         </div>
 
-        {/* Bottom copyright block */}
-        <div className="mt-12 border-t border-zinc-300 pt-8 text-center text-xs text-[#706A65] dark:border-zinc-800 dark:text-zinc-500">
-          <p>© {currentYear} CalcUnit.net. All rights reserved.</p>
-          <p className="mt-1">
-            Calculations are for informational purposes. Double-check all critical values.
-          </p>
+        {/* ─── BOTTOM SECTION: Copyright & Legal Disclaimer ───────────────────────── */}
+        <div className="border-t border-zinc-800 py-10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-500">
+          <div className="text-center md:text-left space-y-1">
+            <p>© {currentYear} CalcUnit.net. All rights reserved.</p>
+            <p className="max-w-2xl text-zinc-600">
+              Disclamer: Calculations are computed locally in the browser. Values should be double-checked for critical professional, financial, or academic decisions.
+            </p>
+          </div>
+          <div className="flex gap-4 shrink-0">
+            <Link href="/settings" className="hover:text-zinc-400 transition-colors">Privacy Policy</Link>
+            <span>•</span>
+            <Link href="/settings" className="hover:text-zinc-400 transition-colors">Terms of Use</Link>
+          </div>
         </div>
+
       </div>
     </footer>
   );
 }
+
