@@ -18,6 +18,8 @@ export interface RegistryEntry {
 }
 
 export const ALL_CALCULATORS: RegistryEntry[] = [
+  { slug: "basic-statistics-calculator", name: "Basic Statistics Calculator", category: "statistics", icon: "📊", shortDesc: "Calculates descriptive statistics (mean, median, range, variance, standard deviation) for a sample size of 5.", formula: "x1+x2+x3+x4+x5", tags: ["statistics","basic statistics","math"], hasSchema: true },
+  { slug: "descriptive-statistics-calculator", name: "Descriptive Statistics Calculator", category: "statistics", icon: "📊", shortDesc: "Computes key descriptive statistical values (sum, mean, range, variance, std dev) for a dataset.", formula: "x1+x2+x3+x4+x5", tags: ["statistics","descriptive statistics","math"], hasSchema: true },
   { slug: "megabyte-converter", name: "Megabyte Converter", category: "converters", icon: "🔄", shortDesc: "Converts digital data size from Megabytes (MB) to Kilobytes, Gigabytes, Terabytes, and Bytes.", formula: "mb * 1024", tags: ["converters","megabyte","math"], hasSchema: true },
   { slug: "megajoule-converter", name: "Megajoule Converter", category: "converters", icon: "🔄", shortDesc: "Converts energy values from Megajoules (MJ) to Joules, Kilojoules, Gigajoules, and Kilowatt-hours.", formula: "mj * 1000000", tags: ["converters","megajoule","math"], hasSchema: true },
   { slug: "megapascal-converter", name: "Megapascal Converter", category: "converters", icon: "🔄", shortDesc: "Converts pressure measurements from Megapascals (MPa) to Pascals, Kilopascals, Bar, and PSI.", formula: "mpa * 1000000", tags: ["converters","megapascal","math"], hasSchema: true },

@@ -1,0 +1,135 @@
+{
+  "id": "descriptive-statistics",
+  "slug": "descriptive-statistics-calculator",
+  "name": "Descriptive Statistics Calculator",
+  "category": "statistics",
+  "description": "Computes key descriptive statistical values (sum, mean, range, variance, std dev) for a dataset.",
+  "icon": "📊",
+  "tags": [
+    "statistics",
+    "descriptive statistics",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "x1",
+      "label": "Value 1",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "x2",
+      "label": "Value 2",
+      "type": "number",
+      "defaultValue": 20
+    },
+    {
+      "id": "x3",
+      "label": "Value 3",
+      "type": "number",
+      "defaultValue": 15
+    },
+    {
+      "id": "x4",
+      "label": "Value 4",
+      "type": "number",
+      "defaultValue": 30
+    },
+    {
+      "id": "x5",
+      "label": "Value 5",
+      "type": "number",
+      "defaultValue": 25
+    },
+    {
+      "id": "sum",
+      "label": "Sum",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "mean",
+      "label": "Mean",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "min",
+      "label": "Minimum",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "max",
+      "label": "Maximum",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "range",
+      "label": "Range",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "variance",
+      "label": "Variance (Sample)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "stddev",
+      "label": "Std Dev (Sample)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "x1",
+        "x2",
+        "x3",
+        "x4",
+        "x5"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "sum",
+        "mean",
+        "min",
+        "max",
+        "range",
+        "variance",
+        "stddev"
+      ]
+    }
+  ],
+  "formulas": {
+    "sum": "x1+x2+x3+x4+x5",
+    "mean": "sum/5",
+    "min": "min(x1,x2,x3,x4,x5)",
+    "max": "max(x1,x2,x3,x4,x5)",
+    "range": "max-min",
+    "variance": "((x1-mean)^2 + (x2-mean)^2 + (x3-mean)^2 + (x4-mean)^2 + (x5-mean)^2)/4",
+    "stddev": "sqrt(variance)"
+  },
+  "explanation": "## Descriptive Statistics Calculator\n\nComputes key descriptive statistical values (sum, mean, range, variance, std dev) for a dataset.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "x1": 10,
+        "x2": 20,
+        "x3": 15,
+        "x4": 30,
+        "x5": 25
+      }
+    }
+  ]
+}
