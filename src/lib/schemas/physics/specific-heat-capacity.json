@@ -1,0 +1,71 @@
+{
+  "id": "specific-heat-capacity",
+  "slug": "specific-heat-capacity-calculator",
+  "name": "Specific Heat Capacity Calculator",
+  "category": "physics",
+  "description": "Calculates specific heat capacity from heat energy transferred, mass, and temperature change.",
+  "icon": "⚛️",
+  "tags": [
+    "physics",
+    "specific heat capacity",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "heat",
+      "label": "Heat Added/Removed (Q, J)",
+      "type": "number",
+      "defaultValue": 4184
+    },
+    {
+      "id": "mass",
+      "label": "Mass (m, kg)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "dt",
+      "label": "Temperature Change (ΔT, K or °C)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "c",
+      "label": "Specific Heat (c, J/(kg·K))",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "heat",
+        "mass",
+        "dt"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "c"
+      ]
+    }
+  ],
+  "formulas": {
+    "c": "heat / (mass * dt)"
+  },
+  "explanation": "## Specific Heat Capacity Calculator\n\nCalculates specific heat capacity from heat energy transferred, mass, and temperature change.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "heat": 4184,
+        "mass": 1,
+        "dt": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "id": "mmhg",
+  "slug": "mmhg-converter",
+  "name": "Mmhg Converter",
+  "category": "converters",
+  "description": "Converts pressure measurements from millimeters of mercury (mmHg) to standard atmospheric units.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "mmhg",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "mmhg",
+      "label": "mmHg",
+      "type": "number",
+      "defaultValue": 760
+    },
+    {
+      "id": "pa",
+      "label": "Pascals (Pa)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "kpa",
+      "label": "Kilopascals (kPa)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "bar",
+      "label": "Bar",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "psi",
+      "label": "PSI",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "mbar",
+      "label": "Millibars (mbar)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "mmhg"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "pa",
+        "kpa",
+        "bar",
+        "psi",
+        "mbar"
+      ]
+    }
+  ],
+  "formulas": {
+    "pa": "mmhg * 133.3224",
+    "kpa": "mmhg * 0.1333224",
+    "bar": "mmhg * 0.001333224",
+    "psi": "mmhg * 0.01933678",
+    "mbar": "mmhg * 1.333224"
+  },
+  "explanation": "## Mmhg Converter\n\nConverts pressure measurements from millimeters of mercury (mmHg) to standard atmospheric units.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "mmhg": 760
+      }
+    }
+  ]
+}

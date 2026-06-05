@@ -1,0 +1,79 @@
+{
+  "id": "nanometer",
+  "slug": "nanometer-converter",
+  "name": "Nanometer Converter",
+  "category": "converters",
+  "description": "Converts length measurements from Nanometers (nm) to Meters, Micrometers, Picometers, and Angstroms.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "nanometer",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "nm",
+      "label": "Nanometers (nm)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "m",
+      "label": "Meters (m)",
+      "type": "computed",
+      "precision": 12
+    },
+    {
+      "id": "um",
+      "label": "Micrometers (µm)",
+      "type": "computed",
+      "precision": 6
+    },
+    {
+      "id": "pm",
+      "label": "Picometers (pm)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "angstrom",
+      "label": "Angstroms (Å)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "nm"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "m",
+        "um",
+        "pm",
+        "angstrom"
+      ]
+    }
+  ],
+  "formulas": {
+    "m": "nm / 1000000000",
+    "um": "nm / 1000",
+    "pm": "nm * 1000",
+    "angstrom": "nm * 10"
+  },
+  "explanation": "## Nanometer Converter\n\nConverts length measurements from Nanometers (nm) to Meters, Micrometers, Picometers, and Angstroms.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "nm": 1
+      }
+    }
+  ]
+}

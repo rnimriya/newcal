@@ -1,0 +1,79 @@
+{
+  "id": "megajoule",
+  "slug": "megajoule-converter",
+  "name": "Megajoule Converter",
+  "category": "converters",
+  "description": "Converts energy values from Megajoules (MJ) to Joules, Kilojoules, Gigajoules, and Kilowatt-hours.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "megajoule",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "mj",
+      "label": "Megajoules (MJ)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "j",
+      "label": "Joules (J)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "kj",
+      "label": "Kilojoules (kJ)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "gj",
+      "label": "Gigajoules (GJ)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "kwh",
+      "label": "Kilowatt-hours (kWh)",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "mj"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "j",
+        "kj",
+        "gj",
+        "kwh"
+      ]
+    }
+  ],
+  "formulas": {
+    "j": "mj * 1000000",
+    "kj": "mj * 1000",
+    "gj": "mj / 1000",
+    "kwh": "mj * 0.277778"
+  },
+  "explanation": "## Megajoule Converter\n\nConverts energy values from Megajoules (MJ) to Joules, Kilojoules, Gigajoules, and Kilowatt-hours.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "mj": 1
+      }
+    }
+  ]
+}

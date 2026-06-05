@@ -1,0 +1,63 @@
+{
+  "id": "percent-to-fraction",
+  "slug": "percent-to-fraction-calculator",
+  "name": "Percent to Fraction Calculator",
+  "category": "math",
+  "description": "Converts a percentage value to its equivalent simplified fraction.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "percent to fraction",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "pct",
+      "label": "Percentage (%)",
+      "type": "number",
+      "defaultValue": 75
+    },
+    {
+      "id": "num",
+      "label": "Numerator",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "den",
+      "label": "Denominator",
+      "type": "computed",
+      "precision": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "pct"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "num",
+        "den"
+      ]
+    }
+  ],
+  "formulas": {
+    "num": "pct / gcd(pct, 100)",
+    "den": "100 / gcd(pct, 100)"
+  },
+  "explanation": "## Percent to Fraction Calculator\n\nConverts a percentage value to its equivalent simplified fraction.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "pct": 75
+      }
+    }
+  ]
+}

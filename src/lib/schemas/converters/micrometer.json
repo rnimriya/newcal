@@ -1,0 +1,79 @@
+{
+  "id": "micrometer",
+  "slug": "micrometer-converter",
+  "name": "Micrometer Converter",
+  "category": "converters",
+  "description": "Converts length measurements from Micrometers (µm) to Meters, Millimeters, Nanometers, and Inches.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "micrometer",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "um",
+      "label": "Micrometers (µm)",
+      "type": "number",
+      "defaultValue": 100
+    },
+    {
+      "id": "m",
+      "label": "Meters (m)",
+      "type": "computed",
+      "precision": 8
+    },
+    {
+      "id": "mm",
+      "label": "Millimeters (mm)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "nm",
+      "label": "Nanometers (nm)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "inch",
+      "label": "Inches (in)",
+      "type": "computed",
+      "precision": 8
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "um"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "m",
+        "mm",
+        "nm",
+        "inch"
+      ]
+    }
+  ],
+  "formulas": {
+    "m": "um / 1000000",
+    "mm": "um / 1000",
+    "nm": "um * 1000",
+    "inch": "um * 0.0000393700787"
+  },
+  "explanation": "## Micrometer Converter\n\nConverts length measurements from Micrometers (µm) to Meters, Millimeters, Nanometers, and Inches.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "um": 100
+      }
+    }
+  ]
+}

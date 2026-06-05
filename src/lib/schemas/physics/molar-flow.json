@@ -1,0 +1,63 @@
+{
+  "id": "molar-flow",
+  "slug": "molar-flow-calculator",
+  "name": "Molar Flow Rate Calculator",
+  "category": "physics",
+  "description": "Calculates the molar flow rate of a substance from its mass flow rate and molar mass.",
+  "icon": "⚛️",
+  "tags": [
+    "physics",
+    "molar flow",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "mass_flow",
+      "label": "Mass Flow Rate (kg/s)",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "molar_mass",
+      "label": "Molar Mass (g/mol)",
+      "type": "number",
+      "defaultValue": 18.015
+    },
+    {
+      "id": "molar_flow",
+      "label": "Molar Flow Rate (mol/s)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "mass_flow",
+        "molar_mass"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "molar_flow"
+      ]
+    }
+  ],
+  "formulas": {
+    "molar_flow": "mass_flow * 1000 / molar_mass"
+  },
+  "explanation": "## Molar Flow Rate Calculator\n\nCalculates the molar flow rate of a substance from its mass flow rate and molar mass.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "mass_flow": 5,
+        "molar_mass": 18.015
+      }
+    }
+  ]
+}

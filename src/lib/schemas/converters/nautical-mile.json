@@ -1,0 +1,79 @@
+{
+  "id": "nautical-mile",
+  "slug": "nautical-mile-converter",
+  "name": "Nautical Mile Converter",
+  "category": "converters",
+  "description": "Converts distance from Nautical Miles (nmi) to standard metric and imperial units.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "nautical mile",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "nmi",
+      "label": "Nautical Miles (nmi)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "m",
+      "label": "Meters (m)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "km",
+      "label": "Kilometers (km)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "mile",
+      "label": "Statute Miles (mi)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "feet",
+      "label": "Feet (ft)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "nmi"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "m",
+        "km",
+        "mile",
+        "feet"
+      ]
+    }
+  ],
+  "formulas": {
+    "m": "nmi * 1852",
+    "km": "nmi * 1.852",
+    "mile": "nmi * 1.150779",
+    "feet": "nmi * 6076.115"
+  },
+  "explanation": "## Nautical Mile Converter\n\nConverts distance from Nautical Miles (nmi) to standard metric and imperial units.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "nmi": 1
+      }
+    }
+  ]
+}

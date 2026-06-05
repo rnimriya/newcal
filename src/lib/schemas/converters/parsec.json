@@ -1,0 +1,79 @@
+{
+  "id": "parsec",
+  "slug": "parsec-converter",
+  "name": "Parsec Converter",
+  "category": "converters",
+  "description": "Converts astronomical distances from Parsecs (pc) to Light Years, Astronomical Units, and meters.",
+  "icon": "🔄",
+  "tags": [
+    "converters",
+    "parsec",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "pc",
+      "label": "Parsecs (pc)",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "ly",
+      "label": "Light Years (ly)",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "au",
+      "label": "Astronomical Units (AU)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "km",
+      "label": "Kilometers (km)",
+      "type": "computed",
+      "precision": 2
+    },
+    {
+      "id": "m",
+      "label": "Meters (m)",
+      "type": "computed",
+      "precision": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "pc"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "ly",
+        "au",
+        "km",
+        "m"
+      ]
+    }
+  ],
+  "formulas": {
+    "ly": "pc * 3.26156",
+    "au": "pc * 206265",
+    "km": "pc * 3.0857e13",
+    "m": "pc * 3.0857e16"
+  },
+  "explanation": "## Parsec Converter\n\nConverts astronomical distances from Parsecs (pc) to Light Years, Astronomical Units, and meters.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "pc": 1
+      }
+    }
+  ]
+}

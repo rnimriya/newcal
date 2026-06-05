@@ -1,0 +1,63 @@
+{
+  "id": "specific-volume",
+  "slug": "specific-volume-calculator",
+  "name": "Specific Volume Calculator",
+  "category": "physics",
+  "description": "Calculates specific volume, which is the ratio of a substance's volume to its mass (reciprocal of density).",
+  "icon": "⚛️",
+  "tags": [
+    "physics",
+    "specific volume",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "volume",
+      "label": "Volume (V, m³)",
+      "type": "number",
+      "defaultValue": 2
+    },
+    {
+      "id": "mass",
+      "label": "Mass (m, kg)",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "spec_vol",
+      "label": "Specific Volume (v, m³/kg)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "volume",
+        "mass"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "spec_vol"
+      ]
+    }
+  ],
+  "formulas": {
+    "spec_vol": "volume / mass"
+  },
+  "explanation": "## Specific Volume Calculator\n\nCalculates specific volume, which is the ratio of a substance's volume to its mass (reciprocal of density).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "volume": 2,
+        "mass": 5
+      }
+    }
+  ]
+}
