@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { AlertOctagon, Scale, ShieldAlert, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Disclaimer — CalcUnit.net",
-  description: "Please read CalcUnit's legal disclaimer. Calculated results are served for educational reference and check validation only.",
+  title: "Disclaimer - CalcUnit.net",
+  description: "CalcUnit results are for reference only. Always verify numbers before using them for medical, financial, or engineering decisions.",
   alternates: { canonical: "https://calcunit.net/disclaimer" },
 };
 
@@ -28,9 +28,9 @@ export default function DisclaimerPage() {
         <div className="flex items-start gap-3.5">
           <ShieldAlert size={20} className="text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <div>
-            <h4 className="font-bold text-sm">Educational and Convenience Reference Only</h4>
+            <h4 className="font-bold text-sm">For reference only - not a substitute for expert advice</h4>
             <p className="text-xs text-amber-800/90 dark:text-amber-400 mt-1 leading-relaxed">
-              All outputs and numbers compiled on CalcUnit are processed client-side. The formulas should NOT be relied upon for critical structural designs, medical evaluations, financial investments, or high-stakes academic examinations without independent verification.
+              All results on CalcUnit are computed in your browser. Do not rely on them alone for structural designs, medical decisions, financial investments, or high-stakes exams. Always verify with a qualified professional.
             </p>
           </div>
         </div>
@@ -44,7 +44,7 @@ export default function DisclaimerPage() {
             1. Accuracy of Calculations
           </h2>
           <p className="text-sm leading-relaxed">
-            While we strive to ensure that all formulas are coded and parsed correctly (following standard reference books, NIST parameters, and mathematical conventions), errors can happen. Math formulas evaluate dynamic floating-point variables, which are subject to minor precision limitations inside standard browser runtimes. CalcUnit makes no warranties regarding the absolute correctness of results.
+            We write every formula based on standard reference books, NIST parameters, and accepted math conventions. Even so, errors can occur. Floating-point arithmetic in browsers has small precision limits. CalcUnit does not guarantee that every result is correct to the last decimal.
           </p>
         </section>
 
@@ -57,19 +57,19 @@ export default function DisclaimerPage() {
             <div className="p-4 rounded-xl border border-zinc-150 bg-zinc-50/30 dark:border-zinc-800 dark:bg-zinc-900/35">
               <h4 className="font-bold text-sm text-zinc-900 dark:text-white">Financial & Loans</h4>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-                Loan, interest, tax, and EMI calculations are estimates. Lending institutions apply different compounding frequencies, fees, and calculations. Always confirm rates with your lender before signing documents.
+                Loan, interest, tax, and EMI figures are estimates. Banks and lenders use different compounding methods, fees, and rate structures. Confirm exact numbers with your lender before signing anything.
               </p>
             </div>
             <div className="p-4 rounded-xl border border-zinc-150 bg-zinc-50/30 dark:border-zinc-800 dark:bg-zinc-900/35">
               <h4 className="font-bold text-sm text-zinc-900 dark:text-white">Physics & Materials Engineering</h4>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-                Material values (elastic modulus, compressive strength, flexural tests) are solved using standard theoretical equations. Actual laboratory specimen conditions vary based on moisture, material defects, and ambient temperatures.
+                Values like elastic modulus and compressive strength come from standard theoretical equations. Real-world results vary based on moisture, defects, and temperature. Test your actual materials in a lab.
               </p>
             </div>
             <div className="p-4 rounded-xl border border-zinc-150 bg-zinc-50/30 dark:border-zinc-800 dark:bg-zinc-900/35">
               <h4 className="font-bold text-sm text-zinc-900 dark:text-white">Health & BMI</h4>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
-                Body Mass Index (BMI) is a general sizing standard and does not account for muscle mass, bone density, or general athletic compositions. It does not replace professional medical evaluations.
+                BMI is a rough size indicator. It does not account for muscle mass, bone density, or athletic build. It is not a medical diagnosis. Talk to a doctor for health assessments.
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function DisclaimerPage() {
             3. Limitation of Liability
           </h2>
           <p className="text-sm leading-relaxed">
-            In no event shall CalcUnit, its builders, contributors, or repository hosters be held liable for any direct, indirect, incidental, special, or consequential damages (including, but not limited to, loss of profits, commercial impact, academic penalties, or structural failures) arising out of the use or inability to use this platform.
+            CalcUnit, its contributors, and hosting providers are not responsible for any loss, penalty, or damage that results from using results from this site. That includes financial loss, academic penalties, or any structural failure.
           </p>
         </section>
       </div>

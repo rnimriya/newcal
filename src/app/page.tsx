@@ -7,8 +7,8 @@ import { ScientificCalculator } from "@/components/calculator/ScientificCalculat
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
 
 export const metadata: Metadata = {
-  title: "Free Online Calculators — CalcUnit.net | Math, Finance, Converters",
-  description: "1000+ free online calculators for math, finance, health, physics, and unit conversion. Instant results, no sign-up, works offline. Try CalcUnit.net.",
+  title: "Free Online Calculators - Math, Finance, Health | CalcUnit.net",
+  description: "1,000+ free calculators for math, finance, health, physics, and unit conversion. Results update as you type. No sign-up. Works offline.",
   alternates: { canonical: "https://calcunit.net" },
 };
 
@@ -41,18 +41,17 @@ export default function HomePage() {
         {/* Left Column: Title, search & details */}
         <div className="lg:col-span-7 text-left space-y-6">
           <span className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 px-4 py-1.5 text-sm font-medium text-indigo-700">
-            <Zap size={13} /> 1000+ free calculators — no sign-up needed
+            <Zap size={13} /> 1,000+ free calculators. No sign-up.
           </span>
 
           <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
-            Every calculation,
+            Any calculation,
             <br />
-            <span className="text-indigo-600">solved in seconds.</span>
+            <span className="text-indigo-600">answered instantly.</span>
           </h1>
 
           <p className="text-lg text-slate-500 max-w-lg leading-relaxed">
-            Free calculators for math, finance, health, physics, and unit conversion.
-            Results update in real time. Works offline.
+            Math, finance, health, physics, and unit conversion - all free. Type a number and the result appears right away. No account needed.
           </p>
 
           {/* Search bar — points to /categories */}
@@ -69,9 +68,9 @@ export default function HomePage() {
           {/* Feature pills */}
           <div className="flex flex-wrap gap-2.5 text-sm text-slate-500">
             {[
-              { icon: <Zap size={12} className="text-indigo-500" />, label: "Real-time solving" },
-              { icon: <Wifi size={12} className="text-emerald-500" />, label: "Works offline (PWA)" },
-              { icon: <Smartphone size={12} className="text-violet-500" />, label: "Mobile-friendly" },
+              { icon: <Zap size={12} className="text-indigo-500" />, label: "Results as you type" },
+              { icon: <Wifi size={12} className="text-emerald-500" />, label: "Works offline" },
+              { icon: <Smartphone size={12} className="text-violet-500" />, label: "Works on mobile" },
             ].map(({ icon, label }) => (
               <span key={label} className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
                 {icon} {label}
@@ -88,7 +87,7 @@ export default function HomePage() {
 
       {/* ── Category Grid ───────────────────────────────────────────────────── */}
       <section>
-        <h2 className="text-xl font-bold text-slate-900 mb-4">Browse by Category</h2>
+        <h2 className="text-xl font-bold text-slate-900 mb-4">Pick a Category</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {CATEGORIES.map((cat) => (
             <Link
@@ -113,7 +112,7 @@ export default function HomePage() {
       {/* ── Featured Calculators ─────────────────────────────────────────────── */}
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-slate-900">Most Popular Calculators</h2>
+          <h2 className="text-xl font-bold text-slate-900">Most Used Calculators</h2>
           <Link href="/categories" className="text-sm font-medium text-indigo-600 hover:text-indigo-700 flex items-center gap-1">
             View all <ArrowRight size={13} />
           </Link>
@@ -155,15 +154,10 @@ export default function HomePage() {
         <div className="calc-card p-6 space-y-4">
           <h2 className="text-lg font-bold text-slate-900 mb-2">About CalcUnit.net</h2>
           <p className="text-sm text-slate-600 leading-relaxed">
-            CalcUnit.net is a free calculator platform with over 1,000 tools for math, finance,
-            health, physics, engineering, and unit conversion. Every calculator runs in your browser —
-            no downloads, no accounts, no ads blocking your results.
+            CalcUnit.net has over 1,000 free calculators for math, finance, health, physics, and unit conversion. Every tool runs inside your browser. No downloads. No ads. No accounts.
           </p>
           <p className="text-sm text-slate-600 leading-relaxed">
-            The calculators use real-time bi-directional solving. Change any value and all related
-            values update instantly. Switch units (kilograms to pounds, Celsius to Fahrenheit)
-            without re-entering numbers. The platform also works as an installable Progressive Web App —
-            open it once and use it offline forever.
+            Change any input and the answer updates right away. You can also switch units (kg to lbs, Celsius to Fahrenheit) without retyping your numbers. Install the site as an app and it works even without an internet connection.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
             {[

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { WifiOff, Calculator, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
+import { WifiOff, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,12 +13,7 @@ export function Footer() {
         {/* ─── TOP SECTION: Trust Badges & Tagline ────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-12 border-b border-zinc-200 items-center dark:border-zinc-800">
           <div className="lg:col-span-5 space-y-3">
-            <Link href="/" className="flex items-center gap-2.5 text-zinc-900 font-extrabold text-lg tracking-tight dark:text-white">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-lg shadow-indigo-500/20">
-                <Calculator size={17} />
-              </span>
-              <span>CalcUnit<span className="text-indigo-600 font-bold dark:text-indigo-400">.net</span></span>
-            </Link>
+
             <p className="text-sm text-zinc-500 leading-relaxed max-w-md dark:text-zinc-400">
               A premium, comprehensive calculator engine hosting 1,000+ specialized conversion and mathematical solvers. Free, offline-first, and ad-free.
             </p>

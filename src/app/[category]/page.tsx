@@ -50,7 +50,7 @@ export default async function CategoryPage({ params }: Props) {
         <div>
           <h1 className="text-2xl font-bold text-slate-900">{cat.label} Calculators</h1>
           <p className="text-slate-500 text-sm mt-1">
-            {calcs.length} free calculators — all work in your browser, no download required.
+            {calcs.length} free calculators. All run in your browser. No download needed.
           </p>
         </div>
       </div>

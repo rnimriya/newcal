@@ -3,8 +3,8 @@ import Link from "next/link";
 import { FileText, CheckCircle, Scale, AlertTriangle, HelpCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — CalcUnit.net",
-  description: "Review CalcUnit's Terms of Service. By accessing our platform, you agree to our policies regarding local browser execution and result checking.",
+  title: "Terms of Service - CalcUnit.net",
+  description: "CalcUnit's terms of use. Free for personal and professional use. Verify results before using them for critical decisions.",
   alternates: { canonical: "https://calcunit.net/terms" },
 };
 
@@ -34,7 +34,7 @@ export default function TermsPage() {
             <h3 className="font-bold text-zinc-900 dark:text-white text-sm">Free to Use</h3>
           </div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            All calculators and unit converters are free for student, professional, and commercial use with zero registration requirements.
+            Every calculator on CalcUnit is free to use. No account, no payment, no restrictions for students, professionals, or businesses.
           </p>
         </div>
 
@@ -46,7 +46,7 @@ export default function TermsPage() {
             <h3 className="font-bold text-zinc-900 dark:text-white text-sm">Verify Outcomes</h3>
           </div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            By using CalcUnit, you agree that you are solely responsible for verifying output values prior to making critical decisions.
+            You are responsible for checking results before using them in real decisions. CalcUnit provides tools, not professional advice.
           </p>
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function TermsPage() {
             1. Acceptance of Terms
           </h2>
           <p className="text-sm leading-relaxed">
-            By accessing and utilizing CalcUnit.net (&ldquo;CalcUnit&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or the &ldquo;Platform&rdquo;), you acknowledge that you have read, understood, and agreed to be bound by these Terms of Service. If you do not agree to these terms, please discontinue use of the platform.
+            Using CalcUnit.net means you accept these terms. If you do not agree, stop using the site.
           </p>
         </section>
 
@@ -69,15 +69,12 @@ export default function TermsPage() {
             2. Platform License and Usage Scope
           </h2>
           <p className="text-sm leading-relaxed">
-            We grant you a personal, non-exclusive, non-transferable, and revocable license to access our math solvers and converters. You may use our calculators for personal study, homework checking, professional estimation, and office workflows.
-          </p>
-          <p className="text-sm leading-relaxed">
-            However, you agree not to:
+            You can use CalcUnit for personal study, homework, professional estimates, and work tasks. You agree not to:
           </p>
           <ul className="list-disc pl-5 space-y-1 text-sm">
-            <li>Scrape calculation routines or reverse-engineer the programmatic topological solver.</li>
-            <li>Incorporate our calculator tools in frame sets on other sites without proper attribution.</li>
-            <li>Use the platform for any automated spam or server overloading tasks.</li>
+            <li>Scrape or copy the calculation engine to use on another site without permission.</li>
+            <li>Embed CalcUnit tools inside frames on other websites without linking back to the source.</li>
+            <li>Use the site for automated bots or anything that overloads the servers.</li>
           </ul>
         </section>
 
@@ -87,7 +84,7 @@ export default function TermsPage() {
             3. Disclaimer of Liability
           </h2>
           <p className="text-sm leading-relaxed">
-            All calculations and conversions on CalcUnit are processed dynamically inside your browser client using open mathematical models. We make no representations or warranties of any kind, express or implied, about the absolute completeness, accuracy, or suitability of the outputs. Please check our dedicated <Link href="/disclaimer" className="text-indigo-600 hover:underline dark:text-indigo-400">Disclaimer Page</Link> for detailed terms.
+            CalcUnit runs calculations in your browser using standard math models. We do not guarantee that every result is perfect. Always double-check outputs before using them for anything important. Read the <Link href="/disclaimer" className="text-indigo-600 hover:underline dark:text-indigo-400">Disclaimer</Link> for more detail.
           </p>
         </section>
 
@@ -97,7 +94,7 @@ export default function TermsPage() {
             4. Revisions & Platform Changes
           </h2>
           <p className="text-sm leading-relaxed">
-            CalcUnit is updated frequently to add new specialized calculators and fix routing schemas. We reserve the right to modify these Terms of Service at any time without notice. Your continued use of the platform following updates represents your binding agreement to the revised terms.
+            We add new calculators and fix bugs regularly. These terms can change at any time. Continuing to use the site after an update means you accept the new terms.
           </p>
         </section>
       </div>

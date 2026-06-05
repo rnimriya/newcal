@@ -112,9 +112,9 @@ export function ExplanationPanel({ schema, fields, theme }: Props) {
 
     return `## How it works
 
-The **${schema.name}** is designed to resolve equations dynamically based on standard mathematical principles.
+The **${schema.name}** uses standard math to compute the result from your inputs.
 
-### Key Parameters Explained
+### What each field does
 #### Inputs
 ${inputDesc}
 
@@ -123,11 +123,11 @@ ${outputDesc}
 
 ---
 
-### Step-by-Step Calculation Guide
+### Step-by-step
 ${steps}
 ${solveStep}
 
-The calculation results are updated in real time as you adjust the fields.`;
+The result updates as soon as you change any field.`;
   };
 
   const getEnhancedDerivation = () => {
@@ -142,16 +142,16 @@ The calculation results are updated in real time as you adjust the fields.`;
       })
       .join("\n\n");
 
-    return `## Formula & Derivation
+    return `## Formula
 
-The mathematical relationship used to solve this calculation is structured as follows:
+Here is the math behind this calculator:
 
 ${formulasBlock}
 
-### Derivation Steps
-1. **Inputs Collection**: Standard variables are populated by the user in standard formats.
-2. **Topological Order Evaluation**: Equations are processed in dependency order to prevent circular errors.
-3. **Precision Application**: Outcoming values are computed and rounded according to the specified decimals.`;
+### How it evaluates
+1. You fill in the input fields with your values.
+2. The calculator checks which fields depend on others and runs them in the right order.
+3. The result is rounded to a useful number of decimal places.`;
   };
 
   const hasChart = !!enhancedChart;

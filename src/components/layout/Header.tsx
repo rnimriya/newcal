@@ -25,7 +25,7 @@ export function Header() {
   }, [setQuery]);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/98 backdrop-blur-sm shadow-sm">
+    <header className="relative z-30 border-b border-slate-200 bg-white/98 backdrop-blur-sm shadow-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
 
         {/* Logo */}
