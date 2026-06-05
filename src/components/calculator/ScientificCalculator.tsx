@@ -97,14 +97,16 @@ function getPreviewResult(expression: string): string {
 export function ScientificCalculator() {
   const [expression, setExpression] = useState("");
   const [isError, setIsError] = useState(false);
-  const displayEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Compute preview dynamically on render
   const preview = isError ? "Error" : getPreviewResult(expression);
 
   // Scroll display to right when expression grows
   useEffect(() => {
-    displayEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+    }
   }, [expression]);
 
   const handleKeyPress = useCallback((val: string) => {
@@ -184,9 +186,8 @@ export function ScientificCalculator() {
       {/* Screen display */}
       <div className="bg-zinc-50 border border-zinc-200/60 rounded-xl p-3.5 mb-4 text-right flex flex-col justify-between h-24 font-mono dark:bg-zinc-950 dark:border-zinc-800/80">
         {/* Active input expression */}
-        <div className="text-sm text-zinc-400 overflow-x-auto whitespace-nowrap scrollbar-none h-6 pr-1 leading-6">
+        <div ref={scrollContainerRef} className="text-sm text-zinc-400 overflow-x-auto whitespace-nowrap scrollbar-none h-6 pr-1 leading-6">
           {expression || "0"}
-          <div ref={displayEndRef} />
         </div>
         {/* Dynamic preview or result */}
         <div
