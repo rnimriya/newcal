@@ -1,0 +1,87 @@
+{
+  "id": "adding-subtracting-fractions",
+  "slug": "adding-subtracting-fractions-calculator",
+  "name": "Adding Subtracting Fractions Calculator",
+  "category": "math",
+  "description": "Adds and subtracts two fractions with different denominators.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "adding subtracting fractions",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "n1",
+      "label": "Numerator 1",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "d1",
+      "label": "Denominator 1",
+      "type": "number",
+      "defaultValue": 2
+    },
+    {
+      "id": "n2",
+      "label": "Numerator 2",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "d2",
+      "label": "Denominator 2",
+      "type": "number",
+      "defaultValue": 3
+    },
+    {
+      "id": "sum",
+      "label": "Sum",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "diff",
+      "label": "Difference",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "n1",
+        "d1",
+        "n2",
+        "d2"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "sum",
+        "diff"
+      ]
+    }
+  ],
+  "formulas": {
+    "sum": "(n1 * d2 + n2 * d1) / (d1 * d2)",
+    "diff": "(n1 * d2 - n2 * d1) / (d1 * d2)"
+  },
+  "explanation": "## Adding Subtracting Fractions Calculator\n\nAdds and subtracts two fractions with different denominators.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "n1": 1,
+        "d1": 2,
+        "n2": 1,
+        "d2": 3
+      }
+    }
+  ]
+}

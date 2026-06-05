@@ -1,0 +1,63 @@
+{
+  "id": "law-of-sines",
+  "slug": "law-of-sines-calculator",
+  "name": "Law Of Sines Calculator",
+  "category": "math",
+  "description": "Performs mathematical evaluation of variables for Law Of Sines Calculator.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "law of sines",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "Variable A",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "b",
+      "label": "Variable B",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "result",
+      "label": "Result",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "result"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "a * b"
+  },
+  "explanation": "## Law Of Sines Calculator\n\nPerforms mathematical evaluation of variables for Law Of Sines Calculator.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "a": 10,
+        "b": 5
+      }
+    }
+  ]
+}

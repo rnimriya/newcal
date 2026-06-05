@@ -1,0 +1,63 @@
+{
+  "id": "area-of-kite",
+  "slug": "area-of-kite-calculator",
+  "name": "Area Of Kite Calculator",
+  "category": "math",
+  "description": "Calculates the area of a kite given its two diagonal lengths.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "area of kite",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "d1",
+      "label": "Diagonal 1",
+      "type": "number",
+      "defaultValue": 8
+    },
+    {
+      "id": "d2",
+      "label": "Diagonal 2",
+      "type": "number",
+      "defaultValue": 6
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "d1",
+        "d2"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "area"
+      ]
+    }
+  ],
+  "formulas": {
+    "area": "0.5 * d1 * d2"
+  },
+  "explanation": "## Area Of Kite Calculator\n\nCalculates the area of a kite given its two diagonal lengths.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "d1": 8,
+        "d2": 6
+      }
+    }
+  ]
+}

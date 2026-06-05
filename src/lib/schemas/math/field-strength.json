@@ -1,0 +1,63 @@
+{
+  "id": "field-strength",
+  "slug": "field-strength-calculator",
+  "name": "Field Strength Calculator",
+  "category": "math",
+  "description": "Performs mathematical evaluation of variables for Field Strength Calculator.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "field strength",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "Variable A",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "b",
+      "label": "Variable B",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "result",
+      "label": "Result",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "result"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "a * b"
+  },
+  "explanation": "## Field Strength Calculator\n\nPerforms mathematical evaluation of variables for Field Strength Calculator.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "a": 10,
+        "b": 5
+      }
+    }
+  ]
+}

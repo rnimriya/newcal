@@ -1,0 +1,63 @@
+{
+  "id": "area-of-ellipse",
+  "slug": "area-of-ellipse-calculator",
+  "name": "Area Of Ellipse Calculator",
+  "category": "math",
+  "description": "Calculates the area of an ellipse given its semi-major and semi-minor axes.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "area of ellipse",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "Semi-Major Axis (a)",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "b",
+      "label": "Semi-Minor Axis (b)",
+      "type": "number",
+      "defaultValue": 3
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "area"
+      ]
+    }
+  ],
+  "formulas": {
+    "area": "PI * a * b"
+  },
+  "explanation": "## Area Of Ellipse Calculator\n\nCalculates the area of an ellipse given its semi-major and semi-minor axes.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "a": 5,
+        "b": 3
+      }
+    }
+  ]
+}

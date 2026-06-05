@@ -1,0 +1,71 @@
+{
+  "id": "absolute-miximum",
+  "slug": "absolute-miximum-calculator",
+  "name": "Absolute Miximum Calculator",
+  "category": "math",
+  "description": "Calculates the absolute maximum value (ignoring positive/negative signs).",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "absolute miximum",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "v1",
+      "label": "Value 1",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "v2",
+      "label": "Value 2",
+      "type": "number",
+      "defaultValue": -25
+    },
+    {
+      "id": "v3",
+      "label": "Value 3",
+      "type": "number",
+      "defaultValue": 15
+    },
+    {
+      "id": "result",
+      "label": "Absolute Maximum",
+      "type": "computed",
+      "precision": 6
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "v1",
+        "v2",
+        "v3"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "result"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "max(abs(v1), abs(v2), abs(v3))"
+  },
+  "explanation": "## Absolute Miximum Calculator\n\nCalculates the absolute maximum value (ignoring positive/negative signs).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "v1": 10,
+        "v2": -25,
+        "v3": 15
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "volume-of-cube",
+  "slug": "volume-of-cube-calculator",
+  "name": "Volume Of Cube Calculator",
+  "category": "math",
+  "description": "Calculates the volume of a cube given its side length.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "volume of cube",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "side",
+      "label": "Side Length",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "side"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "volume"
+      ]
+    }
+  ],
+  "formulas": {
+    "volume": "side^3"
+  },
+  "explanation": "## Volume Of Cube Calculator\n\nCalculates the volume of a cube given its side length.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "side": 5
+      }
+    }
+  ]
+}

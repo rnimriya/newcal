@@ -1,0 +1,55 @@
+{
+  "id": "seconds-to-minutes",
+  "slug": "seconds-to-minutes-calculator",
+  "name": "Seconds To Minutes Calculator",
+  "category": "converters",
+  "description": "Converts seconds to minutes.",
+  "icon": "🧮",
+  "tags": [
+    "converters",
+    "seconds to minutes",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "sec",
+      "label": "Seconds",
+      "type": "number",
+      "defaultValue": 120
+    },
+    {
+      "id": "min",
+      "label": "Minutes",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "sec"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "min"
+      ]
+    }
+  ],
+  "formulas": {
+    "min": "sec / 60"
+  },
+  "explanation": "## Seconds To Minutes Calculator\n\nConverts seconds to minutes.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "sec": 120
+      }
+    }
+  ]
+}

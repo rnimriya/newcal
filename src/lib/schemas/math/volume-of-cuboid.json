@@ -1,0 +1,71 @@
+{
+  "id": "volume-of-cuboid",
+  "slug": "volume-of-cuboid-calculator",
+  "name": "Volume Of Cuboid Calculator",
+  "category": "math",
+  "description": "Calculates the volume of a rectangular prism (cuboid).",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "volume of cuboid",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "length",
+      "label": "Length",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "width",
+      "label": "Width",
+      "type": "number",
+      "defaultValue": 4
+    },
+    {
+      "id": "height",
+      "label": "Height",
+      "type": "number",
+      "defaultValue": 3
+    },
+    {
+      "id": "volume",
+      "label": "Volume",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "length",
+        "width",
+        "height"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "volume"
+      ]
+    }
+  ],
+  "formulas": {
+    "volume": "length * width * height"
+  },
+  "explanation": "## Volume Of Cuboid Calculator\n\nCalculates the volume of a rectangular prism (cuboid).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "length": 5,
+        "width": 4,
+        "height": 3
+      }
+    }
+  ]
+}

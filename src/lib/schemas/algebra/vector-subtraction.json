@@ -1,0 +1,63 @@
+{
+  "id": "vector-subtraction",
+  "slug": "vector-subtraction-calculator",
+  "name": "Vector Subtraction Calculator",
+  "category": "algebra",
+  "description": "Subtracts the second number from the first for Vector Subtraction Calculator.",
+  "icon": "🔢",
+  "tags": [
+    "algebra",
+    "vector subtraction",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "First Number",
+      "type": "number",
+      "defaultValue": 15
+    },
+    {
+      "id": "b",
+      "label": "Second Number",
+      "type": "number",
+      "defaultValue": 8
+    },
+    {
+      "id": "result",
+      "label": "Difference",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "result"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "a - b"
+  },
+  "explanation": "## Vector Subtraction Calculator\n\nSubtracts the second number from the first for Vector Subtraction Calculator.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "a": 15,
+        "b": 8
+      }
+    }
+  ]
+}

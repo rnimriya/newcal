@@ -1,0 +1,63 @@
+{
+  "id": "area-of-parallelogram",
+  "slug": "area-of-parallelogram-calculator",
+  "name": "Area Of Parallelogram Calculator",
+  "category": "math",
+  "description": "Calculates the area of a parallelogram using its base and height.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "area of parallelogram",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "base",
+      "label": "Base",
+      "type": "number",
+      "defaultValue": 8
+    },
+    {
+      "id": "height",
+      "label": "Height",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "base",
+        "height"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "area"
+      ]
+    }
+  ],
+  "formulas": {
+    "area": "base * height"
+  },
+  "explanation": "## Area Of Parallelogram Calculator\n\nCalculates the area of a parallelogram using its base and height.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "base": 8,
+        "height": 5
+      }
+    }
+  ]
+}

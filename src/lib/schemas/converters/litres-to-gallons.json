@@ -1,0 +1,55 @@
+{
+  "id": "litres-to-gallons",
+  "slug": "litres-to-gallons-calculator",
+  "name": "Litres To Gallons Calculator",
+  "category": "converters",
+  "description": "Converts litres to US liquid gallons.",
+  "icon": "🧮",
+  "tags": [
+    "converters",
+    "litres to gallons",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "litres",
+      "label": "Litres",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "gallons",
+      "label": "Gallons (US)",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "litres"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "gallons"
+      ]
+    }
+  ],
+  "formulas": {
+    "gallons": "litres * 0.264172"
+  },
+  "explanation": "## Litres To Gallons Calculator\n\nConverts litres to US liquid gallons.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "litres": 10
+      }
+    }
+  ]
+}

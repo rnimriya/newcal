@@ -1,0 +1,63 @@
+{
+  "id": "scalar-multiplication",
+  "slug": "scalar-multiplication-calculator",
+  "name": "Scalar Multiplication Calculator",
+  "category": "math",
+  "description": "Calculates the product of two numbers for Scalar Multiplication Calculator.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "scalar multiplication",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "First Number",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "b",
+      "label": "Second Number",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "result",
+      "label": "Product",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "result"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "a * b"
+  },
+  "explanation": "## Scalar Multiplication Calculator\n\nCalculates the product of two numbers for Scalar Multiplication Calculator.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "a": 10,
+        "b": 5
+      }
+    }
+  ]
+}

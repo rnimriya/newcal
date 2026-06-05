@@ -1,0 +1,87 @@
+{
+  "id": "adding-vectors",
+  "slug": "adding-vectors-calculator",
+  "name": "Adding Vectors Calculator",
+  "category": "math",
+  "description": "Adds two 2D vectors component-wise.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "adding vectors",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "x1",
+      "label": "Vector 1 X",
+      "type": "number",
+      "defaultValue": 3
+    },
+    {
+      "id": "y1",
+      "label": "Vector 1 Y",
+      "type": "number",
+      "defaultValue": 4
+    },
+    {
+      "id": "x2",
+      "label": "Vector 2 X",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "id": "y2",
+      "label": "Vector 2 Y",
+      "type": "number",
+      "defaultValue": 2
+    },
+    {
+      "id": "rx",
+      "label": "Resultant X",
+      "type": "computed",
+      "precision": 4
+    },
+    {
+      "id": "ry",
+      "label": "Resultant Y",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "x1",
+        "y1",
+        "x2",
+        "y2"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "rx",
+        "ry"
+      ]
+    }
+  ],
+  "formulas": {
+    "rx": "x1 + x2",
+    "ry": "y1 + y2"
+  },
+  "explanation": "## Adding Vectors Calculator\n\nAdds two 2D vectors component-wise.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "x1": 3,
+        "y1": 4,
+        "x2": 1,
+        "y2": 2
+      }
+    }
+  ]
+}

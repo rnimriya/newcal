@@ -1,0 +1,55 @@
+{
+  "id": "weeks-to-months",
+  "slug": "weeks-to-months-calculator",
+  "name": "Weeks To Months Calculator",
+  "category": "converters",
+  "description": "Converts weeks to months (based on average calendar length).",
+  "icon": "🧮",
+  "tags": [
+    "converters",
+    "weeks to months",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "weeks",
+      "label": "Weeks",
+      "type": "number",
+      "defaultValue": 12
+    },
+    {
+      "id": "months",
+      "label": "Months",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "weeks"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "months"
+      ]
+    }
+  ],
+  "formulas": {
+    "months": "weeks / 4.34524"
+  },
+  "explanation": "## Weeks To Months Calculator\n\nConverts weeks to months (based on average calendar length).\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "weeks": 12
+      }
+    }
+  ]
+}

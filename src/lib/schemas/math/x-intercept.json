@@ -1,0 +1,63 @@
+{
+  "id": "x-intercept",
+  "slug": "x-intercept-calculator",
+  "name": "X Intercept Calculator",
+  "category": "math",
+  "description": "Performs mathematical evaluation of variables for X Intercept Calculator.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "x intercept",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "Variable A",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "b",
+      "label": "Variable B",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "result",
+      "label": "Result",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "result"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "a * b"
+  },
+  "explanation": "## X Intercept Calculator\n\nPerforms mathematical evaluation of variables for X Intercept Calculator.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "a": 10,
+        "b": 5
+      }
+    }
+  ]
+}

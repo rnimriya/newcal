@@ -1,0 +1,71 @@
+{
+  "id": "area-of-quadrilateral",
+  "slug": "area-of-quadrilateral-calculator",
+  "name": "Area Of Quadrilateral Calculator",
+  "category": "math",
+  "description": "Calculates the area of a general quadrilateral from its diagonals and the angle between them.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "area of quadrilateral",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "d1",
+      "label": "Diagonal 1",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "d2",
+      "label": "Diagonal 2",
+      "type": "number",
+      "defaultValue": 8
+    },
+    {
+      "id": "theta",
+      "label": "Angle Between Diagonals (degrees)",
+      "type": "number",
+      "defaultValue": 90
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "d1",
+        "d2",
+        "theta"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "area"
+      ]
+    }
+  ],
+  "formulas": {
+    "area": "0.5 * d1 * d2 * sin(theta * PI / 180)"
+  },
+  "explanation": "## Area Of Quadrilateral Calculator\n\nCalculates the area of a general quadrilateral from its diagonals and the angle between them.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "d1": 10,
+        "d2": 8,
+        "theta": 90
+      }
+    }
+  ]
+}

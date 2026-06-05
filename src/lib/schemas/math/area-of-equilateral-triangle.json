@@ -1,0 +1,55 @@
+{
+  "id": "area-of-equilateral-triangle",
+  "slug": "area-of-equilateral-triangle-calculator",
+  "name": "Area Of Equilateral Triangle Calculator",
+  "category": "math",
+  "description": "Calculates the area of an equilateral triangle where all sides are equal.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "area of equilateral triangle",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "side",
+      "label": "Side Length",
+      "type": "number",
+      "defaultValue": 6
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "side"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "area"
+      ]
+    }
+  ],
+  "formulas": {
+    "area": "(sqrt(3)/4) * side^2"
+  },
+  "explanation": "## Area Of Equilateral Triangle Calculator\n\nCalculates the area of an equilateral triangle where all sides are equal.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "side": 6
+      }
+    }
+  ]
+}

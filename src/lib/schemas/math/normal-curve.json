@@ -1,0 +1,63 @@
+{
+  "id": "normal-curve",
+  "slug": "normal-curve-calculator",
+  "name": "Normal Curve Calculator",
+  "category": "math",
+  "description": "Performs mathematical evaluation of variables for Normal Curve Calculator.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "normal curve",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "a",
+      "label": "Variable A",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "id": "b",
+      "label": "Variable B",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "id": "result",
+      "label": "Result",
+      "type": "computed",
+      "precision": 4
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "result"
+      ]
+    }
+  ],
+  "formulas": {
+    "result": "a * b"
+  },
+  "explanation": "## Normal Curve Calculator\n\nPerforms mathematical evaluation of variables for Normal Curve Calculator.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "a": 10,
+        "b": 5
+      }
+    }
+  ]
+}

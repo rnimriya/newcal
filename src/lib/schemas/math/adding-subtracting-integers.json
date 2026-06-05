@@ -1,0 +1,71 @@
+{
+  "id": "adding-subtracting-integers",
+  "slug": "adding-subtracting-integers-calculator",
+  "name": "Adding Subtracting Integers Calculator",
+  "category": "math",
+  "description": "Computes both the sum and difference of two integers.",
+  "icon": "🧮",
+  "tags": [
+    "math",
+    "adding subtracting integers",
+    "math"
+  ],
+  "fields": [
+    {
+      "id": "v1",
+      "label": "Integer 1",
+      "type": "number",
+      "defaultValue": 15
+    },
+    {
+      "id": "v2",
+      "label": "Integer 2",
+      "type": "number",
+      "defaultValue": 8
+    },
+    {
+      "id": "sum",
+      "label": "Sum",
+      "type": "computed",
+      "precision": 0
+    },
+    {
+      "id": "diff",
+      "label": "Difference",
+      "type": "computed",
+      "precision": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "inputs",
+      "label": "Inputs",
+      "fields": [
+        "v1",
+        "v2"
+      ]
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs",
+      "fields": [
+        "sum",
+        "diff"
+      ]
+    }
+  ],
+  "formulas": {
+    "sum": "v1 + v2",
+    "diff": "v1 - v2"
+  },
+  "explanation": "## Adding Subtracting Integers Calculator\n\nComputes both the sum and difference of two integers.\n\nStandard mathematical model.",
+  "examples": [
+    {
+      "label": "Example calculation",
+      "inputs": {
+        "v1": 15,
+        "v2": 8
+      }
+    }
+  ]
+}
