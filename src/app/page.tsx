@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/registry/categories";
 import { ALL_CALCULATORS } from "@/lib/registry";
-import { ArrowRight, Zap, Wifi, Smartphone, Search } from "lucide-react";
+import { ArrowRight, Zap, Wifi, Smartphone } from "lucide-react";
 import { ScientificCalculator } from "@/components/calculator/ScientificCalculator";
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
 
@@ -37,42 +37,30 @@ export default function HomePage() {
     <div className="space-y-14">
 
       {/* ── Hero ────────────────────────────────────────────────────────────── */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-12 px-4">
-        {/* Left Column: Title, search & details */}
-        <div className="lg:col-span-7 text-left space-y-6">
-          <span className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 px-4 py-1.5 text-sm font-medium text-indigo-700">
-            <Zap size={13} /> 1,000+ free calculators. No sign-up.
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center py-6 px-4">
+        {/* Left Column: Title & details */}
+        <div className="lg:col-span-7 text-left space-y-4">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 border border-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
+            <Zap size={12} /> 1,000+ free calculators. No sign-up.
           </span>
 
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
-            Any calculation,
-            <br />
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight tracking-tight">
+            Any calculation,{" "}
             <span className="text-indigo-600">answered instantly.</span>
           </h1>
 
-          <p className="text-lg text-slate-500 max-w-lg leading-relaxed">
-            Math, finance, health, physics, and unit conversion - all free. Type a number and the result appears right away. No account needed.
+          <p className="text-base text-slate-500 max-w-lg leading-relaxed">
+            Math, finance, health, physics, and unit conversion — all free. Type a number and the result appears right away.
           </p>
 
-          {/* Search bar — points to /categories */}
-          <div className="relative max-w-md">
-            <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-            <Link
-              href="/categories"
-              className="block w-full calc-input pl-10 cursor-pointer text-slate-400 leading-[1.75]"
-            >
-              Search calculators…
-            </Link>
-          </div>
-
           {/* Feature pills */}
-          <div className="flex flex-wrap gap-2.5 text-sm text-slate-500">
+          <div className="flex flex-wrap gap-2 text-xs text-slate-500">
             {[
-              { icon: <Zap size={12} className="text-indigo-500" />, label: "Results as you type" },
-              { icon: <Wifi size={12} className="text-emerald-500" />, label: "Works offline" },
-              { icon: <Smartphone size={12} className="text-violet-500" />, label: "Works on mobile" },
+              { icon: <Zap size={11} className="text-indigo-500" />, label: "Results as you type" },
+              { icon: <Wifi size={11} className="text-emerald-500" />, label: "Works offline" },
+              { icon: <Smartphone size={11} className="text-violet-500" />, label: "Works on mobile" },
             ].map(({ icon, label }) => (
-              <span key={label} className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
+              <span key={label} className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 shadow-sm">
                 {icon} {label}
               </span>
             ))}

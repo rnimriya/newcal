@@ -201,7 +201,9 @@ ${formulasBlock}
 // ─── Minimal Markdown renderer (headings, bold, lists, code, tables) ──────────
 
 function MarkdownRenderer({ content, theme }: { content: string; theme: CategoryTheme }) {
-  const lines = content.split("\n");
+  // Pre-process: collapse multi-line $$\nformula\n$$ into single $$formula$$ tokens
+  const normalized = content.replace(/\$\$\s*\n([\s\S]*?)\n\s*\$\$/g, (_, formula) => `$$${formula.trim()}$$`);
+  const lines = normalized.split("\n");
 
   return (
     <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-bold prose-headings:text-zinc-900 dark:prose-headings:text-white prose-p:text-zinc-600 dark:prose-p:text-zinc-400">
@@ -228,14 +230,20 @@ function MarkdownRenderer({ content, theme }: { content: string; theme: Category
         }
         if (line.startsWith("- ") || line.startsWith("* "))
           return <li key={i} className="ml-4 list-disc text-sm text-zinc-600 dark:text-zinc-400 my-0.5">{parseBold(line.slice(2))}</li>;
-        if (line.startsWith("$$"))
-          return <div key={i} className={`my-2 rounded-xl px-4 py-3.5 font-mono text-sm shadow-sm ${theme.mathBlock}`}>{line.replace(/\$\$/g, "")}</div>;
+        // Match $$formula$$ — single line (after pre-processing)
+        if (line.startsWith("$$") && line.endsWith("$$") && line.length > 4) {
+          const formula = line.slice(2, -2).trim();
+          return <div key={i} className={`my-2 rounded-xl px-4 py-3.5 font-mono text-sm shadow-sm overflow-x-auto ${theme.mathBlock}`}>{formula}</div>;
+        }
+        // Standalone $$ line with no content — skip (artifact of pre-processing)
+        if (line.trim() === "$$") return null;
         if (line.trim() === "") return <br key={i} />;
         return <p key={i} className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed my-1">{parseBold(line)}</p>;
       })}
     </div>
   );
 }
+
 
 function parseBold(text: string): React.ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
