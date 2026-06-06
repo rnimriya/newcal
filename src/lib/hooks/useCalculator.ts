@@ -10,7 +10,7 @@
  * to manual-mode and recompute the other computed fields instead.
  */
 
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer, useMemo, useTransition } from "react";
 import type {
   CalculatorSchema,
   CalculatorField,
@@ -62,15 +62,8 @@ function initFieldStates(schema: CalculatorSchema): Record<string, FieldState> {
 function runSolver(
   schema: CalculatorSchema,
   fields: Record<string, FieldState>,
-  userLocked: Set<string>
+  orderedIds: string[]
 ): Record<string, FieldState> {
-  const allIds = schema.fields.map((f) => f.id);
-  const computedIds = schema.fields
-    .filter((f) => f.type === "computed" && !userLocked.has(f.id))
-    .map((f) => f.id);
-
-  const depGraph = buildDependencyGraph(schema.formulas, allIds);
-  const orderedIds = topoSort(depGraph, computedIds);
 
   // Build numeric scope: base-unit values for all known (non-empty) fields
   const scope: Record<string, unknown> = {};
@@ -198,28 +191,54 @@ export function useCalculator(schema: CalculatorSchema): UseCalculatorReturn {
     reducer({ fields: {}, userLocked: new Set() }, { type: "INIT", schema })
   );
 
+  const [isPending, startTransition] = useTransition();
+
   // Re-initialize when schema changes
   useEffect(() => {
     dispatch({ type: "INIT", schema });
   }, [schema]);
 
-  // Run solver after every state change
-  const solvedFields = runSolver(schema, state.fields, state.userLocked);
+  // Memoize the static dependency graph parsing
+  const depGraph = useMemo(() => {
+    const allIds = schema.fields.map((f) => f.id);
+    return buildDependencyGraph(schema.formulas, allIds);
+  }, [schema.formulas, schema.fields]);
+
+  // TopoSort the currently unlocked computed fields
+  const orderedIds = useMemo(() => {
+    const computedIds = schema.fields
+      .filter((f) => f.type === "computed" && !state.userLocked.has(f.id))
+      .map((f) => f.id);
+    return topoSort(depGraph, computedIds);
+  }, [schema.fields, state.userLocked, depGraph]);
+
+  // Run solver after every state change using the memoized evaluation order
+  const solvedFields = useMemo(() => {
+    return runSolver(schema, state.fields, orderedIds);
+  }, [schema, state.fields, orderedIds]);
 
   const setValue = useCallback((fieldId: string, value: string) => {
-    dispatch({ type: "SET_VALUE", fieldId, value });
+    startTransition(() => {
+      dispatch({ type: "SET_VALUE", fieldId, value });
+    });
   }, []);
 
   const setUnit = useCallback((fieldId: string, unit: string) => {
-    dispatch({ type: "SET_UNIT", fieldId, unit });
+    startTransition(() => {
+      dispatch({ type: "SET_UNIT", fieldId, unit });
+    });
   }, []);
 
   const loadExample = useCallback((inputs: Record<string, number>) => {
-    dispatch({ type: "LOAD_EXAMPLE", inputs });
+    startTransition(() => {
+      dispatch({ type: "LOAD_EXAMPLE", inputs });
+    });
   }, []);
 
   const reset = useCallback(() => {
-    dispatch({ type: "INIT", schema });
+    startTransition(() => {
+      dispatch({ type: "INIT", schema });
+    });
   }, [schema]);
 
   return { fields: solvedFields, setValue, setUnit, loadExample, reset };

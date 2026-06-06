@@ -3,11 +3,11 @@
  * Evaluates math.js expression strings in a scoped variable environment.
  * Returns null on error (division by zero, undefined vars, etc.)
  */
-import { create, all } from "mathjs/number";
+import { create, evaluateDependencies } from "mathjs/number";
 import type { MathJsInstance } from "mathjs";
 
-// Singleton math instance with all plugins
-const math = create(all) as MathJsInstance;
+// Tree-shaken math instance with only evaluation capabilities
+const math = create({ evaluateDependencies }) as MathJsInstance;
 
 // Extend scope with useful constants
 const BASE_SCOPE: Record<string, unknown> = {
