@@ -31,8 +31,8 @@ export function Header() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0 mr-1">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white">
-            <Calculator size={17} />
+          <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-md">
+            <img src="/logo.png" alt="CalcUnit Logo" className="h-full w-full object-contain" />
           </div>
           <span className="font-extrabold text-slate-900 text-lg hidden sm:block tracking-tight">
             CalcUnit<span className="text-indigo-600">.net</span>

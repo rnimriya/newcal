@@ -4,6 +4,8 @@ import { CATEGORIES } from "@/lib/registry/categories";
 
 const BASE_URL = "https://calcunit.net";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL,              lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
