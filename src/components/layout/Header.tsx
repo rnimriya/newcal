@@ -7,6 +7,7 @@ import { useSearch } from "@/lib/hooks/useSearch";
 import { CATEGORIES } from "@/lib/registry/categories";
 import { useCalcStore } from "@/store/calculatorStore";
 import { CategoryIcon } from "@/components/ui/FlatIcon";
+import { Button } from "@/components/ui/Button";
 
 export function Header() {
   const { query, setQuery, results } = useSearch();
@@ -70,13 +71,14 @@ export function Header() {
 
         {/* Category Mega Menu */}
         <div className="relative hidden md:block">
-          <button
+          <Button
+            variant="ghost"
             onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-            className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+            className="flex items-center gap-1.5"
           >
             Categories
             <ChevronDown size={13} className={`transition-transform ${megaMenuOpen ? "rotate-180" : ""}`} />
-          </button>
+          </Button>
 
           {megaMenuOpen && (
             <>
@@ -101,19 +103,21 @@ export function Header() {
         </div>
 
         {/* Unit toggle */}
-        <button
+        <Button
+          variant="outline"
+          size="sm"
           onClick={() => setUnitSystem(unitSystem === "metric" ? "imperial" : "metric")}
-          className="hidden sm:flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors border border-slate-200"
+          className="hidden sm:flex items-center gap-1.5"
           title="Toggle unit system"
         >
           <Globe size={14} />
           <span className="text-xs font-bold uppercase">{unitSystem === "metric" ? "SI" : "US"}</span>
-        </button>
+        </Button>
 
         {/* Saved */}
         <Link
           href="/saved"
-          className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors hover:bg-zinc-100 hover:text-zinc-900 h-10 w-10 text-slate-500"
           title="Saved calculators"
         >
           <Bookmark size={18} />
