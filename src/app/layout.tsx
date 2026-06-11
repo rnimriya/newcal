@@ -6,6 +6,7 @@ import { AppShell } from "@/components/layout/AppShell";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://calcunit.net"),
   title: {
     default: "CalcUnit — Dynamic Calculator Platform",
     template: "%s | CalcUnit",
