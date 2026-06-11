@@ -65,15 +65,3 @@ export function TableOfContents({ items }: Props) {
     </nav>
   );
 }
-
-// Standard TOC items for every calculator page
-export const STANDARD_TOC: TocItem[] = [
-  { id: "calculator",  label: "Calculator",           level: 2 },
-  { id: "description", label: "What is it?",          level: 2 },
-  { id: "how-to-use",  label: "How to Use",           level: 2 },
-  { id: "formula",     label: "Formula",              level: 2 },
-  { id: "examples",    label: "Common Examples",      level: 2 },
-  { id: "reference",   label: "Reference Table",      level: 2 },
-  { id: "faq",         label: "Frequently Asked",     level: 2 },
-  { id: "related",     label: "Related Calculators",  level: 2 },
-];

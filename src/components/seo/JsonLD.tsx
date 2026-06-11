@@ -1,5 +1,7 @@
+import type { JsonLDDocument } from "@/lib/seo/jsonld";
+
 interface Props {
-  data: Record<string, unknown>;
+  data: JsonLDDocument | Record<string, unknown>;
 }
 
 export function JsonLD({ data }: Props) {

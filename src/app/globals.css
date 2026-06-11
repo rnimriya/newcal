@@ -160,6 +160,9 @@ p, li {
 .btn-primary:hover  { background: var(--accent-hover); }
 .btn-primary:active { transform: scale(0.98); }
 
+/* ─── Page wrapper ───────────────────────────────────────────────────────────── */
+.bg-page { background: var(--bg-page); }
+
 /* ─── PWA safe area ──────────────────────────────────────────────────────────── */
 .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
 

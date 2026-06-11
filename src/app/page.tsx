@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/registry/categories";
-import { ALL_CALCULATORS } from "@/lib/registry";
+import { ALL_CALCULATORS, BY_CATEGORY } from "@/lib/registry";
+import { SITE_URL, SITE_DISPLAY_NAME } from "@/lib/constants";
 import { ArrowRight, Zap, Wifi, Smartphone } from "lucide-react";
 import { ScientificCalculator } from "@/components/calculator/ScientificCalculator";
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
 
 export const metadata: Metadata = {
-  title: "Free Online Calculators - Math, Finance, Health | CalcUnit.net",
+  title: `Free Online Calculators - Math, Finance, Health | ${SITE_DISPLAY_NAME}`,
   description: "1,000+ free calculators for math, finance, health, physics, and unit conversion. Results update as you type. No sign-up. Works offline.",
-  alternates: { canonical: "https://calcunit.net" },
+  alternates: { canonical: SITE_URL },
 };
 
 // Featured calculators with schema (interactive)
@@ -90,7 +91,7 @@ export default function HomePage() {
                 {cat.label}
               </p>
               <p className="text-xs text-slate-400">
-                {ALL_CALCULATORS.filter((c) => c.category === cat.id).length} calculators
+                {(BY_CATEGORY[cat.id] ?? []).length} calculators
               </p>
             </Link>
           ))}
@@ -140,9 +141,9 @@ export default function HomePage() {
       {/* ── SEO Content Block ─────────────────────────────────────────────────── */}
       <section className="prose prose-sm max-w-none">
         <div className="calc-card p-6 space-y-4">
-          <h2 className="text-lg font-bold text-slate-900 mb-2">About CalcUnit.net</h2>
+          <h2 className="text-lg font-bold text-slate-900 mb-2">About {SITE_DISPLAY_NAME}</h2>
           <p className="text-sm text-slate-600 leading-relaxed">
-            CalcUnit.net has over 1,000 free calculators for math, finance, health, physics, and unit conversion. Every tool runs inside your browser. No downloads. No ads. No accounts.
+            {SITE_DISPLAY_NAME} has over 1,000 free calculators for math, finance, health, physics, and unit conversion. Every tool runs inside your browser. No downloads. No ads. No accounts.
           </p>
           <p className="text-sm text-slate-600 leading-relaxed">
             Change any input and the answer updates right away. You can also switch units (kg to lbs, Celsius to Fahrenheit) without retyping your numbers. Install the site as an app and it works even without an internet connection.

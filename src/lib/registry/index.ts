@@ -815,13 +815,22 @@ export function getEntry(slug: string): RegistryEntry | undefined {
   return REGISTRY_MAP[slug];
 }
 
+/** Returns all calculators for a given category using the pre-built index. O(1). */
+export function getCalculatorsByCategory(categoryId: string): RegistryEntry[] {
+  return BY_CATEGORY[categoryId] ?? [];
+}
+
 export function getRelated(entry: RegistryEntry, limit = 5): RegistryEntry[] {
-  return ALL_CALCULATORS
-    .filter(
-      (e) =>
-        e.slug !== entry.slug &&
-        (e.category === entry.category ||
-          e.tags.some((t) => entry.tags.includes(t)))
+  const tagSet = new Set(entry.tags);
+  return (BY_CATEGORY[entry.category] ?? [])
+    .filter((e) => e.slug !== entry.slug)
+    .concat(
+      ALL_CALCULATORS.filter(
+        (e) =>
+          e.slug !== entry.slug &&
+          e.category !== entry.category &&
+          e.tags.some((t) => tagSet.has(t))
+      )
     )
     .slice(0, limit);
 }

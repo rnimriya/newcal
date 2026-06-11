@@ -34,8 +34,8 @@ interface HookState {
 type HookAction =
   | { type: "INIT"; schema: CalculatorSchema }
   | { type: "SET_VALUE"; fieldId: string; value: string }
-  | { type: "SET_UNIT"; fieldId: string; unit: string }
-  | { type: "LOAD_EXAMPLE"; inputs: Record<string, number> };
+  | { type: "SET_UNIT"; fieldId: string; unit: string; convertedValue: string }
+  | { type: "LOAD_EXAMPLE"; inputs: Record<string, number>; schema: CalculatorSchema };
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -148,26 +148,27 @@ function reducer(state: HookState, action: HookAction): HookState {
     }
 
     case "SET_UNIT": {
-      const { fieldId, unit } = action;
+      const { fieldId, unit, convertedValue } = action;
       const field_state = state.fields[fieldId];
-      // Re-convert existing numeric value to new unit
-      const oldUnitDef = undefined; // old unit already stored in state
-      void oldUnitDef;
       return {
         ...state,
         fields: {
           ...state.fields,
-          [fieldId]: { ...field_state, unit },
+          [fieldId]: { ...field_state, unit, value: convertedValue },
         },
       };
     }
 
     case "LOAD_EXAMPLE": {
+      const { inputs, schema } = action;
       const nextFields = { ...state.fields };
       const locked = new Set<string>();
-      for (const [id, val] of Object.entries(action.inputs)) {
+      for (const [id, val] of Object.entries(inputs)) {
         if (nextFields[id]) {
-          nextFields[id] = { ...nextFields[id], value: String(val) };
+          // Also reset the unit to the field's default so example values are interpreted correctly
+          const fieldDef = schema.fields.find((f) => f.id === id);
+          const unit = fieldDef ? defaultUnit(fieldDef) : nextFields[id].unit;
+          nextFields[id] = { ...nextFields[id], value: String(val), unit };
           locked.add(id);
         }
       }
@@ -191,7 +192,7 @@ export function useCalculator(schema: CalculatorSchema): UseCalculatorReturn {
     reducer({ fields: {}, userLocked: new Set() }, { type: "INIT", schema })
   );
 
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   // Re-initialize when schema changes
   useEffect(() => {
@@ -225,15 +226,36 @@ export function useCalculator(schema: CalculatorSchema): UseCalculatorReturn {
 
   const setUnit = useCallback((fieldId: string, unit: string) => {
     startTransition(() => {
-      dispatch({ type: "SET_UNIT", fieldId, unit });
+      // Reconvert the current displayed value from old unit to new unit
+      // so the underlying physical quantity stays the same.
+      const fieldDef = schema.fields.find((f) => f.id === fieldId);
+      const currentState = state.fields[fieldId];
+      let convertedValue = currentState?.value ?? "";
+
+      if (fieldDef?.units && currentState) {
+        const raw = parseFloat(currentState.value);
+        if (!isNaN(raw)) {
+          const oldUnitDef = fieldDef.units.find((u) => u.value === currentState.unit);
+          const newUnitDef = fieldDef.units.find((u) => u.value === unit);
+          if (oldUnitDef && newUnitDef) {
+            // old display value -> base -> new display value
+            const baseValue = convertToBase(raw, oldUnitDef.toBase);
+            const newDisplayValue = convertFromBase(baseValue, newUnitDef.fromBase);
+            // Preserve reasonable precision: up to 6 sig figs
+            convertedValue = parseFloat(newDisplayValue.toPrecision(6)).toString();
+          }
+        }
+      }
+
+      dispatch({ type: "SET_UNIT", fieldId, unit, convertedValue });
     });
-  }, []);
+  }, [schema.fields, state.fields]);
 
   const loadExample = useCallback((inputs: Record<string, number>) => {
     startTransition(() => {
-      dispatch({ type: "LOAD_EXAMPLE", inputs });
+      dispatch({ type: "LOAD_EXAMPLE", inputs, schema });
     });
-  }, []);
+  }, [schema]);
 
   const reset = useCallback(() => {
     startTransition(() => {

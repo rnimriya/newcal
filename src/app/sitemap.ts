@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { ALL_CALCULATORS } from "@/lib/registry";
 import { CATEGORIES } from "@/lib/registry/categories";
-
-const BASE_URL = "https://calcunit.net";
+import { SITE_URL as BASE_URL } from "@/lib/constants";
 
 export const dynamic = "force-static";
 

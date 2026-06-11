@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CATEGORIES, CATEGORY_MAP } from "@/lib/registry/categories";
-import { ALL_CALCULATORS } from "@/lib/registry";
+import { BY_CATEGORY } from "@/lib/registry";
+import { SITE_URL, SITE_DISPLAY_NAME } from "@/lib/constants";
 import { Breadcrumb } from "@/components/calculator/Breadcrumb";
 import { ArrowRight } from "lucide-react";
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
@@ -20,12 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cat = CATEGORY_MAP[category];
   if (!cat) return { title: "Not Found" };
 
-  const count = ALL_CALCULATORS.filter((c) => c.category === category).length;
+  const count = (BY_CATEGORY[category] ?? []).length;
 
   return {
-    title: `Free ${cat.label} Calculators — CalcUnit.net`,
-    description: `${count} free online ${cat.label.toLowerCase()} calculators. Instant results, no sign-up required. Try CalcUnit.net.`,
-    alternates: { canonical: `https://calcunit.net/${category}` },
+    title: `Free ${cat.label} Calculators — ${SITE_DISPLAY_NAME}`,
+    description: `${count} free online ${cat.label.toLowerCase()} calculators. Instant results, no sign-up required. Try ${SITE_DISPLAY_NAME}.`,
+    alternates: { canonical: `${SITE_URL}/${category}` },
   };
 }
 
@@ -34,7 +35,7 @@ export default async function CategoryPage({ params }: Props) {
   const cat = CATEGORY_MAP[category];
   if (!cat) notFound();
 
-  const calcs = ALL_CALCULATORS.filter((c) => c.category === category);
+  const calcs = BY_CATEGORY[category] ?? [];
   const featured = calcs.filter((c) => c.hasSchema);
   const others   = calcs.filter((c) => !c.hasSchema);
 

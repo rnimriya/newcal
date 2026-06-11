@@ -1,4 +1,5 @@
 import type { RegistryEntry } from "@/lib/registry";
+import { SITE_DISPLAY_NAME } from "@/lib/constants";
 
 // ─── SEO Content Generator ────────────────────────────────────────────────────
 // Produces structured content for every calculator page:
@@ -228,7 +229,7 @@ function generateFAQs(entry: RegistryEntry): Array<{ q: string; a: string }> {
 // ─── Generate How-To steps for any calculator ─────────────────────────────────
 function generateSteps(entry: RegistryEntry): string[] {
   return [
-    `Open the ${entry.name} on CalcUnit.net.`,
+    `Open the ${entry.name} on ${SITE_DISPLAY_NAME}.`,
     `Type your numbers in the input boxes. The calculator computes the outputs automatically.`,
     `Click the unit selector to switch units if needed.`,
     `Watch the results update instantly as you type. You do not need to click solve.`,
@@ -263,7 +264,7 @@ function generateDescription(entry: RegistryEntry): string {
   const formulaStr = entry.formula ? ` It runs the formula ${entry.formula} to compute results.` : "";
   return `Use the free ${entry.name} to solve your problems. This online tool requires no accounts or downloads. Type your input values. The calculator outputs precise answers in real time.${formulaStr}
 
-You can use this tool for school work, homework, or quick everyday calculations. Every solver on CalcUnit.net is built to be accurate and fast. It works on mobile screens and computers.`;
+You can use this tool for school work, homework, or quick everyday calculations. Every solver on ${SITE_DISPLAY_NAME} is built to be accurate and fast. It works on mobile screens and computers.`;
 }
 
 function generateExamples(entry: RegistryEntry): SEOContent["examples"] {

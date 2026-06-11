@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/registry/categories";
-import { ALL_CALCULATORS } from "@/lib/registry";
+import { BY_CATEGORY } from "@/lib/registry";
 import { CategoryIcon } from "@/components/ui/FlatIcon";
 import { Layers, ArrowRight } from "lucide-react";
+import { SITE_URL, SITE_DISPLAY_NAME, SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Sitemap Directory — CalcUnit.net",
-  description: "Browse the HTML directory map of all free online calculators, math solvers, and unit converters on CalcUnit.net. Grouped by category.",
-  alternates: { canonical: "https://calcunit.net/sitemap" },
+  title: `Sitemap Directory — ${SITE_DISPLAY_NAME}`,
+  description: `Browse the HTML directory map of all free online calculators, math solvers, and unit converters on ${SITE_NAME}. Grouped by category.`,
+  alternates: { canonical: `${SITE_URL}/sitemap` },
 };
 
 export default function SitemapPage() {
@@ -23,14 +24,14 @@ export default function SitemapPage() {
           Sitemap
         </h1>
         <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed">
-          Browse all specialized solvers, math calculators, and unit converters available on CalcUnit.net. Grouped by core categories.
+          Browse all specialized solvers, math calculators, and unit converters available on CalcHub. Grouped by core categories.
         </p>
       </div>
 
       {/* Grid of Categories */}
       <div className="space-y-12">
         {CATEGORIES.map((cat) => {
-          const calcsInCat = ALL_CALCULATORS.filter((c) => c.category === cat.id);
+          const calcsInCat = BY_CATEGORY[cat.id] ?? [];
           return (
             <div key={cat.id} className="space-y-4">
               <div className="flex items-center gap-2.5 border-b border-zinc-150 pb-2 dark:border-zinc-800">

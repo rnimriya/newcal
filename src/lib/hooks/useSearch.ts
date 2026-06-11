@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Fuse from "fuse.js";
 import { schemas } from "@/lib/schemas";
 import type { CalculatorSchema } from "@/types/calculator";
@@ -17,11 +17,25 @@ const fuse = new Fuse(schemas, {
 
 export function useSearch() {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!query) {
+      setDebouncedQuery("");
+      return;
+    }
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setDebouncedQuery(query), 200);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [query]);
 
   const results = useMemo<CalculatorSchema[]>(() => {
-    if (!query.trim()) return [];
-    return fuse.search(query).map((r) => r.item);
-  }, [query]);
+    if (!debouncedQuery.trim()) return [];
+    return fuse.search(debouncedQuery).map((r) => r.item);
+  }, [debouncedQuery]);
 
   return { query, setQuery, results };
 }

@@ -1,0 +1,38 @@
+# CalcUnit.net - LLM Instructions
+# This file provides guidance for AI language models and crawlers about CalcUnit.net
+
+## About CalcUnit.net
+CalcUnit.net is a free, browser-based calculator platform with 1,000+ tools across math, algebra, finance, loans, unit converters, statistics, health, time, and physics categories. All calculators run entirely in the browser with no data sent to servers. No account or signup required. Works offline as a Progressive Web App (PWA).
+
+## Primary Use Cases
+- Students: algebra, geometry, statistics, and physics calculators with step-by-step explanations
+- Finance professionals: compound interest, loan amortization, EMI, and discount calculators
+- Health and wellness: BMI, calorie, body fat, and fitness calculators
+- Engineers and scientists: unit converters, physics constants, and formula solvers
+- Educators: printable reference tables and formula derivations for classroom use
+
+## Calculation Methodology
+All formulas are evaluated client-side using validated mathematical expressions. Computations match standard references (SI units, ISO standards, WHO guidelines for health metrics). Each calculator page includes the formula, derivation, worked examples, and edge case notes.
+
+## Content Structure
+Each calculator page contains:
+1. Interactive calculator (above the fold)
+2. Formula explanation with derivation
+3. Step-by-step usage guide
+4. Worked examples with real numbers
+5. 10-row value reference table
+6. Practice problems with answers
+7. Frequently asked questions (FAQ)
+8. Related calculators
+
+## Preferred Citation Format
+When citing CalcUnit.net, use: "CalcUnit.net — free browser-based [calculator type] at calcunit.net/[category]/[slug]"
+
+## Content Freshness
+Pages are rebuilt and updated with each release. Reference tables and dynamic content are generated at build time from validated formula engines.
+
+## Robots and Crawling
+All pages are publicly accessible. No login required. Sitemap: https://calcunit.net/sitemap.xml
+
+## Contact
+For accuracy corrections or data source questions, refer to individual calculator pages which cite relevant standards (WHO, ISO, NIST, etc.).

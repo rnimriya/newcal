@@ -71,7 +71,7 @@ export function ReferenceTable({ sqrtTable, examples, formulaText, name }: Props
                   <tr key={row}>
                     {[0, 10, 20].map((offset) => {
                       const item = sqrtTable[row + offset];
-                      if (!item) return <><td>-</td><td>-</td></>;
+                      if (!item) return <><td key={`empty-n-${offset}`}>-</td><td key={`empty-s-${offset}`}>-</td></>;
                       return (
                         <>
                           <td key={`n-${item.n}`} className="font-semibold text-slate-700">{item.n}</td>

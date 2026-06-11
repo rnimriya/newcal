@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ShieldCheck, EyeOff, Key, ServerOff, HelpCircle } from "lucide-react";
+import { SITE_URL, SITE_DISPLAY_NAME, SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - CalcUnit.net",
-  description: "CalcUnit collects no personal data. All calculations run in your browser. No cookies, no tracking, no accounts.",
-  alternates: { canonical: "https://calcunit.net/privacy" },
+  title: `Privacy Policy - ${SITE_DISPLAY_NAME}`,
+  description: `${SITE_NAME} collects no personal data. All calculations run in your browser. No cookies, no tracking, no accounts.`,
+  alternates: { canonical: `${SITE_URL}/privacy` },
 };
 
 export default function PrivacyPage() {
@@ -46,7 +47,7 @@ export default function PrivacyPage() {
             <h3 className="font-bold text-zinc-900 dark:text-white text-sm">No Ads or Tracking</h3>
           </div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            CalcUnit has no ads, no third-party trackers, no cookies, and no sign-up system.
+            CalcHub has no ads, no third-party trackers, no cookies, and no sign-up system.
           </p>
         </div>
       </div>
@@ -59,7 +60,7 @@ export default function PrivacyPage() {
             1. Information We Do NOT Collect
           </h2>
           <p className="text-sm leading-relaxed">
-            CalcUnit works without an account. We do not log the numbers you enter, store your IP address, or create any user profile.
+            CalcHub works without an account. We do not log the numbers you enter, store your IP address, or create any user profile.
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-sm">
             <li>We do not log or store values you enter in the inputs.</li>

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/registry/categories";
-import { ALL_CALCULATORS } from "@/lib/registry";
+import { ALL_CALCULATORS, BY_CATEGORY } from "@/lib/registry";
+import { SITE_DISPLAY_NAME } from "@/lib/constants";
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
 
 export const metadata: Metadata = {
-  title: "All Calculator Categories — CalcUnit.net",
+  title: `All Calculator Categories — ${SITE_DISPLAY_NAME}`,
   description: "Browse 1000+ free online calculators by category: Math, Finance, Converters, Statistics, Health, Time, Physics, and more.",
 };
 
@@ -20,7 +21,7 @@ export default function CategoriesPage() {
       </div>
 
       {CATEGORIES.map((cat) => {
-        const catCalcs = ALL_CALCULATORS.filter((c) => c.category === cat.id);
+        const catCalcs = BY_CATEGORY[cat.id] ?? [];
         return (
           <section key={cat.id} id={cat.id} className="scroll-mt-20">
             <Link href={`/${cat.id}`} className="group inline-flex items-center gap-3 mb-4">

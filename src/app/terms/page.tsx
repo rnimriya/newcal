@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FileText, CheckCircle, Scale, AlertTriangle, HelpCircle } from "lucide-react";
+import { SITE_URL, SITE_DISPLAY_NAME, SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - CalcUnit.net",
-  description: "CalcUnit's terms of use. Free for personal and professional use. Verify results before using them for critical decisions.",
-  alternates: { canonical: "https://calcunit.net/terms" },
+  title: `Terms of Service - ${SITE_DISPLAY_NAME}`,
+  description: `${SITE_NAME}'s terms of use. Free for personal and professional use. Verify results before using them for critical decisions.`,
+  alternates: { canonical: `${SITE_URL}/terms` },
 };
 
 export default function TermsPage() {
@@ -34,7 +35,7 @@ export default function TermsPage() {
             <h3 className="font-bold text-zinc-900 dark:text-white text-sm">Free to Use</h3>
           </div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            Every calculator on CalcUnit is free to use. No account, no payment, no restrictions for students, professionals, or businesses.
+            Every calculator on CalcHub is free to use. No account, no payment, no restrictions for students, professionals, or businesses.
           </p>
         </div>
 
@@ -46,7 +47,7 @@ export default function TermsPage() {
             <h3 className="font-bold text-zinc-900 dark:text-white text-sm">Verify Outcomes</h3>
           </div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            You are responsible for checking results before using them in real decisions. CalcUnit provides tools, not professional advice.
+            You are responsible for checking results before using them in real decisions. CalcHub provides tools, not professional advice.
           </p>
         </div>
       </div>
@@ -59,7 +60,7 @@ export default function TermsPage() {
             1. Acceptance of Terms
           </h2>
           <p className="text-sm leading-relaxed">
-            Using CalcUnit.net means you accept these terms. If you do not agree, stop using the site.
+            Using CalcHub.net means you accept these terms. If you do not agree, stop using the site.
           </p>
         </section>
 
@@ -69,11 +70,11 @@ export default function TermsPage() {
             2. Platform License and Usage Scope
           </h2>
           <p className="text-sm leading-relaxed">
-            You can use CalcUnit for personal study, homework, professional estimates, and work tasks. You agree not to:
+            You can use CalcHub for personal study, homework, professional estimates, and work tasks. You agree not to:
           </p>
           <ul className="list-disc pl-5 space-y-1 text-sm">
             <li>Scrape or copy the calculation engine to use on another site without permission.</li>
-            <li>Embed CalcUnit tools inside frames on other websites without linking back to the source.</li>
+            <li>Embed CalcHub tools inside frames on other websites without linking back to the source.</li>
             <li>Use the site for automated bots or anything that overloads the servers.</li>
           </ul>
         </section>
@@ -84,7 +85,7 @@ export default function TermsPage() {
             3. Disclaimer of Liability
           </h2>
           <p className="text-sm leading-relaxed">
-            CalcUnit runs calculations in your browser using standard math models. We do not guarantee that every result is perfect. Always double-check outputs before using them for anything important. Read the <Link href="/disclaimer" className="text-indigo-600 hover:underline dark:text-indigo-400">Disclaimer</Link> for more detail.
+            CalcHub runs calculations in your browser using standard math models. We do not guarantee that every result is perfect. Always double-check outputs before using them for anything important. Read the <Link href="/disclaimer" className="text-indigo-600 hover:underline dark:text-indigo-400">Disclaimer</Link> for more detail.
           </p>
         </section>
 

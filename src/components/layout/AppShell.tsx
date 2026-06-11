@@ -24,7 +24,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-page)" }}>
+    <div className="min-h-screen bg-page">
       <OfflineBanner show={isOffline} />
 
       {/* Desktop header */}

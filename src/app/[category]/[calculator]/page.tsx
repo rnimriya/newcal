@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getSchemaBySlug } from "@/lib/schemas";
 import { getEntry, getRelated, ALL_CALCULATORS } from "@/lib/registry";
 import { getSEOContent } from "@/lib/seo/content";
-import { buildJsonLD, buildMetaTitle, buildMetaDesc } from "@/lib/seo/jsonld";
+import { buildJsonLD, buildMetaTitle, buildMetaDesc, buildHowToSchema } from "@/lib/seo/jsonld";
 import { CalculatorLayout } from "@/components/calculator/CalculatorLayout";
 import { Breadcrumb } from "@/components/calculator/Breadcrumb";
 import { TableOfContents } from "@/components/calculator/TableOfContents";
@@ -42,6 +42,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type:        "website",
       url:         `https://calcunit.net/${entry.category}/${entry.slug}`,
       siteName:    "CalcUnit.net",
+      images: [
+        {
+          url:    `https://calcunit.net/og-image.png`,
+          width:  1200,
+          height: 630,
+          alt:    `${entry.name} - Free Calculator on CalcUnit.net`,
+        },
+      ],
     },
     twitter: {
       card:        "summary_large_image",
@@ -50,6 +58,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     keywords: entry.tags?.join(", "),
     robots: { index: true, follow: true },
+    other: {
+      "article:modified_time":   new Date().toISOString(),
+      "article:published_time":  "2024-01-01T00:00:00.000Z",
+    },
   };
 }
 
@@ -62,7 +74,8 @@ export default async function CalculatorPage({ params }: Props) {
   const schema  = getSchemaBySlug(calcSlug);   // may be undefined for non-schema calcs
   const content = getSEOContent(entry);
   const related = getRelated(entry, 6);
-  const jsonLD  = buildJsonLD(entry, content.faqs);
+  const jsonLD    = buildJsonLD(entry, content.faqs);
+  const howToLD   = buildHowToSchema(entry, content);
 
   const dynamicContent = generateDynamicContent(schema || { name: entry.name, slug: entry.slug, fields: [], formulas: {} });
 
@@ -83,6 +96,7 @@ export default async function CalculatorPage({ params }: Props) {
   return (
     <>
       <JsonLD data={jsonLD as Record<string, unknown>} />
+      <JsonLD data={howToLD as Record<string, unknown>} />
 
       {/* Three-column layout on desktop: TOC | Main | (right on calc page) */}
       <div className="flex gap-6 items-start">

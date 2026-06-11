@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: {
-    default: "CalcHub — Dynamic Calculator Platform",
-    template: "%s | CalcHub",
+    default: "CalcUnit — Dynamic Calculator Platform",
+    template: "%s | CalcUnit",
   },
   description:
     "100+ schema-driven calculators for Finance, Health, Math, and Physics. Works offline as a PWA.",
@@ -16,12 +16,12 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "CalcHub",
+    title: "CalcUnit",
   },
   openGraph: {
     type: "website",
-    siteName: "CalcHub",
-    title: "CalcHub — Dynamic Calculator Platform",
+    siteName: "CalcUnit",
+    title: "CalcUnit — Dynamic Calculator Platform",
     description: "Schema-driven calculators for Finance, Health, Math & Physics",
   },
 };

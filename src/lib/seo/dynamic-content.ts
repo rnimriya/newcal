@@ -83,7 +83,12 @@ export function generateDynamicContent(schema: CalculatorSchema | Partial<Calcul
       const formula = (schema.formulas ?? {})[id];
       if (formula) {
         const result = evalExpression(formula, scope);
-        scope[id] = typeof result === "number" ? result : 0;
+        // Preserve the actual result type so string-valued formulas (e.g. category
+        // labels) are not silently coerced to 0, which would corrupt downstream
+        // formulas that depend on this field and make table cells show "0.00".
+        if (result !== null && result !== undefined) {
+          scope[id] = result;
+        }
       }
     }
     return scope;

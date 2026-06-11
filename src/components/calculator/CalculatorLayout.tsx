@@ -5,13 +5,23 @@
  * layout split. Renders the form on the left, explanation + chart on the right.
  */
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, memo, useState } from "react";
+import dynamic from "next/dynamic";
 import type { CalculatorSchema } from "@/types/calculator";
 import { useCalculator } from "@/lib/hooks/useCalculator";
 import { ExplanationPanel } from "./ExplanationPanel";
 import { InfoGraphic } from "./InfoGraphic";
-import { YouTubeSection } from "./YouTubeSection";
 import { getCategoryTheme } from "./theme";
+
+const YouTubeSection = dynamic(
+  () => import("./YouTubeSection").then((m) => m.YouTubeSection),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="rounded-2xl border border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-800 h-48 animate-pulse" />
+    ),
+  }
+);
 
 interface Props {
   schema: CalculatorSchema;
@@ -67,6 +77,7 @@ import { useCalcStore } from "@/store/calculatorStore";
 import { FieldRenderer } from "./FieldRenderer";
 import type { UseCalculatorReturn } from "@/lib/hooks/useCalculator";
 import type { CategoryTheme } from "./theme";
+import type { CalculatorField, FieldState } from "@/types/calculator";
 
 interface ConnectedProps {
   schema: CalculatorSchema;
@@ -74,6 +85,35 @@ interface ConnectedProps {
   isMobile: boolean;
   theme: CategoryTheme;
 }
+
+const MemoizedFieldEntry = memo(function FieldEntry({
+  field,
+  state,
+  setValue,
+  setUnit,
+  theme,
+  isMobile,
+}: {
+  field: CalculatorField;
+  state: FieldState;
+  setValue: (id: string, v: string) => void;
+  setUnit: (id: string, u: string) => void;
+  theme: CategoryTheme;
+  isMobile: boolean;
+}) {
+  const onValueChange = useCallback((v: string) => setValue(field.id, v), [field.id, setValue]);
+  const onUnitChange = useCallback((u: string) => setUnit(field.id, u), [field.id, setUnit]);
+  return (
+    <FieldRenderer
+      field={field}
+      state={state}
+      onValueChange={onValueChange}
+      onUnitChange={onUnitChange}
+      theme={theme}
+      isMobile={isMobile}
+    />
+  );
+});
 
 function CalculatorFormConnected({ schema, state, isMobile, theme }: ConnectedProps) {
   const { fields, setValue, setUnit, loadExample, reset } = state;
@@ -150,12 +190,12 @@ function CalculatorFormConnected({ schema, state, isMobile, theme }: ConnectedPr
                 const fieldState = fields[field.id];
                 if (!fieldState) return null;
                 return (
-                  <FieldRenderer
+                  <MemoizedFieldEntry
                     key={field.id}
                     field={field}
                     state={fieldState}
-                    onValueChange={(v) => setValue(field.id, v)}
-                    onUnitChange={(u) => setUnit(field.id, u)}
+                    setValue={setValue}
+                    setUnit={setUnit}
                     theme={theme}
                     isMobile={isMobile}
                   />
