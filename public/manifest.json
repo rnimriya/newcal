@@ -1,7 +1,7 @@
 {
-  "name": "CalcHub — Dynamic Calculator Platform",
-  "short_name": "CalcHub",
-  "description": "Schema-driven calculators for Finance, Health, Math & Physics. Works offline.",
+  "name": "CalcUnit — Free Online Calculators",
+  "short_name": "CalcUnit",
+  "description": "1,000+ free browser-based calculators for math, finance, health, physics, and unit conversions. Works offline.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -9,6 +9,21 @@
   "theme_color": "#6366f1",
   "categories": ["utilities", "education", "productivity"],
   "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
@@ -20,11 +35,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
     }
   ],
   "shortcuts": [
