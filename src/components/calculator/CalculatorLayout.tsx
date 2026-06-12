@@ -268,10 +268,12 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header card */}
-      <div className={`rounded-2xl border-none p-6 sm:p-8 text-white shadow-xl shadow-indigo-500/10 bg-gradient-to-br ${theme.heroGradient} transition-all relative overflow-hidden`}>
-        {/* Abstract shape background */}
-        <div className="absolute top-0 right-0 -mt-8 -mr-8 opacity-[0.15] pointer-events-none mix-blend-overlay">
-          <CalculatorIcon slug={schema.slug} category={schema.category} size={180} />
+      <div className={`rounded-2xl border-none p-6 sm:p-8 text-white shadow-xl shadow-indigo-500/10 bg-gradient-to-br ${theme.heroGradient} transition-all relative`}>
+        {/* Abstract shape background — clipped independently so dropdowns can escape */}
+        <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none">
+          <div className="absolute top-0 right-0 -mt-8 -mr-8 opacity-[0.15] mix-blend-overlay">
+            <CalculatorIcon slug={schema.slug} category={schema.category} size={180} />
+          </div>
         </div>
 
         <div className="flex items-start gap-4 relative z-10">
