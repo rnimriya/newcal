@@ -3,7 +3,7 @@
  * Network-first for Next.js RSC data and API routes.
  */
 
-const CACHE_VERSION = "calchub-v1";
+const CACHE_VERSION = "calcunit-v2";
 const APP_SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const CALC_DATA_CACHE = `${CACHE_VERSION}-data`;
 
@@ -34,7 +34,7 @@ self.addEventListener("activate", (event) => {
       .then((keys) =>
         Promise.all(
           keys
-            .filter((k) => k.startsWith("calchub-") && k !== APP_SHELL_CACHE && k !== CALC_DATA_CACHE)
+            .filter((k) => k.startsWith("calcunit-") && k !== APP_SHELL_CACHE && k !== CALC_DATA_CACHE)
             .map((k) => caches.delete(k))
         )
       )
