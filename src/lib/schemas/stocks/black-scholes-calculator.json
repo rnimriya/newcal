@@ -1,0 +1,40 @@
+{
+  "id": "black-scholes",
+  "slug": "black-scholes-calculator",
+  "name": "Black-Scholes Option Pricing Calculator",
+  "category": "stocks",
+  "description": "Price European call and put options using the Black-Scholes model with implied delta calculations.",
+  "icon": "🎯",
+  "tags": ["Black-Scholes", "options", "call option", "put option", "delta"],
+  "fields": [
+    { "id": "stockPrice", "label": "Current Stock Price", "type": "number", "defaultValue": 100, "prefix": "$", "constraint": { "min": 0.01, "step": 1, "required": true } },
+    { "id": "strikePrice", "label": "Strike Price", "type": "number", "defaultValue": 100, "prefix": "$", "constraint": { "min": 0.01, "step": 1, "required": true } },
+    { "id": "timeToExpiry", "label": "Time to Expiry (Years)", "type": "number", "defaultValue": 1, "suffix": "yr", "constraint": { "min": 0.01, "max": 10, "step": 0.1, "required": true } },
+    { "id": "riskFreeRate", "label": "Risk-Free Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "volatility", "label": "Implied Volatility", "type": "number", "defaultValue": 20, "suffix": "%", "constraint": { "min": 0.1, "max": 200, "step": 0.5, "required": true } },
+    { "id": "d1", "label": "d1", "type": "computed", "precision": 4 },
+    { "id": "d2", "label": "d2", "type": "computed", "precision": 4 },
+    { "id": "callPrice", "label": "Call Option Price", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "putPrice", "label": "Put Option Price", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "callDelta", "label": "Call Delta", "type": "computed", "precision": 4 },
+    { "id": "putDelta", "label": "Put Delta", "type": "computed", "precision": 4 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Option Parameters", "fields": ["stockPrice", "strikePrice", "timeToExpiry", "riskFreeRate", "volatility"] },
+    { "id": "outputs", "label": "Option Pricing", "fields": ["d1", "d2", "callPrice", "putPrice", "callDelta", "putDelta"] }
+  ],
+  "formulas": {
+    "d1": "(log(stockPrice/strikePrice) + (riskFreeRate/100 + (volatility/100)^2/2) * timeToExpiry) / (volatility/100 * sqrt(timeToExpiry))",
+    "d2": "d1 - volatility/100 * sqrt(timeToExpiry)",
+    "callPrice": "stockPrice * (1/(1 + exp(-1.7 * d1))) - strikePrice * exp(-riskFreeRate/100 * timeToExpiry) * (1/(1 + exp(-1.7 * d2)))",
+    "putPrice": "strikePrice * exp(-riskFreeRate/100 * timeToExpiry) * (1 - (1/(1 + exp(-1.7 * d2)))) - stockPrice * (1 - (1/(1 + exp(-1.7 * d1))))",
+    "callDelta": "1/(1 + exp(-1.7 * d1))",
+    "putDelta": "callDelta - 1"
+  },
+  "examples": [
+    { "label": "At-the-money call", "inputs": { "stockPrice": 100, "strikePrice": 100, "timeToExpiry": 1, "riskFreeRate": 5, "volatility": 20 } },
+    { "label": "Deep in-the-money", "inputs": { "stockPrice": 120, "strikePrice": 100, "timeToExpiry": 0.5, "riskFreeRate": 4, "volatility": 25 } },
+    { "label": "Short-term option", "inputs": { "stockPrice": 50, "strikePrice": 55, "timeToExpiry": 0.25, "riskFreeRate": 5, "volatility": 30 } }
+  ],
+  "explanation": "The Black-Scholes model prices European options based on stock price, strike, time to expiry, risk-free rate, and volatility. The model uses a logistic approximation for the normal CDF. Delta represents the rate of change in option price per $1 move in the stock. Put-call parity ensures callDelta - putDelta = 1."
+}

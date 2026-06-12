@@ -1,0 +1,44 @@
+{
+  "id": "social-security-distribution",
+  "slug": "social-security-distribution-calculator",
+  "name": "Social Security Tax Calculator",
+  "category": "retirement",
+  "description": "Estimate what portion of your Social Security benefits may be subject to federal income tax.",
+  "icon": "🧾",
+  "tags": ["social security", "taxation", "provisional income", "retirement tax", "85% rule"],
+  "fields": [
+    { "id": "primaryBenefit", "label": "Primary SS Benefit (Monthly)", "type": "number", "defaultValue": 2500, "prefix": "$", "constraint": { "min": 0, "step": 50, "required": true } },
+    { "id": "spouseBenefit", "label": "Spouse SS Benefit (Monthly)", "type": "number", "defaultValue": 1000, "prefix": "$", "constraint": { "min": 0, "step": 50 } },
+    {
+      "id": "filingStatus",
+      "label": "Filing Status",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Individual", "value": 1 },
+        { "label": "Married Filing Jointly", "value": 2 }
+      ]
+    },
+    { "id": "combinedOtherIncome", "label": "Other Annual Income", "type": "number", "defaultValue": 30000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "combinedBenefits", "label": "Annual SS Benefits", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "provisionalIncome", "label": "Provisional Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "taxableAmount", "label": "Taxable SS Amount", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "estimatedTax", "label": "Estimated Tax on SS", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Income Information", "fields": ["primaryBenefit", "spouseBenefit", "filingStatus", "combinedOtherIncome"] },
+    { "id": "outputs", "label": "Tax Analysis", "fields": ["combinedBenefits", "provisionalIncome", "taxableAmount", "estimatedTax"] }
+  ],
+  "formulas": {
+    "combinedBenefits": "primaryBenefit * 12 + spouseBenefit * 12 * (filingStatus - 1)",
+    "provisionalIncome": "combinedOtherIncome + combinedBenefits * 0.5",
+    "taxableAmount": "provisionalIncome > 44000 ? combinedBenefits * 0.85 : (provisionalIncome > 25000 ? combinedBenefits * 0.5 : 0)",
+    "estimatedTax": "taxableAmount * 0.22"
+  },
+  "examples": [
+    { "label": "Single retiree", "inputs": { "primaryBenefit": 2500, "spouseBenefit": 0, "filingStatus": 1, "combinedOtherIncome": 30000 } },
+    { "label": "Married couple", "inputs": { "primaryBenefit": 2500, "spouseBenefit": 1000, "filingStatus": 2, "combinedOtherIncome": 40000 } },
+    { "label": "Low income", "inputs": { "primaryBenefit": 1500, "spouseBenefit": 0, "filingStatus": 1, "combinedOtherIncome": 10000 } }
+  ],
+  "explanation": "Up to 85% of Social Security benefits may be taxable depending on your provisional income (other income + half your SS benefits). If provisional income is below $25,000 (single) or $32,000 (joint), benefits are not taxable. Between those thresholds, up to 50% is taxable; above $34,000/$44,000, up to 85% is taxable."
+}

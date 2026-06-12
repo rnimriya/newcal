@@ -1,0 +1,35 @@
+{
+  "id": "social-security-analysis",
+  "slug": "social-security-analysis-calculator",
+  "name": "Social Security Analysis Calculator",
+  "category": "retirement",
+  "description": "Analyze lifetime Social Security benefits and break-even age for different claiming strategies.",
+  "icon": "📈",
+  "tags": ["social security", "break-even", "lifetime benefits", "claiming strategy", "retirement"],
+  "fields": [
+    { "id": "monthlyBenefit", "label": "Monthly Benefit at Claiming Age", "type": "number", "defaultValue": 2000, "prefix": "$", "constraint": { "min": 0, "step": 50, "required": true } },
+    { "id": "claimAge", "label": "Claiming Age", "type": "number", "defaultValue": 62, "constraint": { "min": 62, "max": 70, "step": 1, "required": true } },
+    { "id": "lifeExpectancy", "label": "Life Expectancy", "type": "number", "defaultValue": 85, "constraint": { "min": 63, "max": 110, "step": 1, "required": true } },
+    { "id": "inflationRate", "label": "COLA Rate (Inflation)", "type": "number", "defaultValue": 2.5, "suffix": "%", "constraint": { "min": 0, "max": 10, "step": 0.1 } },
+    { "id": "yearsOfBenefits", "label": "Years of Benefits", "type": "computed", "precision": 0 },
+    { "id": "totalNominalBenefits", "label": "Total Nominal Benefits", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalRealBenefits", "label": "Total Real Benefits (with COLA)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "breakEvenAge", "label": "Break-Even Age", "type": "computed", "precision": 1 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Benefit Details", "fields": ["monthlyBenefit", "claimAge", "lifeExpectancy", "inflationRate"] },
+    { "id": "outputs", "label": "Lifetime Analysis", "fields": ["yearsOfBenefits", "totalNominalBenefits", "totalRealBenefits", "breakEvenAge"] }
+  ],
+  "formulas": {
+    "yearsOfBenefits": "max(0, lifeExpectancy - claimAge)",
+    "totalNominalBenefits": "monthlyBenefit * 12 * yearsOfBenefits",
+    "totalRealBenefits": "monthlyBenefit * 12 * (((1 + inflationRate/100)^yearsOfBenefits - 1) / (inflationRate/100))",
+    "breakEvenAge": "claimAge + (totalNominalBenefits / (monthlyBenefit * 12))"
+  },
+  "examples": [
+    { "label": "Claim at 62", "inputs": { "monthlyBenefit": 2000, "claimAge": 62, "lifeExpectancy": 85, "inflationRate": 2.5 } },
+    { "label": "Claim at 67", "inputs": { "monthlyBenefit": 2500, "claimAge": 67, "lifeExpectancy": 85, "inflationRate": 2.5 } },
+    { "label": "Claim at 70", "inputs": { "monthlyBenefit": 3100, "claimAge": 70, "lifeExpectancy": 88, "inflationRate": 2.5 } }
+  ],
+  "explanation": "Choosing when to claim Social Security involves a lifetime income trade-off. Claiming early gives more years of benefits but at a reduced rate. The Cost of Living Adjustment (COLA) helps benefits keep pace with inflation. The break-even age is when total lifetime benefits equal each other across different claiming ages."
+}

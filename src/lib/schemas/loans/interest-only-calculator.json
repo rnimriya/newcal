@@ -1,0 +1,37 @@
+{
+  "id": "interest-only",
+  "slug": "interest-only-calculator",
+  "name": "Interest Only Calculator",
+  "category": "loans",
+  "description": "Calculate interest-only loan payments, principal & interest payments after the interest-only period, and total interest cost.",
+  "icon": "📊",
+  "tags": ["interest only", "IO loan", "mortgage", "principal", "loan payment"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 400000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "annualRate", "label": "Annual Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Total Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 5, "max": 50, "step": 5, "required": true } },
+    { "id": "interestOnlyPeriod", "label": "Interest-Only Period (Years)", "type": "number", "defaultValue": 10, "constraint": { "min": 1, "max": 20, "step": 1, "required": true } },
+    { "id": "interestOnlyPayment", "label": "Monthly Payment (IO Period)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "principalAndInterestPayment", "label": "Monthly Payment (After IO)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterestOnlyPayments", "label": "Total IO Period Payments", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterestAfterPeriod", "label": "Total Interest After IO Period", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest", "label": "Total Interest Paid", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan Details", "fields": ["loanAmount", "annualRate", "termYears", "interestOnlyPeriod"] },
+    { "id": "outputs", "label": "Payment Breakdown", "fields": ["interestOnlyPayment", "principalAndInterestPayment", "totalInterestOnlyPayments", "totalInterestAfterPeriod", "totalInterest"] }
+  ],
+  "formulas": {
+    "interestOnlyPayment": "loanAmount * annualRate / 1200",
+    "principalAndInterestPayment": "loanAmount * (annualRate/1200) * (1 + annualRate/1200)^((termYears - interestOnlyPeriod)*12) / ((1 + annualRate/1200)^((termYears - interestOnlyPeriod)*12) - 1)",
+    "totalInterestOnlyPayments": "interestOnlyPayment * interestOnlyPeriod * 12",
+    "totalInterestAfterPeriod": "principalAndInterestPayment * (termYears - interestOnlyPeriod) * 12 - loanAmount",
+    "totalInterest": "totalInterestOnlyPayments + totalInterestAfterPeriod"
+  },
+  "examples": [
+    { "label": "10-yr IO on 30yr", "inputs": { "loanAmount": 400000, "annualRate": 6.5, "termYears": 30, "interestOnlyPeriod": 10 } },
+    { "label": "5-yr IO on 30yr", "inputs": { "loanAmount": 500000, "annualRate": 6.0, "termYears": 30, "interestOnlyPeriod": 5 } },
+    { "label": "7-yr IO on 25yr", "inputs": { "loanAmount": 350000, "annualRate": 7.0, "termYears": 25, "interestOnlyPeriod": 7 } }
+  ],
+  "explanation": "Interest-only loans require only interest payments for the initial period, keeping payments low. After the IO period ends, payments jump significantly as principal must now be repaid over the remaining term. Total interest is much higher than a traditional mortgage because no principal is paid during the IO period."
+}

@@ -1,0 +1,37 @@
+{
+  "id": "credit-card-minimum",
+  "slug": "credit-card-minimum-calculator",
+  "name": "Credit Card Minimum Payment Calculator",
+  "category": "credit",
+  "description": "See how long it takes and how much interest you pay if you only make minimum payments on your credit card.",
+  "icon": "⚠️",
+  "tags": ["credit card", "minimum payment", "debt", "interest trap", "payoff time"],
+  "fields": [
+    { "id": "balance", "label": "Current Balance", "type": "number", "defaultValue": 8000, "prefix": "$", "constraint": { "min": 1, "step": 100, "required": true } },
+    { "id": "apr", "label": "Annual Percentage Rate (APR)", "type": "number", "defaultValue": 22.99, "suffix": "%", "constraint": { "min": 0.1, "max": 100, "step": 0.01, "required": true } },
+    { "id": "minimumPaymentPercent", "label": "Minimum Payment %", "type": "number", "defaultValue": 2, "suffix": "%", "constraint": { "min": 0.5, "max": 20, "step": 0.5, "required": true } },
+    { "id": "minimumPaymentFloor", "label": "Minimum Payment Floor", "type": "number", "defaultValue": 25, "prefix": "$", "constraint": { "min": 1, "step": 1 } },
+    { "id": "monthlyRate", "label": "Monthly Interest Rate", "type": "computed", "precision": 4, "suffix": "%" },
+    { "id": "firstMinimumPayment", "label": "First Month's Minimum Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthsToPayoff", "label": "Months to Pay Off", "type": "computed", "precision": 0 },
+    { "id": "totalPaid", "label": "Total Amount Paid", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest", "label": "Total Interest Paid", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Card Details", "fields": ["balance", "apr", "minimumPaymentPercent", "minimumPaymentFloor"] },
+    { "id": "outputs", "label": "Minimum Payment Impact", "fields": ["monthlyRate", "firstMinimumPayment", "monthsToPayoff", "totalPaid", "totalInterest"] }
+  ],
+  "formulas": {
+    "monthlyRate": "apr / 1200",
+    "firstMinimumPayment": "max(minimumPaymentFloor, balance * minimumPaymentPercent / 100)",
+    "monthsToPayoff": "ceil(log(firstMinimumPayment / (firstMinimumPayment - balance * monthlyRate)) / log(1 + monthlyRate) / (1 - minimumPaymentPercent/100))",
+    "totalPaid": "balance * (1 + monthlyRate)^monthsToPayoff",
+    "totalInterest": "totalPaid - balance"
+  },
+  "examples": [
+    { "label": "High balance card", "inputs": { "balance": 8000, "apr": 22.99, "minimumPaymentPercent": 2, "minimumPaymentFloor": 25 } },
+    { "label": "Student credit card", "inputs": { "balance": 3000, "apr": 19.99, "minimumPaymentPercent": 2, "minimumPaymentFloor": 25 } },
+    { "label": "Store card", "inputs": { "balance": 5000, "apr": 26.99, "minimumPaymentPercent": 2.5, "minimumPaymentFloor": 35 } }
+  ],
+  "explanation": "Making only minimum payments is the most expensive way to repay credit card debt. As the balance decreases, so does the minimum payment, extending repayment over many years. A $8,000 balance at 23% APR paying just 2% monthly could take over 25 years to pay off, costing more in interest than the original debt."
+}

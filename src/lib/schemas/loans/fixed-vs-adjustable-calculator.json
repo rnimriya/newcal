@@ -1,0 +1,40 @@
+{
+  "id": "fixed-vs-adjustable",
+  "slug": "fixed-vs-adjustable-rate-calculator",
+  "name": "Fixed vs Adjustable Rate Calculator",
+  "category": "loans",
+  "description": "Compare the total lifetime cost of a fixed-rate mortgage versus an adjustable-rate mortgage.",
+  "icon": "⚖️",
+  "tags": ["fixed rate", "adjustable rate", "ARM", "mortgage comparison", "fixed vs ARM"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 350000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 5, "max": 50, "step": 5, "required": true } },
+    { "id": "fixedRate", "label": "Fixed Interest Rate", "type": "number", "defaultValue": 7.0, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "armInitialRate", "label": "ARM Initial Rate", "type": "number", "defaultValue": 5.5, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "armExpectedRate", "label": "ARM Expected Rate (After Fixed Period)", "type": "number", "defaultValue": 7.5, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "fixedMonthlyPayment", "label": "Fixed Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "armInitialPayment", "label": "ARM Initial Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "armAveragePayment", "label": "ARM Average Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "fixedTotalCost", "label": "Fixed Total Cost", "type": "computed", "precision": 0, "prefix": "$" },
+    { "id": "armTotalCost", "label": "ARM Total Cost (Estimated)", "type": "computed", "precision": 0, "prefix": "$" },
+    { "id": "costDifference", "label": "Cost Difference", "type": "computed", "precision": 0, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan Parameters", "fields": ["loanAmount", "termYears", "fixedRate", "armInitialRate", "armExpectedRate"] },
+    { "id": "outputs", "label": "Comparison Results", "fields": ["fixedMonthlyPayment", "armInitialPayment", "armAveragePayment", "fixedTotalCost", "armTotalCost", "costDifference"] }
+  ],
+  "formulas": {
+    "fixedMonthlyPayment": "loanAmount * (fixedRate/1200) * (1 + fixedRate/1200)^(termYears*12) / ((1 + fixedRate/1200)^(termYears*12) - 1)",
+    "armInitialPayment": "loanAmount * (armInitialRate/1200) * (1 + armInitialRate/1200)^(termYears*12) / ((1 + armInitialRate/1200)^(termYears*12) - 1)",
+    "armAveragePayment": "loanAmount * (armExpectedRate/1200) * (1 + armExpectedRate/1200)^(termYears*12) / ((1 + armExpectedRate/1200)^(termYears*12) - 1)",
+    "fixedTotalCost": "fixedMonthlyPayment * termYears * 12",
+    "armTotalCost": "armAveragePayment * termYears * 12",
+    "costDifference": "abs(fixedTotalCost - armTotalCost)"
+  },
+  "examples": [
+    { "label": "30yr fixed vs 5/1 ARM", "inputs": { "loanAmount": 350000, "termYears": 30, "fixedRate": 7.0, "armInitialRate": 5.5, "armExpectedRate": 7.5 } },
+    { "label": "15yr fixed vs ARM", "inputs": { "loanAmount": 300000, "termYears": 15, "fixedRate": 6.5, "armInitialRate": 5.25, "armExpectedRate": 7.0 } },
+    { "label": "Jumbo mortgage", "inputs": { "loanAmount": 600000, "termYears": 30, "fixedRate": 7.25, "armInitialRate": 5.75, "armExpectedRate": 7.75 } }
+  ],
+  "explanation": "Fixed-rate mortgages offer payment certainty but often have higher initial rates. ARMs start lower but can rise significantly after the fixed period. If rates stay low, an ARM may save money. If rates rise, the fixed rate wins. The cost difference shows how much you save or risk between the two options."
+}

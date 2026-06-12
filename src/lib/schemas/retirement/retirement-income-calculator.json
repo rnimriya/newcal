@@ -1,0 +1,38 @@
+{
+  "id": "retirement-income",
+  "slug": "retirement-income-calculator",
+  "name": "Retirement Income Calculator",
+  "category": "retirement",
+  "description": "Calculate total retirement income from savings withdrawals, Social Security, pension, and part-time work.",
+  "icon": "💰",
+  "tags": ["retirement income", "withdrawal", "social security", "pension", "monthly income"],
+  "fields": [
+    { "id": "retirementSavings", "label": "Retirement Savings", "type": "number", "defaultValue": 800000, "prefix": "$", "constraint": { "min": 0, "step": 10000, "required": true } },
+    { "id": "withdrawalRate", "label": "Annual Withdrawal Rate", "type": "number", "defaultValue": 4, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.1, "required": true } },
+    { "id": "socialSecurityMonthly", "label": "Social Security (Monthly)", "type": "number", "defaultValue": 1800, "prefix": "$", "constraint": { "min": 0, "step": 50 } },
+    { "id": "pensionMonthly", "label": "Pension (Monthly)", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 50 } },
+    { "id": "partTimeIncome", "label": "Part-Time Income (Monthly)", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "portfolioMonthlyIncome", "label": "Portfolio Monthly Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalMonthlyIncome", "label": "Total Monthly Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalAnnualIncome", "label": "Total Annual Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "taxableIncome", "label": "Estimated Taxable Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "estimatedTax", "label": "Estimated Annual Tax", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Income Sources", "fields": ["retirementSavings", "withdrawalRate", "socialSecurityMonthly", "pensionMonthly", "partTimeIncome"] },
+    { "id": "outputs", "label": "Income Summary", "fields": ["portfolioMonthlyIncome", "totalMonthlyIncome", "totalAnnualIncome", "taxableIncome", "estimatedTax"] }
+  ],
+  "formulas": {
+    "portfolioMonthlyIncome": "retirementSavings * withdrawalRate / 100 / 12",
+    "totalMonthlyIncome": "portfolioMonthlyIncome + socialSecurityMonthly + pensionMonthly + partTimeIncome",
+    "totalAnnualIncome": "totalMonthlyIncome * 12",
+    "taxableIncome": "portfolioMonthlyIncome * 12 + partTimeIncome * 12",
+    "estimatedTax": "taxableIncome * 0.15"
+  },
+  "examples": [
+    { "label": "Comfortable retiree", "inputs": { "retirementSavings": 800000, "withdrawalRate": 4, "socialSecurityMonthly": 1800, "pensionMonthly": 0, "partTimeIncome": 0 } },
+    { "label": "With pension", "inputs": { "retirementSavings": 500000, "withdrawalRate": 4, "socialSecurityMonthly": 2000, "pensionMonthly": 1500, "partTimeIncome": 500 } },
+    { "label": "Frugal retiree", "inputs": { "retirementSavings": 400000, "withdrawalRate": 3, "socialSecurityMonthly": 2200, "pensionMonthly": 0, "partTimeIncome": 1000 } }
+  ],
+  "explanation": "Retirement income typically comes from multiple sources: portfolio withdrawals, Social Security, pensions, and part-time work. The estimated taxable income excludes Social Security (which may or may not be taxed depending on total income). A 15% effective tax rate is used as an approximation for many retirees."
+}

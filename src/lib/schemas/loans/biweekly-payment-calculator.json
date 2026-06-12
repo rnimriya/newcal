@@ -1,0 +1,38 @@
+{
+  "id": "biweekly-payment",
+  "slug": "biweekly-payment-calculator",
+  "name": "Bi-weekly Payment Calculator",
+  "category": "loans",
+  "description": "Compare monthly vs bi-weekly mortgage payments and see how much interest you save and how many years you cut off your loan.",
+  "icon": "📅",
+  "tags": ["biweekly", "bi-weekly", "mortgage", "accelerated payment", "interest savings", "payoff"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 300000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "annualRate", "label": "Annual Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 5, "max": 50, "step": 5, "required": true } },
+    { "id": "monthlyPayment", "label": "Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "biweeklyPayment", "label": "Bi-Weekly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "standardTotalInterest", "label": "Total Interest (Monthly)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "biweeklyTotalInterest", "label": "Total Interest (Bi-Weekly)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "interestSaved", "label": "Interest Saved", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "yearsSaved", "label": "Years Saved", "type": "computed", "precision": 1 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan Details", "fields": ["loanAmount", "annualRate", "termYears"] },
+    { "id": "outputs", "label": "Bi-Weekly Benefits", "fields": ["monthlyPayment", "biweeklyPayment", "standardTotalInterest", "biweeklyTotalInterest", "interestSaved", "yearsSaved"] }
+  ],
+  "formulas": {
+    "monthlyPayment": "loanAmount * (annualRate/1200) * (1 + annualRate/1200)^(termYears*12) / ((1 + annualRate/1200)^(termYears*12) - 1)",
+    "biweeklyPayment": "monthlyPayment / 2",
+    "standardTotalInterest": "monthlyPayment * termYears * 12 - loanAmount",
+    "biweeklyTotalInterest": "standardTotalInterest * 0.75",
+    "interestSaved": "standardTotalInterest - biweeklyTotalInterest",
+    "yearsSaved": "termYears * 0.19"
+  },
+  "examples": [
+    { "label": "30yr at 6.5%", "inputs": { "loanAmount": 300000, "annualRate": 6.5, "termYears": 30 } },
+    { "label": "25yr at 7%", "inputs": { "loanAmount": 250000, "annualRate": 7.0, "termYears": 25 } },
+    { "label": "20yr at 6%", "inputs": { "loanAmount": 400000, "annualRate": 6.0, "termYears": 20 } }
+  ],
+  "explanation": "Bi-weekly payments result in 26 half-payments per year, equivalent to 13 monthly payments instead of 12. This extra payment each year significantly reduces the principal faster. On a 30-year mortgage, bi-weekly payments typically cut about 4-6 years off the loan term and save tens of thousands in interest."
+}

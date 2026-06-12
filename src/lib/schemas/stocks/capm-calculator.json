@@ -1,0 +1,32 @@
+{
+  "id": "capm",
+  "slug": "capm-calculator",
+  "name": "CAPM Calculator",
+  "category": "stocks",
+  "description": "Calculate expected stock return using the Capital Asset Pricing Model (CAPM) based on beta and market return.",
+  "icon": "📐",
+  "tags": ["CAPM", "beta", "expected return", "risk premium", "stock valuation"],
+  "fields": [
+    { "id": "riskFreeRate", "label": "Risk-Free Rate", "type": "number", "defaultValue": 4, "suffix": "%", "constraint": { "min": 0, "max": 20, "step": 0.1, "required": true } },
+    { "id": "marketReturn", "label": "Expected Market Return", "type": "number", "defaultValue": 10, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.1, "required": true } },
+    { "id": "beta", "label": "Stock Beta", "type": "number", "defaultValue": 1.2, "constraint": { "min": -3, "max": 5, "step": 0.05, "required": true } },
+    { "id": "marketRiskPremium", "label": "Market Risk Premium", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "expectedReturn", "label": "Expected Return (CAPM)", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "alphaForBreakeven", "label": "Alpha for Break-Even", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "CAPM Inputs", "fields": ["riskFreeRate", "marketReturn", "beta"] },
+    { "id": "outputs", "label": "CAPM Results", "fields": ["marketRiskPremium", "expectedReturn", "alphaForBreakeven"] }
+  ],
+  "formulas": {
+    "marketRiskPremium": "marketReturn - riskFreeRate",
+    "expectedReturn": "riskFreeRate + beta * marketRiskPremium",
+    "alphaForBreakeven": "0"
+  },
+  "examples": [
+    { "label": "High-beta tech stock", "inputs": { "riskFreeRate": 4, "marketReturn": 10, "beta": 1.5 } },
+    { "label": "Defensive utility", "inputs": { "riskFreeRate": 4, "marketReturn": 10, "beta": 0.6 } },
+    { "label": "Market index", "inputs": { "riskFreeRate": 4, "marketReturn": 10, "beta": 1.0 } }
+  ],
+  "explanation": "The Capital Asset Pricing Model (CAPM) states that a stock's expected return equals the risk-free rate plus beta times the market risk premium. Beta measures systematic risk: values above 1 indicate the stock amplifies market moves, below 1 indicates lower volatility. Higher beta demands higher return."
+}

@@ -1,0 +1,37 @@
+{
+  "id": "rent-vs-buy",
+  "slug": "rent-vs-buy-calculator",
+  "name": "Rent vs Buy Calculator",
+  "category": "loans",
+  "description": "Compare the 5-year total cost of renting versus buying a home, including appreciation and break-even analysis.",
+  "icon": "⚖️",
+  "tags": ["rent vs buy", "mortgage", "home buying", "renting", "break even", "real estate"],
+  "fields": [
+    { "id": "homePrice", "label": "Home Price", "type": "number", "defaultValue": 400000, "prefix": "$", "constraint": { "min": 10000, "step": 5000, "required": true } },
+    { "id": "downPayment", "label": "Down Payment", "type": "number", "defaultValue": 80000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "mortgageRate", "label": "Mortgage Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Mortgage Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 5, "max": 50, "step": 5, "required": true } },
+    { "id": "monthlyRent", "label": "Monthly Rent", "type": "number", "defaultValue": 2000, "prefix": "$", "constraint": { "min": 100, "step": 50, "required": true } },
+    { "id": "homeAppreciation", "label": "Annual Home Appreciation", "type": "number", "defaultValue": 3, "suffix": "%", "constraint": { "min": -10, "max": 20, "step": 0.5, "required": true } },
+    { "id": "rentIncrease", "label": "Annual Rent Increase", "type": "number", "defaultValue": 3, "suffix": "%", "constraint": { "min": 0, "max": 20, "step": 0.5, "required": true } },
+    { "id": "taxRate", "label": "Marginal Tax Rate", "type": "number", "defaultValue": 25, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 1, "required": true } },
+    { "id": "totalBuyCost5yr", "label": "Total Buy Cost (5 Years)", "type": "computed", "precision": 0, "prefix": "$" },
+    { "id": "totalRentCost5yr", "label": "Total Rent Cost (5 Years)", "type": "computed", "precision": 0, "prefix": "$" },
+    { "id": "breakEvenYears", "label": "Break-Even Point (Years)", "type": "computed", "precision": 1 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Buy & Rent Parameters", "fields": ["homePrice", "downPayment", "mortgageRate", "termYears", "monthlyRent", "homeAppreciation", "rentIncrease", "taxRate"] },
+    { "id": "outputs", "label": "Comparison Results", "fields": ["totalBuyCost5yr", "totalRentCost5yr", "breakEvenYears"] }
+  ],
+  "formulas": {
+    "totalBuyCost5yr": "(homePrice - downPayment) * (mortgageRate/1200) * (1 + mortgageRate/1200)^(termYears*12) / ((1 + mortgageRate/1200)^(termYears*12) - 1) * 60 + downPayment - homePrice * (1 + homeAppreciation/100)^5 + homePrice",
+    "totalRentCost5yr": "monthlyRent * 12 * ((1 + rentIncrease/100)^5 - 1) / (rentIncrease/100)",
+    "breakEvenYears": "log(totalRentCost5yr / (homePrice * 0.05)) / log(1 + homeAppreciation/100)"
+  },
+  "examples": [
+    { "label": "Urban market", "inputs": { "homePrice": 400000, "downPayment": 80000, "mortgageRate": 6.5, "termYears": 30, "monthlyRent": 2000, "homeAppreciation": 3, "rentIncrease": 3, "taxRate": 25 } },
+    { "label": "Expensive city", "inputs": { "homePrice": 700000, "downPayment": 140000, "mortgageRate": 6.0, "termYears": 30, "monthlyRent": 3500, "homeAppreciation": 4, "rentIncrease": 4, "taxRate": 32 } },
+    { "label": "Affordable market", "inputs": { "homePrice": 250000, "downPayment": 50000, "mortgageRate": 7.0, "termYears": 30, "monthlyRent": 1200, "homeAppreciation": 2, "rentIncrease": 2, "taxRate": 22 } }
+  ],
+  "explanation": "The rent vs buy decision depends on how long you plan to stay. Buying involves a large upfront cost (down payment, closing costs) but builds equity through mortgage payments and appreciation. Renting offers flexibility but costs rise annually. The break-even point is when cumulative buy costs equal cumulative rent costs."
+}

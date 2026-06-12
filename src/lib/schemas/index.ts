@@ -764,6 +764,69 @@ import childEducation from "./loans/child-education.json";
 import car from "./loans/car.json";
 import dreamHome from "./loans/dream-home.json";
 
+// ─── Retirement schemas ───────────────────────────────────────────────────────
+import retirementPlanner          from "./retirement/retirement-planner.json";
+import retirement401kContribution from "./retirement/401k-contribution-calculator.json";
+import retirement401kSaveMax      from "./retirement/401k-save-max-calculator.json";
+import retirementSavingsAnalysis  from "./retirement/retirement-savings-analysis.json";
+import retirementIncomeAnalysis   from "./retirement/retirement-income-analysis.json";
+import traditionalIraVsRothIra    from "./retirement/traditional-ira-vs-roth-ira.json";
+import rmdCalculator              from "./retirement/rmd-calculator.json";
+import socialSecurityEstimator    from "./retirement/social-security-estimator.json";
+import socialSecurityAnalysis     from "./retirement/social-security-analysis.json";
+import socialSecurityDistribution from "./retirement/social-security-distribution.json";
+import assetAllocationCalculator  from "./retirement/asset-allocation-calculator.json";
+import retirementIncomeCalculator from "./retirement/retirement-income-calculator.json";
+import retirementCalculatorUs     from "./retirement/retirement-calculator-us.json";
+import annuityCalculator          from "./retirement/annuity-calculator.json";
+
+// ─── Stocks schemas ───────────────────────────────────────────────────────────
+import stockReturnCalculator         from "./stocks/stock-return-calculator.json";
+import stockConstantGrowthCalculator from "./stocks/stock-constant-growth-calculator.json";
+import stockNonconstantGrowth        from "./stocks/stock-nonconstant-growth-calculator.json";
+import capmCalculator                from "./stocks/capm-calculator.json";
+import expectedReturnCalculator      from "./stocks/expected-return-calculator.json";
+import holdingPeriodReturnCalculator from "./stocks/holding-period-return-calculator.json";
+import waccCalculator                from "./stocks/wacc-calculator.json";
+import blackScholesCalculator        from "./stocks/black-scholes-calculator.json";
+import pivotPointCalculator          from "./stocks/pivot-point-calculator.json";
+import fibonacciStocksCalculator     from "./stocks/fibonacci-calculator.json";
+import dividendTaxCalculator         from "./stocks/dividend-tax-calculator.json";
+import commoditiesFuturesCalculator  from "./stocks/commodities-futures-calculator.json";
+
+// ─── Credit schemas ───────────────────────────────────────────────────────────
+import creditCardPayoffCalculator  from "./credit/credit-card-payoff-calculator.json";
+import creditCardMinimumCalculator from "./credit/credit-card-minimum-calculator.json";
+
+// ─── Finance new schemas ──────────────────────────────────────────────────────
+import roiCalculator            from "./finance/roi-calculator.json";
+import irrNpvCalculator         from "./finance/irr-npv-calculator.json";
+import bondCalculator           from "./finance/bond-calculator.json";
+import taxEquivalentYield       from "./finance/tax-equivalent-yield-calculator.json";
+import ruleOf72Calculator       from "./finance/rule-of-72-calculator.json";
+import collegeSavingsCalculator from "./finance/college-savings-calculator.json";
+import investmentIncomeCalc     from "./finance/investment-income-calculator.json";
+import mutualFundFeeCalculator  from "./finance/mutual-fund-fee-calculator.json";
+import hsaCalculator            from "./finance/hsa-calculator.json";
+import savingsGoalCalculator    from "./finance/savings-goal-calculator.json";
+
+// ─── Loans new schemas ────────────────────────────────────────────────────────
+import loanComparisonCalculator    from "./loans/loan-comparison-calculator.json";
+import loanRefinanceCalculator     from "./loans/loan-refinance-calculator.json";
+import aprCalculator               from "./loans/apr-calculator.json";
+import aprAdvancedCalculator       from "./loans/apr-advanced-calculator.json";
+import commercialLoanCalculator    from "./loans/commercial-loan-calculator.json";
+import loanAnalysisCalculator      from "./loans/loan-analysis-calculator.json";
+import homeAffordabilityCalculator from "./loans/home-affordability-calculator.json";
+import rentVsBuyCalculator         from "./loans/rent-vs-buy-calculator.json";
+import mortgageTaxSavingCalc       from "./loans/mortgage-tax-saving-calculator.json";
+import discountPointsCalculator    from "./loans/discount-points-calculator.json";
+import adjustableRateCalculator    from "./loans/adjustable-rate-calculator.json";
+import fixedVsAdjustableCalc       from "./loans/fixed-vs-adjustable-calculator.json";
+import biweeklyPaymentCalculator   from "./loans/biweekly-payment-calculator.json";
+import interestOnlyCalculator      from "./loans/interest-only-calculator.json";
+import rentalPropertyCalculator    from "./loans/rental-property-calculator.json";
+
 export const schemas: CalculatorSchema[] = [
   stepUpSip, wealthSip, cagr, elss, stp, indexFund, investment, wealth, goalBased, retirement, childEducation, car, dreamHome,
   bulkModulus, compressiveStrength, creepRate, dataTransferRate, dateToRoman, decimeter, deformation, dyne, elasticModulus, electricConductance, electricConductivity, electricPotential, electricResistivity, electronvolt, exabyte, fahrenheitToDelisle, fahrenheitToNewton, fahrenheitToRankine, fahrenheitToReaumur, fahrenheitToRomer, fatigueStrength, flexuralStrength, footPound, fractureToughness, gigabyte, illuminance, impactStrength, inhg, kelvinToRankine, kilobyte, kilocalorie, kilojoule, kilonewton, kilopascal, luminousIntensity, magneticFlux, massFlow,
@@ -861,6 +924,34 @@ export const schemas: CalculatorSchema[] = [
   wavelengthPhysics, torquePhysics, momentumPhysics, gravitationalForce,
   electricPower, resistorsSeries, resistorsParallel, freeFall, projectileMotion,
   capacitorCharge,
+
+  // Retirement
+  retirementPlanner, retirement401kContribution, retirement401kSaveMax,
+  retirementSavingsAnalysis, retirementIncomeAnalysis, traditionalIraVsRothIra,
+  rmdCalculator, socialSecurityEstimator, socialSecurityAnalysis,
+  socialSecurityDistribution, assetAllocationCalculator, retirementIncomeCalculator,
+  retirementCalculatorUs, annuityCalculator,
+
+  // Stocks
+  stockReturnCalculator, stockConstantGrowthCalculator, stockNonconstantGrowth,
+  capmCalculator, expectedReturnCalculator, holdingPeriodReturnCalculator,
+  waccCalculator, blackScholesCalculator, pivotPointCalculator,
+  fibonacciStocksCalculator, dividendTaxCalculator, commoditiesFuturesCalculator,
+
+  // Credit
+  creditCardPayoffCalculator, creditCardMinimumCalculator,
+
+  // Finance (new additions)
+  roiCalculator, irrNpvCalculator, bondCalculator, taxEquivalentYield,
+  ruleOf72Calculator, collegeSavingsCalculator, investmentIncomeCalc,
+  mutualFundFeeCalculator, hsaCalculator, savingsGoalCalculator,
+
+  // Loans (new additions)
+  loanComparisonCalculator, loanRefinanceCalculator, aprCalculator,
+  aprAdvancedCalculator, commercialLoanCalculator, loanAnalysisCalculator,
+  homeAffordabilityCalculator, rentVsBuyCalculator, mortgageTaxSavingCalc,
+  discountPointsCalculator, adjustableRateCalculator, fixedVsAdjustableCalc,
+  biweeklyPaymentCalculator, interestOnlyCalculator, rentalPropertyCalculator,
 ].map((s) => s as unknown as CalculatorSchema);
 
 export const schemaMap: Record<string, CalculatorSchema> = Object.fromEntries(

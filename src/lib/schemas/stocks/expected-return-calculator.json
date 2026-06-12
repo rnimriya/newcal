@@ -1,0 +1,37 @@
+{
+  "id": "expected-return",
+  "slug": "expected-return-calculator",
+  "name": "Expected Return Calculator",
+  "category": "stocks",
+  "description": "Calculate expected return, variance, and standard deviation of an investment with three probability-weighted scenarios.",
+  "icon": "🎲",
+  "tags": ["expected return", "probability", "variance", "standard deviation", "risk analysis"],
+  "fields": [
+    { "id": "prob1", "label": "Probability - Scenario 1", "type": "number", "defaultValue": 25, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 1, "required": true } },
+    { "id": "return1", "label": "Return - Scenario 1", "type": "number", "defaultValue": -10, "suffix": "%", "constraint": { "min": -100, "max": 200, "step": 1, "required": true } },
+    { "id": "prob2", "label": "Probability - Scenario 2", "type": "number", "defaultValue": 50, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 1, "required": true } },
+    { "id": "return2", "label": "Return - Scenario 2", "type": "number", "defaultValue": 8, "suffix": "%", "constraint": { "min": -100, "max": 200, "step": 1, "required": true } },
+    { "id": "prob3", "label": "Probability - Scenario 3", "type": "number", "defaultValue": 25, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 1, "required": true } },
+    { "id": "return3", "label": "Return - Scenario 3", "type": "number", "defaultValue": 20, "suffix": "%", "constraint": { "min": -100, "max": 200, "step": 1, "required": true } },
+    { "id": "totalProbability", "label": "Total Probability", "type": "computed", "precision": 1, "suffix": "%" },
+    { "id": "expectedReturn", "label": "Expected Return", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "variance", "label": "Variance", "type": "computed", "precision": 4 },
+    { "id": "standardDeviation", "label": "Standard Deviation", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Scenarios", "fields": ["prob1", "return1", "prob2", "return2", "prob3", "return3"] },
+    { "id": "outputs", "label": "Risk & Return", "fields": ["totalProbability", "expectedReturn", "variance", "standardDeviation"] }
+  ],
+  "formulas": {
+    "totalProbability": "prob1 + prob2 + prob3",
+    "expectedReturn": "prob1/100 * return1 + prob2/100 * return2 + prob3/100 * return3",
+    "variance": "prob1/100 * (return1 - expectedReturn)^2 + prob2/100 * (return2 - expectedReturn)^2 + prob3/100 * (return3 - expectedReturn)^2",
+    "standardDeviation": "sqrt(variance)"
+  },
+  "examples": [
+    { "label": "Volatile stock", "inputs": { "prob1": 25, "return1": -10, "prob2": 50, "return2": 8, "prob3": 25, "return3": 20 } },
+    { "label": "Stable investment", "inputs": { "prob1": 20, "return1": 2, "prob2": 60, "return2": 6, "prob3": 20, "return3": 10 } },
+    { "label": "High risk/reward", "inputs": { "prob1": 30, "return1": -25, "prob2": 40, "return2": 10, "prob3": 30, "return3": 40 } }
+  ],
+  "explanation": "Expected return is the probability-weighted average of all possible returns. Variance measures how spread out returns are from the mean, and standard deviation (the square root of variance) quantifies risk in the same units as return. Higher standard deviation means higher risk and return volatility."
+}

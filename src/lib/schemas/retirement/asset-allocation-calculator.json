@@ -1,0 +1,48 @@
+{
+  "id": "asset-allocation",
+  "slug": "asset-allocation-calculator",
+  "name": "Asset Allocation Calculator",
+  "category": "retirement",
+  "description": "Determine your optimal portfolio allocation between stocks, bonds, and cash based on age and risk tolerance.",
+  "icon": "🎯",
+  "tags": ["asset allocation", "portfolio", "stocks", "bonds", "risk tolerance"],
+  "fields": [
+    { "id": "age", "label": "Your Age", "type": "number", "defaultValue": 40, "constraint": { "min": 18, "max": 90, "step": 1, "required": true } },
+    {
+      "id": "riskTolerance",
+      "label": "Risk Tolerance",
+      "type": "select",
+      "defaultValue": 2,
+      "selectOptions": [
+        { "label": "Conservative", "value": 1 },
+        { "label": "Moderate", "value": 2 },
+        { "label": "Aggressive", "value": 3 }
+      ]
+    },
+    { "id": "totalPortfolio", "label": "Total Portfolio Value", "type": "number", "defaultValue": 250000, "prefix": "$", "constraint": { "min": 0, "step": 5000, "required": true } },
+    { "id": "stockAllocation", "label": "Stock Allocation", "type": "computed", "precision": 1, "suffix": "%" },
+    { "id": "bondAllocation", "label": "Bond Allocation", "type": "computed", "precision": 1, "suffix": "%" },
+    { "id": "cashAllocation", "label": "Cash Allocation", "type": "computed", "precision": 1, "suffix": "%" },
+    { "id": "stockValue", "label": "Stock Value", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "bondValue", "label": "Bond Value", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "cashValue", "label": "Cash Value", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Portfolio Parameters", "fields": ["age", "riskTolerance", "totalPortfolio"] },
+    { "id": "outputs", "label": "Recommended Allocation", "fields": ["stockAllocation", "bondAllocation", "cashAllocation", "stockValue", "bondValue", "cashValue"] }
+  ],
+  "formulas": {
+    "stockAllocation": "min(95, max(20, (110 - age) * riskTolerance / 2))",
+    "bondAllocation": "max(5, 90 - stockAllocation)",
+    "cashAllocation": "max(0, 100 - stockAllocation - bondAllocation)",
+    "stockValue": "totalPortfolio * stockAllocation / 100",
+    "bondValue": "totalPortfolio * bondAllocation / 100",
+    "cashValue": "totalPortfolio * cashAllocation / 100"
+  },
+  "examples": [
+    { "label": "Moderate 40-year-old", "inputs": { "age": 40, "riskTolerance": 2, "totalPortfolio": 250000 } },
+    { "label": "Conservative 60-year-old", "inputs": { "age": 60, "riskTolerance": 1, "totalPortfolio": 500000 } },
+    { "label": "Aggressive 30-year-old", "inputs": { "age": 30, "riskTolerance": 3, "totalPortfolio": 100000 } }
+  ],
+  "explanation": "Asset allocation balances growth potential with risk management. The classic rule of 110 minus your age in stocks is adjusted by risk tolerance. Younger investors and aggressive risk-takers can hold more equities for higher long-term growth, while older or conservative investors benefit from more bonds and cash for stability."
+}

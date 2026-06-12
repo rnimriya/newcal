@@ -1,0 +1,39 @@
+{
+  "id": "loan-refinance",
+  "slug": "loan-refinance-calculator",
+  "name": "Loan Refinance Calculator",
+  "category": "loans",
+  "description": "Calculate monthly savings, break-even period, and lifetime savings from refinancing your existing mortgage or loan.",
+  "icon": "🔄",
+  "tags": ["refinance", "mortgage refinance", "break-even", "monthly savings", "closing costs"],
+  "fields": [
+    { "id": "currentBalance", "label": "Current Loan Balance", "type": "number", "defaultValue": 250000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "currentRate", "label": "Current Interest Rate", "type": "number", "defaultValue": 7.5, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "remainingTerm", "label": "Remaining Term (Years)", "type": "number", "defaultValue": 25, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "newRate", "label": "New Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "newTerm", "label": "New Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "closingCosts", "label": "Closing Costs", "type": "number", "defaultValue": 3000, "prefix": "$", "constraint": { "min": 0, "step": 500 } },
+    { "id": "currentPayment", "label": "Current Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "newPayment", "label": "New Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthlySavings", "label": "Monthly Savings", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "breakEvenMonths", "label": "Break-Even Period (Months)", "type": "computed", "precision": 0 },
+    { "id": "lifetimeSavings", "label": "Lifetime Savings", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Refinance Details", "fields": ["currentBalance", "currentRate", "remainingTerm", "newRate", "newTerm", "closingCosts"] },
+    { "id": "outputs", "label": "Refinance Analysis", "fields": ["currentPayment", "newPayment", "monthlySavings", "breakEvenMonths", "lifetimeSavings"] }
+  ],
+  "formulas": {
+    "currentPayment": "currentBalance * (currentRate/1200) * (1 + currentRate/1200)^(remainingTerm*12) / ((1 + currentRate/1200)^(remainingTerm*12) - 1)",
+    "newPayment": "(currentBalance + closingCosts) * (newRate/1200) * (1 + newRate/1200)^(newTerm*12) / ((1 + newRate/1200)^(newTerm*12) - 1)",
+    "monthlySavings": "currentPayment - newPayment",
+    "breakEvenMonths": "monthlySavings > 0 ? ceil(closingCosts / monthlySavings) : 0",
+    "lifetimeSavings": "currentPayment * remainingTerm * 12 - newPayment * newTerm * 12 - closingCosts"
+  },
+  "examples": [
+    { "label": "Rate drop refinance", "inputs": { "currentBalance": 250000, "currentRate": 7.5, "remainingTerm": 25, "newRate": 6.5, "newTerm": 30, "closingCosts": 3000 } },
+    { "label": "Shorten term", "inputs": { "currentBalance": 300000, "currentRate": 6.5, "remainingTerm": 28, "newRate": 6.0, "newTerm": 15, "closingCosts": 4000 } },
+    { "label": "Small rate drop", "inputs": { "currentBalance": 200000, "currentRate": 7.0, "remainingTerm": 20, "newRate": 6.75, "newTerm": 20, "closingCosts": 2500 } }
+  ],
+  "explanation": "Refinancing makes sense when the monthly savings outweigh closing costs within your planned stay in the home. The break-even point is when cumulative monthly savings equal closing costs. Extending the term while lowering the rate reduces payments but may increase total interest paid, so consider both outcomes."
+}

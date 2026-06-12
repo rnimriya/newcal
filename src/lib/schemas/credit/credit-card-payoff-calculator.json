@@ -1,0 +1,36 @@
+{
+  "id": "credit-card-payoff",
+  "slug": "credit-card-payoff-calculator",
+  "name": "Credit Card Payoff Calculator",
+  "category": "credit",
+  "description": "Calculate how long it will take to pay off your credit card and total interest paid at your current payment amount.",
+  "icon": "💳",
+  "tags": ["credit card", "payoff", "debt", "interest", "monthly payment"],
+  "fields": [
+    { "id": "balance", "label": "Current Balance", "type": "number", "defaultValue": 5000, "prefix": "$", "constraint": { "min": 1, "step": 100, "required": true } },
+    { "id": "apr", "label": "Annual Percentage Rate (APR)", "type": "number", "defaultValue": 19.99, "suffix": "%", "constraint": { "min": 0.1, "max": 100, "step": 0.01, "required": true } },
+    { "id": "monthlyPayment", "label": "Monthly Payment", "type": "number", "defaultValue": 200, "prefix": "$", "constraint": { "min": 1, "step": 10, "required": true } },
+    { "id": "monthlyRate", "label": "Monthly Interest Rate", "type": "computed", "precision": 4, "suffix": "%" },
+    { "id": "monthsToPayoff", "label": "Months to Pay Off", "type": "computed", "precision": 0 },
+    { "id": "totalPaid", "label": "Total Amount Paid", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest", "label": "Total Interest Paid", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "interestSavingsDoubled", "label": "Interest Saved by Doubling Payment", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Credit Card Details", "fields": ["balance", "apr", "monthlyPayment"] },
+    { "id": "outputs", "label": "Payoff Analysis", "fields": ["monthlyRate", "monthsToPayoff", "totalPaid", "totalInterest", "interestSavingsDoubled"] }
+  ],
+  "formulas": {
+    "monthlyRate": "apr / 1200",
+    "monthsToPayoff": "monthlyPayment > balance * monthlyRate ? ceil(log(monthlyPayment / (monthlyPayment - balance * monthlyRate)) / log(1 + monthlyRate)) : 0",
+    "totalPaid": "monthsToPayoff * monthlyPayment",
+    "totalInterest": "totalPaid - balance",
+    "interestSavingsDoubled": "totalInterest - (balance * monthlyRate * ceil(log(monthlyPayment * 2 / (monthlyPayment * 2 - balance * monthlyRate)) / log(1 + monthlyRate)))"
+  },
+  "examples": [
+    { "label": "Standard card balance", "inputs": { "balance": 5000, "apr": 19.99, "monthlyPayment": 200 } },
+    { "label": "High balance", "inputs": { "balance": 15000, "apr": 22.99, "monthlyPayment": 400 } },
+    { "label": "Minimum plus", "inputs": { "balance": 3000, "apr": 18.99, "monthlyPayment": 100 } }
+  ],
+  "explanation": "Credit card interest compounds monthly, making minimum payments extremely costly over time. The payoff calculator uses the loan amortization formula to find how many months are needed. Doubling your monthly payment dramatically reduces both time to payoff and total interest, as shown by the interest savings comparison."
+}

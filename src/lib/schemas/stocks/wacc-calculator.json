@@ -1,0 +1,38 @@
+{
+  "id": "wacc",
+  "slug": "wacc-calculator",
+  "name": "WACC Calculator",
+  "category": "stocks",
+  "description": "Calculate the Weighted Average Cost of Capital (WACC) for a company based on equity and debt proportions.",
+  "icon": "⚖️",
+  "tags": ["WACC", "cost of capital", "equity", "debt", "corporate finance"],
+  "fields": [
+    { "id": "equityValue", "label": "Market Value of Equity", "type": "number", "defaultValue": 800000, "prefix": "$", "constraint": { "min": 0, "step": 10000, "required": true } },
+    { "id": "debtValue", "label": "Market Value of Debt", "type": "number", "defaultValue": 200000, "prefix": "$", "constraint": { "min": 0, "step": 10000, "required": true } },
+    { "id": "costOfEquity", "label": "Cost of Equity", "type": "number", "defaultValue": 12, "suffix": "%", "constraint": { "min": 0, "max": 80, "step": 0.1, "required": true } },
+    { "id": "costOfDebt", "label": "Pre-Tax Cost of Debt", "type": "number", "defaultValue": 6, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.1, "required": true } },
+    { "id": "taxRate", "label": "Corporate Tax Rate", "type": "number", "defaultValue": 25, "suffix": "%", "constraint": { "min": 0, "max": 60, "step": 0.5, "required": true } },
+    { "id": "totalCapital", "label": "Total Capital", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "equityWeight", "label": "Equity Weight", "type": "computed", "precision": 4 },
+    { "id": "debtWeight", "label": "Debt Weight", "type": "computed", "precision": 4 },
+    { "id": "afterTaxCostOfDebt", "label": "After-Tax Cost of Debt", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "wacc", "label": "WACC", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Capital Structure", "fields": ["equityValue", "debtValue", "costOfEquity", "costOfDebt", "taxRate"] },
+    { "id": "outputs", "label": "WACC Results", "fields": ["totalCapital", "equityWeight", "debtWeight", "afterTaxCostOfDebt", "wacc"] }
+  ],
+  "formulas": {
+    "totalCapital": "equityValue + debtValue",
+    "equityWeight": "equityValue / totalCapital",
+    "debtWeight": "debtValue / totalCapital",
+    "afterTaxCostOfDebt": "costOfDebt * (1 - taxRate/100)",
+    "wacc": "(equityWeight * costOfEquity/100 + debtWeight * afterTaxCostOfDebt/100) * 100"
+  },
+  "examples": [
+    { "label": "Standard company", "inputs": { "equityValue": 800000, "debtValue": 200000, "costOfEquity": 12, "costOfDebt": 6, "taxRate": 25 } },
+    { "label": "Leveraged company", "inputs": { "equityValue": 500000, "debtValue": 500000, "costOfEquity": 14, "costOfDebt": 7, "taxRate": 21 } },
+    { "label": "Conservative firm", "inputs": { "equityValue": 900000, "debtValue": 100000, "costOfEquity": 10, "costOfDebt": 5, "taxRate": 28 } }
+  ],
+  "explanation": "WACC is the minimum return a company must earn on its investments to satisfy both debt holders and equity investors. Debt has a tax advantage since interest payments are tax-deductible. WACC is used as the discount rate in DCF valuations to determine if a project creates or destroys shareholder value."
+}

@@ -1,0 +1,38 @@
+{
+  "id": "mutual-fund-fee",
+  "slug": "mutual-fund-fee-calculator",
+  "name": "Mutual Fund Fee Calculator",
+  "category": "finance",
+  "description": "Calculate the long-term cost of mutual fund expense ratios and how fees impact your final portfolio value.",
+  "icon": "📉",
+  "tags": ["mutual fund", "expense ratio", "fees", "investment costs", "fund comparison"],
+  "fields": [
+    { "id": "initialInvestment", "label": "Initial Investment", "type": "number", "defaultValue": 100000, "prefix": "$", "constraint": { "min": 0, "step": 5000, "required": true } },
+    { "id": "annualReturn", "label": "Gross Annual Return", "type": "number", "defaultValue": 8, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.1, "required": true } },
+    { "id": "expenseRatio", "label": "Expense Ratio", "type": "number", "defaultValue": 1, "suffix": "%", "constraint": { "min": 0, "max": 5, "step": 0.01, "required": true } },
+    { "id": "years", "label": "Investment Period (Years)", "type": "number", "defaultValue": 20, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "annualContribution", "label": "Annual Additional Contribution", "type": "number", "defaultValue": 6000, "prefix": "$", "constraint": { "min": 0, "step": 500 } },
+    { "id": "grossFutureValue", "label": "Value Before Fees", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "netFutureValue", "label": "Value After Fees", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalFeesCost", "label": "Total Cost of Fees", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "feeImpactPercent", "label": "Fee Impact (%)", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "effectiveReturn", "label": "Effective Net Return", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Fund Parameters", "fields": ["initialInvestment", "annualReturn", "expenseRatio", "years", "annualContribution"] },
+    { "id": "outputs", "label": "Fee Impact Analysis", "fields": ["grossFutureValue", "netFutureValue", "totalFeesCost", "feeImpactPercent", "effectiveReturn"] }
+  ],
+  "formulas": {
+    "grossFutureValue": "initialInvestment * (1 + annualReturn/100)^years + annualContribution * (((1 + annualReturn/100)^years - 1) / (annualReturn/100))",
+    "netFutureValue": "initialInvestment * (1 + (annualReturn - expenseRatio)/100)^years + annualContribution * (((1 + (annualReturn - expenseRatio)/100)^years - 1) / ((annualReturn - expenseRatio)/100))",
+    "totalFeesCost": "grossFutureValue - netFutureValue",
+    "feeImpactPercent": "totalFeesCost / grossFutureValue * 100",
+    "effectiveReturn": "annualReturn - expenseRatio"
+  },
+  "examples": [
+    { "label": "Active vs passive fund", "inputs": { "initialInvestment": 100000, "annualReturn": 8, "expenseRatio": 1, "years": 20, "annualContribution": 6000 } },
+    { "label": "Index fund (low cost)", "inputs": { "initialInvestment": 50000, "annualReturn": 8, "expenseRatio": 0.04, "years": 30, "annualContribution": 5000 } },
+    { "label": "Hedge fund fees", "inputs": { "initialInvestment": 500000, "annualReturn": 10, "expenseRatio": 2, "years": 15, "annualContribution": 0 } }
+  ],
+  "explanation": "Expense ratios compound just like returns, silently eroding wealth over time. A 1% annual fee on a $100,000 investment over 30 years can cost over $100,000 in lost returns. Index funds typically charge 0.03-0.2%, while actively managed funds often charge 0.5-2%+, rarely justifying the cost difference."
+}

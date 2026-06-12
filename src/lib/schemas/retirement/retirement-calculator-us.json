@@ -1,0 +1,43 @@
+{
+  "id": "us-retirement-calculator",
+  "slug": "us-retirement-calculator",
+  "name": "US Retirement Calculator",
+  "category": "retirement",
+  "description": "Comprehensive US retirement calculator with savings projection, inflation-adjusted income needs, and monthly shortfall analysis.",
+  "icon": "🇺🇸",
+  "tags": ["retirement", "US", "savings", "inflation", "planning"],
+  "fields": [
+    { "id": "currentAge", "label": "Current Age", "type": "number", "defaultValue": 40, "constraint": { "min": 18, "max": 80, "step": 1, "required": true } },
+    { "id": "retirementAge", "label": "Retirement Age", "type": "number", "defaultValue": 67, "constraint": { "min": 40, "max": 90, "step": 1, "required": true } },
+    { "id": "lifeExpectancy", "label": "Life Expectancy", "type": "number", "defaultValue": 90, "constraint": { "min": 50, "max": 110, "step": 1, "required": true } },
+    { "id": "currentSavings", "label": "Current Savings", "type": "number", "defaultValue": 100000, "prefix": "$", "constraint": { "min": 0, "step": 5000, "required": true } },
+    { "id": "monthlyContribution", "label": "Monthly Contribution", "type": "number", "defaultValue": 1500, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "expectedReturn", "label": "Expected Annual Return", "type": "number", "defaultValue": 7, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "inflationRate", "label": "Inflation Rate", "type": "number", "defaultValue": 3, "suffix": "%", "constraint": { "min": 0, "max": 15, "step": 0.1, "required": true } },
+    { "id": "desiredMonthlyIncome", "label": "Desired Monthly Income (Today's $)", "type": "number", "defaultValue": 6000, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "yearsToRetirement", "label": "Years to Retirement", "type": "computed", "precision": 0 },
+    { "id": "yearsInRetirement", "label": "Years in Retirement", "type": "computed", "precision": 0 },
+    { "id": "futureValue", "label": "Projected Savings at Retirement", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "inflationAdjustedIncome", "label": "Inflation-Adjusted Monthly Income Needed", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "requiredSavings", "label": "Required Retirement Corpus", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthlyShortfall", "label": "Required Additional Monthly Savings", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Retirement Parameters", "fields": ["currentAge", "retirementAge", "lifeExpectancy", "currentSavings", "monthlyContribution", "expectedReturn", "inflationRate", "desiredMonthlyIncome"] },
+    { "id": "outputs", "label": "Retirement Projections", "fields": ["yearsToRetirement", "yearsInRetirement", "futureValue", "inflationAdjustedIncome", "requiredSavings", "monthlyShortfall"] }
+  ],
+  "formulas": {
+    "yearsToRetirement": "retirementAge - currentAge",
+    "yearsInRetirement": "lifeExpectancy - retirementAge",
+    "futureValue": "currentSavings * (1 + expectedReturn/100)^yearsToRetirement + monthlyContribution * 12 * (((1 + expectedReturn/100)^yearsToRetirement - 1) / (expectedReturn/100))",
+    "inflationAdjustedIncome": "desiredMonthlyIncome * (1 + inflationRate/100)^yearsToRetirement",
+    "requiredSavings": "inflationAdjustedIncome * 12 * yearsInRetirement / (expectedReturn/100)",
+    "monthlyShortfall": "max(0, (requiredSavings - futureValue) / (12 * yearsToRetirement))"
+  },
+  "examples": [
+    { "label": "Comfortable retirement", "inputs": { "currentAge": 40, "retirementAge": 67, "lifeExpectancy": 90, "currentSavings": 100000, "monthlyContribution": 1500, "expectedReturn": 7, "inflationRate": 3, "desiredMonthlyIncome": 6000 } },
+    { "label": "Early retirement", "inputs": { "currentAge": 35, "retirementAge": 55, "lifeExpectancy": 90, "currentSavings": 200000, "monthlyContribution": 3000, "expectedReturn": 7, "inflationRate": 3, "desiredMonthlyIncome": 5000 } },
+    { "label": "Late saver", "inputs": { "currentAge": 50, "retirementAge": 67, "lifeExpectancy": 85, "currentSavings": 50000, "monthlyContribution": 2500, "expectedReturn": 6, "inflationRate": 3, "desiredMonthlyIncome": 4000 } }
+  ],
+  "explanation": "This comprehensive calculator projects your retirement savings growth and compares it to your income needs adjusted for inflation. The required corpus uses your desired annual income divided by your expected return rate. The monthly shortfall shows how much more you'd need to save to close any gap."
+}

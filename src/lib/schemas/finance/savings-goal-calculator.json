@@ -1,0 +1,37 @@
+{
+  "id": "savings-goal",
+  "slug": "savings-goal-calculator",
+  "name": "Savings Goal Calculator",
+  "category": "finance",
+  "description": "Calculate how many months it will take to reach your savings goal with regular monthly contributions and interest.",
+  "icon": "🎯",
+  "tags": ["savings goal", "monthly savings", "goal planning", "time to save", "interest"],
+  "fields": [
+    { "id": "savingsGoal", "label": "Savings Goal", "type": "number", "defaultValue": 50000, "prefix": "$", "constraint": { "min": 1, "step": 1000, "required": true } },
+    { "id": "currentSavings", "label": "Current Savings", "type": "number", "defaultValue": 5000, "prefix": "$", "constraint": { "min": 0, "step": 500 } },
+    { "id": "monthlyContribution", "label": "Monthly Contribution", "type": "number", "defaultValue": 500, "prefix": "$", "constraint": { "min": 1, "step": 50, "required": true } },
+    { "id": "expectedReturn", "label": "Annual Interest Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "remainingAmount", "label": "Remaining Amount to Save", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthsToGoal", "label": "Months to Reach Goal", "type": "computed", "precision": 0 },
+    { "id": "yearsToGoal", "label": "Years to Reach Goal", "type": "computed", "precision": 1 },
+    { "id": "totalContributions", "label": "Total Contributions Needed", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "interestEarned", "label": "Interest Earned", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Savings Parameters", "fields": ["savingsGoal", "currentSavings", "monthlyContribution", "expectedReturn"] },
+    { "id": "outputs", "label": "Goal Timeline", "fields": ["remainingAmount", "monthsToGoal", "yearsToGoal", "totalContributions", "interestEarned"] }
+  ],
+  "formulas": {
+    "remainingAmount": "max(0, savingsGoal - currentSavings)",
+    "monthsToGoal": "expectedReturn > 0 ? ceil(log(1 + remainingAmount * (expectedReturn/1200) / monthlyContribution) / log(1 + expectedReturn/1200)) : ceil(remainingAmount / monthlyContribution)",
+    "yearsToGoal": "monthsToGoal / 12",
+    "totalContributions": "monthlyContribution * monthsToGoal",
+    "interestEarned": "savingsGoal - currentSavings - totalContributions"
+  },
+  "examples": [
+    { "label": "Emergency fund", "inputs": { "savingsGoal": 50000, "currentSavings": 5000, "monthlyContribution": 500, "expectedReturn": 5 } },
+    { "label": "House down payment", "inputs": { "savingsGoal": 100000, "currentSavings": 20000, "monthlyContribution": 1500, "expectedReturn": 4 } },
+    { "label": "Vacation fund", "inputs": { "savingsGoal": 10000, "currentSavings": 0, "monthlyContribution": 400, "expectedReturn": 3 } }
+  ],
+  "explanation": "This calculator uses the future value of an annuity formula to determine how many months of contributions are needed to reach your goal. The compounding interest from your savings account accelerates progress, especially over longer timeframes. Setting up automatic monthly transfers is the most reliable way to stay on track."
+}

@@ -1,0 +1,42 @@
+{
+  "id": "rental-property",
+  "slug": "rental-property-calculator",
+  "name": "Rental Property Calculator",
+  "category": "loans",
+  "description": "Analyze rental property investment returns including NOI, cash flow, cap rate, and cash-on-cash return.",
+  "icon": "🏘️",
+  "tags": ["rental property", "real estate", "cap rate", "cash on cash", "NOI", "investment property"],
+  "fields": [
+    { "id": "purchasePrice", "label": "Purchase Price", "type": "number", "defaultValue": 350000, "prefix": "$", "constraint": { "min": 10000, "step": 5000, "required": true } },
+    { "id": "downPayment", "label": "Down Payment", "type": "number", "defaultValue": 70000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "mortgageRate", "label": "Mortgage Rate", "type": "number", "defaultValue": 7.0, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 5, "max": 50, "step": 5, "required": true } },
+    { "id": "monthlyRent", "label": "Monthly Rent", "type": "number", "defaultValue": 2500, "prefix": "$", "constraint": { "min": 100, "step": 50, "required": true } },
+    { "id": "vacancy", "label": "Vacancy Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 1, "required": true } },
+    { "id": "operatingExpenses", "label": "Monthly Operating Expenses", "type": "number", "defaultValue": 600, "prefix": "$", "constraint": { "min": 0, "step": 50, "required": true } },
+    { "id": "mortgagePayment", "label": "Monthly Mortgage Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "noi", "label": "Net Operating Income (Annual)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "cashFlow", "label": "Monthly Cash Flow", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "capRate", "label": "Cap Rate", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "cashOnCashReturn", "label": "Cash-on-Cash Return", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "grossRentMultiplier", "label": "Gross Rent Multiplier", "type": "computed", "precision": 2 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Property & Financing", "fields": ["purchasePrice", "downPayment", "mortgageRate", "termYears", "monthlyRent", "vacancy", "operatingExpenses"] },
+    { "id": "outputs", "label": "Investment Metrics", "fields": ["mortgagePayment", "noi", "cashFlow", "capRate", "cashOnCashReturn", "grossRentMultiplier"] }
+  ],
+  "formulas": {
+    "mortgagePayment": "(purchasePrice - downPayment) * (mortgageRate/1200) * (1 + mortgageRate/1200)^(termYears*12) / ((1 + mortgageRate/1200)^(termYears*12) - 1)",
+    "noi": "(monthlyRent * 12 * (1 - vacancy/100)) - (operatingExpenses * 12)",
+    "cashFlow": "noi / 12 - mortgagePayment",
+    "capRate": "noi / purchasePrice * 100",
+    "cashOnCashReturn": "cashFlow * 12 / downPayment * 100",
+    "grossRentMultiplier": "purchasePrice / (monthlyRent * 12)"
+  },
+  "examples": [
+    { "label": "Single family rental", "inputs": { "purchasePrice": 350000, "downPayment": 70000, "mortgageRate": 7.0, "termYears": 30, "monthlyRent": 2500, "vacancy": 5, "operatingExpenses": 600 } },
+    { "label": "Duplex investment", "inputs": { "purchasePrice": 500000, "downPayment": 100000, "mortgageRate": 6.75, "termYears": 30, "monthlyRent": 3800, "vacancy": 5, "operatingExpenses": 900 } },
+    { "label": "Condo rental", "inputs": { "purchasePrice": 250000, "downPayment": 50000, "mortgageRate": 7.25, "termYears": 30, "monthlyRent": 1800, "vacancy": 8, "operatingExpenses": 500 } }
+  ],
+  "explanation": "Rental property analysis uses several key metrics. Cap rate (NOI/price) measures property return independent of financing. Cash-on-cash return measures actual cash yield on invested cash (down payment). Gross Rent Multiplier compares price to gross rent — lower is better. A cap rate above the mortgage rate generally indicates positive leverage."
+}

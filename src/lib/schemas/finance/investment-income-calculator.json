@@ -1,0 +1,39 @@
+{
+  "id": "investment-income",
+  "slug": "investment-income-calculator",
+  "name": "Investment Income Calculator",
+  "category": "finance",
+  "description": "Calculate total annual investment income from dividends, interest, and capital gains on your portfolio.",
+  "icon": "💵",
+  "tags": ["investment income", "dividends", "interest income", "capital gains", "portfolio income"],
+  "fields": [
+    { "id": "portfolioValue", "label": "Portfolio Value", "type": "number", "defaultValue": 500000, "prefix": "$", "constraint": { "min": 0, "step": 10000, "required": true } },
+    { "id": "dividendYield", "label": "Dividend Yield", "type": "number", "defaultValue": 3, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "interestYield", "label": "Interest/Bond Yield", "type": "number", "defaultValue": 2, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "capitalGainRate", "label": "Expected Capital Gain Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": -20, "max": 50, "step": 0.1 } },
+    { "id": "annualDividendIncome", "label": "Annual Dividend Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "annualInterestIncome", "label": "Annual Interest Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "annualCapitalGain", "label": "Annual Capital Gain", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalAnnualIncome", "label": "Total Annual Return", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthlyIncome", "label": "Average Monthly Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "effectiveYield", "label": "Effective Total Yield", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Portfolio Details", "fields": ["portfolioValue", "dividendYield", "interestYield", "capitalGainRate"] },
+    { "id": "outputs", "label": "Income Breakdown", "fields": ["annualDividendIncome", "annualInterestIncome", "annualCapitalGain", "totalAnnualIncome", "monthlyIncome", "effectiveYield"] }
+  ],
+  "formulas": {
+    "annualDividendIncome": "portfolioValue * dividendYield / 100",
+    "annualInterestIncome": "portfolioValue * interestYield / 100",
+    "annualCapitalGain": "portfolioValue * capitalGainRate / 100",
+    "totalAnnualIncome": "annualDividendIncome + annualInterestIncome + annualCapitalGain",
+    "monthlyIncome": "totalAnnualIncome / 12",
+    "effectiveYield": "totalAnnualIncome / portfolioValue * 100"
+  },
+  "examples": [
+    { "label": "Balanced portfolio", "inputs": { "portfolioValue": 500000, "dividendYield": 3, "interestYield": 2, "capitalGainRate": 5 } },
+    { "label": "Income-focused", "inputs": { "portfolioValue": 750000, "dividendYield": 5, "interestYield": 4, "capitalGainRate": 2 } },
+    { "label": "Growth portfolio", "inputs": { "portfolioValue": 300000, "dividendYield": 1, "interestYield": 1, "capitalGainRate": 10 } }
+  ],
+  "explanation": "Investment income comes from three main sources: dividends (equity income), interest (bond/cash income), and capital gains (appreciation). A balanced portfolio typically targets total returns of 7-10% annually. The effective yield combines all three components to give a complete picture of portfolio performance."
+}

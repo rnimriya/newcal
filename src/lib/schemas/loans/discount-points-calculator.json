@@ -1,0 +1,39 @@
+{
+  "id": "discount-points",
+  "slug": "discount-points-calculator",
+  "name": "Discount Points Calculator",
+  "category": "loans",
+  "description": "Calculate whether paying discount points to lower your mortgage rate is worthwhile by finding the break-even month.",
+  "icon": "📉",
+  "tags": ["discount points", "mortgage points", "break even", "rate reduction", "mortgage"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 300000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "originalRate", "label": "Original Interest Rate", "type": "number", "defaultValue": 7.0, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "pointsCount", "label": "Number of Points to Buy", "type": "number", "defaultValue": 2, "constraint": { "min": 0, "max": 10, "step": 0.25, "required": true } },
+    { "id": "pointCost", "label": "Total Points Cost", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "rateAfterPoints", "label": "Rate After Buying Points", "type": "computed", "precision": 3, "suffix": "%" },
+    { "id": "monthlyPaymentOriginal", "label": "Monthly Payment (Original Rate)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthlyPaymentNew", "label": "Monthly Payment (Reduced Rate)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthlySavings", "label": "Monthly Savings", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "breakEvenMonths", "label": "Break-Even Months", "type": "computed", "precision": 0 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Mortgage & Points Details", "fields": ["loanAmount", "originalRate", "termYears", "pointsCount"] },
+    { "id": "outputs", "label": "Points Analysis", "fields": ["pointCost", "rateAfterPoints", "monthlyPaymentOriginal", "monthlyPaymentNew", "monthlySavings", "breakEvenMonths"] }
+  ],
+  "formulas": {
+    "pointCost": "loanAmount * pointsCount / 100",
+    "rateAfterPoints": "originalRate - pointsCount * 0.25",
+    "monthlyPaymentOriginal": "loanAmount * (originalRate/1200) * (1 + originalRate/1200)^(termYears*12) / ((1 + originalRate/1200)^(termYears*12) - 1)",
+    "monthlyPaymentNew": "loanAmount * (rateAfterPoints/1200) * (1 + rateAfterPoints/1200)^(termYears*12) / ((1 + rateAfterPoints/1200)^(termYears*12) - 1)",
+    "monthlySavings": "monthlyPaymentOriginal - monthlyPaymentNew",
+    "breakEvenMonths": "pointCost / monthlySavings"
+  },
+  "examples": [
+    { "label": "2 points on 30yr", "inputs": { "loanAmount": 300000, "originalRate": 7.0, "termYears": 30, "pointsCount": 2 } },
+    { "label": "1 point refinance", "inputs": { "loanAmount": 200000, "originalRate": 6.75, "termYears": 15, "pointsCount": 1 } },
+    { "label": "3 points jumbo", "inputs": { "loanAmount": 500000, "originalRate": 7.25, "termYears": 30, "pointsCount": 3 } }
+  ],
+  "explanation": "Each discount point costs 1% of the loan amount and typically reduces the rate by 0.25%. If you plan to keep the loan past the break-even month, buying points saves money. If you might sell or refinance before break-even, avoid buying points. A break-even of under 5 years generally favors buying points."
+}

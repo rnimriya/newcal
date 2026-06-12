@@ -1,0 +1,39 @@
+{
+  "id": "stock-return",
+  "slug": "stock-return-calculator",
+  "name": "Stock Return Calculator",
+  "category": "stocks",
+  "description": "Calculate total stock return including capital gains, dividends, and annualized return for any holding period.",
+  "icon": "📈",
+  "tags": ["stock return", "capital gain", "dividend", "annualized return", "investment"],
+  "fields": [
+    { "id": "purchasePrice", "label": "Purchase Price per Share", "type": "number", "defaultValue": 100, "prefix": "$", "constraint": { "min": 0.01, "step": 1, "required": true } },
+    { "id": "sellPrice", "label": "Sell Price per Share", "type": "number", "defaultValue": 150, "prefix": "$", "constraint": { "min": 0.01, "step": 1, "required": true } },
+    { "id": "shares", "label": "Number of Shares", "type": "number", "defaultValue": 100, "constraint": { "min": 1, "step": 1, "required": true } },
+    { "id": "dividends", "label": "Total Dividends Received", "type": "number", "defaultValue": 200, "prefix": "$", "constraint": { "min": 0, "step": 10 } },
+    { "id": "holdingPeriodYears", "label": "Holding Period (Years)", "type": "number", "defaultValue": 3, "constraint": { "min": 0.01, "step": 0.25, "required": true } },
+    { "id": "commissions", "label": "Total Commissions & Fees", "type": "number", "defaultValue": 10, "prefix": "$", "constraint": { "min": 0, "step": 1 } },
+    { "id": "capitalGain", "label": "Capital Gain/Loss", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "dividendReturn", "label": "Dividend Return", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalReturn", "label": "Total Return", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalReturnPercent", "label": "Total Return %", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "annualizedReturn", "label": "Annualized Return", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Trade Details", "fields": ["purchasePrice", "sellPrice", "shares", "dividends", "holdingPeriodYears", "commissions"] },
+    { "id": "outputs", "label": "Return Analysis", "fields": ["capitalGain", "dividendReturn", "totalReturn", "totalReturnPercent", "annualizedReturn"] }
+  ],
+  "formulas": {
+    "capitalGain": "(sellPrice - purchasePrice) * shares - commissions",
+    "dividendReturn": "dividends",
+    "totalReturn": "capitalGain + dividendReturn",
+    "totalReturnPercent": "totalReturn / (purchasePrice * shares) * 100",
+    "annualizedReturn": "((1 + totalReturnPercent/100)^(1/holdingPeriodYears) - 1) * 100"
+  },
+  "examples": [
+    { "label": "Profitable 3-year hold", "inputs": { "purchasePrice": 100, "sellPrice": 150, "shares": 100, "dividends": 200, "holdingPeriodYears": 3, "commissions": 10 } },
+    { "label": "Short-term gain", "inputs": { "purchasePrice": 50, "sellPrice": 65, "shares": 200, "dividends": 0, "holdingPeriodYears": 0.5, "commissions": 0 } },
+    { "label": "Long-term growth", "inputs": { "purchasePrice": 25, "sellPrice": 100, "shares": 500, "dividends": 1500, "holdingPeriodYears": 10, "commissions": 20 } }
+  ],
+  "explanation": "Total stock return includes both capital appreciation and dividends received. Annualized return converts the total return to an equivalent annual rate, enabling comparison across different holding periods. Commissions and fees reduce your actual capital gain and should always be factored in."
+}

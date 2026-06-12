@@ -1,0 +1,37 @@
+{
+  "id": "apr-advanced",
+  "slug": "apr-advanced-calculator",
+  "name": "APR Advanced Calculator",
+  "category": "loans",
+  "description": "Detailed APR calculation accounting for origination fees, discount points, and closing costs.",
+  "icon": "📊",
+  "tags": ["APR", "advanced", "origination fee", "points", "closing costs", "mortgage"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 300000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "originationFee", "label": "Origination Fee", "type": "number", "defaultValue": 1500, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "points", "label": "Discount Points", "type": "number", "defaultValue": 1, "constraint": { "min": 0, "max": 10, "step": 0.25, "required": true } },
+    { "id": "closingCosts", "label": "Other Closing Costs", "type": "number", "defaultValue": 4000, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "nominalRate", "label": "Nominal Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "pointsCost", "label": "Points Cost", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalFinancingCost", "label": "Total Financing Fees", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "apr", "label": "APR (Estimated)", "type": "computed", "precision": 3, "suffix": "%" },
+    { "id": "totalCostDifference", "label": "Extra Cost vs Nominal Rate", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan Parameters", "fields": ["loanAmount", "originationFee", "points", "closingCosts", "nominalRate", "termYears"] },
+    { "id": "outputs", "label": "APR Analysis", "fields": ["pointsCost", "totalFinancingCost", "apr", "totalCostDifference"] }
+  ],
+  "formulas": {
+    "pointsCost": "loanAmount * points / 100",
+    "totalFinancingCost": "originationFee + pointsCost + closingCosts",
+    "apr": "nominalRate + totalFinancingCost / loanAmount / (termYears) * 100",
+    "totalCostDifference": "loanAmount * (apr - nominalRate) / 100 * termYears"
+  },
+  "examples": [
+    { "label": "30-yr with 1 point", "inputs": { "loanAmount": 300000, "originationFee": 1500, "points": 1, "closingCosts": 4000, "nominalRate": 6.5, "termYears": 30 } },
+    { "label": "15-yr low-fee", "inputs": { "loanAmount": 250000, "originationFee": 500, "points": 0, "closingCosts": 2000, "nominalRate": 6.0, "termYears": 15 } },
+    { "label": "Jumbo with points", "inputs": { "loanAmount": 600000, "originationFee": 3000, "points": 2, "closingCosts": 8000, "nominalRate": 7.0, "termYears": 30 } }
+  ],
+  "explanation": "Advanced APR calculations include origination fees, discount points (each point = 1% of the loan), and other closing costs. These fees are amortized over the loan term to arrive at the true annual cost. A lower APR than nominal rate is impossible — APR is always higher when fees are present."
+}

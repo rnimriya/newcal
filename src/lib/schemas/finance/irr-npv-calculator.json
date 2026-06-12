@@ -1,0 +1,41 @@
+{
+  "id": "irr-npv",
+  "slug": "irr-npv-calculator",
+  "name": "NPV Calculator",
+  "category": "finance",
+  "description": "Calculate Net Present Value (NPV) and present values of cash flows over four years at a given discount rate.",
+  "icon": "💼",
+  "tags": ["NPV", "net present value", "cash flow", "discount rate", "investment analysis"],
+  "fields": [
+    { "id": "initialInvestment", "label": "Initial Investment", "type": "number", "defaultValue": 50000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "cashFlow1", "label": "Cash Flow Year 1", "type": "number", "defaultValue": 15000, "prefix": "$", "constraint": { "step": 100, "required": true } },
+    { "id": "cashFlow2", "label": "Cash Flow Year 2", "type": "number", "defaultValue": 18000, "prefix": "$", "constraint": { "step": 100, "required": true } },
+    { "id": "cashFlow3", "label": "Cash Flow Year 3", "type": "number", "defaultValue": 20000, "prefix": "$", "constraint": { "step": 100, "required": true } },
+    { "id": "cashFlow4", "label": "Cash Flow Year 4", "type": "number", "defaultValue": 22000, "prefix": "$", "constraint": { "step": 100, "required": true } },
+    { "id": "discountRate", "label": "Discount Rate (WACC)", "type": "number", "defaultValue": 10, "suffix": "%", "constraint": { "min": 0.1, "max": 100, "step": 0.1, "required": true } },
+    { "id": "pv1", "label": "PV of Year 1 Cash Flow", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "pv2", "label": "PV of Year 2 Cash Flow", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "pv3", "label": "PV of Year 3 Cash Flow", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "pv4", "label": "PV of Year 4 Cash Flow", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalPV", "label": "Total Present Value", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "npv", "label": "Net Present Value (NPV)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Project Cash Flows", "fields": ["initialInvestment", "cashFlow1", "cashFlow2", "cashFlow3", "cashFlow4", "discountRate"] },
+    { "id": "outputs", "label": "NPV Analysis", "fields": ["pv1", "pv2", "pv3", "pv4", "totalPV", "npv"] }
+  ],
+  "formulas": {
+    "pv1": "cashFlow1 / (1 + discountRate/100)",
+    "pv2": "cashFlow2 / (1 + discountRate/100)^2",
+    "pv3": "cashFlow3 / (1 + discountRate/100)^3",
+    "pv4": "cashFlow4 / (1 + discountRate/100)^4",
+    "totalPV": "pv1 + pv2 + pv3 + pv4",
+    "npv": "totalPV - initialInvestment"
+  },
+  "examples": [
+    { "label": "Business investment", "inputs": { "initialInvestment": 50000, "cashFlow1": 15000, "cashFlow2": 18000, "cashFlow3": 20000, "cashFlow4": 22000, "discountRate": 10 } },
+    { "label": "Equipment purchase", "inputs": { "initialInvestment": 100000, "cashFlow1": 30000, "cashFlow2": 35000, "cashFlow3": 40000, "cashFlow4": 45000, "discountRate": 8 } },
+    { "label": "Risky venture", "inputs": { "initialInvestment": 25000, "cashFlow1": 5000, "cashFlow2": 8000, "cashFlow3": 12000, "cashFlow4": 20000, "discountRate": 15 } }
+  ],
+  "explanation": "NPV discounts future cash flows to today's value using the required rate of return (discount rate). A positive NPV means the investment creates value above the required return; negative NPV means it destroys value. NPV is the gold standard for evaluating capital investments and project viability."
+}

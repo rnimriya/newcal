@@ -1,0 +1,35 @@
+{
+  "id": "social-security-estimator",
+  "slug": "social-security-estimator-calculator",
+  "name": "Social Security Benefit Estimator",
+  "category": "retirement",
+  "description": "Estimate your Social Security benefits based on earnings history, years worked, and your planned claiming age.",
+  "icon": "🏛️",
+  "tags": ["social security", "retirement benefit", "claiming age", "SSA", "retirement income"],
+  "fields": [
+    { "id": "currentAge", "label": "Current Age", "type": "number", "defaultValue": 55, "constraint": { "min": 18, "max": 70, "step": 1, "required": true } },
+    { "id": "claimAge", "label": "Planned Claiming Age", "type": "number", "defaultValue": 67, "constraint": { "min": 62, "max": 70, "step": 1, "required": true } },
+    { "id": "averageAnnualEarnings", "label": "Average Annual Earnings", "type": "number", "defaultValue": 60000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "yearsWorked", "label": "Years Worked (SS-covered)", "type": "number", "defaultValue": 30, "constraint": { "min": 0, "max": 50, "step": 1, "required": true } },
+    { "id": "fullRetirementBenefit", "label": "Full Retirement Benefit (Monthly)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "earlyBenefit", "label": "Early Claiming Benefit (Monthly)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "delayedBenefit", "label": "Delayed Claiming Benefit (Monthly)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "estimatedBenefit", "label": "Your Estimated Benefit (Monthly)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Earnings History", "fields": ["currentAge", "claimAge", "averageAnnualEarnings", "yearsWorked"] },
+    { "id": "outputs", "label": "Benefit Estimates", "fields": ["fullRetirementBenefit", "earlyBenefit", "delayedBenefit", "estimatedBenefit"] }
+  ],
+  "formulas": {
+    "fullRetirementBenefit": "min(averageAnnualEarnings * 0.4, 3822) * (yearsWorked / 35)",
+    "earlyBenefit": "fullRetirementBenefit * max(0.7, 1 - 0.005 * max(0, (67 - claimAge) * 12))",
+    "delayedBenefit": "fullRetirementBenefit * min(1.24, 1 + 0.008 * max(0, (claimAge - 67) * 12))",
+    "estimatedBenefit": "claimAge < 67 ? earlyBenefit : delayedBenefit"
+  },
+  "examples": [
+    { "label": "Full retirement age", "inputs": { "currentAge": 55, "claimAge": 67, "averageAnnualEarnings": 60000, "yearsWorked": 30 } },
+    { "label": "Early at 62", "inputs": { "currentAge": 58, "claimAge": 62, "averageAnnualEarnings": 55000, "yearsWorked": 28 } },
+    { "label": "Delayed to 70", "inputs": { "currentAge": 60, "claimAge": 70, "averageAnnualEarnings": 80000, "yearsWorked": 35 } }
+  ],
+  "explanation": "Social Security benefits are based on your 35 highest earning years. Claiming before full retirement age (67) permanently reduces benefits by up to 30%. Delaying until age 70 increases benefits by 8% per year, boosting your monthly check by up to 24%."
+}

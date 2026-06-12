@@ -1,0 +1,40 @@
+{
+  "id": "pivot-point",
+  "slug": "pivot-point-calculator",
+  "name": "Pivot Point Calculator",
+  "category": "stocks",
+  "description": "Calculate standard pivot points, resistance levels (R1-R3), and support levels (S1-S3) from previous day's price data.",
+  "icon": "📍",
+  "tags": ["pivot point", "support", "resistance", "technical analysis", "trading"],
+  "fields": [
+    { "id": "high", "label": "Previous High", "type": "number", "defaultValue": 155, "prefix": "$", "constraint": { "min": 0.01, "step": 0.01, "required": true } },
+    { "id": "low", "label": "Previous Low", "type": "number", "defaultValue": 145, "prefix": "$", "constraint": { "min": 0.01, "step": 0.01, "required": true } },
+    { "id": "close", "label": "Previous Close", "type": "number", "defaultValue": 150, "prefix": "$", "constraint": { "min": 0.01, "step": 0.01, "required": true } },
+    { "id": "pivotPoint", "label": "Pivot Point (PP)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "r1", "label": "Resistance 1 (R1)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "r2", "label": "Resistance 2 (R2)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "r3", "label": "Resistance 3 (R3)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "s1", "label": "Support 1 (S1)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "s2", "label": "Support 2 (S2)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "s3", "label": "Support 3 (S3)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Previous Day Prices", "fields": ["high", "low", "close"] },
+    { "id": "outputs", "label": "Pivot Levels", "fields": ["pivotPoint", "r1", "r2", "r3", "s1", "s2", "s3"] }
+  ],
+  "formulas": {
+    "pivotPoint": "(high + low + close) / 3",
+    "r1": "2 * pivotPoint - low",
+    "r2": "pivotPoint + (high - low)",
+    "r3": "high + 2 * (pivotPoint - low)",
+    "s1": "2 * pivotPoint - high",
+    "s2": "pivotPoint - (high - low)",
+    "s3": "low - 2 * (high - pivotPoint)"
+  },
+  "examples": [
+    { "label": "Volatile day", "inputs": { "high": 155, "low": 145, "close": 150 } },
+    { "label": "Bullish close", "inputs": { "high": 210, "low": 195, "close": 208 } },
+    { "label": "Narrow range", "inputs": { "high": 100.5, "low": 99.0, "close": 99.8 } }
+  ],
+  "explanation": "Pivot points are technical analysis indicators used to determine potential support and resistance levels. Calculated from the previous period's high, low, and close, they help traders identify potential reversal or continuation points. Price above the pivot suggests bullish bias; below suggests bearish."
+}

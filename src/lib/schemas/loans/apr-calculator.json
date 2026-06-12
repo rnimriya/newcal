@@ -1,0 +1,33 @@
+{
+  "id": "apr",
+  "slug": "apr-calculator",
+  "name": "APR Calculator",
+  "category": "loans",
+  "description": "Calculate the Annual Percentage Rate (APR) from loan amount, fees, term, and monthly payment.",
+  "icon": "💳",
+  "tags": ["APR", "annual percentage rate", "loan", "fees", "interest rate"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 200000, "prefix": "$", "constraint": { "min": 1000, "step": 1000, "required": true } },
+    { "id": "fees", "label": "Total Fees", "type": "number", "defaultValue": 3000, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "termMonths", "label": "Loan Term (Months)", "type": "number", "defaultValue": 360, "constraint": { "min": 1, "max": 600, "step": 1, "required": true } },
+    { "id": "monthlyPayment", "label": "Monthly Payment", "type": "number", "defaultValue": 1200, "prefix": "$", "constraint": { "min": 1, "step": 10, "required": true } },
+    { "id": "apr", "label": "APR (Estimated)", "type": "computed", "precision": 3, "suffix": "%" },
+    { "id": "totalCost", "label": "Total Loan Cost", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterestAndFees", "label": "Total Interest & Fees", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan Details", "fields": ["loanAmount", "fees", "termMonths", "monthlyPayment"] },
+    { "id": "outputs", "label": "APR Results", "fields": ["apr", "totalCost", "totalInterestAndFees"] }
+  ],
+  "formulas": {
+    "apr": "(monthlyPayment * termMonths - loanAmount) / (loanAmount + fees) / (termMonths / 12) * 100",
+    "totalCost": "monthlyPayment * termMonths",
+    "totalInterestAndFees": "totalCost - loanAmount + fees"
+  },
+  "examples": [
+    { "label": "30-year mortgage", "inputs": { "loanAmount": 200000, "fees": 3000, "termMonths": 360, "monthlyPayment": 1200 } },
+    { "label": "5-year auto loan", "inputs": { "loanAmount": 25000, "fees": 500, "termMonths": 60, "monthlyPayment": 500 } },
+    { "label": "Personal loan", "inputs": { "loanAmount": 10000, "fees": 200, "termMonths": 36, "monthlyPayment": 320 } }
+  ],
+  "explanation": "APR (Annual Percentage Rate) represents the true annual cost of a loan including both interest and fees. It is always higher than the nominal interest rate when fees are included. Comparing APRs across loan offers is the most accurate way to determine which loan is least expensive."
+}

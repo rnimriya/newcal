@@ -1,0 +1,39 @@
+{
+  "id": "hsa",
+  "slug": "hsa-calculator",
+  "name": "HSA Calculator",
+  "category": "finance",
+  "description": "Calculate the long-term growth of your Health Savings Account (HSA) with tax savings and investment returns.",
+  "icon": "🏥",
+  "tags": ["HSA", "health savings account", "tax-free", "medical savings", "triple tax advantage"],
+  "fields": [
+    { "id": "annualContribution", "label": "Annual Contribution", "type": "number", "defaultValue": 4150, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "currentBalance", "label": "Current HSA Balance", "type": "number", "defaultValue": 8000, "prefix": "$", "constraint": { "min": 0, "step": 500 } },
+    { "id": "expectedReturn", "label": "Expected Annual Return", "type": "number", "defaultValue": 6, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "years", "label": "Years to Grow", "type": "number", "defaultValue": 20, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "taxRate", "label": "Marginal Tax Rate", "type": "number", "defaultValue": 24, "suffix": "%", "constraint": { "min": 0, "max": 60, "step": 1, "required": true } },
+    { "id": "annualWithdrawal", "label": "Annual Medical Withdrawals", "type": "number", "defaultValue": 1000, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "totalContributions", "label": "Total Contributions", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "futureBalance", "label": "Projected HSA Balance", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "taxSavingsOnContributions", "label": "Annual Tax Savings", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalTaxSavings", "label": "Total Tax Savings", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "netBalance", "label": "Net Balance (After Withdrawals)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "HSA Parameters", "fields": ["annualContribution", "currentBalance", "expectedReturn", "years", "taxRate", "annualWithdrawal"] },
+    { "id": "outputs", "label": "HSA Growth Analysis", "fields": ["totalContributions", "futureBalance", "taxSavingsOnContributions", "totalTaxSavings", "netBalance"] }
+  ],
+  "formulas": {
+    "totalContributions": "annualContribution * years",
+    "futureBalance": "(currentBalance + annualContribution) * (((1 + expectedReturn/100)^years - 1) / (expectedReturn/100)) * (1 + expectedReturn/100) - annualWithdrawal * (((1 + expectedReturn/100)^years - 1) / (expectedReturn/100))",
+    "taxSavingsOnContributions": "annualContribution * taxRate / 100",
+    "totalTaxSavings": "taxSavingsOnContributions * years",
+    "netBalance": "max(0, futureBalance)"
+  },
+  "examples": [
+    { "label": "Individual HSA 2024", "inputs": { "annualContribution": 4150, "currentBalance": 8000, "expectedReturn": 6, "years": 20, "taxRate": 24, "annualWithdrawal": 1000 } },
+    { "label": "Family HSA maximized", "inputs": { "annualContribution": 8300, "currentBalance": 20000, "expectedReturn": 7, "years": 25, "taxRate": 32, "annualWithdrawal": 2000 } },
+    { "label": "Long-term super saver", "inputs": { "annualContribution": 4150, "currentBalance": 0, "expectedReturn": 7, "years": 30, "taxRate": 22, "annualWithdrawal": 500 } }
+  ],
+  "explanation": "The HSA offers a triple tax advantage: contributions are tax-deductible, growth is tax-free, and withdrawals for medical expenses are tax-free. Unlike FSAs, HSA funds roll over indefinitely. After age 65, you can withdraw for any purpose (taxed as ordinary income), making it a powerful supplemental retirement account."
+}

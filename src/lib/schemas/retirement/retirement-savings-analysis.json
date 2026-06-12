@@ -1,0 +1,45 @@
+{
+  "id": "retirement-savings-analysis",
+  "slug": "retirement-savings-analysis-calculator",
+  "name": "Retirement Savings Analysis",
+  "category": "retirement",
+  "description": "Analyze whether your current savings will cover your retirement expenses including Social Security and pension income.",
+  "icon": "📊",
+  "tags": ["retirement", "savings gap", "social security", "pension", "analysis"],
+  "fields": [
+    { "id": "currentAge", "label": "Current Age", "type": "number", "defaultValue": 35, "constraint": { "min": 18, "max": 80, "step": 1, "required": true } },
+    { "id": "retirementAge", "label": "Retirement Age", "type": "number", "defaultValue": 65, "constraint": { "min": 40, "max": 90, "step": 1, "required": true } },
+    { "id": "currentSavings", "label": "Current Savings", "type": "number", "defaultValue": 75000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "monthlyExpenses", "label": "Current Monthly Expenses", "type": "number", "defaultValue": 5000, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "socialSecurityIncome", "label": "Social Security Income (Monthly)", "type": "number", "defaultValue": 1500, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "pensionIncome", "label": "Pension Income (Monthly)", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "expectedReturn", "label": "Expected Annual Return", "type": "number", "defaultValue": 6, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "inflationRate", "label": "Inflation Rate", "type": "number", "defaultValue": 3, "suffix": "%", "constraint": { "min": 0, "max": 15, "step": 0.1, "required": true } },
+    { "id": "yearsToRetirement", "label": "Years to Retirement", "type": "computed", "precision": 0 },
+    { "id": "retirementDuration", "label": "Retirement Duration (years)", "type": "computed", "precision": 0 },
+    { "id": "inflatedMonthlyExpenses", "label": "Inflated Monthly Expenses", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthlyIncomeNeeded", "label": "Monthly Income Needed from Portfolio", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "annualIncomeNeeded", "label": "Annual Income Needed", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "requiredCorpus", "label": "Required Retirement Corpus", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "savingsGap", "label": "Savings Gap", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Retirement Details", "fields": ["currentAge", "retirementAge", "currentSavings", "monthlyExpenses", "socialSecurityIncome", "pensionIncome", "expectedReturn", "inflationRate"] },
+    { "id": "outputs", "label": "Analysis Results", "fields": ["yearsToRetirement", "retirementDuration", "inflatedMonthlyExpenses", "monthlyIncomeNeeded", "annualIncomeNeeded", "requiredCorpus", "savingsGap"] }
+  ],
+  "formulas": {
+    "yearsToRetirement": "retirementAge - currentAge",
+    "retirementDuration": "90 - retirementAge",
+    "inflatedMonthlyExpenses": "monthlyExpenses * (1 + inflationRate/100)^yearsToRetirement",
+    "monthlyIncomeNeeded": "max(0, inflatedMonthlyExpenses - socialSecurityIncome - pensionIncome)",
+    "annualIncomeNeeded": "monthlyIncomeNeeded * 12",
+    "requiredCorpus": "annualIncomeNeeded / (expectedReturn/100)",
+    "savingsGap": "max(0, requiredCorpus - currentSavings * (1 + expectedReturn/100)^yearsToRetirement)"
+  },
+  "examples": [
+    { "label": "Comfortable retirement", "inputs": { "currentAge": 35, "retirementAge": 65, "currentSavings": 75000, "monthlyExpenses": 5000, "socialSecurityIncome": 1500, "pensionIncome": 0, "expectedReturn": 6, "inflationRate": 3 } },
+    { "label": "With pension", "inputs": { "currentAge": 45, "retirementAge": 62, "currentSavings": 200000, "monthlyExpenses": 6000, "socialSecurityIncome": 1800, "pensionIncome": 2000, "expectedReturn": 5, "inflationRate": 3 } },
+    { "label": "Late saver", "inputs": { "currentAge": 50, "retirementAge": 67, "currentSavings": 50000, "monthlyExpenses": 4000, "socialSecurityIncome": 2000, "pensionIncome": 0, "expectedReturn": 6, "inflationRate": 3 } }
+  ],
+  "explanation": "This analysis accounts for inflation's impact on your future expenses and deducts guaranteed income sources like Social Security and pensions. The savings gap represents how much additional savings you need to accumulate before retirement. Assuming a 90-year life expectancy provides a conservative estimate."
+}

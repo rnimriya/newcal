@@ -1,0 +1,45 @@
+{
+  "id": "annuity",
+  "slug": "annuity-calculator",
+  "name": "Annuity Calculator",
+  "category": "retirement",
+  "description": "Calculate the future value, total payments, and interest earned on an annuity with regular payments.",
+  "icon": "🔄",
+  "tags": ["annuity", "retirement", "future value", "regular payments", "present value"],
+  "fields": [
+    { "id": "presentValue", "label": "Present Value (Initial)", "type": "number", "defaultValue": 100000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "paymentAmount", "label": "Regular Payment Amount", "type": "number", "defaultValue": 1000, "prefix": "$", "constraint": { "min": 0, "step": 50, "required": true } },
+    { "id": "interestRate", "label": "Annual Interest Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "periods", "label": "Number of Periods (Months)", "type": "number", "defaultValue": 120, "constraint": { "min": 1, "step": 1, "required": true } },
+    {
+      "id": "annuityType",
+      "label": "Annuity Type",
+      "type": "select",
+      "defaultValue": 0,
+      "selectOptions": [
+        { "label": "Ordinary (End of Period)", "value": 0 },
+        { "label": "Due (Beginning of Period)", "value": 1 }
+      ]
+    },
+    { "id": "futureValue", "label": "Future Value", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalPayments", "label": "Total Payments Made", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest", "label": "Total Interest Earned", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "presentValueOfAnnuity", "label": "Present Value of Annuity", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Annuity Parameters", "fields": ["presentValue", "paymentAmount", "interestRate", "periods", "annuityType"] },
+    { "id": "outputs", "label": "Annuity Results", "fields": ["futureValue", "totalPayments", "totalInterest", "presentValueOfAnnuity"] }
+  ],
+  "formulas": {
+    "futureValue": "paymentAmount * (((1 + interestRate/1200)^periods - 1) / (interestRate/1200)) * (1 + annuityType * interestRate/1200)",
+    "totalPayments": "paymentAmount * periods",
+    "totalInterest": "futureValue - totalPayments",
+    "presentValueOfAnnuity": "paymentAmount * ((1 - (1 + interestRate/1200)^(-periods)) / (interestRate/1200)) * (1 + annuityType * interestRate/1200)"
+  },
+  "examples": [
+    { "label": "10-year monthly annuity", "inputs": { "presentValue": 100000, "paymentAmount": 1000, "interestRate": 5, "periods": 120, "annuityType": 0 } },
+    { "label": "20-year retirement annuity", "inputs": { "presentValue": 250000, "paymentAmount": 1500, "interestRate": 4, "periods": 240, "annuityType": 0 } },
+    { "label": "Annuity due", "inputs": { "presentValue": 50000, "paymentAmount": 500, "interestRate": 6, "periods": 60, "annuityType": 1 } }
+  ],
+  "explanation": "An annuity provides regular payments over a fixed period, growing through compound interest. An ordinary annuity makes payments at the end of each period, while an annuity due makes payments at the beginning, yielding slightly higher returns. The present value formula helps determine the lump sum equivalent of a series of future payments."
+}

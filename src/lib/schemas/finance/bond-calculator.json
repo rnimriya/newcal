@@ -1,0 +1,50 @@
+{
+  "id": "bond",
+  "slug": "bond-calculator",
+  "name": "Bond Price Calculator",
+  "category": "finance",
+  "description": "Calculate the fair price, current yield, and modified duration of a bond based on market interest rates.",
+  "icon": "🏦",
+  "tags": ["bond", "bond price", "coupon", "yield to maturity", "duration"],
+  "fields": [
+    { "id": "faceValue", "label": "Face Value (Par)", "type": "number", "defaultValue": 1000, "prefix": "$", "constraint": { "min": 100, "step": 100, "required": true } },
+    { "id": "couponRate", "label": "Coupon Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "yearsToMaturity", "label": "Years to Maturity", "type": "number", "defaultValue": 10, "constraint": { "min": 0.5, "max": 50, "step": 0.5, "required": true } },
+    { "id": "marketRate", "label": "Market Interest Rate (YTM)", "type": "number", "defaultValue": 6, "suffix": "%", "constraint": { "min": 0.1, "max": 50, "step": 0.1, "required": true } },
+    {
+      "id": "paymentsPerYear",
+      "label": "Payment Frequency",
+      "type": "select",
+      "defaultValue": 2,
+      "selectOptions": [
+        { "label": "Annual", "value": 1 },
+        { "label": "Semi-Annual", "value": 2 },
+        { "label": "Quarterly", "value": 4 }
+      ]
+    },
+    { "id": "periodicCoupon", "label": "Periodic Coupon Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalPeriods", "label": "Total Periods", "type": "computed", "precision": 0 },
+    { "id": "periodRate", "label": "Period Interest Rate", "type": "computed", "precision": 4, "suffix": "%" },
+    { "id": "bondPrice", "label": "Fair Bond Price", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "currentYield", "label": "Current Yield", "type": "computed", "precision": 3, "suffix": "%" },
+    { "id": "duration", "label": "Macaulay Duration (years)", "type": "computed", "precision": 2 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Bond Parameters", "fields": ["faceValue", "couponRate", "yearsToMaturity", "marketRate", "paymentsPerYear"] },
+    { "id": "outputs", "label": "Bond Valuation", "fields": ["periodicCoupon", "totalPeriods", "periodRate", "bondPrice", "currentYield", "duration"] }
+  ],
+  "formulas": {
+    "periodicCoupon": "faceValue * couponRate/100 / paymentsPerYear",
+    "totalPeriods": "yearsToMaturity * paymentsPerYear",
+    "periodRate": "marketRate/100 / paymentsPerYear",
+    "bondPrice": "periodicCoupon * ((1 - (1 + periodRate)^(-totalPeriods)) / periodRate) + faceValue / (1 + periodRate)^totalPeriods",
+    "currentYield": "periodicCoupon * paymentsPerYear / bondPrice * 100",
+    "duration": "(periodicCoupon * ((1 - (1 + periodRate)^(-totalPeriods)) / periodRate) * totalPeriods / 2 + faceValue * totalPeriods / (1 + periodRate)^totalPeriods) / bondPrice / paymentsPerYear"
+  },
+  "examples": [
+    { "label": "10-year bond at discount", "inputs": { "faceValue": 1000, "couponRate": 5, "yearsToMaturity": 10, "marketRate": 6, "paymentsPerYear": 2 } },
+    { "label": "Bond at premium", "inputs": { "faceValue": 1000, "couponRate": 7, "yearsToMaturity": 5, "marketRate": 5, "paymentsPerYear": 2 } },
+    { "label": "Zero coupon equivalent", "inputs": { "faceValue": 1000, "couponRate": 0.1, "yearsToMaturity": 20, "marketRate": 4, "paymentsPerYear": 1 } }
+  ],
+  "explanation": "Bond prices move inversely to interest rates. When market rates rise above the coupon rate, bonds trade at a discount; when market rates fall below the coupon, bonds trade at a premium. Current yield measures annual income relative to price, while Macaulay duration measures interest rate sensitivity."
+}

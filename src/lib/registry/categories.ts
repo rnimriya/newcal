@@ -10,6 +10,9 @@ export const CATEGORIES: Category[] = [
   { id: "health",     label: "Health",          icon: "❤️", color: "bg-red-100 text-red-700",        calculators: [] },
   { id: "time",       label: "Time & Date",     icon: "🕐", color: "bg-indigo-100 text-indigo-700",  calculators: [] },
   { id: "physics",    label: "Physics",         icon: "⚛️", color: "bg-sky-100 text-sky-700",        calculators: [] },
+  { id: "retirement", label: "Retirement",      icon: "🏖️", color: "bg-orange-100 text-orange-700",  calculators: [] },
+  { id: "stocks",     label: "Stocks",          icon: "📈", color: "bg-green-100 text-green-700",    calculators: [] },
+  { id: "credit",     label: "Credit Cards",    icon: "💳", color: "bg-purple-100 text-purple-700",  calculators: [] },
 ];
 
 export const CATEGORY_MAP = Object.fromEntries(CATEGORIES.map((c) => [c.id, c]));

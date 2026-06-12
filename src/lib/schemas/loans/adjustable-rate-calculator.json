@@ -1,0 +1,36 @@
+{
+  "id": "adjustable-rate",
+  "slug": "adjustable-rate-calculator",
+  "name": "Adjustable Rate Calculator",
+  "category": "loans",
+  "description": "Calculate ARM (Adjustable Rate Mortgage) payments for initial fixed period, after adjustment, and at the lifetime rate cap.",
+  "icon": "📈",
+  "tags": ["ARM", "adjustable rate", "mortgage", "variable rate", "rate cap", "initial rate"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 350000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "initialRate", "label": "Initial Interest Rate", "type": "number", "defaultValue": 5.5, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 5, "max": 50, "step": 5, "required": true } },
+    { "id": "fixedPeriodYears", "label": "Initial Fixed Period (Years)", "type": "number", "defaultValue": 5, "constraint": { "min": 1, "max": 20, "step": 1, "required": true } },
+    { "id": "expectedRateAdjustment", "label": "Expected Rate After Fixed Period", "type": "number", "defaultValue": 7.5, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "rateCapPerAdjustment", "label": "Rate Cap Per Adjustment", "type": "number", "defaultValue": 2, "suffix": "%", "constraint": { "min": 0, "max": 10, "step": 0.5, "required": true } },
+    { "id": "lifetimeCap", "label": "Lifetime Rate Cap Above Initial", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 1, "max": 15, "step": 0.5, "required": true } },
+    { "id": "initialMonthlyPayment", "label": "Initial Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "adjustedMonthlyPayment", "label": "Adjusted Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "maxMonthlyPayment", "label": "Maximum Monthly Payment (Cap)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "ARM Parameters", "fields": ["loanAmount", "initialRate", "termYears", "fixedPeriodYears", "expectedRateAdjustment", "rateCapPerAdjustment", "lifetimeCap"] },
+    { "id": "outputs", "label": "Payment Scenarios", "fields": ["initialMonthlyPayment", "adjustedMonthlyPayment", "maxMonthlyPayment"] }
+  ],
+  "formulas": {
+    "initialMonthlyPayment": "loanAmount * (initialRate/1200) * (1 + initialRate/1200)^(termYears*12) / ((1 + initialRate/1200)^(termYears*12) - 1)",
+    "adjustedMonthlyPayment": "loanAmount * (expectedRateAdjustment/1200) * (1 + expectedRateAdjustment/1200)^(termYears*12) / ((1 + expectedRateAdjustment/1200)^(termYears*12) - 1)",
+    "maxMonthlyPayment": "loanAmount * ((initialRate + lifetimeCap)/1200) * (1 + (initialRate + lifetimeCap)/1200)^(termYears*12) / ((1 + (initialRate + lifetimeCap)/1200)^(termYears*12) - 1)"
+  },
+  "examples": [
+    { "label": "5/1 ARM", "inputs": { "loanAmount": 350000, "initialRate": 5.5, "termYears": 30, "fixedPeriodYears": 5, "expectedRateAdjustment": 7.5, "rateCapPerAdjustment": 2, "lifetimeCap": 5 } },
+    { "label": "7/1 ARM", "inputs": { "loanAmount": 400000, "initialRate": 5.75, "termYears": 30, "fixedPeriodYears": 7, "expectedRateAdjustment": 7.25, "rateCapPerAdjustment": 2, "lifetimeCap": 5 } },
+    { "label": "3/1 ARM short", "inputs": { "loanAmount": 250000, "initialRate": 5.25, "termYears": 30, "fixedPeriodYears": 3, "expectedRateAdjustment": 8.0, "rateCapPerAdjustment": 2, "lifetimeCap": 5 } }
+  ],
+  "explanation": "An ARM has an initial fixed rate period followed by periodic rate adjustments. The periodic cap limits how much the rate can rise each adjustment period, while the lifetime cap is the maximum total increase from the initial rate. Planning for the maximum payment scenario ensures you can afford the loan worst-case."
+}

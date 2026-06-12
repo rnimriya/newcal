@@ -1,0 +1,34 @@
+{
+  "id": "stock-constant-growth",
+  "slug": "stock-constant-growth-calculator",
+  "name": "Constant Growth Stock (Gordon Growth Model)",
+  "category": "stocks",
+  "description": "Value a stock using the Gordon Growth Model (Dividend Discount Model) assuming constant dividend growth.",
+  "icon": "📊",
+  "tags": ["Gordon Growth Model", "dividend discount", "stock valuation", "constant growth", "DDM"],
+  "fields": [
+    { "id": "currentDividend", "label": "Current Annual Dividend (D0)", "type": "number", "defaultValue": 2, "prefix": "$", "constraint": { "min": 0.01, "step": 0.1, "required": true } },
+    { "id": "growthRate", "label": "Dividend Growth Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.1, "required": true } },
+    { "id": "requiredReturn", "label": "Required Rate of Return", "type": "number", "defaultValue": 10, "suffix": "%", "constraint": { "min": 0.1, "max": 80, "step": 0.1, "required": true } },
+    { "id": "nextDividend", "label": "Next Dividend (D1)", "type": "computed", "precision": 4, "prefix": "$" },
+    { "id": "stockPrice", "label": "Intrinsic Stock Price", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "dividendYield", "label": "Dividend Yield", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "priceToEarningsRatio", "label": "Price/Dividend Ratio", "type": "computed", "precision": 2 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Valuation Inputs", "fields": ["currentDividend", "growthRate", "requiredReturn"] },
+    { "id": "outputs", "label": "Valuation Results", "fields": ["nextDividend", "stockPrice", "dividendYield", "priceToEarningsRatio"] }
+  ],
+  "formulas": {
+    "nextDividend": "currentDividend * (1 + growthRate/100)",
+    "stockPrice": "nextDividend / ((requiredReturn - growthRate) / 100)",
+    "dividendYield": "nextDividend / stockPrice * 100",
+    "priceToEarningsRatio": "stockPrice / currentDividend"
+  },
+  "examples": [
+    { "label": "Blue chip dividend stock", "inputs": { "currentDividend": 2, "growthRate": 5, "requiredReturn": 10 } },
+    { "label": "High-growth dividend stock", "inputs": { "currentDividend": 1.5, "growthRate": 8, "requiredReturn": 12 } },
+    { "label": "Mature utility stock", "inputs": { "currentDividend": 3, "growthRate": 3, "requiredReturn": 8 } }
+  ],
+  "explanation": "The Gordon Growth Model (GGM) values a stock as the present value of all future dividends growing at a constant rate. The required return must exceed the growth rate for the model to work. Stocks trading below the intrinsic price are potentially undervalued; those above may be overvalued."
+}

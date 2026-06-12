@@ -1,0 +1,37 @@
+{
+  "id": "mortgage-tax-saving",
+  "slug": "mortgage-tax-saving-calculator",
+  "name": "Mortgage Tax Saving Calculator",
+  "category": "loans",
+  "description": "Calculate annual and total mortgage interest tax savings based on your tax bracket and loan details.",
+  "icon": "🏦",
+  "tags": ["mortgage", "tax savings", "interest deduction", "tax bracket", "home loan"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 300000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "interestRate", "label": "Annual Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "taxBracket", "label": "Federal Tax Bracket", "type": "number", "defaultValue": 22, "suffix": "%", "constraint": { "min": 10, "max": 37, "step": 1, "required": true } },
+    { "id": "annualInterestPaid", "label": "Annual Interest Paid (Year 1)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "annualTaxSaving", "label": "Annual Tax Saving (Year 1)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterestPaid", "label": "Total Interest Paid (Lifetime)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalTaxSaving", "label": "Total Tax Saving (Lifetime)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "effectiveRate", "label": "Effective After-Tax Rate", "type": "computed", "precision": 3, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan & Tax Details", "fields": ["loanAmount", "interestRate", "termYears", "taxBracket"] },
+    { "id": "outputs", "label": "Tax Savings", "fields": ["annualInterestPaid", "annualTaxSaving", "totalInterestPaid", "totalTaxSaving", "effectiveRate"] }
+  ],
+  "formulas": {
+    "annualInterestPaid": "loanAmount * interestRate / 100 * (1 - (1/(1 + interestRate/1200))^12) / (interestRate/1200) / 12 * 12 * interestRate / 100",
+    "annualTaxSaving": "annualInterestPaid * taxBracket / 100",
+    "totalInterestPaid": "loanAmount * (interestRate/1200) * (1 + interestRate/1200)^(termYears*12) / ((1 + interestRate/1200)^(termYears*12) - 1) * termYears * 12 - loanAmount",
+    "totalTaxSaving": "totalInterestPaid * taxBracket / 100",
+    "effectiveRate": "interestRate * (1 - taxBracket/100)"
+  },
+  "examples": [
+    { "label": "22% bracket", "inputs": { "loanAmount": 300000, "interestRate": 6.5, "termYears": 30, "taxBracket": 22 } },
+    { "label": "32% bracket", "inputs": { "loanAmount": 500000, "interestRate": 6.0, "termYears": 30, "taxBracket": 32 } },
+    { "label": "12% bracket", "inputs": { "loanAmount": 200000, "interestRate": 7.0, "termYears": 30, "taxBracket": 12 } }
+  ],
+  "explanation": "Homeowners who itemize deductions can deduct mortgage interest from taxable income. The tax saving equals the interest paid multiplied by the marginal tax rate. The effective after-tax interest rate is lower than the stated rate — a 6.5% mortgage in the 22% bracket effectively costs 5.07% after the deduction."
+}

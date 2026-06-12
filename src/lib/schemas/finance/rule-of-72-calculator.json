@@ -1,0 +1,35 @@
+{
+  "id": "rule-of-72",
+  "slug": "rule-of-72-calculator",
+  "name": "Rule of 72 Calculator",
+  "category": "finance",
+  "description": "Use the Rule of 72 to estimate how long it takes to double (or quadruple) your money at a given interest rate.",
+  "icon": "✌️",
+  "tags": ["rule of 72", "doubling time", "compound interest", "investment", "quick calculation"],
+  "fields": [
+    { "id": "interestRate", "label": "Annual Interest Rate", "type": "number", "defaultValue": 7, "suffix": "%", "constraint": { "min": 0.1, "max": 100, "step": 0.1, "required": true } },
+    { "id": "currentAmount", "label": "Current Amount", "type": "number", "defaultValue": 10000, "prefix": "$", "constraint": { "min": 1, "step": 100, "required": true } },
+    { "id": "yearsToDouble", "label": "Years to Double (Rule of 72)", "type": "computed", "precision": 1 },
+    { "id": "doubleAmount", "label": "Doubled Amount", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "yearsToQuadruple", "label": "Years to Quadruple", "type": "computed", "precision": 1 },
+    { "id": "quadrupleAmount", "label": "Quadrupled Amount", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "exactYearsToDouble", "label": "Exact Years to Double", "type": "computed", "precision": 2 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Investment Parameters", "fields": ["interestRate", "currentAmount"] },
+    { "id": "outputs", "label": "Doubling Analysis", "fields": ["yearsToDouble", "doubleAmount", "yearsToQuadruple", "quadrupleAmount", "exactYearsToDouble"] }
+  ],
+  "formulas": {
+    "yearsToDouble": "72 / interestRate",
+    "doubleAmount": "currentAmount * 2",
+    "yearsToQuadruple": "144 / interestRate",
+    "quadrupleAmount": "currentAmount * 4",
+    "exactYearsToDouble": "log(2) / log(1 + interestRate/100)"
+  },
+  "examples": [
+    { "label": "Stock market average", "inputs": { "interestRate": 7, "currentAmount": 10000 } },
+    { "label": "High-yield savings", "inputs": { "interestRate": 5, "currentAmount": 25000 } },
+    { "label": "Real estate", "inputs": { "interestRate": 10, "currentAmount": 100000 } }
+  ],
+  "explanation": "The Rule of 72 is a quick mental math shortcut: divide 72 by your annual interest rate to estimate years to double your money. For example, at 7%, your money doubles in about 10.3 years. The rule is surprisingly accurate for rates between 5-20%. The exact doubling time uses the logarithm formula."
+}

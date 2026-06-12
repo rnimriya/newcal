@@ -1,0 +1,37 @@
+{
+  "id": "retirement-planner",
+  "slug": "retirement-planner-calculator",
+  "name": "Retirement Planner",
+  "category": "retirement",
+  "description": "Plan your retirement with projected savings, inflation adjustment, and estimated monthly income.",
+  "icon": "🏖️",
+  "tags": ["retirement", "savings", "planning", "future value", "inflation"],
+  "fields": [
+    { "id": "currentAge", "label": "Current Age", "type": "number", "defaultValue": 30, "constraint": { "min": 18, "max": 80, "step": 1, "required": true } },
+    { "id": "retirementAge", "label": "Retirement Age", "type": "number", "defaultValue": 65, "constraint": { "min": 40, "max": 90, "step": 1, "required": true } },
+    { "id": "currentSavings", "label": "Current Savings", "type": "number", "defaultValue": 50000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "monthlyContribution", "label": "Monthly Contribution", "type": "number", "defaultValue": 1000, "prefix": "$", "constraint": { "min": 0, "step": 50, "required": true } },
+    { "id": "expectedReturn", "label": "Expected Annual Return", "type": "number", "defaultValue": 7, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "inflationRate", "label": "Inflation Rate", "type": "number", "defaultValue": 3, "suffix": "%", "constraint": { "min": 0, "max": 15, "step": 0.1, "required": true } },
+    { "id": "yearsToRetirement", "label": "Years to Retirement", "type": "computed", "precision": 0 },
+    { "id": "futureValue", "label": "Future Savings Value", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "inflationAdjustedValue", "label": "Inflation-Adjusted Value", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "monthlyRetirementIncome", "label": "Est. Monthly Retirement Income", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Retirement Parameters", "fields": ["currentAge", "retirementAge", "currentSavings", "monthlyContribution", "expectedReturn", "inflationRate"] },
+    { "id": "outputs", "label": "Projections", "fields": ["yearsToRetirement", "futureValue", "inflationAdjustedValue", "monthlyRetirementIncome"] }
+  ],
+  "formulas": {
+    "yearsToRetirement": "retirementAge - currentAge",
+    "futureValue": "currentSavings * (1 + expectedReturn/100)^yearsToRetirement + monthlyContribution * 12 * (((1 + expectedReturn/100)^yearsToRetirement - 1) / (expectedReturn/100))",
+    "inflationAdjustedValue": "futureValue / (1 + inflationRate/100)^yearsToRetirement",
+    "monthlyRetirementIncome": "inflationAdjustedValue * (expectedReturn/100) / 12"
+  },
+  "examples": [
+    { "label": "Early saver age 30", "inputs": { "currentAge": 30, "retirementAge": 65, "currentSavings": 50000, "monthlyContribution": 1000, "expectedReturn": 7, "inflationRate": 3 } },
+    { "label": "Mid-career age 45", "inputs": { "currentAge": 45, "retirementAge": 65, "currentSavings": 200000, "monthlyContribution": 2000, "expectedReturn": 6, "inflationRate": 3 } },
+    { "label": "Late starter age 50", "inputs": { "currentAge": 50, "retirementAge": 67, "currentSavings": 100000, "monthlyContribution": 3000, "expectedReturn": 6, "inflationRate": 2.5 } }
+  ],
+  "explanation": "The retirement planner projects your nest egg using compound growth on current savings plus monthly contributions. The inflation-adjusted value shows your future savings in today's purchasing power. Estimated monthly income assumes you draw down based on your expected return rate."
+}

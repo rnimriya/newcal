@@ -1,0 +1,36 @@
+{
+  "id": "commodities-futures",
+  "slug": "commodities-futures-calculator",
+  "name": "Commodities Futures Calculator",
+  "category": "stocks",
+  "description": "Calculate theoretical futures price using cost-of-carry model with storage costs and convenience yield.",
+  "icon": "🌽",
+  "tags": ["futures", "commodities", "cost of carry", "convenience yield", "derivatives"],
+  "fields": [
+    { "id": "spotPrice", "label": "Current Spot Price", "type": "number", "defaultValue": 100, "prefix": "$", "constraint": { "min": 0.01, "step": 1, "required": true } },
+    { "id": "riskFreeRate", "label": "Risk-Free Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "storageCost", "label": "Annual Storage Cost", "type": "number", "defaultValue": 2, "suffix": "%", "constraint": { "min": 0, "max": 20, "step": 0.1 } },
+    { "id": "convenienceYield", "label": "Convenience Yield", "type": "number", "defaultValue": 1, "suffix": "%", "constraint": { "min": 0, "max": 20, "step": 0.1 } },
+    { "id": "timeToMaturity", "label": "Time to Maturity (Years)", "type": "number", "defaultValue": 0.5, "suffix": "yr", "constraint": { "min": 0.01, "max": 10, "step": 0.1, "required": true } },
+    { "id": "costOfCarry", "label": "Net Cost of Carry", "type": "computed", "precision": 4, "suffix": "%" },
+    { "id": "futuresPrice", "label": "Theoretical Futures Price", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "theoreticalBasis", "label": "Theoretical Basis", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "annualizedBasis", "label": "Annualized Basis", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Futures Parameters", "fields": ["spotPrice", "riskFreeRate", "storageCost", "convenienceYield", "timeToMaturity"] },
+    { "id": "outputs", "label": "Pricing Results", "fields": ["costOfCarry", "futuresPrice", "theoreticalBasis", "annualizedBasis"] }
+  ],
+  "formulas": {
+    "costOfCarry": "riskFreeRate/100 + storageCost/100 - convenienceYield/100",
+    "futuresPrice": "spotPrice * exp(costOfCarry * timeToMaturity)",
+    "theoreticalBasis": "futuresPrice - spotPrice",
+    "annualizedBasis": "theoreticalBasis / timeToMaturity"
+  },
+  "examples": [
+    { "label": "Oil futures 6-month", "inputs": { "spotPrice": 100, "riskFreeRate": 5, "storageCost": 2, "convenienceYield": 1, "timeToMaturity": 0.5 } },
+    { "label": "Gold futures 1-year", "inputs": { "spotPrice": 2000, "riskFreeRate": 5, "storageCost": 0.5, "convenienceYield": 0, "timeToMaturity": 1 } },
+    { "label": "Corn futures 3-month", "inputs": { "spotPrice": 450, "riskFreeRate": 5, "storageCost": 3, "convenienceYield": 2, "timeToMaturity": 0.25 } }
+  ],
+  "explanation": "The cost-of-carry model prices futures based on the spot price adjusted for financing costs, storage costs, and convenience yield. The convenience yield represents the non-monetary benefit of physically holding a commodity (e.g., ensuring supply security). When futures are above spot (contango), the cost of carry is positive; when below (backwardation), it's negative."
+}

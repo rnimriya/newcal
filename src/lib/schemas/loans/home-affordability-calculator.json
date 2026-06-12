@@ -1,0 +1,36 @@
+{
+  "id": "home-affordability",
+  "slug": "home-affordability-calculator",
+  "name": "Home Affordability Calculator",
+  "category": "loans",
+  "description": "Determine how much home you can afford based on your income, debts, and down payment using the 28% front-end ratio rule.",
+  "icon": "🏠",
+  "tags": ["home affordability", "mortgage", "income", "debt-to-income", "down payment", "housing"],
+  "fields": [
+    { "id": "grossMonthlyIncome", "label": "Gross Monthly Income", "type": "number", "defaultValue": 7500, "prefix": "$", "constraint": { "min": 500, "step": 500, "required": true } },
+    { "id": "monthlyDebts", "label": "Monthly Debt Payments", "type": "number", "defaultValue": 500, "prefix": "$", "constraint": { "min": 0, "step": 50, "required": true } },
+    { "id": "downPayment", "label": "Down Payment", "type": "number", "defaultValue": 60000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "interestRate", "label": "Mortgage Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.05, "required": true } },
+    { "id": "termYears", "label": "Loan Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 5, "max": 50, "step": 5, "required": true } },
+    { "id": "maxMonthlyMortgage", "label": "Max Monthly Mortgage", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "maxLoanAmount", "label": "Max Loan Amount", "type": "computed", "precision": 0, "prefix": "$" },
+    { "id": "maxHomePrice", "label": "Max Home Price", "type": "computed", "precision": 0, "prefix": "$" },
+    { "id": "debtToIncomeRatio", "label": "Back-End DTI Ratio", "type": "computed", "precision": 1, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Financial Profile", "fields": ["grossMonthlyIncome", "monthlyDebts", "downPayment", "interestRate", "termYears"] },
+    { "id": "outputs", "label": "Affordability Results", "fields": ["maxMonthlyMortgage", "maxLoanAmount", "maxHomePrice", "debtToIncomeRatio"] }
+  ],
+  "formulas": {
+    "maxMonthlyMortgage": "min(grossMonthlyIncome * 0.28, grossMonthlyIncome * 0.36 - monthlyDebts)",
+    "maxLoanAmount": "maxMonthlyMortgage * ((1 + interestRate/1200)^(termYears*12) - 1) / ((interestRate/1200) * (1 + interestRate/1200)^(termYears*12))",
+    "maxHomePrice": "maxLoanAmount + downPayment",
+    "debtToIncomeRatio": "(maxMonthlyMortgage + monthlyDebts) / grossMonthlyIncome * 100"
+  },
+  "examples": [
+    { "label": "Median income buyer", "inputs": { "grossMonthlyIncome": 7500, "monthlyDebts": 500, "downPayment": 60000, "interestRate": 6.5, "termYears": 30 } },
+    { "label": "High-income buyer", "inputs": { "grossMonthlyIncome": 15000, "monthlyDebts": 1000, "downPayment": 150000, "interestRate": 6.0, "termYears": 30 } },
+    { "label": "Low down payment", "inputs": { "grossMonthlyIncome": 6000, "monthlyDebts": 300, "downPayment": 20000, "interestRate": 7.0, "termYears": 30 } }
+  ],
+  "explanation": "The 28/36 rule states that housing costs should not exceed 28% of gross monthly income (front-end ratio), and total debt payments should not exceed 36% (back-end ratio). Lenders use debt-to-income ratios to qualify borrowers. Your maximum mortgage is the lesser of the 28% and 36% limits."
+}

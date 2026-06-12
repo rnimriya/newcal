@@ -1,0 +1,39 @@
+{
+  "id": "retirement-income-analysis",
+  "slug": "retirement-income-analysis-calculator",
+  "name": "Retirement Income Analysis",
+  "category": "retirement",
+  "description": "Analyze your total retirement income from portfolio withdrawals, Social Security, pension, and other sources.",
+  "icon": "💵",
+  "tags": ["retirement income", "withdrawal rate", "social security", "portfolio", "4% rule"],
+  "fields": [
+    { "id": "portfolioValue", "label": "Portfolio Value", "type": "number", "defaultValue": 1000000, "prefix": "$", "constraint": { "min": 0, "step": 10000, "required": true } },
+    { "id": "withdrawalRate", "label": "Annual Withdrawal Rate", "type": "number", "defaultValue": 4, "suffix": "%", "constraint": { "min": 0.1, "max": 20, "step": 0.1, "required": true } },
+    { "id": "socialSecurity", "label": "Social Security (Monthly)", "type": "number", "defaultValue": 2000, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "pension", "label": "Pension (Monthly)", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "otherIncome", "label": "Other Income (Monthly)", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "inflationRate", "label": "Inflation Rate", "type": "number", "defaultValue": 3, "suffix": "%", "constraint": { "min": 0, "max": 15, "step": 0.1 } },
+    { "id": "portfolioIncome", "label": "Monthly Portfolio Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalMonthlyIncome", "label": "Total Monthly Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalAnnualIncome", "label": "Total Annual Income", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "safeWithdrawal", "label": "Safe 4% Withdrawal (Monthly)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "yearsUntilDepletion", "label": "Est. Years Until Depletion", "type": "computed", "precision": 1 }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Income Sources", "fields": ["portfolioValue", "withdrawalRate", "socialSecurity", "pension", "otherIncome", "inflationRate"] },
+    { "id": "outputs", "label": "Income Analysis", "fields": ["portfolioIncome", "totalMonthlyIncome", "totalAnnualIncome", "safeWithdrawal", "yearsUntilDepletion"] }
+  ],
+  "formulas": {
+    "portfolioIncome": "portfolioValue * withdrawalRate / 100 / 12",
+    "totalMonthlyIncome": "portfolioIncome + socialSecurity + pension + otherIncome",
+    "totalAnnualIncome": "totalMonthlyIncome * 12",
+    "safeWithdrawal": "portfolioValue * 0.04 / 12",
+    "yearsUntilDepletion": "withdrawalRate <= 4 ? 30 : max(0, log(1 - (portfolioValue * withdrawalRate/100) / (totalAnnualIncome)) / log(1 + withdrawalRate/100))"
+  },
+  "examples": [
+    { "label": "Million dollar portfolio", "inputs": { "portfolioValue": 1000000, "withdrawalRate": 4, "socialSecurity": 2000, "pension": 0, "otherIncome": 0, "inflationRate": 3 } },
+    { "label": "Conservative withdrawal", "inputs": { "portfolioValue": 750000, "withdrawalRate": 3, "socialSecurity": 1800, "pension": 500, "otherIncome": 200, "inflationRate": 2.5 } },
+    { "label": "Higher withdrawal", "inputs": { "portfolioValue": 500000, "withdrawalRate": 5, "socialSecurity": 2200, "pension": 0, "otherIncome": 0, "inflationRate": 3 } }
+  ],
+  "explanation": "The 4% rule, based on the Trinity Study, suggests withdrawing 4% annually from your portfolio is sustainable over a 30-year retirement. Higher withdrawal rates risk depleting your savings. This calculator combines all income sources for a complete retirement income picture."
+}

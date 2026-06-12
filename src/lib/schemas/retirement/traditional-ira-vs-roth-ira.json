@@ -1,0 +1,39 @@
+{
+  "id": "traditional-ira-vs-roth-ira",
+  "slug": "traditional-ira-vs-roth-ira-calculator",
+  "name": "Traditional IRA vs Roth IRA Calculator",
+  "category": "retirement",
+  "description": "Compare Traditional IRA and Roth IRA after-tax retirement values based on current and future tax rates.",
+  "icon": "⚖️",
+  "tags": ["IRA", "Roth IRA", "Traditional IRA", "tax comparison", "retirement"],
+  "fields": [
+    { "id": "annualContribution", "label": "Annual Contribution", "type": "number", "defaultValue": 7000, "prefix": "$", "constraint": { "min": 0, "step": 500, "required": true } },
+    { "id": "currentAge", "label": "Current Age", "type": "number", "defaultValue": 35, "constraint": { "min": 18, "max": 70, "step": 1, "required": true } },
+    { "id": "retirementAge", "label": "Retirement Age", "type": "number", "defaultValue": 65, "constraint": { "min": 40, "max": 90, "step": 1, "required": true } },
+    { "id": "currentTaxRate", "label": "Current Tax Rate", "type": "number", "defaultValue": 22, "suffix": "%", "constraint": { "min": 0, "max": 60, "step": 1, "required": true } },
+    { "id": "retirementTaxRate", "label": "Retirement Tax Rate", "type": "number", "defaultValue": 18, "suffix": "%", "constraint": { "min": 0, "max": 60, "step": 1, "required": true } },
+    { "id": "expectedReturn", "label": "Expected Annual Return", "type": "number", "defaultValue": 7, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "yearsToRetirement", "label": "Years to Retirement", "type": "computed", "precision": 0 },
+    { "id": "traditionalFutureValue", "label": "Traditional IRA (Pre-tax)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "rothFutureValue", "label": "Roth IRA (Pre-tax)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "traditionalAfterTax", "label": "Traditional IRA (After-tax)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "rothAfterTax", "label": "Roth IRA (After-tax)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "IRA Parameters", "fields": ["annualContribution", "currentAge", "retirementAge", "currentTaxRate", "retirementTaxRate", "expectedReturn"] },
+    { "id": "outputs", "label": "Comparison Results", "fields": ["yearsToRetirement", "traditionalFutureValue", "rothFutureValue", "traditionalAfterTax", "rothAfterTax"] }
+  ],
+  "formulas": {
+    "yearsToRetirement": "retirementAge - currentAge",
+    "traditionalFutureValue": "annualContribution * (((1 + expectedReturn/100)^yearsToRetirement - 1) / (expectedReturn/100))",
+    "rothFutureValue": "annualContribution * (1 - currentTaxRate/100) * (((1 + expectedReturn/100)^yearsToRetirement - 1) / (expectedReturn/100))",
+    "traditionalAfterTax": "traditionalFutureValue * (1 - retirementTaxRate/100)",
+    "rothAfterTax": "rothFutureValue"
+  },
+  "examples": [
+    { "label": "Lower retirement tax", "inputs": { "annualContribution": 7000, "currentAge": 35, "retirementAge": 65, "currentTaxRate": 22, "retirementTaxRate": 18, "expectedReturn": 7 } },
+    { "label": "Higher retirement tax", "inputs": { "annualContribution": 7000, "currentAge": 30, "retirementAge": 65, "currentTaxRate": 12, "retirementTaxRate": 22, "expectedReturn": 7 } },
+    { "label": "Same tax bracket", "inputs": { "annualContribution": 6500, "currentAge": 40, "retirementAge": 65, "currentTaxRate": 24, "retirementTaxRate": 24, "expectedReturn": 6 } }
+  ],
+  "explanation": "Traditional IRA contributions are tax-deductible now but taxed at withdrawal. Roth IRA contributions are made after-tax but grow and withdraw tax-free. If you expect higher taxes in retirement, Roth is generally better; if lower, Traditional wins. This calculator shows the after-tax value of each option."
+}

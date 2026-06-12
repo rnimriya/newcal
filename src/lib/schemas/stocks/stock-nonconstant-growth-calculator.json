@@ -1,0 +1,40 @@
+{
+  "id": "stock-nonconstant-growth",
+  "slug": "stock-nonconstant-growth-calculator",
+  "name": "Non-Constant Growth Stock Calculator",
+  "category": "stocks",
+  "description": "Value a stock with a high-growth phase followed by stable constant growth using a two-stage dividend discount model.",
+  "icon": "📉",
+  "tags": ["non-constant growth", "two-stage DDM", "stock valuation", "dividend discount", "growth stock"],
+  "fields": [
+    { "id": "currentDividend", "label": "Current Dividend (D0)", "type": "number", "defaultValue": 1.5, "prefix": "$", "constraint": { "min": 0.01, "step": 0.1, "required": true } },
+    { "id": "growthPhase1", "label": "High-Growth Phase Rate", "type": "number", "defaultValue": 15, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 0.5, "required": true } },
+    { "id": "years1", "label": "High-Growth Phase Duration (Years)", "type": "number", "defaultValue": 5, "constraint": { "min": 1, "max": 30, "step": 1, "required": true } },
+    { "id": "growthPhase2", "label": "Stable Growth Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.5, "required": true } },
+    { "id": "requiredReturn", "label": "Required Rate of Return", "type": "number", "defaultValue": 10, "suffix": "%", "constraint": { "min": 0.1, "max": 80, "step": 0.1, "required": true } },
+    { "id": "dividendYear1", "label": "Dividend Year 1", "type": "computed", "precision": 4, "prefix": "$" },
+    { "id": "dividendYear3", "label": "Dividend Year 3", "type": "computed", "precision": 4, "prefix": "$" },
+    { "id": "dividendYear5", "label": "Dividend at End of Phase 1", "type": "computed", "precision": 4, "prefix": "$" },
+    { "id": "terminalValue", "label": "Terminal Value", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "presentValuePhase1", "label": "PV of Phase 1 Dividends", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "stockPrice", "label": "Intrinsic Stock Price", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Valuation Inputs", "fields": ["currentDividend", "growthPhase1", "years1", "growthPhase2", "requiredReturn"] },
+    { "id": "outputs", "label": "Valuation Results", "fields": ["dividendYear1", "dividendYear3", "dividendYear5", "terminalValue", "presentValuePhase1", "stockPrice"] }
+  ],
+  "formulas": {
+    "dividendYear1": "currentDividend * (1 + growthPhase1/100)",
+    "dividendYear3": "currentDividend * (1 + growthPhase1/100)^3",
+    "dividendYear5": "currentDividend * (1 + growthPhase1/100)^years1",
+    "terminalValue": "dividendYear5 * (1 + growthPhase2/100) / ((requiredReturn - growthPhase2) / 100)",
+    "presentValuePhase1": "currentDividend * (1 + growthPhase1/100) * ((1 - (1 + growthPhase1/100)^years1 / (1 + requiredReturn/100)^years1) / (requiredReturn/100 - growthPhase1/100))",
+    "stockPrice": "presentValuePhase1 + terminalValue / (1 + requiredReturn/100)^years1"
+  },
+  "examples": [
+    { "label": "Tech growth stock", "inputs": { "currentDividend": 1.5, "growthPhase1": 15, "years1": 5, "growthPhase2": 5, "requiredReturn": 10 } },
+    { "label": "Consumer brand", "inputs": { "currentDividend": 2, "growthPhase1": 12, "years1": 7, "growthPhase2": 4, "requiredReturn": 9 } },
+    { "label": "Startup dividend", "inputs": { "currentDividend": 0.5, "growthPhase1": 25, "years1": 5, "growthPhase2": 6, "requiredReturn": 12 } }
+  ],
+  "explanation": "The two-stage dividend discount model handles stocks with an initial high-growth period followed by stable growth. Phase 1 dividends are discounted individually; the terminal value captures all dividends from Phase 2 onward using the Gordon Growth Model, then discounted back to today."
+}

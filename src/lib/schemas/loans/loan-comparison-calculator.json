@@ -1,0 +1,42 @@
+{
+  "id": "loan-comparison",
+  "slug": "loan-comparison-calculator",
+  "name": "Loan Comparison Calculator",
+  "category": "loans",
+  "description": "Compare two loan options side by side — monthly payments, total costs, and interest paid for each.",
+  "icon": "⚖️",
+  "tags": ["loan comparison", "mortgage", "monthly payment", "total interest", "loan options"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 300000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "rate1", "label": "Loan 1 Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "term1", "label": "Loan 1 Term (Years)", "type": "number", "defaultValue": 30, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "rate2", "label": "Loan 2 Interest Rate", "type": "number", "defaultValue": 7.0, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "term2", "label": "Loan 2 Term (Years)", "type": "number", "defaultValue": 15, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "payment1", "label": "Loan 1 Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "payment2", "label": "Loan 2 Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalCost1", "label": "Loan 1 Total Cost", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalCost2", "label": "Loan 2 Total Cost", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest1", "label": "Loan 1 Total Interest", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest2", "label": "Loan 2 Total Interest", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "savings", "label": "Interest Difference", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan Options", "fields": ["loanAmount", "rate1", "term1", "rate2", "term2"] },
+    { "id": "outputs", "label": "Comparison Results", "fields": ["payment1", "payment2", "totalCost1", "totalCost2", "totalInterest1", "totalInterest2", "savings"] }
+  ],
+  "formulas": {
+    "payment1": "loanAmount * (rate1/1200) * (1 + rate1/1200)^(term1*12) / ((1 + rate1/1200)^(term1*12) - 1)",
+    "payment2": "loanAmount * (rate2/1200) * (1 + rate2/1200)^(term2*12) / ((1 + rate2/1200)^(term2*12) - 1)",
+    "totalCost1": "payment1 * term1 * 12",
+    "totalCost2": "payment2 * term2 * 12",
+    "totalInterest1": "totalCost1 - loanAmount",
+    "totalInterest2": "totalCost2 - loanAmount",
+    "savings": "abs(totalInterest1 - totalInterest2)"
+  },
+  "examples": [
+    { "label": "30yr vs 15yr mortgage", "inputs": { "loanAmount": 300000, "rate1": 6.5, "term1": 30, "rate2": 7.0, "term2": 15 } },
+    { "label": "Rate comparison", "inputs": { "loanAmount": 250000, "rate1": 6.0, "term1": 30, "rate2": 6.75, "term2": 30 } },
+    { "label": "Personal loan options", "inputs": { "loanAmount": 20000, "rate1": 8.0, "term1": 5, "rate2": 10.0, "term2": 3 } }
+  ],
+  "explanation": "Loan comparisons reveal the true cost difference between options. A shorter term usually means higher monthly payments but dramatically less total interest. A lower rate always saves money when terms are equal. This side-by-side view helps make the best financial decision based on monthly cash flow vs. lifetime cost."
+}

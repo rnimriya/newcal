@@ -1,0 +1,34 @@
+{
+  "id": "loan-analysis",
+  "slug": "loan-analysis-calculator",
+  "name": "Loan Analysis Calculator",
+  "category": "loans",
+  "description": "Full loan analysis including monthly payment, total cost, total interest, and interest as a percentage of principal.",
+  "icon": "📋",
+  "tags": ["loan analysis", "amortization", "total interest", "monthly payment", "loan cost"],
+  "fields": [
+    { "id": "loanAmount", "label": "Loan Amount", "type": "number", "defaultValue": 250000, "prefix": "$", "constraint": { "min": 1000, "step": 5000, "required": true } },
+    { "id": "annualRate", "label": "Annual Interest Rate", "type": "number", "defaultValue": 6.5, "suffix": "%", "constraint": { "min": 0.1, "max": 30, "step": 0.05, "required": true } },
+    { "id": "termMonths", "label": "Loan Term (Months)", "type": "number", "defaultValue": 360, "constraint": { "min": 1, "max": 600, "step": 1, "required": true } },
+    { "id": "monthlyPayment", "label": "Monthly Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalPayment", "label": "Total Payment", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalInterest", "label": "Total Interest Paid", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "interestPercentage", "label": "Interest as % of Principal", "type": "computed", "precision": 1, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Loan Details", "fields": ["loanAmount", "annualRate", "termMonths"] },
+    { "id": "outputs", "label": "Loan Analysis", "fields": ["monthlyPayment", "totalPayment", "totalInterest", "interestPercentage"] }
+  ],
+  "formulas": {
+    "monthlyPayment": "loanAmount * (annualRate/1200) * (1 + annualRate/1200)^termMonths / ((1 + annualRate/1200)^termMonths - 1)",
+    "totalPayment": "monthlyPayment * termMonths",
+    "totalInterest": "totalPayment - loanAmount",
+    "interestPercentage": "totalInterest / loanAmount * 100"
+  },
+  "examples": [
+    { "label": "30-yr mortgage", "inputs": { "loanAmount": 250000, "annualRate": 6.5, "termMonths": 360 } },
+    { "label": "15-yr mortgage", "inputs": { "loanAmount": 250000, "annualRate": 6.0, "termMonths": 180 } },
+    { "label": "5-yr personal loan", "inputs": { "loanAmount": 20000, "annualRate": 9.5, "termMonths": 60 } }
+  ],
+  "explanation": "Loan analysis reveals the true cost of borrowing over the loan's lifetime. For a 30-year mortgage, you often pay more in interest than the principal itself — the interest percentage shows this starkly. Shorter terms dramatically reduce total interest despite higher monthly payments."
+}

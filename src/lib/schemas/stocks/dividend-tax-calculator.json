@@ -1,0 +1,48 @@
+{
+  "id": "dividend-tax",
+  "slug": "dividend-tax-calculator",
+  "name": "Dividend Tax Calculator",
+  "category": "stocks",
+  "description": "Calculate the tax owed on dividend income for qualified and non-qualified (ordinary) dividends.",
+  "icon": "🧾",
+  "tags": ["dividend tax", "qualified dividend", "ordinary dividend", "tax rate", "investment income"],
+  "fields": [
+    { "id": "dividendAmount", "label": "Dividend Amount", "type": "number", "defaultValue": 5000, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "holdingPeriodDays", "label": "Holding Period (Days)", "type": "number", "defaultValue": 180, "constraint": { "min": 0, "max": 3650, "step": 1, "required": true } },
+    { "id": "taxableIncome", "label": "Annual Taxable Income", "type": "number", "defaultValue": 80000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    {
+      "id": "filingStatus",
+      "label": "Filing Status",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Single", "value": 1 },
+        { "label": "Married Filing Jointly", "value": 2 }
+      ]
+    },
+    { "id": "isQualified", "label": "Qualifies as Qualified Dividend", "type": "computed", "precision": 0 },
+    { "id": "qualifiedTaxRate", "label": "Qualified Dividend Tax Rate", "type": "computed", "precision": 0, "suffix": "%" },
+    { "id": "ordinaryTaxRate", "label": "Ordinary Dividend Tax Rate", "type": "computed", "precision": 0, "suffix": "%" },
+    { "id": "qualifiedTax", "label": "Tax if Qualified", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "ordinaryTax", "label": "Tax if Ordinary", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "taxDue", "label": "Tax Due (Based on Holding Period)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Dividend Details", "fields": ["dividendAmount", "holdingPeriodDays", "taxableIncome", "filingStatus"] },
+    { "id": "outputs", "label": "Tax Calculation", "fields": ["isQualified", "qualifiedTaxRate", "ordinaryTaxRate", "qualifiedTax", "ordinaryTax", "taxDue"] }
+  ],
+  "formulas": {
+    "isQualified": "holdingPeriodDays >= 61 ? 1 : 0",
+    "qualifiedTaxRate": "taxableIncome <= (filingStatus == 1 ? 47025 : 94050) ? 0 : (taxableIncome <= (filingStatus == 1 ? 518900 : 583750) ? 15 : 20)",
+    "ordinaryTaxRate": "taxableIncome <= 44725 ? 12 : (taxableIncome <= 95375 ? 22 : (taxableIncome <= 201050 ? 24 : 32))",
+    "qualifiedTax": "dividendAmount * qualifiedTaxRate / 100",
+    "ordinaryTax": "dividendAmount * ordinaryTaxRate / 100",
+    "taxDue": "isQualified == 1 ? qualifiedTax : ordinaryTax"
+  },
+  "examples": [
+    { "label": "Qualified dividend - mid income", "inputs": { "dividendAmount": 5000, "holdingPeriodDays": 180, "taxableIncome": 80000, "filingStatus": 1 } },
+    { "label": "Short-term holding", "inputs": { "dividendAmount": 3000, "holdingPeriodDays": 30, "taxableIncome": 95000, "filingStatus": 1 } },
+    { "label": "Married couple", "inputs": { "dividendAmount": 10000, "holdingPeriodDays": 200, "taxableIncome": 150000, "filingStatus": 2 } }
+  ],
+  "explanation": "Qualified dividends are taxed at lower long-term capital gain rates (0%, 15%, or 20%), while ordinary dividends are taxed as regular income. To qualify, you must hold the stock more than 60 days in the 121-day period surrounding the ex-dividend date. The tax savings on qualified dividends can be significant for high-income earners."
+}

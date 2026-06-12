@@ -1,0 +1,35 @@
+{
+  "id": "roi",
+  "slug": "roi-calculator",
+  "name": "ROI Calculator",
+  "category": "finance",
+  "description": "Calculate return on investment (ROI), annualized ROI, and net profit for any investment.",
+  "icon": "📊",
+  "tags": ["ROI", "return on investment", "profit", "annualized return", "investment"],
+  "fields": [
+    { "id": "initialInvestment", "label": "Initial Investment", "type": "number", "defaultValue": 10000, "prefix": "$", "constraint": { "min": 1, "step": 100, "required": true } },
+    { "id": "finalValue", "label": "Final Value", "type": "number", "defaultValue": 14500, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "holdingYears", "label": "Holding Period (Years)", "type": "number", "defaultValue": 3, "constraint": { "min": 0.1, "max": 100, "step": 0.1, "required": true } },
+    { "id": "additionalCosts", "label": "Additional Costs (Fees, Taxes)", "type": "number", "defaultValue": 500, "prefix": "$", "constraint": { "min": 0, "step": 50 } },
+    { "id": "netProfit", "label": "Net Profit", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "roi", "label": "ROI", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "annualizedRoi", "label": "Annualized ROI", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "totalReturn", "label": "Total Return (Before Costs)", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Investment Details", "fields": ["initialInvestment", "finalValue", "holdingYears", "additionalCosts"] },
+    { "id": "outputs", "label": "ROI Results", "fields": ["netProfit", "roi", "annualizedRoi", "totalReturn"] }
+  ],
+  "formulas": {
+    "netProfit": "finalValue - initialInvestment - additionalCosts",
+    "roi": "netProfit / (initialInvestment + additionalCosts) * 100",
+    "annualizedRoi": "((1 + roi/100)^(1/holdingYears) - 1) * 100",
+    "totalReturn": "finalValue - initialInvestment"
+  },
+  "examples": [
+    { "label": "3-year investment", "inputs": { "initialInvestment": 10000, "finalValue": 14500, "holdingYears": 3, "additionalCosts": 500 } },
+    { "label": "Real estate 5-year", "inputs": { "initialInvestment": 50000, "finalValue": 80000, "holdingYears": 5, "additionalCosts": 5000 } },
+    { "label": "Short-term trade", "inputs": { "initialInvestment": 5000, "finalValue": 6200, "holdingYears": 0.5, "additionalCosts": 50 } }
+  ],
+  "explanation": "ROI measures the efficiency of an investment relative to its total cost. Annualized ROI converts the total return to a yearly rate, enabling comparison across different time horizons. Including transaction fees, taxes, and other costs gives a more accurate picture of true investment performance."
+}

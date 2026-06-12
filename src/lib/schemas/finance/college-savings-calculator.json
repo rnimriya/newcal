@@ -1,0 +1,42 @@
+{
+  "id": "college-savings",
+  "slug": "college-savings-calculator",
+  "name": "College Savings Calculator",
+  "category": "finance",
+  "description": "Calculate how much you need to save monthly to fund your child's college education after inflation.",
+  "icon": "🎓",
+  "tags": ["college savings", "529 plan", "education", "tuition", "savings goal"],
+  "fields": [
+    { "id": "childAge", "label": "Child's Current Age", "type": "number", "defaultValue": 5, "constraint": { "min": 0, "max": 17, "step": 1, "required": true } },
+    { "id": "collegeStartAge", "label": "College Start Age", "type": "number", "defaultValue": 18, "constraint": { "min": 16, "max": 25, "step": 1, "required": true } },
+    { "id": "currentSavings", "label": "Current Savings", "type": "number", "defaultValue": 5000, "prefix": "$", "constraint": { "min": 0, "step": 500 } },
+    { "id": "monthlyContribution", "label": "Monthly Contribution", "type": "number", "defaultValue": 300, "prefix": "$", "constraint": { "min": 0, "step": 25, "required": true } },
+    { "id": "expectedReturn", "label": "Expected Return", "type": "number", "defaultValue": 6, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "collegeInflation", "label": "College Cost Inflation", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 20, "step": 0.1, "required": true } },
+    { "id": "annualCollegeCost", "label": "Current Annual College Cost", "type": "number", "defaultValue": 25000, "prefix": "$", "constraint": { "min": 1000, "step": 1000, "required": true } },
+    { "id": "yearsToCollege", "label": "Years Until College", "type": "computed", "precision": 0 },
+    { "id": "futureSavings", "label": "Projected Savings at College Start", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "futureCostPerYear", "label": "Future Annual Cost", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalFutureCost", "label": "Total 4-Year Cost", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "savingsGap", "label": "Savings Gap", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "requiredMonthly", "label": "Required Monthly to Close Gap", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "College Savings Parameters", "fields": ["childAge", "collegeStartAge", "currentSavings", "monthlyContribution", "expectedReturn", "collegeInflation", "annualCollegeCost"] },
+    { "id": "outputs", "label": "Savings Analysis", "fields": ["yearsToCollege", "futureSavings", "futureCostPerYear", "totalFutureCost", "savingsGap", "requiredMonthly"] }
+  ],
+  "formulas": {
+    "yearsToCollege": "collegeStartAge - childAge",
+    "futureSavings": "currentSavings * (1 + expectedReturn/100)^yearsToCollege + monthlyContribution * 12 * (((1 + expectedReturn/100)^yearsToCollege - 1) / (expectedReturn/100))",
+    "futureCostPerYear": "annualCollegeCost * (1 + collegeInflation/100)^yearsToCollege",
+    "totalFutureCost": "futureCostPerYear * 4",
+    "savingsGap": "max(0, totalFutureCost - futureSavings)",
+    "requiredMonthly": "savingsGap / (((1 + expectedReturn/100)^yearsToCollege - 1) / (expectedReturn/100)) / 12"
+  },
+  "examples": [
+    { "label": "Young child, 13 years", "inputs": { "childAge": 5, "collegeStartAge": 18, "currentSavings": 5000, "monthlyContribution": 300, "expectedReturn": 6, "collegeInflation": 5, "annualCollegeCost": 25000 } },
+    { "label": "Older child, 5 years", "inputs": { "childAge": 13, "collegeStartAge": 18, "currentSavings": 15000, "monthlyContribution": 600, "expectedReturn": 5, "collegeInflation": 5, "annualCollegeCost": 30000 } },
+    { "label": "Private university goal", "inputs": { "childAge": 3, "collegeStartAge": 18, "currentSavings": 10000, "monthlyContribution": 500, "expectedReturn": 7, "collegeInflation": 5, "annualCollegeCost": 55000 } }
+  ],
+  "explanation": "College costs have historically risen at 5-6% per year, faster than general inflation. The 529 college savings plan provides tax-free growth when used for education expenses. Starting early is crucial: the same monthly contribution at age 5 versus age 13 results in dramatically different outcomes due to compounding."
+}

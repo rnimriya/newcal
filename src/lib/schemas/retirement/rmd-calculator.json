@@ -1,0 +1,32 @@
+{
+  "id": "rmd-calculator",
+  "slug": "rmd-calculator",
+  "name": "Required Minimum Distribution (RMD) Calculator",
+  "category": "retirement",
+  "description": "Calculate your IRS Required Minimum Distribution from retirement accounts using the Uniform Lifetime Table.",
+  "icon": "📋",
+  "tags": ["RMD", "required minimum distribution", "IRA", "401k", "retirement tax"],
+  "fields": [
+    { "id": "accountBalance", "label": "Account Balance", "type": "number", "defaultValue": 500000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "age", "label": "Your Age", "type": "number", "defaultValue": 73, "constraint": { "min": 73, "max": 115, "step": 1, "required": true } },
+    { "id": "priorYearBalance", "label": "Prior Year-End Balance", "type": "number", "defaultValue": 520000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "distributionPeriod", "label": "Distribution Period (years)", "type": "computed", "precision": 1 },
+    { "id": "rmdAmount", "label": "Required Minimum Distribution", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "rmdPercentage", "label": "RMD as % of Balance", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Account Information", "fields": ["accountBalance", "age", "priorYearBalance"] },
+    { "id": "outputs", "label": "RMD Calculation", "fields": ["distributionPeriod", "rmdAmount", "rmdPercentage"] }
+  ],
+  "formulas": {
+    "distributionPeriod": "max(1, 26.5 - max(0, age - 72) * 0.5)",
+    "rmdAmount": "priorYearBalance / distributionPeriod",
+    "rmdPercentage": "rmdAmount / priorYearBalance * 100"
+  },
+  "examples": [
+    { "label": "Age 73", "inputs": { "accountBalance": 500000, "age": 73, "priorYearBalance": 520000 } },
+    { "label": "Age 80", "inputs": { "accountBalance": 350000, "age": 80, "priorYearBalance": 375000 } },
+    { "label": "Age 90", "inputs": { "accountBalance": 200000, "age": 90, "priorYearBalance": 215000 } }
+  ],
+  "explanation": "The RMD is the minimum amount you must withdraw annually from tax-deferred retirement accounts starting at age 73. The IRS Uniform Lifetime Table provides distribution periods that decrease with age. Using the prior year-end balance ensures the correct calculation per IRS rules."
+}

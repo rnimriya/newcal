@@ -1,0 +1,38 @@
+{
+  "id": "401k-contribution",
+  "slug": "401k-contribution-calculator",
+  "name": "401k Contribution Calculator",
+  "category": "retirement",
+  "description": "Calculate your 401k contributions, employer match, and projected retirement balance.",
+  "icon": "💼",
+  "tags": ["401k", "retirement", "employer match", "contributions", "savings"],
+  "fields": [
+    { "id": "annualSalary", "label": "Annual Salary", "type": "number", "defaultValue": 75000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "contributionPercent", "label": "Your Contribution", "type": "number", "defaultValue": 10, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 0.5, "required": true } },
+    { "id": "employerMatch", "label": "Employer Match Rate", "type": "number", "defaultValue": 50, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 1, "required": true } },
+    { "id": "employerMatchCap", "label": "Employer Match Cap", "type": "number", "defaultValue": 6, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 0.5, "required": true } },
+    { "id": "currentBalance", "label": "Current Balance", "type": "number", "defaultValue": 25000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "yearsToRetirement", "label": "Years to Retirement", "type": "number", "defaultValue": 30, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "expectedReturn", "label": "Expected Annual Return", "type": "number", "defaultValue": 7, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "annualContribution", "label": "Your Annual Contribution", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "employerContribution", "label": "Employer Annual Contribution", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalAnnualContribution", "label": "Total Annual Contribution", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "futureValue", "label": "Projected Retirement Balance", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "401k Parameters", "fields": ["annualSalary", "contributionPercent", "employerMatch", "employerMatchCap", "currentBalance", "yearsToRetirement", "expectedReturn"] },
+    { "id": "outputs", "label": "Results", "fields": ["annualContribution", "employerContribution", "totalAnnualContribution", "futureValue"] }
+  ],
+  "formulas": {
+    "annualContribution": "annualSalary * contributionPercent / 100",
+    "employerContribution": "annualSalary * min(contributionPercent, employerMatchCap) / 100 * employerMatch / 100",
+    "totalAnnualContribution": "annualContribution + employerContribution",
+    "futureValue": "currentBalance * (1 + expectedReturn/100)^yearsToRetirement + totalAnnualContribution * (((1 + expectedReturn/100)^yearsToRetirement - 1) / (expectedReturn/100))"
+  },
+  "examples": [
+    { "label": "Standard match", "inputs": { "annualSalary": 75000, "contributionPercent": 10, "employerMatch": 50, "employerMatchCap": 6, "currentBalance": 25000, "yearsToRetirement": 30, "expectedReturn": 7 } },
+    { "label": "Maxing out", "inputs": { "annualSalary": 100000, "contributionPercent": 15, "employerMatch": 100, "employerMatchCap": 4, "currentBalance": 50000, "yearsToRetirement": 20, "expectedReturn": 7 } },
+    { "label": "New employee", "inputs": { "annualSalary": 60000, "contributionPercent": 6, "employerMatch": 50, "employerMatchCap": 6, "currentBalance": 0, "yearsToRetirement": 35, "expectedReturn": 7 } }
+  ],
+  "explanation": "The 401k calculator shows how employer matching amplifies your retirement savings. The employer contributes a percentage of your salary up to a cap, providing an immediate return on your contributions. Over time, compounding dramatically grows these combined contributions."
+}

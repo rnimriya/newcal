@@ -1,0 +1,42 @@
+{
+  "id": "401k-save-max",
+  "slug": "401k-save-max-calculator",
+  "name": "401k Max Savings Calculator",
+  "category": "retirement",
+  "description": "Compare your current 401k contributions to the IRS maximum and see the long-term impact of maxing out.",
+  "icon": "🚀",
+  "tags": ["401k", "retirement", "IRS limit", "max contribution", "savings"],
+  "fields": [
+    { "id": "annualSalary", "label": "Annual Salary", "type": "number", "defaultValue": 100000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "currentContributionPercent", "label": "Current Contribution %", "type": "number", "defaultValue": 10, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 0.5, "required": true } },
+    { "id": "age", "label": "Your Age", "type": "number", "defaultValue": 40, "constraint": { "min": 18, "max": 70, "step": 1, "required": true } },
+    { "id": "expectedReturn", "label": "Expected Annual Return", "type": "number", "defaultValue": 7, "suffix": "%", "constraint": { "min": 0, "max": 30, "step": 0.1, "required": true } },
+    { "id": "yearsToRetirement", "label": "Years to Retirement", "type": "number", "defaultValue": 25, "constraint": { "min": 1, "max": 50, "step": 1, "required": true } },
+    { "id": "currentAnnualContribution", "label": "Current Annual Contribution", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "maxContribution", "label": "IRS Max Contribution", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "maxContributionPercent", "label": "Max as % of Salary", "type": "computed", "precision": 1, "suffix": "%" },
+    { "id": "additionalContribution", "label": "Additional You Could Contribute", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "futureValueCurrent", "label": "Future Value (Current Rate)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "futureValueMax", "label": "Future Value (Maxed Out)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "additionalFutureValue", "label": "Additional Retirement Savings", "type": "computed", "precision": 2, "prefix": "$" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Your 401k Info", "fields": ["annualSalary", "currentContributionPercent", "age", "expectedReturn", "yearsToRetirement"] },
+    { "id": "outputs", "label": "Max Savings Analysis", "fields": ["currentAnnualContribution", "maxContribution", "maxContributionPercent", "additionalContribution", "futureValueCurrent", "futureValueMax", "additionalFutureValue"] }
+  ],
+  "formulas": {
+    "currentAnnualContribution": "annualSalary * currentContributionPercent / 100",
+    "maxContribution": "age >= 50 ? 30500 : 23000",
+    "maxContributionPercent": "maxContribution / annualSalary * 100",
+    "additionalContribution": "max(0, maxContribution - currentAnnualContribution)",
+    "futureValueCurrent": "currentAnnualContribution * (((1 + expectedReturn/100)^yearsToRetirement - 1) / (expectedReturn/100))",
+    "futureValueMax": "maxContribution * (((1 + expectedReturn/100)^yearsToRetirement - 1) / (expectedReturn/100))",
+    "additionalFutureValue": "futureValueMax - futureValueCurrent"
+  },
+  "examples": [
+    { "label": "Under 50 earner", "inputs": { "annualSalary": 100000, "currentContributionPercent": 10, "age": 40, "expectedReturn": 7, "yearsToRetirement": 25 } },
+    { "label": "Catch-up eligible", "inputs": { "annualSalary": 120000, "currentContributionPercent": 15, "age": 52, "expectedReturn": 6, "yearsToRetirement": 13 } },
+    { "label": "High earner", "inputs": { "annualSalary": 200000, "currentContributionPercent": 8, "age": 35, "expectedReturn": 7, "yearsToRetirement": 30 } }
+  ],
+  "explanation": "The IRS limits 401k contributions annually ($23,000 in 2024, $30,500 if age 50+). This calculator shows how much more you could save and the projected impact over your remaining work years. Even small increases in contributions compound significantly over decades."
+}

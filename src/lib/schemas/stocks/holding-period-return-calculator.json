@@ -1,0 +1,36 @@
+{
+  "id": "holding-period-return",
+  "slug": "holding-period-return-calculator",
+  "name": "Holding Period Return Calculator",
+  "category": "stocks",
+  "description": "Calculate the holding period return and annualized return for a 2-year or 3-year investment period.",
+  "icon": "⏱️",
+  "tags": ["holding period return", "HPR", "annualized return", "investment return", "total return"],
+  "fields": [
+    { "id": "beginningValue", "label": "Beginning Value", "type": "number", "defaultValue": 10000, "prefix": "$", "constraint": { "min": 1, "step": 100, "required": true } },
+    { "id": "endingValue", "label": "Ending Value", "type": "number", "defaultValue": 12500, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "incomeDividends", "label": "Income & Dividends Received", "type": "number", "defaultValue": 500, "prefix": "$", "constraint": { "min": 0, "step": 50 } },
+    { "id": "capitalGain", "label": "Capital Gain", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "totalReturn", "label": "Total Return ($)", "type": "computed", "precision": 2, "prefix": "$" },
+    { "id": "holdingPeriodReturn", "label": "Holding Period Return", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "annualizedReturn2yr", "label": "Annualized Return (2-year)", "type": "computed", "precision": 2, "suffix": "%" },
+    { "id": "annualizedReturn3yr", "label": "Annualized Return (3-year)", "type": "computed", "precision": 2, "suffix": "%" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Investment Values", "fields": ["beginningValue", "endingValue", "incomeDividends"] },
+    { "id": "outputs", "label": "Return Metrics", "fields": ["capitalGain", "totalReturn", "holdingPeriodReturn", "annualizedReturn2yr", "annualizedReturn3yr"] }
+  ],
+  "formulas": {
+    "capitalGain": "endingValue - beginningValue",
+    "totalReturn": "capitalGain + incomeDividends",
+    "holdingPeriodReturn": "totalReturn / beginningValue * 100",
+    "annualizedReturn2yr": "((1 + holdingPeriodReturn/100)^(1/2) - 1) * 100",
+    "annualizedReturn3yr": "((1 + holdingPeriodReturn/100)^(1/3) - 1) * 100"
+  },
+  "examples": [
+    { "label": "2-year stock hold", "inputs": { "beginningValue": 10000, "endingValue": 12500, "incomeDividends": 500 } },
+    { "label": "3-year fund investment", "inputs": { "beginningValue": 25000, "endingValue": 35000, "incomeDividends": 2000 } },
+    { "label": "Dividend stock", "inputs": { "beginningValue": 50000, "endingValue": 55000, "incomeDividends": 5000 } }
+  ],
+  "explanation": "The holding period return (HPR) is the total return on an investment over any period, including both capital appreciation and income. To compare across different time periods, the annualized return converts HPR to an equivalent annual rate using geometric compounding. The 2-year and 3-year annualized rates show what your HPR equals per year under each assumption."
+}
