@@ -127,15 +127,16 @@ export function Header() {
               {/* full-page backdrop */}
               <div className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[1px]" onClick={() => setMegaOpen(false)} />
 
-              {/* Mega panel */}
+              {/* Mega panel — full viewport width */}
               <div
-                className="fixed left-0 right-0 top-[65px] z-50 mx-auto max-w-7xl px-4 sm:px-6"
+                className="fixed left-0 right-0 top-[65px] z-50"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="rounded-2xl border border-border bg-popover shadow-2xl overflow-hidden flex">
+                <div className="border-b border-border bg-popover shadow-2xl overflow-hidden">
+                  <div className="mx-auto max-w-7xl flex">
 
                   {/* Left: category list */}
-                  <nav className="w-56 shrink-0 border-r border-border bg-muted/40 py-3">
+                  <nav className="w-64 shrink-0 border-r border-border bg-muted/40 py-3">
                     <p className="px-4 pb-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       Browse
                     </p>
@@ -231,6 +232,7 @@ export function Header() {
                       </button>
                     </div>
                   </div>
+                  </div>{/* end max-w-7xl flex */}
                 </div>
               </div>
             </>
