@@ -259,19 +259,37 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
     <div className="space-y-6 animate-fade-in">
       {/* Header card */}
       <div className={`rounded-2xl border border-zinc-200 border-t-4 ${theme.accentBorder} bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}>
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${theme.iconBg} font-bold`}>
-              <CalculatorIcon slug={schema.slug} category={schema.category} size={20} />
-            </div>
-            <div>
-              <h1 className="font-bold text-zinc-900 dark:text-white text-xl leading-tight">
-                {schema.name}
-              </h1>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 leading-snug">{schema.description}</p>
-            </div>
+        <div className="flex items-start gap-3">
+          <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${theme.iconBg} font-bold`}>
+            <CalculatorIcon slug={schema.slug} category={schema.category} size={20} />
           </div>
-          <div className="flex items-center gap-1 shrink-0">
+          <div>
+            <h1 className="font-bold text-zinc-900 dark:text-white text-xl leading-tight">
+              {schema.name}
+            </h1>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 leading-snug">{schema.description}</p>
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-zinc-100 dark:border-zinc-800">
+          <div className="flex flex-wrap gap-2 min-h-[36px]">
+            {schema.examples && schema.examples.length > 0 && (
+              <>
+                <span className="text-xs text-zinc-400 dark:text-zinc-500 self-center font-bold">Try Examples:</span>
+                {schema.examples.map((ex) => (
+                  <button
+                    key={ex.label}
+                    onClick={() => loadExample(ex.inputs)}
+                    className={`rounded-xl border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-bold text-zinc-600 ${theme.hoverBorder} ${theme.textAccent} ${theme.hoverBg} transition-all dark:border-zinc-700 dark:bg-zinc-800/40 dark:text-zinc-400 dark:hover:border-zinc-500 cursor-pointer`}
+                  >
+                    {ex.label}
+                  </button>
+                ))}
+              </>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1 shrink-0 ml-auto">
             <ShareButton
               slug={schema.slug}
               category={schema.category}
@@ -306,21 +324,6 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
             </button>
           </div>
         </div>
-
-        {schema.examples && schema.examples.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2 pt-3 border-t border-zinc-100 dark:border-zinc-800">
-            <span className="text-xs text-zinc-400 dark:text-zinc-500 self-center font-bold">Try Examples:</span>
-            {schema.examples.map((ex) => (
-              <button
-                key={ex.label}
-                onClick={() => loadExample(ex.inputs)}
-                className={`rounded-xl border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-bold text-zinc-600 ${theme.hoverBorder} ${theme.textAccent} ${theme.hoverBg} transition-all dark:border-zinc-700 dark:bg-zinc-800/40 dark:text-zinc-400 dark:hover:border-zinc-500 cursor-pointer`}
-              >
-                {ex.label}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Solve-for selector */}
