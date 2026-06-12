@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -29,7 +30,6 @@ function buildChartData(
   const points = chart.points ?? 50;
   const step = (xMax - xMin) / points;
 
-  // Assemble current scope from field states
   const scope: Record<string, unknown> = {};
   for (const f of schema.fields) {
     const val = parseFloat(fields[f.id]?.value ?? "");
@@ -45,15 +45,48 @@ function buildChartData(
 
     const yVal = evalExpression(yExpr, pointScope);
     if (typeof yVal === "number" && isFinite(yVal)) {
-      data.push({ [chart.xAxisField]: parseFloat(xVal.toFixed(2)), [chart.yAxisField]: parseFloat(yVal.toFixed(4)) });
+      data.push({
+        [chart.xAxisField]: parseFloat(xVal.toFixed(2)),
+        [chart.yAxisField]: parseFloat(yVal.toFixed(4)),
+      });
     }
   }
 
   return data;
 }
 
+function useCssColors() {
+  const [colors, setColors] = useState({
+    primary: "#0369a1",
+    border: "#e2e8f0",
+    mutedFg: "#64748b",
+    card: "#ffffff",
+    cardFg: "#0f172a",
+  });
+
+  useEffect(() => {
+    const style = getComputedStyle(document.documentElement);
+    const get = (v: string) => style.getPropertyValue(v).trim();
+
+    const toHsl = (raw: string) =>
+      raw ? (raw.startsWith("#") ? raw : `hsl(${raw})`) : undefined;
+
+    setColors({
+      primary: toHsl(get("--primary")) ?? "#0369a1",
+      border: toHsl(get("--border")) ?? "#e2e8f0",
+      mutedFg: toHsl(get("--muted-foreground")) ?? "#64748b",
+      card: toHsl(get("--card")) ?? "#ffffff",
+      cardFg: toHsl(get("--card-foreground")) ?? "#0f172a",
+    });
+  }, []);
+
+  return colors;
+}
+
 export function FormulaChart({ schema, fields }: Props) {
   const chart = schema.chart;
+  const colors = useCssColors();
+
   if (!chart) return null;
 
   const data = buildChartData(schema, fields);
@@ -70,56 +103,58 @@ export function FormulaChart({ schema, fields }: Props) {
 
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={data} margin={{ top: 4, right: 16, left: 0, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+          <CartesianGrid strokeDasharray="3 3" stroke={colors.border} />
           <XAxis
             dataKey={chart.xAxisField}
-            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+            tick={{ fontSize: 11, fill: colors.mutedFg }}
             label={{
               value: xField?.label ?? chart.xAxisField,
               position: "insideBottom",
               offset: -2,
               fontSize: 11,
-              fill: "hsl(var(--muted-foreground))",
+              fill: colors.mutedFg,
             }}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
+            tick={{ fontSize: 11, fill: colors.mutedFg }}
             label={{
               value: yField?.label ?? chart.yAxisField,
               angle: -90,
               position: "insideLeft",
               fontSize: 11,
-              fill: "hsl(var(--muted-foreground))",
+              fill: colors.mutedFg,
             }}
           />
           <Tooltip
             contentStyle={{
               borderRadius: "10px",
-              border: "1px solid hsl(var(--border))",
-              backgroundColor: "hsl(var(--card))",
-              color: "hsl(var(--card-foreground))",
+              border: `1px solid ${colors.border}`,
+              backgroundColor: colors.card,
+              color: colors.cardFg,
               fontSize: "12px",
             }}
-            formatter={(value) => [typeof value === "number" ? value.toFixed(3) : String(value), yField?.label ?? chart.yAxisField]}
+            formatter={(value) => [
+              typeof value === "number" ? value.toFixed(3) : String(value),
+              yField?.label ?? chart.yAxisField,
+            ]}
             labelFormatter={(v) => `${xField?.label ?? chart.xAxisField}: ${v}`}
           />
-          {/* Vertical line at current user input value */}
           {!isNaN(currentX) && (
             <ReferenceLine
               x={currentX}
-              stroke="hsl(var(--primary))"
+              stroke={colors.primary}
               strokeWidth={2}
               strokeDasharray="4 3"
-              label={{ value: "You", fill: "hsl(var(--primary))", fontSize: 11 }}
+              label={{ value: "You", fill: colors.primary, fontSize: 11 }}
             />
           )}
           <Line
             type="monotone"
             dataKey={chart.yAxisField}
-            stroke="hsl(var(--primary))"
+            stroke={colors.primary}
             strokeWidth={2.5}
             dot={false}
-            activeDot={{ r: 5, fill: "hsl(var(--primary))" }}
+            activeDot={{ r: 5, fill: colors.primary }}
           />
         </LineChart>
       </ResponsiveContainer>
