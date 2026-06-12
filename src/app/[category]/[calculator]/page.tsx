@@ -255,7 +255,7 @@ export default async function CalculatorPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               {dynamicContent.progression.map((step, i) => (
-                <div key={i} className="calc-card p-4 bg-card border border-border relative flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div key={i} className="calc-card p-4 bg-card border border-border rounded-xl relative flex flex-col justify-between hover:shadow-md transition-shadow">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-black text-primary/20 tracking-wider">{step.step}</span>
@@ -281,7 +281,7 @@ export default async function CalculatorPage({ params }: Props) {
             </p>
             <div className="space-y-3">
               {dynamicContent.powerExamples.map((ex, i) => (
-                <div key={i} className="calc-card p-5 bg-card border border-border hover:border-primary/30 transition-colors">
+                <div key={i} className="calc-card p-5 bg-card border border-border rounded-xl hover:border-primary/30 transition-colors">
                   <div className="flex items-start gap-3">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-sm font-bold text-emerald-500 dark:text-emerald-400 mt-0.5">
                       {i + 1}
