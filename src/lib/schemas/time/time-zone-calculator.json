@@ -1,0 +1,34 @@
+{
+  "id": "time-zone-calculator",
+  "slug": "time-zone-calculator",
+  "name": "Time Zone Converter",
+  "category": "time",
+  "description": "Convert any time between UTC offset zones instantly.",
+  "icon": "🌍",
+  "tags": ["time zone", "UTC", "convert time", "world time", "GMT"],
+  "fields": [
+    { "id": "hour", "label": "Hour (0-23)", "type": "number", "defaultValue": 12, "constraint": { "min": 0, "max": 23, "step": 1, "required": true } },
+    { "id": "minute", "label": "Minute", "type": "number", "defaultValue": 0, "constraint": { "min": 0, "max": 59, "step": 1, "required": true } },
+    { "id": "fromOffset", "label": "From UTC Offset (hours)", "type": "number", "defaultValue": 0, "constraint": { "min": -12, "max": 14, "step": 0.5, "required": true } },
+    { "id": "toOffset", "label": "To UTC Offset (hours)", "type": "number", "defaultValue": -5, "constraint": { "min": -12, "max": 14, "step": 0.5, "required": true } },
+    { "id": "totalMinutes", "label": "Total Minutes (internal)", "type": "computed", "precision": 0, "helpText": "Intermediate calculation" },
+    { "id": "convertedHour", "label": "Converted Hour", "type": "computed", "precision": 0, "helpText": "Result hour (24h format)" },
+    { "id": "convertedMinute", "label": "Converted Minute", "type": "computed", "precision": 0, "helpText": "Result minute" },
+    { "id": "dayOffset", "label": "Day Offset (-1=prev, 0=same, +1=next)", "type": "computed", "precision": 0, "helpText": "Whether the converted time falls on a different day" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Time & Zones", "fields": ["hour", "minute", "fromOffset", "toOffset"] },
+    { "id": "outputs", "label": "Converted Time", "fields": ["convertedHour", "convertedMinute", "dayOffset"] }
+  ],
+  "formulas": {
+    "totalMinutes": "hour * 60 + minute + (toOffset - fromOffset) * 60",
+    "convertedHour": "floor(((hour * 60 + minute + (toOffset - fromOffset) * 60) mod 1440 + 1440) mod 1440 / 60)",
+    "convertedMinute": "((hour * 60 + minute + (toOffset - fromOffset) * 60) mod 1440 + 1440) mod 1440 - floor(((hour * 60 + minute + (toOffset - fromOffset) * 60) mod 1440 + 1440) mod 1440 / 60) * 60",
+    "dayOffset": "(hour * 60 + minute + (toOffset - fromOffset) * 60) < 0 ? -1 : ((hour * 60 + minute + (toOffset - fromOffset) * 60) >= 1440 ? 1 : 0)"
+  },
+  "examples": [
+    { "label": "Noon UTC to New York (UTC-5)", "inputs": { "hour": 12, "minute": 0, "fromOffset": 0, "toOffset": -5 } },
+    { "label": "9 AM New York to London (UTC+1)", "inputs": { "hour": 9, "minute": 0, "fromOffset": -5, "toOffset": 1 } },
+    { "label": "3 PM Tokyo to LA", "inputs": { "hour": 15, "minute": 0, "fromOffset": 9, "toOffset": -7 } }
+  ]
+}

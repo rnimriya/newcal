@@ -1,0 +1,32 @@
+{
+  "id": "aspect-ratio-calculator",
+  "slug": "aspect-ratio-calculator",
+  "name": "Aspect Ratio Calculator",
+  "category": "converters",
+  "description": "Calculate aspect ratio, diagonal, and megapixels for any screen or image resolution.",
+  "icon": "📐",
+  "tags": ["aspect ratio", "resolution", "pixels", "screen size", "video", "photography"],
+  "fields": [
+    { "id": "width", "label": "Width (pixels)", "type": "number", "defaultValue": 1920, "constraint": { "min": 1, "step": 1, "required": true } },
+    { "id": "height", "label": "Height (pixels)", "type": "number", "defaultValue": 1080, "constraint": { "min": 1, "step": 1, "required": true } },
+    { "id": "ratio", "label": "Aspect Ratio (decimal)", "type": "computed", "precision": 4, "helpText": "Width divided by height" },
+    { "id": "diagonal", "label": "Diagonal (same unit)", "type": "computed", "precision": 0, "helpText": "Pythagorean diagonal" },
+    { "id": "totalPixels", "label": "Total Pixels", "type": "computed", "precision": 0, "helpText": "Width × Height" },
+    { "id": "megapixels", "label": "Megapixels", "type": "computed", "precision": 2, "helpText": "Total pixels in millions" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Resolution", "fields": ["width", "height"] },
+    { "id": "outputs", "label": "Results", "fields": ["ratio", "diagonal", "totalPixels", "megapixels"] }
+  ],
+  "formulas": {
+    "ratio": "width / height",
+    "diagonal": "sqrt(width ^ 2 + height ^ 2)",
+    "totalPixels": "width * height",
+    "megapixels": "width * height / 1000000"
+  },
+  "examples": [
+    { "label": "1080p Full HD", "inputs": { "width": 1920, "height": 1080 } },
+    { "label": "4K UHD", "inputs": { "width": 3840, "height": 2160 } },
+    { "label": "Square Instagram", "inputs": { "width": 1080, "height": 1080 } }
+  ]
+}

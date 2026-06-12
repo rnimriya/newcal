@@ -1,0 +1,38 @@
+{
+  "id": "tip-calculator",
+  "slug": "tip-calculator",
+  "name": "Tip Calculator",
+  "category": "finance",
+  "description": "Calculate restaurant tip, total bill, and split amount between people.",
+  "icon": "🍽️",
+  "tags": ["tip", "gratuity", "restaurant", "split bill", "dining"],
+  "fields": [
+    { "id": "bill", "label": "Bill Amount", "type": "number", "defaultValue": 50, "prefix": "$", "constraint": { "min": 0, "step": 1, "required": true } },
+    { "id": "tipPercent", "label": "Tip Percentage", "type": "number", "defaultValue": 18, "suffix": "%", "constraint": { "min": 0, "max": 100, "step": 1, "required": true } },
+    { "id": "split", "label": "Split Between (people)", "type": "number", "defaultValue": 1, "constraint": { "min": 1, "step": 1, "required": true } },
+    { "id": "tipAmount", "label": "Tip Amount", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Tip = Bill × Tip% / 100" },
+    { "id": "totalBill", "label": "Total Bill", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Total = Bill + Tip" },
+    { "id": "perPerson", "label": "Per Person", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Total split evenly" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Bill Details", "fields": ["bill", "tipPercent", "split"] },
+    { "id": "outputs", "label": "Results", "fields": ["tipAmount", "totalBill", "perPerson"] }
+  ],
+  "formulas": {
+    "tipAmount": "bill * tipPercent / 100",
+    "totalBill": "bill + bill * tipPercent / 100",
+    "perPerson": "(bill + bill * tipPercent / 100) / split"
+  },
+  "examples": [
+    { "label": "Dinner for 2 (18%)", "inputs": { "bill": 80, "tipPercent": 18, "split": 2 } },
+    { "label": "Group of 4 (20%)", "inputs": { "bill": 160, "tipPercent": 20, "split": 4 } },
+    { "label": "Solo lunch (15%)", "inputs": { "bill": 25, "tipPercent": 15, "split": 1 } }
+  ],
+  "chart": {
+    "xAxisField": "tipPercent",
+    "yAxisField": "tipAmount",
+    "xRange": [0, 30],
+    "points": 30,
+    "label": "Tip Amount by Percentage"
+  }
+}

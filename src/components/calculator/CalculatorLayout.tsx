@@ -13,16 +13,20 @@ import { getCategoryTheme } from "./theme";
 import { CrossLinks } from "./CrossLinks";
 import { ComparisonMode } from "./ComparisonMode";
 import { BatchProcessor } from "./BatchProcessor";
-import { Breadcrumb } from "./Breadcrumb";
 
 const YouTubeSection = dynamic(
   () => import("./YouTubeSection").then((m) => m.YouTubeSection),
   {
     ssr: false,
     loading: () => (
-      <div className="rounded-2xl border border-border bg-card h-48 animate-pulse" />
+      <div className="rounded-2xl border border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-800 h-48 animate-pulse" />
     ),
   }
+);
+
+const FormulaChart = dynamic(
+  () => import("@/components/charts/FormulaChart").then((m) => m.FormulaChart),
+  { ssr: false, loading: () => null }
 );
 
 interface Props {
@@ -58,15 +62,10 @@ export function CalculatorLayout({ schema }: Props) {
     }
   }
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const calculatorState = useCalculator(schema, {
     initialValues,
     slug: schema.slug,
-    preferredUnits: mounted ? filteredPreferredUnits : {},
+    preferredUnits: filteredPreferredUnits,
   });
   const theme = getCategoryTheme(schema.category);
 
@@ -76,20 +75,22 @@ export function CalculatorLayout({ schema }: Props) {
       <div className="flex flex-wrap items-center gap-2">
         <button
           onClick={() => { setShowComparison((v) => !v); setShowBatch(false); }}
-          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-base font-bold transition-all cursor-pointer ${showComparison
-            ? `${theme.buttonAccent} border-transparent`
-            : `border-border text-muted-foreground hover:bg-secondary`
-            }`}
+          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+            showComparison
+              ? `${theme.buttonAccent} border-transparent`
+              : `border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800`
+          }`}
         >
           <Columns2 size={13} />
           Compare
         </button>
         <button
           onClick={() => { setShowBatch((v) => !v); setShowComparison(false); }}
-          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-base font-bold transition-all cursor-pointer ${showBatch
-            ? `${theme.buttonAccent} border-transparent`
-            : `border-border text-muted-foreground hover:bg-secondary`
-            }`}
+          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+            showBatch
+              ? `${theme.buttonAccent} border-transparent`
+              : `border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800`
+          }`}
         >
           <TableProperties size={13} />
           Batch
@@ -114,6 +115,11 @@ export function CalculatorLayout({ schema }: Props) {
           <ExplanationPanel schema={schema} fields={calculatorState.fields} theme={theme} />
         </div>
       </div>
+
+      {/* Chart visualization */}
+      {schema.chart && (
+        <FormulaChart schema={schema} fields={calculatorState.fields} />
+      )}
 
       {/* Bottom: Infographic + YouTube */}
       <div className={`${isMobile ? "flex flex-col gap-6" : "grid grid-cols-2 gap-6"}`}>
@@ -161,7 +167,6 @@ const MemoizedFieldEntry = memo(function FieldEntry({
   setUnit,
   theme,
   isMobile,
-  compact,
 }: {
   field: CalculatorField;
   state: FieldState;
@@ -169,7 +174,6 @@ const MemoizedFieldEntry = memo(function FieldEntry({
   setUnit: (id: string, u: string) => void;
   theme: CategoryTheme;
   isMobile: boolean;
-  compact?: boolean;
 }) {
   const onValueChange = useCallback((v: string) => setValue(field.id, v), [field.id, setValue]);
   const onUnitChange = useCallback((u: string) => setUnit(field.id, u), [field.id, setUnit]);
@@ -181,7 +185,6 @@ const MemoizedFieldEntry = memo(function FieldEntry({
       onUnitChange={onUnitChange}
       theme={theme}
       isMobile={isMobile}
-      compact={compact}
     />
   );
 });
@@ -189,9 +192,7 @@ const MemoizedFieldEntry = memo(function FieldEntry({
 function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredUnit }: ConnectedProps) {
   const { fields, setValue, setUnit, loadExample, reset } = state;
   const { savedCalculators, saveCalculator, removeCalculator, addHistoryEntry } = useCalcStore();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const isSaved = mounted && savedCalculators.includes(schema.slug);
+  const isSaved = savedCalculators.includes(schema.slug);
   const [showHistory, setShowHistory] = useState(false);
   const [solveTarget, setSolveTarget] = useState<string | null>(null);
 
@@ -266,67 +267,80 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className={`rounded-2xl border border-border p-5 sm:p-6 bg-card shadow-sm transition-all relative`}>
-        <div className="flex flex-col items-start gap-4 relative z-20">
-          <div className="flex flex-col gap-1 w-full">
-            <h1 className="font-extrabold text-foreground text-2xl sm:text-3xl leading-tight">
+      {/* Header card */}
+      <div className={`rounded-2xl border-none p-6 sm:p-8 text-white shadow-xl shadow-indigo-500/10 bg-gradient-to-br ${theme.heroGradient} transition-all relative overflow-hidden`}>
+        {/* Abstract shape background */}
+        <div className="absolute top-0 right-0 -mt-8 -mr-8 opacity-[0.15] pointer-events-none mix-blend-overlay">
+          <CalculatorIcon slug={schema.slug} category={schema.category} size={180} />
+        </div>
+
+        <div className="flex items-start gap-4 relative z-10">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-md shadow-sm border border-white/20">
+            <CalculatorIcon slug={schema.slug} category={schema.category} size={32} />
+          </div>
+          <div>
+            <h1 className="font-extrabold text-white text-2xl sm:text-3xl leading-tight drop-shadow-sm">
               {schema.name}
             </h1>
-            <p className="text-base sm:text-base text-muted-foreground mt-1 mb-2 leading-relaxed font-medium">
+            <p className="text-sm sm:text-base text-white/90 mt-1.5 leading-relaxed font-medium max-w-2xl drop-shadow-sm">
               {schema.description}
             </p>
-            <div className="flex flex-wrap items-center justify-start gap-1 text-muted-foreground shrink-0 mt-1 -ml-2">
-              <ShareButton
-                slug={schema.slug}
-                category={schema.category}
-                fields={fields}
-                schema={schema}
-              />
-              <ExportButton schema={schema} fields={fields} theme={theme} />
-              <button
-                onClick={() => isSaved ? removeCalculator(schema.slug) : saveCalculator(schema.slug)}
-                className="rounded-xl p-2 hover:bg-secondary transition-all duration-200 active:scale-90 cursor-pointer"
-                title={isSaved ? "Saved" : "Save Calculator"}
-              >
-                {isSaved ? <BookmarkCheck size={19} /> : <Bookmark size={19} />}
-              </button>
-              <button
-                onClick={() => setShowHistory((v) => !v)}
-                className={`rounded-xl p-2 transition-all duration-200 active:scale-90 cursor-pointer ${showHistory
-                  ? "bg-secondary text-foreground"
-                  : "hover:bg-secondary"
-                  }`}
-                title="Calculation History"
-              >
-                <History size={19} />
-              </button>
-              <button
-                onClick={reset}
-                className="rounded-xl p-2 hover:bg-secondary transition-all duration-200 active:scale-90 cursor-pointer"
-                title="Reset Fields"
-              >
-                <RotateCcw size={19} />
-              </button>
-            </div>
           </div>
         </div>
 
-        {schema.examples && schema.examples.length > 0 && (
-          <div className="mt-6 flex flex-wrap items-center gap-4 pt-4 border-t border-border relative z-10">
-            <div className="flex flex-wrap gap-2 min-h-[36px]">
-              <span className="text-base text-muted-foreground self-center font-bold tracking-wide uppercase">Examples:</span>
-              {schema.examples.map((ex) => (
-                <button
-                  key={ex.label}
-                  onClick={() => loadExample(ex.inputs)}
-                  className="rounded-md border border-border bg-secondary px-3 py-0 text-base font-bold text-secondary-foreground hover:bg-muted transition-all cursor-pointer shadow-sm text-xs"
-                >
-                  {ex.label}
-                </button>
-              ))}
-            </div>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/20 relative z-10">
+          <div className="flex flex-wrap gap-2 min-h-[36px]">
+            {schema.examples && schema.examples.length > 0 && (
+              <>
+                <span className="text-xs text-white/80 self-center font-bold tracking-wide uppercase">Examples:</span>
+                {schema.examples.map((ex) => (
+                  <button
+                    key={ex.label}
+                    onClick={() => loadExample(ex.inputs)}
+                    className="rounded-xl border border-white/20 bg-black/10 backdrop-blur-md px-3 py-1.5 text-xs font-bold text-white hover:bg-white hover:text-slate-900 transition-all cursor-pointer shadow-sm"
+                  >
+                    {ex.label}
+                  </button>
+                ))}
+              </>
+            )}
           </div>
-        )}
+
+          <div className="flex items-center gap-1 shrink-0 ml-auto text-white/90">
+            <ShareButton
+              slug={schema.slug}
+              category={schema.category}
+              fields={fields}
+              schema={schema}
+            />
+            <ExportButton schema={schema} fields={fields} theme={theme} />
+            <button
+              onClick={() => isSaved ? removeCalculator(schema.slug) : saveCalculator(schema.slug)}
+              className="rounded-xl p-2 hover:bg-white/20 transition-all duration-200 active:scale-90 cursor-pointer"
+              title={isSaved ? "Saved" : "Save Calculator"}
+            >
+              {isSaved ? <BookmarkCheck size={19} className="text-white" /> : <Bookmark size={19} />}
+            </button>
+            <button
+              onClick={() => setShowHistory((v) => !v)}
+              className={`rounded-xl p-2 transition-all duration-200 active:scale-90 cursor-pointer ${
+                showHistory
+                  ? "bg-white text-slate-900"
+                  : "hover:bg-white/20"
+              }`}
+              title="Calculation History"
+            >
+              <History size={19} />
+            </button>
+            <button
+              onClick={reset}
+              className="rounded-xl p-2 hover:bg-white/20 transition-all duration-200 active:scale-90 cursor-pointer"
+              title="Reset Fields"
+            >
+              <RotateCcw size={19} />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Solve-for selector */}
@@ -344,12 +358,12 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
         return (
           <div
             key={group.id}
-            className={`rounded-2xl border border-border bg-card p-5 shadow-sm transition-all ${theme.glowShadow}`}
+            className={`rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}
           >
-            <h2 className={`mb-4 text-base font-black uppercase tracking-wider border-b border-border pb-2 ${theme.textAccent}`}>
+            <h2 className={`mb-4 text-xs font-black uppercase tracking-wider border-b border-zinc-100 pb-2 dark:border-zinc-800 ${theme.textAccent}`}>
               {group.label}
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-5">
               {groupFields.map((field) => {
                 const fieldState = fields[field.id];
                 if (!fieldState) return null;
@@ -362,7 +376,6 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
                     setUnit={setUnitAndPersist}
                     theme={theme}
                     isMobile={isMobile}
-                    compact
                   />
                 );
               })}

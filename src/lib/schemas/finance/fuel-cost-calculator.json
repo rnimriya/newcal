@@ -1,0 +1,40 @@
+{
+  "id": "fuel-cost-calculator",
+  "slug": "fuel-cost-calculator",
+  "name": "Fuel Cost Calculator",
+  "category": "finance",
+  "description": "Calculate total fuel cost and cost per mile for any road trip.",
+  "icon": "⛽",
+  "tags": ["fuel cost", "gas mileage", "mpg", "road trip", "travel cost"],
+  "fields": [
+    { "id": "distance", "label": "Distance (miles)", "type": "number", "defaultValue": 300, "constraint": { "min": 0, "step": 10, "required": true } },
+    { "id": "mpg", "label": "Fuel Efficiency (MPG)", "type": "number", "defaultValue": 30, "constraint": { "min": 1, "step": 1, "required": true } },
+    { "id": "gasPrice", "label": "Gas Price ($/gallon)", "type": "number", "defaultValue": 3.50, "prefix": "$", "constraint": { "min": 0, "step": 0.01, "required": true } },
+    { "id": "gallonsNeeded", "label": "Gallons Needed", "type": "computed", "precision": 2, "helpText": "Total fuel required" },
+    { "id": "totalCost", "label": "Total Fuel Cost", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Total cost of fuel for the trip" },
+    { "id": "costPerMile", "label": "Cost Per Mile", "type": "computed", "precision": 3, "prefix": "$", "helpText": "Fuel cost per mile driven" },
+    { "id": "costPerKm", "label": "Cost Per Km", "type": "computed", "precision": 3, "prefix": "$", "helpText": "Fuel cost per kilometer driven" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Trip Details", "fields": ["distance", "mpg", "gasPrice"] },
+    { "id": "outputs", "label": "Cost Breakdown", "fields": ["gallonsNeeded", "totalCost", "costPerMile", "costPerKm"] }
+  ],
+  "formulas": {
+    "gallonsNeeded": "distance / mpg",
+    "totalCost": "distance / mpg * gasPrice",
+    "costPerMile": "gasPrice / mpg",
+    "costPerKm": "gasPrice / mpg / 1.60934"
+  },
+  "examples": [
+    { "label": "300-mile road trip, 30 MPG", "inputs": { "distance": 300, "mpg": 30, "gasPrice": 3.50 } },
+    { "label": "Cross-country 2800 miles, 25 MPG", "inputs": { "distance": 2800, "mpg": 25, "gasPrice": 3.75 } },
+    { "label": "Daily commute 40 miles, 35 MPG", "inputs": { "distance": 40, "mpg": 35, "gasPrice": 3.25 } }
+  ],
+  "chart": {
+    "xAxisField": "distance",
+    "yAxisField": "totalCost",
+    "xRange": [0, 1000],
+    "points": 20,
+    "label": "Fuel Cost by Distance"
+  }
+}

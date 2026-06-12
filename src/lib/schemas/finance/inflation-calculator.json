@@ -1,0 +1,38 @@
+{
+  "id": "inflation-calculator",
+  "slug": "inflation-calculator",
+  "name": "Inflation Calculator",
+  "category": "finance",
+  "description": "Calculate the future value of money and purchasing power lost to inflation.",
+  "icon": "📈",
+  "tags": ["inflation", "CPI", "purchasing power", "cost of living", "money"],
+  "fields": [
+    { "id": "amount", "label": "Original Amount", "type": "number", "defaultValue": 1000, "prefix": "$", "constraint": { "min": 0, "step": 100, "required": true } },
+    { "id": "inflationRate", "label": "Annual Inflation Rate", "type": "number", "defaultValue": 3.5, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.1, "required": true } },
+    { "id": "years", "label": "Number of Years", "type": "number", "defaultValue": 10, "constraint": { "min": 1, "max": 100, "step": 1, "required": true } },
+    { "id": "futureValue", "label": "Future Equivalent Amount", "type": "computed", "precision": 2, "prefix": "$", "helpText": "How much you'd need in the future" },
+    { "id": "purchasingPowerLost", "label": "Purchasing Power Lost", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Value eroded by inflation" },
+    { "id": "realValueToday", "label": "Today's $ for Same Value", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Present value of future amount" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Parameters", "fields": ["amount", "inflationRate", "years"] },
+    { "id": "outputs", "label": "Results", "fields": ["futureValue", "purchasingPowerLost", "realValueToday"] }
+  ],
+  "formulas": {
+    "futureValue": "amount * (1 + inflationRate / 100) ^ years",
+    "purchasingPowerLost": "amount * (1 + inflationRate / 100) ^ years - amount",
+    "realValueToday": "amount / (1 + inflationRate / 100) ^ years"
+  },
+  "examples": [
+    { "label": "$1,000 at 3.5% for 10 years", "inputs": { "amount": 1000, "inflationRate": 3.5, "years": 10 } },
+    { "label": "$50,000 salary in 20 years", "inputs": { "amount": 50000, "inflationRate": 3, "years": 20 } },
+    { "label": "High inflation scenario", "inputs": { "amount": 10000, "inflationRate": 8, "years": 5 } }
+  ],
+  "chart": {
+    "xAxisField": "years",
+    "yAxisField": "futureValue",
+    "xRange": [0, 30],
+    "points": 30,
+    "label": "Inflation Impact Over Time"
+  }
+}

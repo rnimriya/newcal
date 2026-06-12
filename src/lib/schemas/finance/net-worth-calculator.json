@@ -1,0 +1,38 @@
+{
+  "id": "net-worth-calculator",
+  "slug": "net-worth-calculator",
+  "name": "Net Worth Calculator",
+  "category": "finance",
+  "description": "Calculate your total net worth by subtracting all liabilities from your assets.",
+  "icon": "💎",
+  "tags": ["net worth", "personal finance", "assets", "liabilities", "wealth"],
+  "fields": [
+    { "id": "cash", "label": "Cash & Savings", "type": "number", "defaultValue": 5000, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "investments", "label": "Investments (stocks, 401k)", "type": "number", "defaultValue": 20000, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "realEstate", "label": "Real Estate Value", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 1000 } },
+    { "id": "vehicles", "label": "Vehicles", "type": "number", "defaultValue": 10000, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "otherAssets", "label": "Other Assets", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "mortgage", "label": "Mortgage Balance", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 1000 } },
+    { "id": "carLoan", "label": "Car Loan Balance", "type": "number", "defaultValue": 5000, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "creditCards", "label": "Credit Card Debt", "type": "number", "defaultValue": 2000, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "studentLoans", "label": "Student Loans", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "otherDebts", "label": "Other Debts", "type": "number", "defaultValue": 0, "prefix": "$", "constraint": { "min": 0, "step": 100 } },
+    { "id": "totalAssets", "label": "Total Assets", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Sum of all assets" },
+    { "id": "totalLiabilities", "label": "Total Liabilities", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Sum of all debts" },
+    { "id": "netWorth", "label": "Net Worth", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Assets minus liabilities" }
+  ],
+  "groups": [
+    { "id": "assets", "label": "Assets", "fields": ["cash", "investments", "realEstate", "vehicles", "otherAssets"] },
+    { "id": "liabilities", "label": "Liabilities", "fields": ["mortgage", "carLoan", "creditCards", "studentLoans", "otherDebts"] },
+    { "id": "outputs", "label": "Net Worth Summary", "fields": ["totalAssets", "totalLiabilities", "netWorth"] }
+  ],
+  "formulas": {
+    "totalAssets": "cash + investments + realEstate + vehicles + otherAssets",
+    "totalLiabilities": "mortgage + carLoan + creditCards + studentLoans + otherDebts",
+    "netWorth": "cash + investments + realEstate + vehicles + otherAssets - mortgage - carLoan - creditCards - studentLoans - otherDebts"
+  },
+  "examples": [
+    { "label": "Young professional", "inputs": { "cash": 5000, "investments": 20000, "realEstate": 0, "vehicles": 10000, "otherAssets": 0, "mortgage": 0, "carLoan": 5000, "creditCards": 2000, "studentLoans": 30000, "otherDebts": 0 } },
+    { "label": "Homeowner", "inputs": { "cash": 20000, "investments": 100000, "realEstate": 350000, "vehicles": 25000, "otherAssets": 5000, "mortgage": 250000, "carLoan": 10000, "creditCards": 3000, "studentLoans": 0, "otherDebts": 0 } }
+  ]
+}

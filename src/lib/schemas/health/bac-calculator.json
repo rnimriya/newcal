@@ -1,0 +1,39 @@
+{
+  "id": "bac-calculator",
+  "slug": "bac-calculator",
+  "name": "Blood Alcohol Content (BAC) Calculator",
+  "category": "health",
+  "description": "Estimate your blood alcohol content (BAC) using the Widmark formula. For informational purposes only. Never drink and drive.",
+  "icon": "🍺",
+  "tags": ["bac", "blood alcohol", "drunk driving", "alcohol", "drinking"],
+  "fields": [
+    { "id": "drinks", "label": "Standard Drinks (14g alcohol each)", "type": "number", "defaultValue": 2, "constraint": { "min": 0, "step": 0.5, "required": true } },
+    { "id": "hours", "label": "Hours Drinking", "type": "number", "defaultValue": 2, "constraint": { "min": 0, "step": 0.5, "required": true } },
+    { "id": "weight", "label": "Body Weight (lbs)", "type": "number", "defaultValue": 160, "constraint": { "min": 50, "step": 1, "required": true } },
+    {
+      "id": "genderFactor",
+      "label": "Biological Sex",
+      "type": "select",
+      "defaultValue": 0.73,
+      "selectOptions": [
+        { "label": "Male", "value": 0.73 },
+        { "label": "Female", "value": 0.66 }
+      ]
+    },
+    { "id": "bac", "label": "BAC Level (%)", "type": "computed", "precision": 3, "helpText": "Blood alcohol concentration (Widmark formula)" },
+    { "id": "hoursSober", "label": "Hours Until Sober", "type": "computed", "precision": 1, "helpText": "Estimated time until BAC reaches 0" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Drinking Details", "fields": ["drinks", "hours", "weight", "genderFactor"] },
+    { "id": "outputs", "label": "Results", "fields": ["bac", "hoursSober"] }
+  ],
+  "formulas": {
+    "bac": "max(0, (drinks * 14) / (weight * 453.592 * genderFactor / 1000) - 0.015 * hours)",
+    "hoursSober": "max(0, ((drinks * 14) / (weight * 453.592 * genderFactor / 1000) - 0.015 * hours) / 0.015)"
+  },
+  "examples": [
+    { "label": "2 drinks, 160 lb male, 1 hour", "inputs": { "drinks": 2, "hours": 1, "weight": 160, "genderFactor": 0.73 } },
+    { "label": "3 drinks, 130 lb female, 2 hours", "inputs": { "drinks": 3, "hours": 2, "weight": 130, "genderFactor": 0.66 } },
+    { "label": "4 drinks, 180 lb male, 3 hours", "inputs": { "drinks": 4, "hours": 3, "weight": 180, "genderFactor": 0.73 } }
+  ]
+}

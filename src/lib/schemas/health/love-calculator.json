@@ -1,0 +1,29 @@
+{
+  "id": "love-calculator",
+  "slug": "love-calculator",
+  "name": "Love Calculator",
+  "category": "health",
+  "description": "A fun personality compatibility tool for entertainment purposes only!",
+  "icon": "❤️",
+  "tags": ["love calculator", "compatibility", "romance", "fun", "numerology", "birthday"],
+  "fields": [
+    { "id": "yourDay", "label": "Your Birth Day", "type": "number", "defaultValue": 1, "constraint": { "min": 1, "max": 31, "step": 1, "required": true } },
+    { "id": "yourMonth", "label": "Your Birth Month", "type": "number", "defaultValue": 6, "constraint": { "min": 1, "max": 12, "step": 1, "required": true } },
+    { "id": "partnerDay", "label": "Partner's Birth Day", "type": "number", "defaultValue": 14, "constraint": { "min": 1, "max": 31, "step": 1, "required": true } },
+    { "id": "partnerMonth", "label": "Partner's Birth Month", "type": "number", "defaultValue": 2, "constraint": { "min": 1, "max": 12, "step": 1, "required": true } },
+    { "id": "compatibility", "label": "Compatibility Score (%)", "type": "computed", "precision": 0, "helpText": "Fun compatibility score (for entertainment only)" },
+    { "id": "lifePathSum", "label": "Numerology Sum", "type": "computed", "precision": 0, "helpText": "Sum of all birthday numbers" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Birth Dates", "fields": ["yourDay", "yourMonth", "partnerDay", "partnerMonth"] },
+    { "id": "outputs", "label": "Results", "fields": ["compatibility", "lifePathSum"] }
+  ],
+  "formulas": {
+    "compatibility": "abs(sin((yourDay + partnerDay + yourMonth * 3 + partnerMonth * 7) * 0.314159)) * 100",
+    "lifePathSum": "yourDay + yourMonth + partnerDay + partnerMonth"
+  },
+  "examples": [
+    { "label": "June 1 & Feb 14", "inputs": { "yourDay": 1, "yourMonth": 6, "partnerDay": 14, "partnerMonth": 2 } },
+    { "label": "Dec 25 & July 4", "inputs": { "yourDay": 25, "yourMonth": 12, "partnerDay": 4, "partnerMonth": 7 } }
+  ]
+}

@@ -11,10 +11,11 @@ import { usePWA } from "@/lib/hooks/usePWA";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { installPrompt, isInstalled, isOffline, triggerInstall } = usePWA();
   const [isMobileOrPWA, setIsMobileOrPWA] = useState(false);
+  const [isEmbed, setIsEmbed] = useState(false);
 
   useEffect(() => {
     const check = () => {
-      const isPWA = window.matchMedia("(display-mode: standalone)").matches;
+      const isPWA    = window.matchMedia("(display-mode: standalone)").matches;
       const isMobile = window.innerWidth < 768;
       setIsMobileOrPWA(isPWA || isMobile);
     };
@@ -23,29 +24,34 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  useEffect(() => {
+    setIsEmbed(new URLSearchParams(window.location.search).get('embed') === '1');
+  }, []);
+
   return (
-    <div className="min-h-screen">
-      <OfflineBanner show={isOffline} />
+    <div className="min-h-screen bg-page">
+      {!isEmbed && <OfflineBanner show={isOffline} />}
 
       {/* Desktop header */}
-      {!isMobileOrPWA && <Header />}
+      {!isMobileOrPWA && !isEmbed && <Header />}
 
       {/* Main content */}
       <main
-        className={`mx-auto max-w-7xl w-full px-4 sm:px-6 ${isMobileOrPWA ? "pb-24 pt-5" : "py-3"
-          }`}
+        className={isEmbed ? "px-4 py-3" : `mx-auto max-w-7xl px-4 sm:px-6 ${
+          isMobileOrPWA ? "pb-24 pt-5" : "py-8"
+        }`}
       >
         {children}
       </main>
 
       {/* Footer */}
-      <Footer />
+      {!isEmbed && <Footer />}
 
       {/* Mobile bottom nav */}
-      {isMobileOrPWA && <BottomNav />}
+      {isMobileOrPWA && !isEmbed && <BottomNav />}
 
       {/* PWA install prompt */}
-      {!isInstalled && (
+      {!isInstalled && !isEmbed && (
         <InstallPrompt show={installPrompt} onInstall={triggerInstall} />
       )}
     </div>

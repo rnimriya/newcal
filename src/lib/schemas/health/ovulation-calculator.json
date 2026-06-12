@@ -1,0 +1,32 @@
+{
+  "id": "ovulation-calculator",
+  "slug": "ovulation-calculator",
+  "name": "Ovulation Calculator",
+  "category": "health",
+  "description": "Calculate your ovulation day and fertile window based on your average cycle length.",
+  "icon": "🌸",
+  "tags": ["ovulation", "fertility", "cycle", "period", "conception", "women's health"],
+  "fields": [
+    { "id": "cycleLength", "label": "Average Cycle Length (days)", "type": "number", "defaultValue": 28, "constraint": { "min": 21, "max": 45, "step": 1, "required": true } },
+    { "id": "lutealPhase", "label": "Luteal Phase Length (days)", "type": "number", "defaultValue": 14, "constraint": { "min": 10, "max": 16, "step": 1, "required": true } },
+    { "id": "ovulationDay", "label": "Ovulation Day", "type": "computed", "precision": 0, "helpText": "Days after period start" },
+    { "id": "fertileStart", "label": "Fertile Window Starts (day)", "type": "computed", "precision": 0, "helpText": "Fertile window begins" },
+    { "id": "fertileEnd", "label": "Fertile Window Ends (day)", "type": "computed", "precision": 0, "helpText": "Fertile window ends" },
+    { "id": "nextPeriodDay", "label": "Next Period (day)", "type": "computed", "precision": 0, "helpText": "Expected next period" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Cycle Details", "fields": ["cycleLength", "lutealPhase"] },
+    { "id": "outputs", "label": "Results (days from period start)", "fields": ["ovulationDay", "fertileStart", "fertileEnd", "nextPeriodDay"] }
+  ],
+  "formulas": {
+    "ovulationDay": "cycleLength - lutealPhase",
+    "fertileStart": "cycleLength - lutealPhase - 5",
+    "fertileEnd": "cycleLength - lutealPhase + 1",
+    "nextPeriodDay": "cycleLength"
+  },
+  "examples": [
+    { "label": "28-day cycle (typical)", "inputs": { "cycleLength": 28, "lutealPhase": 14 } },
+    { "label": "32-day cycle", "inputs": { "cycleLength": 32, "lutealPhase": 14 } },
+    { "label": "24-day cycle (short)", "inputs": { "cycleLength": 24, "lutealPhase": 12 } }
+  ]
+}

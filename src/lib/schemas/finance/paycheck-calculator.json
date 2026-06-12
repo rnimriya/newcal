@@ -1,0 +1,51 @@
+{
+  "id": "paycheck-calculator",
+  "slug": "paycheck-calculator",
+  "name": "Paycheck Calculator",
+  "category": "finance",
+  "description": "Calculate your take-home pay after federal, state, and FICA taxes.",
+  "icon": "💵",
+  "tags": ["paycheck", "take-home pay", "salary", "net pay", "taxes", "withholding"],
+  "fields": [
+    { "id": "grossAnnual", "label": "Annual Gross Salary", "type": "number", "defaultValue": 60000, "prefix": "$", "constraint": { "min": 0, "step": 1000, "required": true } },
+    { "id": "federalRate", "label": "Federal Income Tax Rate", "type": "number", "defaultValue": 22, "suffix": "%", "constraint": { "min": 0, "max": 50, "step": 0.5, "required": true } },
+    { "id": "stateRate", "label": "State Income Tax Rate", "type": "number", "defaultValue": 5, "suffix": "%", "constraint": { "min": 0, "max": 20, "step": 0.5, "required": true } },
+    {
+      "id": "payPeriods",
+      "label": "Pay Frequency",
+      "type": "select",
+      "defaultValue": 26,
+      "selectOptions": [
+        { "label": "Weekly (52/yr)", "value": 52 },
+        { "label": "Bi-Weekly (26/yr)", "value": 26 },
+        { "label": "Semi-Monthly (24/yr)", "value": 24 },
+        { "label": "Monthly (12/yr)", "value": 12 }
+      ]
+    },
+    { "id": "grossPerPeriod", "label": "Gross Pay Per Period", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Pre-tax paycheck amount" },
+    { "id": "federalTax", "label": "Federal Tax Withheld", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Federal income tax per paycheck" },
+    { "id": "stateTax", "label": "State Tax Withheld", "type": "computed", "precision": 2, "prefix": "$", "helpText": "State income tax per paycheck" },
+    { "id": "socialSecurity", "label": "Social Security (6.2%)", "type": "computed", "precision": 2, "prefix": "$", "helpText": "FICA Social Security deduction" },
+    { "id": "medicare", "label": "Medicare (1.45%)", "type": "computed", "precision": 2, "prefix": "$", "helpText": "FICA Medicare deduction" },
+    { "id": "netPay", "label": "Net Take-Home Pay", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Your actual paycheck" },
+    { "id": "annualNet", "label": "Annual Take-Home Pay", "type": "computed", "precision": 2, "prefix": "$", "helpText": "Total annual net pay" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Salary & Tax Details", "fields": ["grossAnnual", "federalRate", "stateRate", "payPeriods"] },
+    { "id": "outputs", "label": "Paycheck Breakdown", "fields": ["grossPerPeriod", "federalTax", "stateTax", "socialSecurity", "medicare", "netPay", "annualNet"] }
+  ],
+  "formulas": {
+    "grossPerPeriod": "grossAnnual / payPeriods",
+    "federalTax": "grossAnnual / payPeriods * federalRate / 100",
+    "stateTax": "grossAnnual / payPeriods * stateRate / 100",
+    "socialSecurity": "grossAnnual / payPeriods * 0.062",
+    "medicare": "grossAnnual / payPeriods * 0.0145",
+    "netPay": "grossAnnual / payPeriods - grossAnnual / payPeriods * federalRate / 100 - grossAnnual / payPeriods * stateRate / 100 - grossAnnual / payPeriods * 0.062 - grossAnnual / payPeriods * 0.0145",
+    "annualNet": "(grossAnnual / payPeriods - grossAnnual / payPeriods * federalRate / 100 - grossAnnual / payPeriods * stateRate / 100 - grossAnnual / payPeriods * 0.062 - grossAnnual / payPeriods * 0.0145) * payPeriods"
+  },
+  "examples": [
+    { "label": "$60k salary, bi-weekly", "inputs": { "grossAnnual": 60000, "federalRate": 22, "stateRate": 5, "payPeriods": 26 } },
+    { "label": "$100k salary, monthly", "inputs": { "grossAnnual": 100000, "federalRate": 24, "stateRate": 6, "payPeriods": 12 } },
+    { "label": "$40k salary, weekly", "inputs": { "grossAnnual": 40000, "federalRate": 12, "stateRate": 3, "payPeriods": 52 } }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "dog-age-calculator",
+  "slug": "dog-age-calculator",
+  "name": "Dog Age Calculator",
+  "category": "health",
+  "description": "Convert your dog's age to human years based on size and age.",
+  "icon": "🐕",
+  "tags": ["dog age", "pet age", "dog years", "human years", "pet care"],
+  "fields": [
+    { "id": "dogAge", "label": "Dog's Age (years)", "type": "number", "defaultValue": 3, "constraint": { "min": 0, "max": 25, "step": 0.5, "required": true } },
+    {
+      "id": "sizeFactor",
+      "label": "Dog Size",
+      "type": "select",
+      "defaultValue": 1,
+      "selectOptions": [
+        { "label": "Small (<20 lbs)", "value": 1 },
+        { "label": "Medium (20-50 lbs)", "value": 1.1 },
+        { "label": "Large (50-90 lbs)", "value": 1.2 },
+        { "label": "Giant (>90 lbs)", "value": 1.35 }
+      ]
+    },
+    { "id": "humanAge", "label": "Human Age Equivalent", "type": "computed", "precision": 0, "helpText": "Approximate human age equivalent" },
+    { "id": "lifeStage", "label": "Life Stage (1=Puppy, 2=Adult, 3=Senior, 4=Geriatric)", "type": "computed", "precision": 0, "helpText": "Dog's life stage" }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Dog Details", "fields": ["dogAge", "sizeFactor"] },
+    { "id": "outputs", "label": "Results", "fields": ["humanAge", "lifeStage"] }
+  ],
+  "formulas": {
+    "humanAge": "dogAge <= 2 ? (dogAge * 12 * sizeFactor) : (24 + (dogAge - 2) * 5 * sizeFactor)",
+    "lifeStage": "(dogAge <= 2 ? (dogAge * 12 * sizeFactor) : (24 + (dogAge - 2) * 5 * sizeFactor)) < 18 ? 1 : ((dogAge <= 2 ? (dogAge * 12 * sizeFactor) : (24 + (dogAge - 2) * 5 * sizeFactor)) < 40 ? 2 : ((dogAge <= 2 ? (dogAge * 12 * sizeFactor) : (24 + (dogAge - 2) * 5 * sizeFactor)) < 60 ? 3 : 4))"
+  },
+  "examples": [
+    { "label": "3-year small dog", "inputs": { "dogAge": 3, "sizeFactor": 1 } },
+    { "label": "7-year large dog", "inputs": { "dogAge": 7, "sizeFactor": 1.2 } },
+    { "label": "1-year giant breed", "inputs": { "dogAge": 1, "sizeFactor": 1.35 } }
+  ]
+}
