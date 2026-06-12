@@ -19,6 +19,7 @@ export interface CategoryTheme {
   buttonAccent: string;
   problemBadge: string;
   mathBlock: string;
+  heroGradient: string;
 }
 
 export const THEMES: Record<string, CategoryTheme> = {
@@ -41,6 +42,7 @@ export const THEMES: Record<string, CategoryTheme> = {
     buttonAccent: "bg-violet-600 hover:bg-violet-700 text-white dark:bg-violet-500 dark:hover:bg-violet-600",
     problemBadge: "bg-violet-50 dark:bg-violet-950/40 text-violet-600 dark:text-violet-400",
     mathBlock: "bg-violet-50/50 border-l-4 border-violet-500 text-violet-700 dark:bg-violet-950/20 dark:text-violet-300 dark:border-violet-400",
+    heroGradient: "from-violet-600 via-fuchsia-600 to-orange-600",
   },
   algebra: {
     primary: "violet",
@@ -61,6 +63,7 @@ export const THEMES: Record<string, CategoryTheme> = {
     buttonAccent: "bg-violet-600 hover:bg-violet-700 text-white dark:bg-violet-500 dark:hover:bg-violet-600",
     problemBadge: "bg-violet-50 dark:bg-violet-950/40 text-violet-600 dark:text-violet-400",
     mathBlock: "bg-violet-50/50 border-l-4 border-violet-500 text-violet-700 dark:bg-violet-950/20 dark:text-violet-300 dark:border-violet-400",
+    heroGradient: "from-blue-600 via-cyan-600 to-teal-500",
   },
   physics: {
     primary: "teal",
@@ -81,6 +84,7 @@ export const THEMES: Record<string, CategoryTheme> = {
     buttonAccent: "bg-teal-600 hover:bg-teal-700 text-white dark:bg-teal-500 dark:hover:bg-teal-600",
     problemBadge: "bg-teal-50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400",
     mathBlock: "bg-teal-50/50 border-l-4 border-teal-500 text-teal-700 dark:bg-teal-950/20 dark:text-teal-300 dark:border-teal-400",
+    heroGradient: "from-sky-500 via-blue-600 to-indigo-600",
   },
   converters: {
     primary: "amber",
@@ -101,6 +105,7 @@ export const THEMES: Record<string, CategoryTheme> = {
     buttonAccent: "bg-amber-600 hover:bg-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600",
     problemBadge: "bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400",
     mathBlock: "bg-amber-50/50 border-l-4 border-amber-500 text-amber-700 dark:bg-amber-950/20 dark:text-amber-300 dark:border-amber-400",
+    heroGradient: "from-amber-500 via-orange-500 to-rose-500",
   },
   statistics: {
     primary: "rose",
@@ -121,6 +126,7 @@ export const THEMES: Record<string, CategoryTheme> = {
     buttonAccent: "bg-rose-600 hover:bg-rose-700 text-white dark:bg-rose-500 dark:hover:bg-rose-600",
     problemBadge: "bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400",
     mathBlock: "bg-rose-50/50 border-l-4 border-rose-500 text-rose-700 dark:bg-rose-950/20 dark:text-rose-300 dark:border-rose-400",
+    heroGradient: "from-pink-600 via-rose-600 to-red-500",
   },
   default: {
     primary: "indigo",
@@ -141,6 +147,7 @@ export const THEMES: Record<string, CategoryTheme> = {
     buttonAccent: "bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-500 dark:hover:bg-indigo-600",
     problemBadge: "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400",
     mathBlock: "bg-indigo-50/50 border-l-4 border-indigo-500 text-indigo-700 dark:bg-indigo-950/20 dark:text-indigo-300 dark:border-indigo-400",
+    heroGradient: "from-indigo-600 via-blue-600 to-cyan-600",
   }
 };
 

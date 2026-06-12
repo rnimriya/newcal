@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CATEGORIES } from "@/lib/registry/categories";
 import { ALL_CALCULATORS, BY_CATEGORY } from "@/lib/registry";
 import { SITE_URL, SITE_DISPLAY_NAME } from "@/lib/constants";
-import { ArrowRight, Zap, Wifi, Smartphone } from "lucide-react";
+import { ArrowRight, Zap, Wifi, Smartphone, Sparkles } from "lucide-react";
 import { ScientificCalculator } from "@/components/calculator/ScientificCalculator";
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
 import { RecentlyViewedSection } from "@/components/calculator/RecentlyViewedSection";
@@ -36,135 +36,124 @@ const featuredCalcs = FEATURED_SLUGS
 
 export default function HomePage() {
   return (
-    <div className="space-y-14">
+    <div className="space-y-14 pb-10">
 
-      {/* ── Hero ────────────────────────────────────────────────────────────── */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center py-6 px-4">
-        {/* Left Column: Title & details */}
-        <div className="lg:col-span-7 text-left space-y-4">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 border border-indigo-100 px-3 py-1 text-xs font-medium text-indigo-700">
-            <Zap size={12} /> 1,000+ free calculators. No sign-up.
-          </span>
-
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight tracking-tight">
-            Any calculation,{" "}
-            <span className="text-indigo-600">answered instantly.</span>
-          </h1>
-
-          <p className="text-base text-slate-500 max-w-lg leading-relaxed">
-            Math, finance, health, physics, and unit conversion — all free. Type a number and the result appears right away.
-          </p>
-
-          {/* Feature pills */}
-          <div className="flex flex-wrap gap-2 text-xs text-slate-500">
-            {[
-              { icon: <Zap size={11} className="text-indigo-500" />, label: "Results as you type" },
-              { icon: <Wifi size={11} className="text-emerald-500" />, label: "Works offline" },
-              { icon: <Smartphone size={11} className="text-violet-500" />, label: "Works on mobile" },
-            ].map(({ icon, label }) => (
-              <span key={label} className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 shadow-sm">
-                {icon} {label}
-              </span>
-            ))}
-          </div>
+      {/* ── Vibrant Hero ──────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600 via-fuchsia-600 to-orange-500 px-6 py-12 sm:py-20 lg:px-12 shadow-2xl shadow-fuchsia-500/20">
+        {/* Abstract decorative blobs */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-full h-64 bg-gradient-to-t from-black/20 to-transparent"></div>
         </div>
 
-        {/* Right Column: Scientific Calculator */}
-        <div className="lg:col-span-5 w-full">
-          <ScientificCalculator />
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* Left Column: Title & details */}
+          <div className="lg:col-span-7 text-left space-y-6">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 px-4 py-1.5 text-xs font-bold text-white shadow-sm uppercase tracking-wider">
+              <Sparkles size={14} className="text-yellow-300" /> 1,000+ Free Tools
+            </span>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight">
+              Any calculation, <br />
+              <span className="text-fuchsia-200">answered instantly.</span>
+            </h1>
+
+            <p className="text-lg text-white/90 max-w-lg leading-relaxed font-medium">
+              Math, finance, health, physics, and unit conversion — all free. Type a number and the result appears right away.
+            </p>
+
+            {/* Feature pills */}
+            <div className="flex flex-wrap gap-3 text-sm font-medium text-white/90 pt-2">
+              {[
+                { icon: <Zap size={16} className="text-yellow-400" />, label: "Results as you type" },
+                { icon: <Wifi size={16} className="text-emerald-300" />, label: "Works offline" },
+                { icon: <Smartphone size={16} className="text-sky-300" />, label: "Mobile native" },
+              ].map(({ icon, label }) => (
+                <span key={label} className="flex items-center gap-2 rounded-xl bg-black/20 backdrop-blur-sm border border-white/10 px-3 py-1.5 shadow-sm">
+                  {icon} {label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Scientific Calculator (Glassmorphism) */}
+          <div className="lg:col-span-5 w-full max-w-md mx-auto">
+            <div className="p-1 rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
+              <div className="bg-white rounded-[1.8rem] overflow-hidden">
+                <ScientificCalculator />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ── Recently Viewed ─────────────────────────────────────────────────── */}
-      <RecentlyViewedSection />
+      <div className="px-4">
+        <RecentlyViewedSection />
+      </div>
 
-      {/* ── Category Grid ───────────────────────────────────────────────────── */}
-      <section>
-        <h2 className="text-xl font-bold text-slate-900 mb-4">Pick a Category</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      {/* ── Colorful Category Grid ──────────────────────────────────────────── */}
+      <section className="px-4">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Browse by Category</h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.id}
               href={`/${cat.id}`}
-              className="calc-card group flex flex-col items-center gap-2.5 p-5 text-center hover:border-indigo-200"
+              className={`group relative overflow-hidden rounded-2xl ${cat.gradient} p-5 sm:p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:-translate-y-1`}
             >
-              <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${cat.color} shadow-sm`}>
-                <CategoryIcon id={cat.id} size={22} />
-              </span>
-              <p className="font-semibold text-slate-800 text-sm group-hover:text-indigo-600 transition-colors">
-                {cat.label}
-              </p>
-              <p className="text-xs text-slate-400">
-                {(BY_CATEGORY[cat.id] ?? []).length} calculators
-              </p>
+              <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">
+                <CategoryIcon id={cat.id} size={80} />
+              </div>
+              <div className="relative z-10">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-md shadow-sm mb-4">
+                  <CategoryIcon id={cat.id} size={24} />
+                </span>
+                <p className="font-bold text-white text-lg sm:text-xl tracking-wide">
+                  {cat.label}
+                </p>
+                <p className="text-sm text-white/80 font-medium mt-1">
+                  {(BY_CATEGORY[cat.id] ?? []).length} calculators
+                </p>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
       {/* ── Featured Calculators ─────────────────────────────────────────────── */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-slate-900">Most Used Calculators</h2>
-          <Link href="/categories" className="text-sm font-medium text-indigo-600 hover:text-indigo-700 flex items-center gap-1">
-            View all <ArrowRight size={13} />
+      <section className="px-4">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Trending Calculators</h2>
+          <Link href="/categories" className="text-sm font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-3 py-1.5 rounded-full transition-colors">
+            View all <ArrowRight size={14} />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {featuredCalcs.map((calc) => (
             calc && (
               <Link
                 key={calc.slug}
                 href={`/${calc.category}/${calc.slug}`}
-                className="calc-card group flex items-start gap-3.5 p-4"
+                className="calc-card group flex items-start gap-4 p-5 hover:border-indigo-300 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 group-hover:bg-indigo-50 transition-colors text-indigo-600">
-                  <CalculatorIcon slug={calc.slug} category={calc.category} size={20} />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 group-hover:bg-indigo-600 group-hover:text-white transition-colors text-indigo-600 shadow-sm">
+                  <CalculatorIcon slug={calc.slug} category={calc.category} size={22} />
                 </span>
-                <div className="min-w-0">
-                  <p className="font-semibold text-slate-800 text-sm group-hover:text-indigo-700 transition-colors leading-snug">
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-slate-900 text-base group-hover:text-indigo-700 transition-colors leading-tight mb-1">
                     {calc.name}
                   </p>
-                  <p className="text-xs text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
+                  <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
                     {calc.shortDesc}
                   </p>
-                  {calc.formula && (
-                    <code className="mt-1 inline-block text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono">
-                      {calc.formula}
-                    </code>
-                  )}
                 </div>
-                <ArrowRight size={13} className="shrink-0 mt-0.5 text-slate-300 group-hover:text-indigo-400 transition-colors" />
               </Link>
             )
           ))}
-        </div>
-      </section>
-
-      {/* ── SEO Content Block ─────────────────────────────────────────────────── */}
-      <section className="prose prose-sm max-w-none">
-        <div className="calc-card p-6 space-y-4">
-          <h2 className="text-lg font-bold text-slate-900 mb-2">About {SITE_DISPLAY_NAME}</h2>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            {SITE_DISPLAY_NAME} has over 1,000 free calculators for math, finance, health, physics, and unit conversion. Every tool runs inside your browser. No downloads. No ads. No accounts.
-          </p>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            Change any input and the answer updates right away. You can also switch units (kg to lbs, Celsius to Fahrenheit) without retyping your numbers. Install the site as an app and it works even without an internet connection.
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            {[
-              { n: "1,000+", label: "Calculators" },
-              { n: "9",      label: "Categories" },
-              { n: "100%",   label: "Free forever" },
-              { n: "0",      label: "Sign-ups needed" },
-            ].map(({ n, label }) => (
-              <div key={label} className="rounded-xl bg-indigo-50 p-3 text-center">
-                <p className="text-xl font-extrabold text-indigo-700">{n}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{label}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

@@ -258,29 +258,36 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header card */}
-      <div className={`rounded-2xl border border-zinc-200 border-t-4 ${theme.accentBorder} bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}>
-        <div className="flex items-start gap-3">
-          <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${theme.iconBg} font-bold`}>
-            <CalculatorIcon slug={schema.slug} category={schema.category} size={20} />
+      <div className={`rounded-2xl border-none p-6 sm:p-8 text-white shadow-xl shadow-indigo-500/10 bg-gradient-to-br ${theme.heroGradient} transition-all relative overflow-hidden`}>
+        {/* Abstract shape background */}
+        <div className="absolute top-0 right-0 -mt-8 -mr-8 opacity-[0.15] pointer-events-none mix-blend-overlay">
+          <CalculatorIcon slug={schema.slug} category={schema.category} size={180} />
+        </div>
+
+        <div className="flex items-start gap-4 relative z-10">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-md shadow-sm border border-white/20">
+            <CalculatorIcon slug={schema.slug} category={schema.category} size={32} />
           </div>
           <div>
-            <h1 className="font-bold text-zinc-900 dark:text-white text-xl leading-tight">
+            <h1 className="font-extrabold text-white text-2xl sm:text-3xl leading-tight drop-shadow-sm">
               {schema.name}
             </h1>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 leading-snug">{schema.description}</p>
+            <p className="text-sm sm:text-base text-white/90 mt-1.5 leading-relaxed font-medium max-w-2xl drop-shadow-sm">
+              {schema.description}
+            </p>
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/20 relative z-10">
           <div className="flex flex-wrap gap-2 min-h-[36px]">
             {schema.examples && schema.examples.length > 0 && (
               <>
-                <span className="text-xs text-zinc-400 dark:text-zinc-500 self-center font-bold">Try Examples:</span>
+                <span className="text-xs text-white/80 self-center font-bold tracking-wide uppercase">Examples:</span>
                 {schema.examples.map((ex) => (
                   <button
                     key={ex.label}
                     onClick={() => loadExample(ex.inputs)}
-                    className={`rounded-xl border border-zinc-200 bg-zinc-50/50 px-3 py-1.5 text-xs font-bold text-zinc-600 ${theme.hoverBorder} ${theme.textAccent} ${theme.hoverBg} transition-all dark:border-zinc-700 dark:bg-zinc-800/40 dark:text-zinc-400 dark:hover:border-zinc-500 cursor-pointer`}
+                    className="rounded-xl border border-white/20 bg-black/10 backdrop-blur-md px-3 py-1.5 text-xs font-bold text-white hover:bg-white hover:text-slate-900 transition-all cursor-pointer shadow-sm"
                   >
                     {ex.label}
                   </button>
@@ -289,7 +296,7 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
             )}
           </div>
 
-          <div className="flex items-center gap-1 shrink-0 ml-auto">
+          <div className="flex items-center gap-1 shrink-0 ml-auto text-white/90">
             <ShareButton
               slug={schema.slug}
               category={schema.category}
@@ -299,17 +306,17 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
             <ExportButton schema={schema} fields={fields} theme={theme} />
             <button
               onClick={() => isSaved ? removeCalculator(schema.slug) : saveCalculator(schema.slug)}
-              className={`rounded-xl p-2 text-zinc-400 hover:text-zinc-650 ${theme.hoverBg} transition-all duration-200 active:scale-90 cursor-pointer`}
+              className="rounded-xl p-2 hover:bg-white/20 transition-all duration-200 active:scale-90 cursor-pointer"
               title={isSaved ? "Saved" : "Save Calculator"}
             >
-              {isSaved ? <BookmarkCheck size={19} className={theme.textAccent} /> : <Bookmark size={19} />}
+              {isSaved ? <BookmarkCheck size={19} className="text-white" /> : <Bookmark size={19} />}
             </button>
             <button
               onClick={() => setShowHistory((v) => !v)}
               className={`rounded-xl p-2 transition-all duration-200 active:scale-90 cursor-pointer ${
                 showHistory
-                  ? `${theme.textAccent} ${theme.iconBg}`
-                  : "text-zinc-400 hover:text-zinc-700 hover:bg-zinc-150 dark:hover:text-zinc-200 dark:hover:bg-zinc-800"
+                  ? "bg-white text-slate-900"
+                  : "hover:bg-white/20"
               }`}
               title="Calculation History"
             >
@@ -317,7 +324,7 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
             </button>
             <button
               onClick={reset}
-              className="rounded-xl p-2 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-150 dark:hover:text-zinc-200 dark:hover:bg-zinc-800 transition-all duration-200 active:scale-90 cursor-pointer"
+              className="rounded-xl p-2 hover:bg-white/20 transition-all duration-200 active:scale-90 cursor-pointer"
               title="Reset Fields"
             >
               <RotateCcw size={19} />
