@@ -1,0 +1,90 @@
+{
+  "id": "crypto-staking",
+  "slug": "crypto-staking-calculator",
+  "name": "Crypto Staking Calculator",
+  "category": "finance",
+  "description": "Calculate your potential cryptocurrency staking rewards and compounding interest over time.",
+  "icon": "💎",
+  "tags": ["crypto", "staking", "finance", "apy", "returns", "blockchain"],
+  "fields": [
+    {
+      "id": "initialAmount",
+      "label": "Initial Token Amount",
+      "type": "number",
+      "defaultValue": 1000,
+      "placeholder": "Enter number of tokens",
+      "helpText": "The amount of cryptocurrency you are staking",
+      "constraint": { "min": 0.01, "max": 1000000000, "step": 0.01, "required": true }
+    },
+    {
+      "id": "tokenPrice",
+      "label": "Current Token Price ($)",
+      "type": "number",
+      "defaultValue": 1.5,
+      "placeholder": "Enter price per token",
+      "helpText": "The current fiat value of one token",
+      "constraint": { "min": 0.000001, "max": 1000000, "step": 0.01, "required": true }
+    },
+    {
+      "id": "apy",
+      "label": "Annual Percentage Yield (APY %)",
+      "type": "number",
+      "defaultValue": 12,
+      "placeholder": "Enter APY",
+      "helpText": "The annual interest rate including compounding",
+      "constraint": { "min": 0, "max": 10000, "step": 0.1, "required": true }
+    },
+    {
+      "id": "months",
+      "label": "Staking Duration (Months)",
+      "type": "number",
+      "defaultValue": 12,
+      "placeholder": "Enter months",
+      "helpText": "How long you plan to stake your tokens",
+      "constraint": { "min": 1, "max": 1200, "step": 1, "required": true }
+    },
+    {
+      "id": "finalTokens",
+      "label": "Final Token Balance",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Total number of tokens after staking duration"
+    },
+    {
+      "id": "earnedTokens",
+      "label": "Tokens Earned",
+      "type": "computed",
+      "precision": 4,
+      "helpText": "Total rewards earned from staking"
+    },
+    {
+      "id": "fiatValue",
+      "label": "Final Fiat Value ($)",
+      "type": "computed",
+      "precision": 2,
+      "helpText": "Total fiat value (assuming token price remains constant)"
+    }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Staking Details", "fields": ["initialAmount", "tokenPrice", "apy", "months"] },
+    { "id": "outputs", "label": "Projected Returns", "fields": ["finalTokens", "earnedTokens", "fiatValue"] }
+  ],
+  "formulas": {
+    "finalTokens": "initialAmount * (1 + (apy/100) * (months/12))",
+    "earnedTokens": "finalTokens - initialAmount",
+    "fiatValue": "finalTokens * tokenPrice"
+  },
+  "explanation": "## How does Crypto Staking work?\n\nStaking cryptocurrency is similar to putting money in a high-yield savings account. By locking your tokens in a Proof-of-Stake (PoS) network, you help secure the blockchain and earn rewards in the form of additional tokens.\n\n### Annual Percentage Yield (APY)\nAPY represents the real rate of return earned on a savings deposit or investment taking into account the effect of compounding interest.\n\n**Note:** This calculator assumes the token price remains constant. In reality, cryptocurrency prices are highly volatile.",
+  "derivation": "## Formula\n\nTo calculate the final token amount without complex daily compounding, a simple interest projection over the specific months is often used for base estimates:\n\n$$\\text{Final Tokens} = \\text{Initial} \\times \\left(1 + \\text{APY} \\times \\frac{\\text{Months}}{12}\\right)$$",
+  "examples": [
+    { "label": "Polkadot (DOT)", "inputs": { "initialAmount": 500, "tokenPrice": 7.5, "apy": 14.5, "months": 12 } },
+    { "label": "Ethereum (ETH)", "inputs": { "initialAmount": 10, "tokenPrice": 2500, "apy": 4.5, "months": 24 } }
+  ],
+  "chart": {
+    "xAxisField": "months",
+    "yAxisField": "fiatValue",
+    "xRange": [1, 60],
+    "points": 60,
+    "label": "Portfolio Value Over Time"
+  }
+}

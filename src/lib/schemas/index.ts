@@ -234,6 +234,7 @@ import fd                    from "./loans/fd.json";
 import gst                   from "./loans/gst.json";
 import lumpsum               from "./loans/lumpsum.json";
 import incomeTax             from "./loans/income-tax.json";
+import cryptoStaking         from "./finance/crypto-staking.json";
 
 // ─── Statistics schemas ───────────────────────────────────────────────────────
 import meanMedianMode        from "./statistics/mean-median-mode.json";
@@ -290,6 +291,7 @@ import bodySurfaceArea        from "./health/body-surface-area.json";
 import smokingCost            from "./health/smoking-cost-calculator.json";
 import sleepCalc              from "./health/sleep-calculator.json";
 import fiberIntake            from "./health/fiber-intake-calculator.json";
+import intermittentFasting    from "./health/intermittent-fasting.json";
 
 // ─── Physics schemas ──────────────────────────────────────────────────────────
 import ohmsLaw                from "./physics/ohms-law-calculator.json";
@@ -952,6 +954,7 @@ export const schemas: CalculatorSchema[] = [
   homeAffordabilityCalculator, rentVsBuyCalculator, mortgageTaxSavingCalc,
   discountPointsCalculator, adjustableRateCalculator, fixedVsAdjustableCalc,
   biweeklyPaymentCalculator, interestOnlyCalculator, rentalPropertyCalculator,
+  cryptoStaking, intermittentFasting
 ].map((s) => s as unknown as CalculatorSchema);
 
 export const schemaMap: Record<string, CalculatorSchema> = Object.fromEntries(

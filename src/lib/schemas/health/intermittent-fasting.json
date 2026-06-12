@@ -1,0 +1,57 @@
+{
+  "id": "intermittent-fasting",
+  "slug": "intermittent-fasting-calculator",
+  "name": "Intermittent Fasting Calculator",
+  "category": "health",
+  "description": "Calculate your fasting and eating windows based on popular intermittent fasting schedules like 16:8.",
+  "icon": "⏳",
+  "tags": ["fasting", "diet", "health", "weight loss", "intermittent fasting"],
+  "fields": [
+    {
+      "id": "fastingHours",
+      "label": "Fasting Duration (Hours)",
+      "type": "number",
+      "defaultValue": 16,
+      "placeholder": "Enter fasting hours",
+      "helpText": "How many hours do you plan to fast? (e.g., 16 for the 16:8 method)",
+      "constraint": { "min": 12, "max": 23, "step": 1, "required": true }
+    },
+    {
+      "id": "startHour",
+      "label": "Last Meal Time (24h format)",
+      "type": "number",
+      "defaultValue": 20,
+      "placeholder": "e.g., 20 for 8:00 PM",
+      "helpText": "The hour you finish your last meal (0-23)",
+      "constraint": { "min": 0, "max": 23, "step": 1, "required": true }
+    },
+    {
+      "id": "eatingWindow",
+      "label": "Eating Window (Hours)",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "The number of hours you have to consume your meals"
+    },
+    {
+      "id": "breakFastTime",
+      "label": "Time to Break Fast",
+      "type": "computed",
+      "precision": 0,
+      "helpText": "The hour (24h format) when you can eat your first meal"
+    }
+  ],
+  "groups": [
+    { "id": "inputs", "label": "Your Schedule", "fields": ["fastingHours", "startHour"] },
+    { "id": "outputs", "label": "Your Windows", "fields": ["eatingWindow", "breakFastTime"] }
+  ],
+  "formulas": {
+    "eatingWindow": "24 - fastingHours",
+    "breakFastTime": "mod(startHour + fastingHours, 24)"
+  },
+  "explanation": "## What is Intermittent Fasting?\n\nIntermittent fasting (IF) is an eating pattern that cycles between periods of fasting and eating. It doesn't specify which foods you should eat but rather *when* you should eat them.\n\n### Popular Schedules\n- **16:8 Method:** Fast for 16 hours, eat within an 8-hour window.\n- **14:10 Method:** Fast for 14 hours, eat within a 10-hour window (great for beginners).\n- **18:6 Method:** A more advanced fast for 18 hours.\n\n### Benefits\nIntermittent fasting can lead to weight loss, improved metabolic health, and potentially a longer lifespan by triggering cellular repair processes like autophagy.",
+  "derivation": "## Formula\n\nYour eating window is simply the remaining hours in a 24-hour day:\n`Eating Window = 24 - Fasting Hours`\n\nThe time you break your fast is calculated by adding your fasting hours to your start time, modulo 24 to wrap around the clock:\n`Break Fast Time = (Start Time + Fasting Hours) % 24`",
+  "examples": [
+    { "label": "16:8 (Finish at 8 PM)", "inputs": { "fastingHours": 16, "startHour": 20 } },
+    { "label": "14:10 (Finish at 7 PM)", "inputs": { "fastingHours": 14, "startHour": 19 } }
+  ]
+}
