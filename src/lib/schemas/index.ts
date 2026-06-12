@@ -829,6 +829,20 @@ import biweeklyPaymentCalculator   from "./loans/biweekly-payment-calculator.jso
 import interestOnlyCalculator      from "./loans/interest-only-calculator.json";
 import rentalPropertyCalculator    from "./loans/rental-property-calculator.json";
 
+// ─── Trending 12 schemas ──────────────────────────────────────────────────────
+import tipCalculator           from "./finance/tip-calculator.json";
+import ovulationCalculator     from "./health/ovulation-calculator.json";
+import bacCalculator           from "./health/bac-calculator.json";
+import inflationCalculator     from "./finance/inflation-calculator.json";
+import netWorthCalculator      from "./finance/net-worth-calculator.json";
+import dogAgeCalculator        from "./health/dog-age-calculator.json";
+import paycheckCalculator      from "./finance/paycheck-calculator.json";
+import electricityBillCalculator from "./finance/electricity-bill-calculator.json";
+import aspectRatioCalculator   from "./converters/aspect-ratio-calculator.json";
+import loveCalculator          from "./health/love-calculator.json";
+import timeZoneCalculator      from "./time/time-zone-calculator.json";
+import fuelCostCalculator      from "./finance/fuel-cost-calculator.json";
+
 export const schemas: CalculatorSchema[] = [
   stepUpSip, wealthSip, cagr, elss, stp, indexFund, investment, wealth, goalBased, retirement, childEducation, car, dreamHome,
   bulkModulus, compressiveStrength, creepRate, dataTransferRate, dateToRoman, decimeter, deformation, dyne, elasticModulus, electricConductance, electricConductivity, electricPotential, electricResistivity, electronvolt, exabyte, fahrenheitToDelisle, fahrenheitToNewton, fahrenheitToRankine, fahrenheitToReaumur, fahrenheitToRomer, fatigueStrength, flexuralStrength, footPound, fractureToughness, gigabyte, illuminance, impactStrength, inhg, kelvinToRankine, kilobyte, kilocalorie, kilojoule, kilonewton, kilopascal, luminousIntensity, magneticFlux, massFlow,
@@ -954,7 +968,14 @@ export const schemas: CalculatorSchema[] = [
   homeAffordabilityCalculator, rentVsBuyCalculator, mortgageTaxSavingCalc,
   discountPointsCalculator, adjustableRateCalculator, fixedVsAdjustableCalc,
   biweeklyPaymentCalculator, interestOnlyCalculator, rentalPropertyCalculator,
-  cryptoStaking, intermittentFasting
+  cryptoStaking, intermittentFasting,
+
+  // Trending 12 — tip, ovulation, BAC, inflation, net-worth, dog age,
+  // paycheck, electricity bill, aspect ratio, love, time zone, fuel cost
+  tipCalculator, ovulationCalculator, bacCalculator, inflationCalculator,
+  netWorthCalculator, dogAgeCalculator, paycheckCalculator,
+  electricityBillCalculator, aspectRatioCalculator, loveCalculator,
+  timeZoneCalculator, fuelCostCalculator,
 ].map((s) => s as unknown as CalculatorSchema);
 
 export const schemaMap: Record<string, CalculatorSchema> = Object.fromEntries(
