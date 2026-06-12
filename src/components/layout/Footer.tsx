@@ -148,9 +148,10 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               {[
                 { label: "Blog & Articles", href: "/blog" },
-                { label: "HTML Sitemap", href: "/sitemap" },
-                { label: "Keyboard Shortcuts", href: "/settings" },
                 { label: "Calculators Directory", href: "/categories" },
+                { label: "About Us", href: "/about" },
+                { label: "Contact Us", href: "/contact" },
+                { label: "HTML Sitemap", href: "/sitemap" },
               ].map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-zinc-500 hover:text-indigo-600 transition-colors flex items-center gap-1 group dark:text-zinc-400 dark:hover:text-white">
