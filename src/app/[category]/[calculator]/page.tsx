@@ -212,7 +212,7 @@ export default async function CalculatorPage({ params }: Props) {
                       Q{i + 1}
                     </span>
                     <div className="space-y-2.5 w-full">
-                      <h4 className="font-semibold text-foreground text-base leading-relaxed">{prob.question}</h4>
+                      <h3 className="font-semibold text-foreground text-base leading-relaxed">{prob.question}</h3>
                       <details className="group">
                         <summary className="text-base font-semibold text-primary hover:text-primary/80 cursor-pointer list-none flex items-center gap-1.5 focus:outline-none">
                           <HelpCircle size={14} className="text-primary" />
@@ -248,7 +248,7 @@ export default async function CalculatorPage({ params }: Props) {
                         </span>
                       )}
                     </div>
-                    <h4 className="font-bold text-foreground text-base tracking-wide uppercase">{step.title}</h4>
+                    <h3 className="font-bold text-foreground text-base tracking-wide uppercase">{step.title}</h3>
                     <p className="text-base text-muted-foreground leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export default async function CalculatorPage({ params }: Props) {
                       {i + 1}
                     </span>
                     <div>
-                      <h4 className="font-bold text-foreground text-base">{ex.scenario}</h4>
+                      <h3 className="font-bold text-foreground text-base">{ex.scenario}</h3>
                       <p className="text-base text-muted-foreground mt-1 leading-relaxed">{ex.example}</p>
                     </div>
                   </div>

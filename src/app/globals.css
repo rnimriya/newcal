@@ -41,7 +41,7 @@
     --card-foreground: #0f172a;
     --popover: #ffffff;
     --popover-foreground: #0f172a;
-    --primary: #0ea5e9; /* sky-500 */
+    --primary: #0369a1; /* sky-700 — 5.9:1 contrast on white, passes WCAG AA */
     --primary-foreground: #ffffff;
     --secondary: #f8fafc; /* slate-50 */
     --secondary-foreground: #475569; /* slate-600 */
@@ -57,7 +57,7 @@
     --warning-foreground: #ffffff;
     --border: #e2e8f0; /* slate-200 */
     --input: #cbd5e1; /* slate-300 for visible input borders */
-    --ring: #0ea5e9; /* sky-500 */
+    --ring: #0369a1; /* sky-700 */
     --radius: 1.25rem;
   }
 
