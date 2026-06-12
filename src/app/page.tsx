@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 // Last 12 added calculators — newest entries sit at the top of ALL_CALCULATORS
-const trendingCalcs = ALL_CALCULATORS.slice(0, 12);
+const trendingCalcs = ALL_CALCULATORS.slice(0, 24);
 
 export default function HomePage() {
   return (
