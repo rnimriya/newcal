@@ -13,6 +13,8 @@ interface Props {
   onUnitChange: (unit: string) => void;
   theme: CategoryTheme;
   isMobile?: boolean;
+  hideLabel?: boolean;
+  compact?: boolean;
 }
 
 export function FieldRenderer({
@@ -22,6 +24,8 @@ export function FieldRenderer({
   onUnitChange,
   theme,
   isMobile,
+  hideLabel,
+  compact,
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -39,27 +43,28 @@ export function FieldRenderer({
   // Select/dropdown field
   if (field.type === "select") {
     return (
-      <FieldWrapper field={field}>
-        <div className={`relative flex items-center transition-all duration-200 rounded-xl border-2 border-zinc-200 bg-zinc-50/30 hover:border-zinc-300 focus-within:bg-white dark:border-zinc-700 dark:bg-zinc-900/50 dark:hover:border-zinc-600 dark:focus-within:bg-zinc-900 ${theme.focusRing}`}>
+      <FieldWrapper field={field} hideLabel={hideLabel}>
+        <div className={`relative flex items-center transition-all duration-200 rounded-xl border-2 border-input bg-secondary hover:border-ring focus-within:bg-background ${theme.focusRing}`}>
           {/* Accent Line */}
-          <div className={`absolute left-0 top-[3px] bottom-[3px] w-1 rounded-l-md transition-all duration-200 ${
-            isFocused ? theme.activeBar : "bg-transparent"
-          }`} />
+          <div className={`absolute left-0 top-[3px] bottom-[3px] w-1 rounded-l-md transition-all duration-200 ${isFocused ? theme.activeBar : "bg-transparent"
+            }`} />
 
           <select
             value={state.value}
             onChange={(e) => onValueChange(e.target.value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            className="w-full appearance-none bg-transparent px-4 py-3 pr-10 text-sm font-semibold text-zinc-900 dark:text-white outline-none min-h-[46px] cursor-pointer"
+            className={`w-full appearance-none bg-transparent px-3 pr-10 font-semibold text-foreground outline-none cursor-pointer ${
+              compact ? "py-2 text-sm min-h-[36px]" : "py-3 px-4 text-base min-h-[46px]"
+            }`}
           >
             {field.selectOptions?.map((opt) => (
-              <option key={String(opt.value)} value={String(opt.value)} className="dark:bg-zinc-900">
+              <option key={String(opt.value)} value={String(opt.value)} className="bg-popover text-popover-foreground">
                 {opt.label}
               </option>
             ))}
           </select>
-          <div className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 font-bold text-xs">
+          <div className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground font-bold text-base">
             ▼
           </div>
         </div>
@@ -70,26 +75,28 @@ export function FieldRenderer({
   // Computed output field
   if (isComputed) {
     return (
-      <FieldWrapper field={field}>
+      <FieldWrapper field={field} hideLabel={hideLabel}>
         <div className="flex items-stretch gap-2">
           <div
-            className={`flex-1 flex items-center justify-between gap-3 rounded-2xl border-2 px-5 py-4 min-h-[58px] transition-all duration-300 ${
-              state.error
-                ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/40 dark:bg-red-950/20 dark:text-red-400"
-                : `${theme.outputBg} ${theme.outputBorder} ${theme.glowShadow} text-zinc-900 dark:text-zinc-50`
-            }`}
+            className={`flex-1 flex items-center justify-between gap-3 rounded-2xl border-2 transition-all duration-300 ${
+              compact ? "px-3 py-2 min-h-[42px] rounded-xl" : "px-5 py-4 min-h-[58px]"
+            } ${state.error
+              ? "border-destructive/40 bg-destructive/10 text-destructive"
+              : `${theme.outputBg} ${theme.outputBorder} ${theme.glowShadow} text-foreground`
+              }`}
           >
             <div className="flex-1 min-w-0 flex items-center gap-2">
               {field.prefix && (
-                <span className="text-zinc-400 font-medium dark:text-zinc-500 self-center">{field.prefix}</span>
+                <span className={`text-muted-foreground font-medium self-center ${compact ? "text-sm" : ""}`}>{field.prefix}</span>
               )}
-              <span className={`font-mono text-lg md:text-xl font-extrabold tracking-tight truncate ${
-                state.error ? "text-red-700 dark:text-red-400" : `${theme.textAccent} ${theme.textAccentDark}`
-              }`}>
+              <span className={`font-mono font-extrabold tracking-tight truncate ${
+                compact ? "text-base md:text-lg" : "text-lg md:text-xl"
+              } ${state.error ? "text-destructive" : `${theme.textAccent} ${theme.textAccentDark}`
+                }`}>
                 {state.error ? "—" : state.value || "—"}
               </span>
               {field.suffix && !state.error && (
-                <span className="text-zinc-400 text-xs font-semibold dark:text-zinc-500 self-end mb-0.5">{field.suffix}</span>
+                <span className="text-muted-foreground text-base font-semibold self-end mb-0.5">{field.suffix}</span>
               )}
             </div>
 
@@ -101,12 +108,12 @@ export function FieldRenderer({
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="flex items-center justify-center p-2 rounded-xl bg-white/70 hover:bg-white border border-zinc-200 hover:border-zinc-300 text-zinc-500 hover:text-zinc-800 transition-all dark:bg-zinc-800/40 dark:hover:bg-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-650 dark:text-zinc-400 dark:hover:text-white cursor-pointer active:scale-95 min-h-[36px] min-w-[36px]"
+                  className="flex items-center justify-center p-2 rounded-xl bg-background hover:bg-secondary border border-border hover:border-ring text-muted-foreground hover:text-foreground transition-all cursor-pointer active:scale-95 min-h-[36px] min-w-[36px]"
                   title="Copy result to clipboard"
                 >
                   {copied ? (
-                    <span className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 animate-copy-pop">
-                      <Check size={14} className="stroke-[3]" />
+                    <span className="flex items-center gap-1.5 text-[10px] font-bold text-primary animate-copy-pop">
+                      <Check size={12} className="stroke-[3]" />
                       <span>Copied</span>
                     </span>
                   ) : (
@@ -132,21 +139,19 @@ export function FieldRenderer({
 
   // Standard number input
   return (
-    <FieldWrapper field={field}>
+    <FieldWrapper field={field} hideLabel={hideLabel}>
       <div className="flex items-stretch gap-2">
-        <div className={`relative flex-1 flex items-center transition-all duration-200 rounded-xl border-2 ${
-          state.error
-            ? "border-red-300 bg-red-50/20 focus-within:border-red-500 focus-within:ring-4 focus-within:ring-red-500/10 dark:border-red-900/40"
-            : `border-zinc-200 bg-zinc-50/30 hover:border-zinc-300 focus-within:border-zinc-300 focus-within:bg-white dark:border-zinc-700 dark:bg-zinc-900/50 dark:hover:border-zinc-600 dark:focus-within:bg-zinc-900 ${theme.focusRing}`
-        }`}>
+        <div className={`relative flex-1 flex items-center transition-all duration-200 rounded-xl border-2 ${state.error
+          ? "border-destructive/40 bg-destructive/10 focus-within:border-destructive focus-within:ring-4 focus-within:ring-destructive/20"
+          : `border-input bg-secondary hover:border-ring focus-within:border-ring focus-within:bg-background ${theme.focusRing}`
+          }`}>
           {/* Focus Accent Line */}
-          <div className={`absolute left-0 top-[3px] bottom-[3px] w-1 rounded-l-md transition-all duration-200 ${
-            isFocused && !state.error ? theme.activeBar : "bg-transparent"
-          }`} />
+          <div className={`absolute left-0 top-[3px] bottom-[3px] w-1 rounded-l-md transition-all duration-200 ${isFocused && !state.error ? theme.activeBar : "bg-transparent"
+            }`} />
 
           {/* Prefix */}
           {field.prefix && (
-            <span className="pl-3.5 pr-1 text-sm font-semibold text-zinc-400 dark:text-zinc-500 select-none">
+            <span className="pl-3.5 pr-1 text-base font-semibold text-muted-foreground select-none">
               {field.prefix}
             </span>
           )}
@@ -163,12 +168,14 @@ export function FieldRenderer({
             min={field.constraint?.min}
             max={field.constraint?.max}
             step={field.constraint?.step}
-            className="w-full bg-transparent py-3 px-3 text-sm text-zinc-950 font-bold outline-none dark:text-white min-h-[46px]"
+            className={`w-full bg-transparent px-3 text-foreground font-bold outline-none ${
+              compact ? "py-2 text-sm min-h-[36px]" : "py-3 text-base min-h-[46px]"
+            }`}
           />
 
           {/* Suffix */}
           {field.suffix && (
-            <span className="pr-3.5 pl-1 text-sm font-semibold text-zinc-400 dark:text-zinc-500 select-none">
+            <span className="pr-3.5 pl-1 text-base font-semibold text-muted-foreground select-none">
               {field.suffix}
             </span>
           )}
@@ -184,7 +191,7 @@ export function FieldRenderer({
         )}
       </div>
       {state.error && (
-        <p className="mt-1 text-xs text-red-500 font-semibold">{state.error}</p>
+        <p className="mt-1 text-base text-destructive font-semibold">{state.error}</p>
       )}
     </FieldWrapper>
   );
@@ -194,30 +201,34 @@ export function FieldRenderer({
 
 function FieldWrapper({
   field,
+  hideLabel,
   children,
 }: {
   field: CalculatorField;
+  hideLabel?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <div className="group">
-      <div className="mb-2 flex items-center gap-1.5">
-        <label className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-          {field.label}
-        </label>
-        {field.helpText && (
-          <div className="relative">
-            <Info
-              size={13}
-              className="text-zinc-400 hover:text-zinc-600 cursor-help dark:hover:text-zinc-300"
-            />
-            <div className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 w-52 rounded-lg bg-zinc-900 px-3 py-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity z-20 shadow-lg">
-              {field.helpText}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-zinc-900" />
+      {!hideLabel && (
+        <div className="mb-2 flex items-center gap-1.5">
+          <label className="text-base font-semibold text-foreground/80">
+            {field.label}
+          </label>
+          {field.helpText && (
+            <div className="relative">
+              <Info
+                size={13}
+                className="text-muted-foreground hover:text-foreground cursor-help"
+              />
+              <div className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 w-52 rounded-xl bg-popover border border-border px-3 py-2 text-base text-popover-foreground opacity-0 group-hover:opacity-100 transition-opacity z-20 shadow-lg">
+                {field.helpText}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-foreground" />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
       {children}
     </div>
   );

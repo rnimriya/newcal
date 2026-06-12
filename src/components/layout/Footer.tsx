@@ -9,28 +9,28 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-50 text-zinc-600 border-t border-zinc-200 mt-16 dark:bg-zinc-950 dark:text-zinc-400 dark:border-zinc-900">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        
+    <footer className="bg-card text-card-foreground border-t border-border mt-16">
+      <div className="mx-auto max-w-7xl w-full px-4 sm:px-6">
+
         {/* ─── TOP SECTION: Trust Badges & Tagline ────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-12 border-b border-zinc-200 items-center dark:border-zinc-800">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-12 border-b border-border items-center">
           <div className="lg:col-span-5 space-y-3">
 
-            <p className="text-sm text-zinc-500 leading-relaxed max-w-md dark:text-zinc-400">
+            <p className="text-base text-muted-foreground leading-relaxed max-w-md">
               A premium, comprehensive calculator engine hosting 1,000+ specialized conversion and mathematical solvers. Free, offline-first, and ad-free.
             </p>
             <div className="flex items-center gap-3 pt-2">
               {[
-                { name: "Twitter/X", href: "https://x.com",       icon: <TwitterXIcon /> },
-                { name: "Facebook",  href: "https://facebook.com", icon: <FacebookIcon /> },
-                { name: "LinkedIn",  href: "https://linkedin.com", icon: <LinkedInIcon /> },
+                { name: "Twitter/X", href: "https://x.com", icon: <TwitterXIcon /> },
+                { name: "Facebook", href: "https://facebook.com", icon: <FacebookIcon /> },
+                { name: "LinkedIn", href: "https://linkedin.com", icon: <LinkedInIcon /> },
               ].map(({ name, href, icon }) => (
                 <a
                   key={name}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 bg-white hover:border-zinc-300 hover:bg-zinc-100 hover:text-indigo-600 transition-all shadow-sm dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-indigo-400 cursor-pointer active:scale-95"
+                  className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-background hover:border-input hover:bg-muted hover:text-primary transition-all shadow-sm cursor-pointer active:scale-95"
                   title={name}
                 >
                   {icon}
@@ -41,30 +41,30 @@ export function Footer() {
 
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* PWA offline badge */}
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-zinc-200/80 hover:border-zinc-300 transition-colors dark:bg-zinc-900/40 dark:border-zinc-800/80 dark:hover:border-zinc-700">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/20 transition-colors">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <WifiOff size={18} />
               </span>
               <div>
-                <h4 className="text-sm font-semibold text-zinc-900 flex items-center gap-1.5 dark:text-white">
+                <h4 className="text-base font-semibold text-card-foreground flex items-center gap-1.5">
                   100% Offline PWAs
                 </h4>
-                <p className="text-xs text-zinc-500 mt-1 leading-relaxed dark:text-zinc-400">
+                <p className="text-base text-muted-foreground mt-1 leading-relaxed">
                   Install {SITE_NAME} to your desktop or mobile screen. Fully functional without an internet connection.
                 </p>
               </div>
             </div>
 
             {/* Zero Ads / Privacy badge */}
-            <div className="flex items-start gap-4 p-4 rounded-xl bg-white border border-zinc-200/80 hover:border-zinc-300 transition-colors dark:bg-zinc-900/40 dark:border-zinc-800/80 dark:hover:border-zinc-700">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
+            <div className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/20 transition-colors">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <ShieldCheck size={18} />
               </span>
               <div>
-                <h4 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                <h4 className="text-base font-semibold text-card-foreground">
                   Zero Ads & Tracking
                 </h4>
-                <p className="text-xs text-zinc-500 mt-1 leading-relaxed dark:text-zinc-400">
+                <p className="text-base text-muted-foreground mt-1 leading-relaxed">
                   Fast, clean experience with no pop-ups, logins, or cookies. All calculations run strictly in your browser.
                 </p>
               </div>
@@ -74,12 +74,12 @@ export function Footer() {
 
         {/* ─── MIDDLE SECTION: Organized Links ────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-8 py-16">
-          
+
           <div className="lg:col-span-3 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-1.5 dark:text-white">
-              <Sparkles size={12} className="text-indigo-600 dark:text-indigo-400" /> Categories
+            <h3 className="text-base font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
+              <Sparkles size={12} className="text-primary" /> Categories
             </h3>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-base">
               {[
                 { label: "Math Calculators", href: "/math" },
                 { label: "Algebra Solver", href: "/algebra" },
@@ -89,9 +89,9 @@ export function Footer() {
                 { label: "Physics Tools", href: "/physics" },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-zinc-500 hover:text-indigo-600 transition-colors flex items-center gap-1 group dark:text-zinc-400 dark:hover:text-white">
+                  <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group">
                     <span>{link.label}</span>
-                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-600 dark:text-indigo-400" />
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                   </Link>
                 </li>
               ))}
@@ -99,10 +99,10 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-white">
+            <h3 className="text-base font-bold uppercase tracking-wider text-foreground">
               Featured Tools
             </h3>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-base">
               {[
                 { label: "Scientific Calculator", href: "/" },
                 { label: "BMI Calculator", href: "/health/bmi-calculator" },
@@ -112,9 +112,9 @@ export function Footer() {
                 { label: "Kilograms to Pounds", href: "/converters/kg-to-pounds" },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-zinc-500 hover:text-indigo-600 transition-colors flex items-center gap-1 group dark:text-zinc-400 dark:hover:text-white">
+                  <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group">
                     <span>{link.label}</span>
-                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-600 dark:text-indigo-400" />
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                   </Link>
                 </li>
               ))}
@@ -122,19 +122,19 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-white">
+            <h3 className="text-base font-bold uppercase tracking-wider text-foreground">
               Platform
             </h3>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-base">
               {[
                 { label: "All Categories", href: "/categories" },
                 { label: "Saved Tools", href: "/saved" },
                 { label: "Preferences", href: "/settings" },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-zinc-500 hover:text-indigo-600 transition-colors flex items-center gap-1 group dark:text-zinc-400 dark:hover:text-white">
+                  <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group">
                     <span>{link.label}</span>
-                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-600 dark:text-indigo-400" />
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                   </Link>
                 </li>
               ))}
@@ -142,10 +142,10 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-white">
+            <h3 className="text-base font-bold uppercase tracking-wider text-foreground">
               Resources
             </h3>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-base">
               {[
                 { label: "Blog & Articles", href: "/blog" },
                 { label: "Calculators Directory", href: "/categories" },
@@ -154,9 +154,9 @@ export function Footer() {
                 { label: "HTML Sitemap", href: "/sitemap" },
               ].map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-zinc-500 hover:text-indigo-600 transition-colors flex items-center gap-1 group dark:text-zinc-400 dark:hover:text-white">
+                  <Link href={link.href} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1 group">
                     <span>{link.label}</span>
-                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-600 dark:text-indigo-400" />
+                    <ArrowRight size={10} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                   </Link>
                 </li>
               ))}
@@ -166,19 +166,19 @@ export function Footer() {
         </div>
 
         {/* ─── BOTTOM SECTION: Copyright & Legal Disclaimer ───────────────────────── */}
-        <div className="border-t border-zinc-200 py-10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-500 dark:border-zinc-800">
+        <div className="border-t border-border py-10 flex flex-col md:flex-row justify-between items-center gap-4 text-base text-muted-foreground">
           <div className="text-center md:text-left space-y-1">
             <p>© {currentYear} {SITE_NAME}. All rights reserved.</p>
-            <p className="max-w-2xl text-zinc-400 dark:text-zinc-600">
+            <p className="max-w-2xl text-muted-foreground/60">
               Disclaimer: Calculations are computed locally in the browser. Values should be double-checked for critical professional, financial, or academic decisions.
             </p>
           </div>
           <div className="flex gap-4 shrink-0 flex-wrap justify-center md:justify-end">
-            <Link href="/privacy" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Privacy Policy</Link>
+            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <span>•</span>
-            <Link href="/terms" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Terms of Use</Link>
+            <Link href="/terms" className="hover:text-foreground transition-colors">Terms of Use</Link>
             <span>•</span>
-            <Link href="/disclaimer" className="hover:text-zinc-800 transition-colors dark:hover:text-zinc-300">Disclaimer</Link>
+            <Link href="/disclaimer" className="hover:text-foreground transition-colors">Disclaimer</Link>
           </div>
         </div>
 

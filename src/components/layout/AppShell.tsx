@@ -14,7 +14,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const check = () => {
-      const isPWA    = window.matchMedia("(display-mode: standalone)").matches;
+      const isPWA = window.matchMedia("(display-mode: standalone)").matches;
       const isMobile = window.innerWidth < 768;
       setIsMobileOrPWA(isPWA || isMobile);
     };
@@ -24,7 +24,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-page">
+    <div className="min-h-screen">
       <OfflineBanner show={isOffline} />
 
       {/* Desktop header */}
@@ -32,9 +32,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Main content */}
       <main
-        className={`mx-auto max-w-7xl px-4 sm:px-6 ${
-          isMobileOrPWA ? "pb-24 pt-5" : "py-8"
-        }`}
+        className={`mx-auto max-w-7xl w-full px-4 sm:px-6 ${isMobileOrPWA ? "pb-24 pt-5" : "py-3"
+          }`}
       >
         {children}
       </main>

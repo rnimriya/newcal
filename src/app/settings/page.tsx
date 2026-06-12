@@ -22,11 +22,10 @@ export default function SettingsPage() {
             <button
               key={sys}
               onClick={() => setUnitSystem(sys)}
-              className={`flex-1 rounded-xl py-2.5 text-sm font-medium capitalize transition-all ${
-                unitSystem === sys
-                  ? "bg-indigo-600 text-white shadow"
-                  : "border border-zinc-200 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-400"
-              }`}
+              className={`flex-1 rounded-xl py-2.5 text-base font-medium capitalize transition-all ${unitSystem === sys
+                ? "bg-indigo-600 text-white shadow"
+                : "border border-zinc-200 text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-400"
+                }`}
             >
               {sys === "metric" ? "🌍 Metric (SI)" : "🇺🇸 Imperial (US)"}
             </button>
@@ -43,14 +42,14 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={() => savedCalculators.forEach(removeCalculator)}
-            className="w-full rounded-xl border border-red-200 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors dark:border-red-800 dark:hover:bg-red-950"
+            className="w-full rounded-xl border border-red-200 py-2.5 text-base font-medium text-red-600 hover:bg-red-50 transition-colors dark:border-red-800 dark:hover:bg-red-950"
           >
             Clear {savedCalculators.length} saved calculator{savedCalculators.length !== 1 ? "s" : ""}
           </button>
         </section>
       )}
 
-      <p className="text-center text-xs text-zinc-400">
+      <p className="text-center text-base text-zinc-400">
         CalcUnit · Schema-driven calculator platform
       </p>
     </div>

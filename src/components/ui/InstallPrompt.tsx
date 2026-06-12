@@ -27,10 +27,10 @@ export function InstallPrompt({ show, onInstall }: Props) {
 
           {/* Text */}
           <div className="flex-1 min-w-0">
-            <p className="font-bold text-sm text-white leading-tight">
+            <p className="font-bold text-base text-white leading-tight">
               Install CalcUnit
             </p>
-            <p className="text-xs text-indigo-200 mt-0.5 flex items-center gap-1.5">
+            <p className="text-base text-indigo-200 mt-0.5 flex items-center gap-1.5">
               <Wifi size={10} className="shrink-0" />
               Works offline · No account needed
             </p>
@@ -40,7 +40,7 @@ export function InstallPrompt({ show, onInstall }: Props) {
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={onInstall}
-              className="rounded-xl bg-white px-3.5 py-1.5 text-xs font-bold text-indigo-600 hover:bg-indigo-50 active:scale-95 transition-all shadow-sm cursor-pointer"
+              className="rounded-xl bg-white px-3.5 py-1.5 text-base font-bold text-indigo-600 hover:bg-indigo-50 active:scale-95 transition-all shadow-sm cursor-pointer"
             >
               Install
             </button>

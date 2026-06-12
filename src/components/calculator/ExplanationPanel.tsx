@@ -11,7 +11,7 @@ const FormulaChart = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 h-[240px] flex items-center justify-center text-sm text-zinc-400 animate-pulse">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm h-[240px] flex items-center justify-center text-base text-muted-foreground animate-pulse">
         Loading chart...
       </div>
     ),
@@ -45,7 +45,7 @@ export function ExplanationPanel({ schema, fields, theme }: Props) {
       const parsed = parseFloat(defVal);
       if (!isNaN(parsed)) defNum = parsed;
     }
-    
+
     max = defNum * 2;
     if (defNum < 0) {
       min = defNum * 2;
@@ -157,23 +157,22 @@ ${formulasBlock}
   const hasChart = !!enhancedChart;
   const tabs = [
     { id: "explanation" as const, label: "How it works", icon: BookOpen },
-    { id: "derivation" as const,  label: "Formula",      icon: FlaskConical },
+    { id: "derivation" as const, label: "Formula", icon: FlaskConical },
     ...(hasChart ? [{ id: "chart" as const, label: "Chart", icon: BarChart2 }] : []),
   ];
 
   return (
     <div className="space-y-4 animate-fade-in">
       {/* Tab bar */}
-      <div className="flex gap-1 rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
+      <div className="flex gap-1 rounded-xl bg-secondary p-1">
         {tabs.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             onClick={() => setTab(id)}
-            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-semibold transition-all cursor-pointer ${
-              tab === id
-                ? theme.tabActive
-                : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
-            }`}
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2 text-base font-semibold transition-all cursor-pointer ${tab === id
+              ? theme.tabActive
+              : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             <Icon size={13} />
             {label}
@@ -187,7 +186,7 @@ ${formulasBlock}
       )}
 
       {tab !== "chart" && (
-        <div className={`rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}>
+        <div className={`rounded-2xl border border-border bg-card p-5 shadow-sm transition-all ${theme.glowShadow}`}>
           <MarkdownRenderer
             content={tab === "explanation" ? getEnhancedExplanation() : getEnhancedDerivation()}
             theme={theme}
@@ -206,14 +205,14 @@ function MarkdownRenderer({ content, theme }: { content: string; theme: Category
   const lines = normalized.split("\n");
 
   return (
-    <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-bold prose-headings:text-zinc-900 dark:prose-headings:text-white prose-p:text-zinc-600 dark:prose-p:text-zinc-400">
+    <div className="prose prose-sm max-w-none prose-headings:font-bold prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-a:text-primary">
       {lines.map((line, i) => {
         if (line.startsWith("## "))
-          return <h2 key={i} className="text-base font-bold mt-4 mb-2 text-zinc-900 dark:text-white">{line.slice(3)}</h2>;
+          return <h2 key={i} className="text-lg font-extrabold mt-5 mb-2 text-foreground">{line.slice(3)}</h2>;
         if (line.startsWith("### "))
-          return <h3 key={i} className="text-sm font-semibold mt-3 mb-1.5 text-zinc-850 dark:text-zinc-200">{line.slice(4)}</h3>;
+          return <h3 key={i} className="text-base font-bold mt-4 mb-2 text-foreground/90">{line.slice(4)}</h3>;
         if (line.startsWith("#### "))
-          return <h4 key={i} className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mt-2.5 mb-1">{line.slice(5)}</h4>;
+          return <h4 key={i} className="text-sm font-bold uppercase tracking-widest text-muted-foreground mt-3 mb-1">{line.slice(5)}</h4>;
         if (line.startsWith("| ")) {
           // Simple table row
           const cells = line.split("|").filter((c) => c.trim() !== "");
@@ -221,24 +220,24 @@ function MarkdownRenderer({ content, theme }: { content: string; theme: Category
           const isSeparator = line.includes("---");
           if (isSeparator) return null;
           return (
-            <div key={i} className={`flex gap-0 text-xs border-b border-zinc-100 dark:border-zinc-800 ${isHeader ? "font-semibold bg-zinc-50 dark:bg-zinc-800/50" : ""}`}>
+            <div key={i} className={`flex gap-0 text-base border-b border-border ${isHeader ? "font-semibold bg-secondary/50" : ""}`}>
               {cells.map((cell, j) => (
-                <div key={j} className="flex-1 px-3 py-1.5 text-zinc-700 dark:text-zinc-300">{cell.trim()}</div>
+                <div key={j} className="flex-1 px-3 py-1.5 text-foreground/80">{cell.trim()}</div>
               ))}
             </div>
           );
         }
         if (line.startsWith("- ") || line.startsWith("* "))
-          return <li key={i} className="ml-4 list-disc text-sm text-zinc-600 dark:text-zinc-400 my-0.5">{parseBold(line.slice(2))}</li>;
+          return <li key={i} className="ml-4 list-disc text-base text-muted-foreground my-0.5">{parseBold(line.slice(2))}</li>;
         // Match $$formula$$ — single line (after pre-processing)
         if (line.startsWith("$$") && line.endsWith("$$") && line.length > 4) {
           const formula = line.slice(2, -2).trim();
-          return <div key={i} className={`my-2 rounded-xl px-4 py-3.5 font-mono text-sm shadow-sm overflow-x-auto ${theme.mathBlock}`}>{formula}</div>;
+          return <div key={i} className={`my-2 rounded-xl px-4 py-3.5 font-mono text-base shadow-sm overflow-x-auto ${theme.mathBlock}`}>{formula}</div>;
         }
         // Standalone $$ line with no content — skip (artifact of pre-processing)
         if (line.trim() === "$$") return null;
-        if (line.trim() === "") return <br key={i} />;
-        return <p key={i} className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed my-1">{parseBold(line)}</p>;
+        if (line.trim() === "") return null;
+        return <p key={i} className="text-base text-muted-foreground leading-relaxed mb-3">{parseBold(line)}</p>;
       })}
     </div>
   );
@@ -249,7 +248,7 @@ function parseBold(text: string): React.ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
-      return <strong key={i} className="font-semibold text-zinc-850 dark:text-zinc-100">{part.slice(2, -2)}</strong>;
+      return <strong key={i} className="font-semibold text-foreground/90">{part.slice(2, -2)}</strong>;
     }
     return part;
   });

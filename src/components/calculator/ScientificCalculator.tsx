@@ -175,25 +175,24 @@ export function ScientificCalculator() {
   }, [handleKeyPress]);
 
   return (
-    <div className="calc-card p-5 bg-white border border-zinc-200 shadow-md select-none w-full max-w-sm mx-auto dark:border-zinc-800 dark:bg-zinc-900">
+    <div className="calc-card border border-border rounded-2xl  p-2 bg-card border border-border hover:border-primary/50 transition-colors rounded-2xl  p-5 bg-card border border-border shadow-md select-none w-full max-w-sm mx-auto">
       <div className="mb-3 flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+        <span className="text-base font-semibold uppercase tracking-wider text-muted-foreground">
           Scientific Calculator
         </span>
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-400" />
       </div>
 
       {/* Screen display */}
-      <div className="bg-zinc-50 border border-zinc-200/60 rounded-xl p-3.5 mb-4 text-right flex flex-col justify-between h-24 font-mono dark:bg-zinc-950 dark:border-zinc-800/80">
+      <div className="bg-secondary border border-border rounded-xl p-3.5 mb-4 text-right flex flex-col justify-between h-24 font-mono">
         {/* Active input expression */}
-        <div ref={scrollContainerRef} className="text-sm text-zinc-400 overflow-x-auto whitespace-nowrap scrollbar-none h-6 pr-1 leading-6">
+        <div ref={scrollContainerRef} className="text-base text-muted-foreground overflow-x-auto whitespace-nowrap scrollbar-none h-6 pr-1 leading-6">
           {expression || "0"}
         </div>
         {/* Dynamic preview or result */}
         <div
-          className={`text-2xl font-bold break-all transition-colors ${
-            isError ? "text-red-500" : "text-zinc-800 dark:text-zinc-200"
-          }`}
+          className={`text-2xl font-bold break-all transition-colors ${isError ? "text-destructive" : "text-foreground"
+            }`}
         >
           {preview}
         </div>
@@ -206,26 +205,26 @@ export function ScientificCalculator() {
 
           if (btn.type === "action") {
             btnClass =
-              "bg-red-50 border border-red-100 hover:bg-red-100/80 text-red-600 dark:bg-red-950/20 dark:border-red-900/40 dark:text-red-400";
+              "bg-destructive/10 border border-destructive/20 hover:bg-destructive/20 text-destructive";
           } else if (btn.type === "equal") {
             btnClass =
-              "bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow-md shadow-indigo-100 dark:shadow-none";
+              "bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-md shadow-primary/20";
           } else if (btn.type === "function") {
             btnClass =
-              "bg-indigo-50/70 border border-indigo-100/50 hover:bg-indigo-100/80 text-indigo-700 dark:bg-indigo-950/30 dark:border-indigo-900/30 dark:text-indigo-400";
+              "bg-primary/10 border border-primary/20 hover:bg-primary/20 text-primary";
           } else if (btn.type === "operator") {
             btnClass =
-              "bg-zinc-100/80 border border-zinc-200/50 hover:bg-zinc-200/70 text-zinc-700 dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-300";
+              "bg-secondary/80 border border-border/50 hover:bg-secondary text-foreground/80";
           } else {
             btnClass =
-              "bg-zinc-50 border border-zinc-100 hover:bg-zinc-100 text-zinc-800 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-100";
+              "bg-background border border-border hover:bg-muted text-foreground";
           }
 
           return (
             <button
               key={btn.label}
               onClick={() => handleKeyPress(btn.value)}
-              className={`rounded-xl py-3 text-xs font-semibold active:scale-95 transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 ${btnClass}`}
+              className={`rounded-xl py-3 text-base font-semibold active:scale-95 transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 ${btnClass}`}
             >
               {btn.label}
             </button>

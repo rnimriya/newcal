@@ -63,39 +63,41 @@ export function FormulaChart({ schema, fields }: Props) {
   const yField = schema.fields.find((f) => f.id === chart.yAxisField);
 
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-      <h3 className="mb-4 text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <h3 className="mb-4 text-base font-semibold text-foreground">
         {chart.label ?? "Formula Visualization"}
       </h3>
 
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={data} margin={{ top: 4, right: 16, left: 0, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" />
+          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis
             dataKey={chart.xAxisField}
-            tick={{ fontSize: 11, fill: "#71717a" }}
+            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
             label={{
               value: xField?.label ?? chart.xAxisField,
               position: "insideBottom",
               offset: -2,
               fontSize: 11,
-              fill: "#a1a1aa",
+              fill: "hsl(var(--muted-foreground))",
             }}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: "#71717a" }}
+            tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }}
             label={{
               value: yField?.label ?? chart.yAxisField,
               angle: -90,
               position: "insideLeft",
               fontSize: 11,
-              fill: "#a1a1aa",
+              fill: "hsl(var(--muted-foreground))",
             }}
           />
           <Tooltip
             contentStyle={{
               borderRadius: "10px",
-              border: "1px solid #e4e4e7",
+              border: "1px solid hsl(var(--border))",
+              backgroundColor: "hsl(var(--card))",
+              color: "hsl(var(--card-foreground))",
               fontSize: "12px",
             }}
             formatter={(value) => [typeof value === "number" ? value.toFixed(3) : String(value), yField?.label ?? chart.yAxisField]}
@@ -105,19 +107,19 @@ export function FormulaChart({ schema, fields }: Props) {
           {!isNaN(currentX) && (
             <ReferenceLine
               x={currentX}
-              stroke="#6366f1"
+              stroke="hsl(var(--primary))"
               strokeWidth={2}
               strokeDasharray="4 3"
-              label={{ value: "You", fill: "#6366f1", fontSize: 11 }}
+              label={{ value: "You", fill: "hsl(var(--primary))", fontSize: 11 }}
             />
           )}
           <Line
             type="monotone"
             dataKey={chart.yAxisField}
-            stroke="#6366f1"
+            stroke="hsl(var(--primary))"
             strokeWidth={2.5}
             dot={false}
-            activeDot={{ r: 5, fill: "#6366f1" }}
+            activeDot={{ r: 5, fill: "hsl(var(--primary))" }}
           />
         </LineChart>
       </ResponsiveContainer>

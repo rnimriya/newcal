@@ -33,8 +33,8 @@ export function HistoryPanel({ slug, onRestore }: Props) {
 
   if (entries.length === 0) {
     return (
-      <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 text-center py-10">
-        <p className="text-sm text-zinc-400 dark:text-zinc-500">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm text-center py-10">
+        <p className="text-base text-muted-foreground">
           No history yet. Run a calculation to see it here.
         </p>
       </div>
@@ -42,30 +42,30 @@ export function HistoryPanel({ slug, onRestore }: Props) {
   }
 
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 space-y-3">
-      <h3 className="text-xs font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm space-y-3">
+      <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground">
         Calculation History
       </h3>
       <div className="space-y-2">
         {entries.map((entry) => (
           <div
             key={entry.id}
-            className="flex items-start justify-between gap-3 rounded-xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/30 p-3"
+            className="flex items-start justify-between gap-3 rounded-xl border border-border bg-secondary/50 p-3"
           >
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mb-1">
+              <p className="text-[11px] text-muted-foreground mb-1">
                 {formatRelativeTime(entry.timestamp)}
               </p>
-              <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 truncate">
+              <p className="text-base font-semibold text-foreground/80 truncate">
                 Inputs: {summarize(entry.inputs)}
               </p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">
+              <p className="text-base text-muted-foreground truncate">
                 Results: {summarize(entry.outputs)}
               </p>
             </div>
             <button
               onClick={() => onRestore(entry.inputs)}
-              className="shrink-0 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-2.5 py-1.5 text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:border-indigo-300 hover:text-indigo-600 dark:hover:border-indigo-500 dark:hover:text-indigo-400 transition-all cursor-pointer"
+              className="shrink-0 rounded-xl border border-border bg-background px-2.5 py-1.5 text-base font-semibold text-muted-foreground hover:border-primary/50 hover:text-primary transition-all cursor-pointer"
             >
               Restore
             </button>

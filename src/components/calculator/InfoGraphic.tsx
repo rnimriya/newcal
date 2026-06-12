@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function InfoGraphic({ schema, fields, theme }: Props) {
-  const inputs  = schema.fields.filter((f) => f.type !== "computed");
+  const inputs = schema.fields.filter((f) => f.type !== "computed");
   const outputs = schema.fields.filter((f) => f.type === "computed");
 
   // Pull a display value for a field (current solved value or default)
@@ -27,11 +27,11 @@ export function InfoGraphic({ schema, fields, theme }: Props) {
   };
 
   const inputColors = [
-    "bg-indigo-50 border-indigo-200 text-indigo-800 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-300",
-    "bg-violet-50 border-violet-200 text-violet-800 dark:bg-violet-950/30 dark:border-violet-800 dark:text-violet-300",
-    "bg-sky-50 border-sky-200 text-sky-800 dark:bg-sky-950/30 dark:border-sky-800 dark:text-sky-300",
-    "bg-teal-50 border-teal-200 text-teal-800 dark:bg-teal-950/30 dark:border-teal-800 dark:text-teal-300",
-    "bg-pink-50 border-pink-200 text-pink-800 dark:bg-pink-950/30 dark:border-pink-800 dark:text-pink-300",
+    "bg-indigo-500/10 border-indigo-500/20 text-indigo-700 dark:text-indigo-400",
+    "bg-violet-500/10 border-violet-500/20 text-violet-700 dark:text-violet-400",
+    "bg-sky-500/10 border-sky-500/20 text-sky-700 dark:text-sky-400",
+    "bg-teal-500/10 border-teal-500/20 text-teal-700 dark:text-teal-400",
+    "bg-pink-500/10 border-pink-500/20 text-pink-700 dark:text-pink-400",
   ];
 
   // Short label — strip unit suffix in parens
@@ -42,17 +42,17 @@ export function InfoGraphic({ schema, fields, theme }: Props) {
   const rawFormula = mainFormulaId ? schema.formulas[mainFormulaId] : undefined;
 
   return (
-    <div className={`rounded-2xl border border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-800 overflow-hidden shadow-sm`}>
+    <div className={`rounded-2xl border border-border bg-card overflow-hidden shadow-sm`}>
       {/* Header */}
-      <div className={`px-5 py-4 ${theme.iconBg} border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between`}>
+      <div className={`px-5 py-4 ${theme.iconBg} border-b border-border flex items-center justify-between`}>
         <div className="flex items-center gap-3">
           <span className="text-2xl">{schema.icon ?? "🧮"}</span>
           <div>
-            <h3 className={`font-bold text-sm ${theme.textAccent}`}>{schema.name}</h3>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">How it calculates</p>
+            <h3 className={`font-bold text-base ${theme.textAccent}`}>{schema.name}</h3>
+            <p className="text-base text-muted-foreground mt-0.5">How it calculates</p>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 dark:text-zinc-500">
+        <div className="flex items-center gap-1.5 text-base font-semibold text-muted-foreground">
           <BarChart3 size={13} />
           Infographic
         </div>
@@ -64,18 +64,18 @@ export function InfoGraphic({ schema, fields, theme }: Props) {
 
           {/* Inputs column */}
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <p className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">Inputs</p>
+            <p className="text-[10px] font-black uppercase tracking-wider text-muted-foreground mb-1">Inputs</p>
             {inputs.slice(0, 5).map((f, idx) => (
               <div
                 key={f.id}
-                className={`flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-xs font-semibold ${inputColors[idx % inputColors.length]}`}
+                className={`flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-base font-semibold ${inputColors[idx % inputColors.length]}`}
               >
                 <span className="truncate">{shortLabel(f.label)}</span>
                 <span className="font-mono font-bold shrink-0 opacity-75">{displayVal(f.id)}</span>
               </div>
             ))}
             {inputs.length > 5 && (
-              <p className="text-[10px] text-zinc-400 pl-1">+{inputs.length - 5} more inputs</p>
+              <p className="text-[10px] text-muted-foreground pl-1">+{inputs.length - 5} more inputs</p>
             )}
           </div>
 
@@ -95,7 +95,7 @@ export function InfoGraphic({ schema, fields, theme }: Props) {
                 {rawFormula.length > 60 ? rawFormula.slice(0, 60) + "…" : rawFormula}
               </code>
             ) : (
-              <span className="text-xs text-zinc-400">Custom logic</span>
+              <span className="text-base text-muted-foreground">Custom logic</span>
             )}
           </div>
 
@@ -106,40 +106,40 @@ export function InfoGraphic({ schema, fields, theme }: Props) {
 
           {/* Outputs column */}
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <p className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">Results</p>
+            <p className="text-[10px] font-black uppercase tracking-wider text-muted-foreground mb-1">Results</p>
             {outputs.slice(0, 4).map((f) => (
               <div
                 key={f.id}
-                className={`flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-xs font-semibold ${theme.outputBg} ${theme.outputBorder} ${theme.textAccent}`}
+                className={`flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-base font-semibold ${theme.outputBg} ${theme.outputBorder} ${theme.textAccent}`}
               >
-                <span className="truncate text-zinc-700 dark:text-zinc-300">{shortLabel(f.label)}</span>
+                <span className="truncate text-foreground/80">{shortLabel(f.label)}</span>
                 <span className="font-mono font-bold shrink-0">
                   {fields[f.id]?.error ? "—" : displayVal(f.id)}
                 </span>
               </div>
             ))}
             {outputs.length > 4 && (
-              <p className="text-[10px] text-zinc-400 pl-1">+{outputs.length - 4} more outputs</p>
+              <p className="text-[10px] text-muted-foreground pl-1">+{outputs.length - 4} more outputs</p>
             )}
           </div>
         </div>
 
         {/* Quick stats row */}
         {schema.examples && schema.examples.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
-            <p className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">Quick Facts</p>
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-[10px] font-black uppercase tracking-wider text-muted-foreground mb-2">Quick Facts</p>
             <div className="grid grid-cols-3 gap-2">
               <div className={`rounded-xl ${theme.iconBg} p-2.5 text-center`}>
                 <p className={`text-lg font-extrabold ${theme.textAccent}`}>{inputs.length}</p>
-                <p className="text-[10px] text-zinc-500 dark:text-zinc-400">Inputs</p>
+                <p className="text-[10px] text-muted-foreground">Inputs</p>
               </div>
               <div className={`rounded-xl ${theme.iconBg} p-2.5 text-center`}>
                 <p className={`text-lg font-extrabold ${theme.textAccent}`}>{outputs.length}</p>
-                <p className="text-[10px] text-zinc-500 dark:text-zinc-400">Outputs</p>
+                <p className="text-[10px] text-muted-foreground">Outputs</p>
               </div>
               <div className={`rounded-xl ${theme.iconBg} p-2.5 text-center`}>
                 <p className={`text-lg font-extrabold ${theme.textAccent}`}>{schema.examples.length}</p>
-                <p className="text-[10px] text-zinc-500 dark:text-zinc-400">Examples</p>
+                <p className="text-[10px] text-muted-foreground">Examples</p>
               </div>
             </div>
           </div>

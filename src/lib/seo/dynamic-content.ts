@@ -25,6 +25,15 @@ export interface DynamicContent {
   }>;
 }
 
+function formatVal(outVal: unknown, precision: number | undefined): string {
+  if (outVal === undefined || outVal === null) return "—";
+  if (typeof outVal === "number") {
+    if (!isFinite(outVal)) return "—";
+    return outVal.toFixed(precision !== undefined ? precision : 2);
+  }
+  return String(outVal);
+}
+
 export function generateDynamicContent(schema: CalculatorSchema | Partial<CalculatorSchema>): DynamicContent {
   const inputs = (schema.fields ?? []).filter((f) => f.type !== "computed");
   const computed = (schema.fields ?? []).filter((f) => f.type === "computed");
@@ -99,12 +108,7 @@ export function generateDynamicContent(schema: CalculatorSchema | Partial<Calcul
     const scope = solveForInput(val);
     return {
       inputVal: `${val} ${targetInput.label.split(" (")[0]}`,
-      outputs: computed.map(c => {
-        const outVal = scope[c.id];
-        return typeof outVal === "number"
-          ? outVal.toFixed(c.precision !== undefined ? c.precision : 2)
-          : String(outVal);
-      })
+      outputs: computed.map(c => formatVal(scope[c.id], c.precision)),
     };
   });
 
@@ -118,13 +122,7 @@ export function generateDynamicContent(schema: CalculatorSchema | Partial<Calcul
   const problemInputs = [5, 20, 100, 250, 1000];
   const practiceProblems = problemInputs.map((val) => {
     const scope = solveForInput(val);
-    const answersStr = computed.map(c => {
-      const outVal = scope[c.id];
-      const outValStr = typeof outVal === "number"
-        ? outVal.toFixed(c.precision !== undefined ? c.precision : 2)
-        : String(outVal);
-      return `${c.label}: ${outValStr}`;
-    }).join(", ");
+    const answersStr = computed.map(c => `${c.label}: ${formatVal(scope[c.id], c.precision)}`).join(", ");
 
     return {
       question: `Find the calculation output for an input value of ${val} ${targetInput.label.split(" (")[0]}.`,
@@ -143,13 +141,7 @@ export function generateDynamicContent(schema: CalculatorSchema | Partial<Calcul
   ];
   const powerExamples = exampleInputs.map((val, idx) => {
     const scope = solveForInput(val);
-    const answersStr = computed.map(c => {
-      const outVal = scope[c.id];
-      const outValStr = typeof outVal === "number"
-        ? outVal.toFixed(c.precision !== undefined ? c.precision : 2)
-        : String(outVal);
-      return `${c.label}: ${outValStr}`;
-    }).join(", ");
+    const answersStr = computed.map(c => `${c.label}: ${formatVal(scope[c.id], c.precision)}`).join(", ");
 
     return {
       scenario: scenarios[idx],

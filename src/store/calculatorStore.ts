@@ -16,7 +16,6 @@ export const useCalcStore = create<CalcStore>()(
       savedCalculators: [],
       calcHistory: {},
       recentlyViewed: [],
-      theme: "system",
       preferredUnits: {},
 
       setSchema: (schema: CalculatorSchema) =>
@@ -67,8 +66,6 @@ export const useCalcStore = create<CalcStore>()(
           return { recentlyViewed: [slug, ...filtered].slice(0, 8) };
         }),
 
-      setTheme: (theme) => set({ theme }),
-
       setPreferredUnit: (slug, fieldId, unit) =>
         set((s) => ({
           preferredUnits: {
@@ -84,7 +81,6 @@ export const useCalcStore = create<CalcStore>()(
         unitSystem: s.unitSystem,
         calcHistory: s.calcHistory,
         recentlyViewed: s.recentlyViewed,
-        theme: s.theme,
         preferredUnits: s.preferredUnits,
       }),
     }

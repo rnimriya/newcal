@@ -3,17 +3,18 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { EmbedDetector } from "@/components/layout/EmbedDetector";
+import { ThemeProvider } from "@/components/ui/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://calcunit.net"),
   title: {
-    default: "CalcUnit — Dynamic Calculator Platform",
-    template: "%s | CalcUnit",
+    default: "CalcUnit.net — Free Online Calculators",
+    template: "%s",
   },
   description:
-    "100+ schema-driven calculators for Finance, Health, Math, and Physics. Works offline as a PWA.",
+    "1,000+ free online calculators for math, finance, health, physics, and unit conversion. Instant results as you type. No sign-up. Works offline.",
   manifest: "/manifest.json",
   icons: {
     icon: [
@@ -54,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -66,20 +67,37 @@ export default function RootLayout({
         <meta name="theme-color" content="#6366f1" />
         <meta name="msvalidate.01" content="XXXXXXXXXXXXXXXXXXX" />
 
-        {/* Theme: prevent flash of wrong color scheme */}
+
+
+        {/* Site-wide JSON-LD: Organization + WebSite (enables sitelinks searchbox) */}
         <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var stored = localStorage.getItem('omni-calc-store');
-                  var theme = stored ? JSON.parse(stored).state?.theme : 'system';
-                  if (theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
-                  }
-                } catch(e) {}
-              })();
-            `,
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://calcunit.net/#organization",
+                  name: "CalcUnit",
+                  url: "https://calcunit.net",
+                  logo: { "@type": "ImageObject", url: "https://calcunit.net/icon-512.png", width: 512, height: 512 },
+                  sameAs: ["https://x.com", "https://facebook.com"],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://calcunit.net/#website",
+                  name: "CalcUnit",
+                  url: "https://calcunit.net",
+                  publisher: { "@id": "https://calcunit.net/#organization" },
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target: { "@type": "EntryPoint", urlTemplate: "https://calcunit.net/?q={search_term_string}" },
+                    "query-input": "required name=search_term_string",
+                  },
+                },
+              ],
+            }),
           }}
         />
 
@@ -96,9 +114,16 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white">
-        <EmbedDetector />
-        <AppShell>{children}</AppShell>
+      <body className={`${inter.variable}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <EmbedDetector />
+          <AppShell>{children}</AppShell>
+        </ThemeProvider>
         <script
           dangerouslySetInnerHTML={{
             __html: `

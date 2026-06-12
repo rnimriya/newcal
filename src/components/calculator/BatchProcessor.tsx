@@ -92,15 +92,15 @@ export function BatchProcessor({ schema, theme }: Props) {
   const previewRows = results?.slice(0, 5) ?? [];
 
   return (
-    <div className={`rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow} overflow-hidden`}>
+    <div className={`rounded-2xl border border-border bg-card transition-all ${theme.glowShadow} overflow-hidden`}>
       {/* Header toggle */}
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className={`w-full flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-colors`}
+        className={`w-full flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-secondary/50 transition-colors`}
       >
         <div className="flex items-center gap-2">
           <TableProperties size={16} className={theme.textAccent} />
-          <span className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Batch Process</span>
+          <span className="text-base font-bold text-foreground">Batch Process</span>
           {rowCount > 0 && (
             <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${theme.badge}`}>
               {rowCount} rows
@@ -109,23 +109,23 @@ export function BatchProcessor({ schema, theme }: Props) {
         </div>
         <ChevronDown
           size={16}
-          className={`text-zinc-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          className={`text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
       {isOpen && (
-        <div className="px-5 pb-5 space-y-4 border-t border-zinc-100 dark:border-zinc-800 pt-4">
+        <div className="px-5 pb-5 space-y-4 border-t border-border pt-4">
           {/* Action row */}
           <div className="flex flex-wrap gap-2 items-center">
             <button
               onClick={handleDownloadTemplate}
-              className="flex items-center gap-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 px-3 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+              className="flex items-center gap-1.5 rounded-xl border border-border px-3 py-2 text-base font-bold text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
             >
               <Download size={13} />
               Download Template
             </button>
 
-            <label className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold text-white cursor-pointer transition-colors ${theme.buttonAccent}`}>
+            <label className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-base font-bold text-white cursor-pointer transition-colors ${theme.buttonAccent}`}>
               <TableProperties size={13} />
               Upload CSV
               <input
@@ -140,7 +140,7 @@ export function BatchProcessor({ schema, theme }: Props) {
             {results && (
               <button
                 onClick={handleDownloadResults}
-                className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold text-white transition-colors ${theme.buttonAccent}`}
+                className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-base font-bold text-white transition-colors ${theme.buttonAccent}`}
               >
                 <Download size={13} />
                 Download Results
@@ -149,29 +149,28 @@ export function BatchProcessor({ schema, theme }: Props) {
           </div>
 
           {error && (
-            <p className="text-xs text-red-500 font-semibold bg-red-50 dark:bg-red-950/20 rounded-lg px-3 py-2">
+            <p className="text-base text-destructive font-semibold bg-destructive/10 rounded-xl px-3 py-2">
               {error}
             </p>
           )}
 
           {/* Expected columns hint */}
-          <div className="text-xs text-zinc-400 dark:text-zinc-500">
+          <div className="text-base text-muted-foreground">
             <span className="font-bold">Expected input columns: </span>
             {inputFields.map((f) => f.id).join(", ")}
           </div>
 
           {/* Preview table */}
           {previewRows.length > 0 && (
-            <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-700">
+            <div className="overflow-x-auto rounded-xl border border-border">
               <table className="w-full text-[11px] font-mono">
                 <thead className={`${theme.bgSubtle}`}>
                   <tr>
                     {allFields.map((f) => (
                       <th
                         key={f.id}
-                        className={`px-3 py-2 text-left font-black uppercase tracking-wider whitespace-nowrap ${
-                          f.type === "computed" ? theme.textAccent : "text-zinc-600 dark:text-zinc-400"
-                        }`}
+                        className={`px-3 py-2 text-left font-black uppercase tracking-wider whitespace-nowrap ${f.type === "computed" ? theme.textAccent : "text-muted-foreground"
+                          }`}
                       >
                         {f.id}
                         {f.type === "computed" && (
@@ -185,16 +184,15 @@ export function BatchProcessor({ schema, theme }: Props) {
                   {previewRows.map((row, i) => (
                     <tr
                       key={i}
-                      className="border-t border-zinc-100 dark:border-zinc-800 even:bg-zinc-50/40 dark:even:bg-zinc-800/20"
+                      className="border-t border-border even:bg-secondary/30"
                     >
                       {allFields.map((f) => (
                         <td
                           key={f.id}
-                          className={`px-3 py-2 whitespace-nowrap ${
-                            f.type === "computed"
-                              ? `font-bold ${theme.textAccent}`
-                              : "text-zinc-700 dark:text-zinc-300"
-                          }`}
+                          className={`px-3 py-2 whitespace-nowrap ${f.type === "computed"
+                            ? `font-bold ${theme.textAccent}`
+                            : "text-foreground/80"
+                            }`}
                         >
                           {row[f.id] || "—"}
                         </td>
@@ -204,7 +202,7 @@ export function BatchProcessor({ schema, theme }: Props) {
                 </tbody>
               </table>
               {results && results.length > 5 && (
-                <div className="px-3 py-2 text-[11px] text-zinc-400 dark:text-zinc-500 border-t border-zinc-100 dark:border-zinc-800">
+                <div className="px-3 py-2 text-[11px] text-muted-foreground border-t border-border">
                   Showing 5 of {results.length} rows. Download to see all.
                 </div>
               )}
@@ -212,7 +210,7 @@ export function BatchProcessor({ schema, theme }: Props) {
           )}
 
           {results && previewRows.length === 0 && (
-            <p className="text-xs text-zinc-400 dark:text-zinc-500">No data rows found.</p>
+            <p className="text-base text-muted-foreground">No data rows found.</p>
           )}
         </div>
       )}

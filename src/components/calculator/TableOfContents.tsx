@@ -39,23 +39,21 @@ export function TableOfContents({ items }: Props) {
   };
 
   return (
-    <nav className="calc-card p-4 sticky top-24">
+    <nav className="calc-card border border-border rounded-2xl  p-2 bg-card border border-border hover:border-primary/50 transition-colors rounded-2xl  p-4 sticky top-24">
       <div className="flex items-center gap-2 mb-3">
-        <List size={15} className="text-indigo-600" />
-        <h3 className="text-sm font-semibold text-slate-800">Contents</h3>
+        <List size={15} className="text-primary" />
+        <h3 className="text-base font-semibold text-foreground">Contents</h3>
       </div>
       <ol className="space-y-1">
         {items.map(({ id, label, level }) => (
           <li key={id}>
             <button
               onClick={() => scrollTo(id)}
-              className={`text-left w-full rounded-md px-2 py-1 text-xs transition-colors ${
-                level === 3 ? "pl-4" : ""
-              } ${
-                activeId === id
-                  ? "bg-indigo-50 text-indigo-700 font-semibold"
-                  : "text-slate-500 hover:text-indigo-600 hover:bg-slate-50"
-              }`}
+              className={`text-left w-full rounded-md px-2 py-1 text-base transition-colors ${level === 3 ? "pl-4" : ""
+                } ${activeId === id
+                  ? "bg-primary/10 text-primary font-semibold"
+                  : "text-muted-foreground hover:text-primary hover:bg-secondary"
+                }`}
             >
               {label}
             </button>

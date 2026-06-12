@@ -22,7 +22,7 @@ export function UnitSelector({ units, value, onChange, isMobile }: Props) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex items-center gap-1 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm font-medium text-zinc-700 min-h-[48px] dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+          className="flex items-center gap-1 rounded-xl border border-border bg-secondary px-3 py-2 text-base font-medium text-foreground min-h-[48px]"
         >
           {selected?.label.split(" ")[0]}
           <ChevronDown size={13} />
@@ -38,15 +38,14 @@ export function UnitSelector({ units, value, onChange, isMobile }: Props) {
               <button
                 key={u.value}
                 onClick={() => { onChange(u.value); setOpen(false); }}
-                className={`flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-medium transition-colors min-h-[48px] ${
-                  u.value === value
-                    ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300"
-                    : "text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800"
-                }`}
+                className={`flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition-colors min-h-[48px] ${u.value === value
+                  ? "bg-primary/10 text-primary"
+                  : "text-foreground hover:bg-muted"
+                  }`}
               >
                 {u.label}
                 {u.value === value && (
-                  <span className="h-2 w-2 rounded-full bg-indigo-500" />
+                  <span className="h-2 w-2 rounded-full bg-primary" />
                 )}
               </button>
             ))}
@@ -62,7 +61,7 @@ export function UnitSelector({ units, value, onChange, isMobile }: Props) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="appearance-none cursor-pointer rounded-lg border border-zinc-200 bg-zinc-50 py-2 pl-3 pr-7 text-sm font-medium text-zinc-700 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+        className="appearance-none cursor-pointer rounded-xl border border-border bg-secondary py-2 pl-3 pr-7 text-base font-medium text-foreground outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
       >
         {units.map((u) => (
           <option key={u.value} value={u.value}>
@@ -72,7 +71,7 @@ export function UnitSelector({ units, value, onChange, isMobile }: Props) {
       </select>
       <ChevronDown
         size={13}
-        className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400"
+        className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
       />
     </div>
   );

@@ -18,8 +18,8 @@ export function CrossLinks({ slug, fields, category }: Props) {
 
   return (
     <section className="space-y-3">
-      <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-        <ArrowRight size={14} className="text-indigo-500" />
+      <h2 className="text-base font-bold text-foreground uppercase tracking-wider flex items-center gap-2">
+        <ArrowRight size={14} className="text-primary" />
         Use this result in
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -42,16 +42,16 @@ export function CrossLinks({ slug, fields, category }: Props) {
             <Link
               key={cl.toSlug}
               href={href}
-              className="flex items-center gap-3 rounded-xl border border-indigo-100 bg-indigo-50/50 p-4 hover:bg-indigo-50 hover:border-indigo-200 transition-colors group"
+              className="flex items-center gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 hover:bg-primary/10 hover:border-primary/30 transition-colors group"
             >
               <span className="text-xl shrink-0">{target.icon}</span>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-indigo-700 group-hover:text-indigo-900 transition-colors leading-snug">
+                <p className="text-base font-semibold text-primary group-hover:text-primary/80 transition-colors leading-snug">
                   {cl.label}
                 </p>
-                <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{target.name}</p>
+                <p className="text-base text-muted-foreground mt-0.5 line-clamp-1">{target.name}</p>
               </div>
-              <ArrowRight size={14} className="shrink-0 text-indigo-300 group-hover:text-indigo-500 transition-colors" />
+              <ArrowRight size={14} className="shrink-0 text-primary/40 group-hover:text-primary/70 transition-colors" />
             </Link>
           );
         })}

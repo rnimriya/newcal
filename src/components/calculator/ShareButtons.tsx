@@ -24,7 +24,7 @@ export function ShareButtons({ url, title }: Props) {
     {
       name: "X / Twitter",
       href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
-      bgClass: "bg-zinc-900 hover:bg-black text-white",
+      bgClass: "bg-foreground hover:bg-foreground/90 text-background",
       icon: (
         <svg className="h-4.5 w-4.5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -64,8 +64,8 @@ export function ShareButtons({ url, title }: Props) {
   ];
 
   return (
-    <div className="pt-4 mt-4 border-t border-indigo-100/40 dark:border-zinc-800">
-      <p className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">
+    <div className="pt-4 mt-4 border-t border-border">
+      <p className="text-base font-bold uppercase tracking-wider text-muted-foreground mb-3">
         Share this Calculator
       </p>
       <div className="flex flex-wrap items-center gap-2">
@@ -85,11 +85,11 @@ export function ShareButtons({ url, title }: Props) {
         <button
           type="button"
           onClick={handleCopy}
-          className={`flex h-9 items-center gap-1.5 px-3.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300 text-zinc-600 hover:text-zinc-850 transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm text-xs font-bold dark:border-zinc-700 dark:bg-zinc-900/60 dark:hover:bg-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 cursor-pointer min-h-[36px]`}
+          className={`flex h-9 items-center gap-1.5 px-3.5 rounded-xl border border-border bg-background hover:bg-secondary hover:border-ring text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm text-base font-bold cursor-pointer min-h-[36px]`}
           title="Copy direct calculator link"
         >
           {copied ? (
-            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 animate-copy-pop">
+            <span className="flex items-center gap-1.5 text-primary animate-copy-pop">
               <Check size={14} className="stroke-[3]" />
               <span>Copied Link</span>
             </span>

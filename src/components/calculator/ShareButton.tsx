@@ -36,10 +36,10 @@ export function ShareButton({ slug, category, fields, schema }: Props) {
     <button
       onClick={handleShare}
       title="Copy shareable link"
-      className="rounded-xl p-2 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-150 dark:hover:text-zinc-200 dark:hover:bg-zinc-800 transition-all duration-200 active:scale-90 cursor-pointer"
+      className="rounded-xl p-2 text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200 active:scale-90 cursor-pointer"
     >
       {copied ? (
-        <Check size={19} className="text-emerald-500" />
+        <Check size={19} className="text-primary" />
       ) : (
         <Link2 size={19} />
       )}

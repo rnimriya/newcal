@@ -112,9 +112,7 @@ export interface CalcStore {
   // Recently Viewed
   recentlyViewed: string[];
   addRecentlyViewed: (slug: string) => void;
-  // Theme
-  theme: "light" | "dark" | "system";
-  setTheme: (theme: "light" | "dark" | "system") => void;
+
   // Custom Units
   preferredUnits: Record<string, string>;
   setPreferredUnit: (slug: string, fieldId: string, unit: string) => void;
@@ -135,6 +133,7 @@ export interface Category {
   label: string;
   icon: string;
   color: string;          // Tailwind bg class
+  description?: string;
   calculators: string[];  // slugs
 }
 

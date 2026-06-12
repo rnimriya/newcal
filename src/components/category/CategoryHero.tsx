@@ -12,23 +12,23 @@ export function CategoryHero({ categoryId, label, color, count }: Props) {
   if (!desc) return null;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-5">
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-5">
       {/* Tagline */}
-      <p className="text-lg font-semibold text-slate-800 leading-snug">{desc.tagline}</p>
+      <p className="text-lg font-semibold text-foreground leading-snug">{desc.tagline}</p>
 
       {/* Stats bar */}
-      <div className="flex flex-wrap gap-3 text-xs font-medium text-slate-500">
+      <div className="flex flex-wrap gap-3 text-base font-medium text-muted-foreground">
         <span className="flex items-center gap-1.5">
-          <span className={`inline-flex h-5 w-5 items-center justify-center rounded-md ${color} text-[10px] font-bold`}>
+          <span className={`inline-flex h-5 w-5 items-center justify-center rounded-md ${color} text-[10px] font-bold text-white`}>
             {count}
           </span>
           {count} {label.toLowerCase()} calculators
         </span>
-        <span className="text-slate-300">•</span>
+        <span className="text-border">•</span>
         <span>Free</span>
-        <span className="text-slate-300">•</span>
+        <span className="text-border">•</span>
         <span>No sign-up</span>
-        <span className="text-slate-300">•</span>
+        <span className="text-border">•</span>
         <span>Works offline</span>
       </div>
 
@@ -37,12 +37,12 @@ export function CategoryHero({ categoryId, label, color, count }: Props) {
         {desc.useCases.map((uc) => (
           <div
             key={uc.title}
-            className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50/60 p-4"
+            className="flex items-start gap-3 rounded-xl border border-border bg-secondary/50 p-4"
           >
             <span className="text-2xl shrink-0" aria-hidden="true">{uc.icon}</span>
             <div>
-              <p className="text-sm font-semibold text-slate-800 leading-snug">{uc.title}</p>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">{uc.desc}</p>
+              <p className="text-base font-semibold text-foreground leading-snug">{uc.title}</p>
+              <p className="text-base text-muted-foreground mt-1 leading-relaxed">{uc.desc}</p>
             </div>
           </div>
         ))}

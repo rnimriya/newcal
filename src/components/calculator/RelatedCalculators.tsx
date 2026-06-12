@@ -11,22 +11,22 @@ export function RelatedCalculators({ entries }: Props) {
 
   return (
     <section id="related" className="scroll-mt-24">
-      <h2 className="section-title">Related Calculators</h2>
+      <h2 className="section-title mb-3 font-bold text-xl ">Related Calculators</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {entries.map((e) => (
           <Link
             key={e.slug}
             href={`/${e.category}/${e.slug}`}
-            className="calc-card flex items-center gap-3 p-4 group"
+            className="calc-card border border-border rounded-2xl  p-2 bg-card border border-border hover:border-primary/50 transition-colors rounded-2xl  flex items-center gap-3 p-4 group"
           >
             <span className="text-2xl">{e.icon}</span>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-slate-800 text-sm group-hover:text-indigo-600 transition-colors leading-tight">
+              <p className="font-medium text-foreground text-base group-hover:text-primary transition-colors leading-tight">
                 {e.name}
               </p>
-              <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">{e.shortDesc}</p>
+              <p className="text-base text-muted-foreground mt-0.5 line-clamp-1">{e.shortDesc}</p>
             </div>
-            <ArrowRight size={14} className="shrink-0 text-slate-300 group-hover:text-indigo-400 transition-colors" />
+            <ArrowRight size={14} className="shrink-0 text-muted-foreground/30 group-hover:text-primary/70 transition-colors" />
           </Link>
         ))}
       </div>

@@ -23,24 +23,24 @@ export function SolveForSelector({ schema, onSolveFor, currentSolveTarget, theme
   if (computedFields.length === 0) return null;
 
   return (
-    <div className={`rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/60 dark:bg-zinc-800/40 px-4 py-3 flex items-center gap-3 flex-wrap`}>
-      <span className="text-xs font-black uppercase tracking-wider text-zinc-500 dark:text-zinc-400 shrink-0">
+    <div className={`rounded-xl border border-border bg-secondary/50 px-4 py-3 flex items-center gap-3 flex-wrap`}>
+      <span className="text-base font-black uppercase tracking-wider text-muted-foreground shrink-0">
         Solve for:
       </span>
-      <div className={`relative flex-1 min-w-[160px] rounded-lg border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 ${theme.focusRing}`}>
+      <div className={`relative flex-1 min-w-[160px] rounded-xl border-2 border-border bg-background ${theme.focusRing}`}>
         <select
           value={currentSolveTarget ?? ""}
           onChange={(e) => onSolveFor(e.target.value)}
-          className="w-full appearance-none bg-transparent px-3 py-2 pr-8 text-xs font-bold text-zinc-800 dark:text-white outline-none cursor-pointer"
+          className="w-full appearance-none bg-transparent px-3 py-2 pr-8 text-base font-bold text-foreground outline-none cursor-pointer"
         >
           <option value="">— Default mode —</option>
           {computedFields.map((f) => (
-            <option key={f.id} value={f.id} className="dark:bg-zinc-900">
+            <option key={f.id} value={f.id} className="bg-popover text-popover-foreground">
               {f.label}
             </option>
           ))}
         </select>
-        <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-[10px] font-bold">
+        <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground text-[10px] font-bold">
           ▼
         </div>
       </div>

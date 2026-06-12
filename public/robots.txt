@@ -1,19 +1,31 @@
 User-agent: *
 Allow: /
+Disallow: /saved
+Disallow: /settings
 
 User-agent: GPTBot
 Allow: /
+Disallow: /saved
+Disallow: /settings
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /saved
+Disallow: /settings
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /saved
+Disallow: /settings
 
 User-agent: Googlebot
 Allow: /
+Disallow: /saved
+Disallow: /settings
 
 User-agent: Bingbot
 Allow: /
+Disallow: /saved
+Disallow: /settings
 
 Sitemap: https://calcunit.net/sitemap.xml

@@ -16,21 +16,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Base styles
     const baseStyles =
-      "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-zinc-950 dark:focus-visible:ring-indigo-300";
+      "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
 
     // Variants
     const variants = {
       default:
-        "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm dark:bg-indigo-600 dark:hover:bg-indigo-700",
+        "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
       destructive:
-        "bg-red-500 text-white hover:bg-red-600 shadow-sm dark:bg-red-900 dark:hover:bg-red-900/90",
+        "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm",
       outline:
-        "border border-zinc-200 bg-white hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
+        "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
       secondary:
-        "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80",
+        "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       ghost:
-        "hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
-      link: "text-indigo-600 underline-offset-4 hover:underline dark:text-indigo-50",
+        "hover:bg-accent hover:text-accent-foreground",
+      link: "text-primary underline-offset-4 hover:underline",
     };
 
     // Sizes
