@@ -11,7 +11,7 @@ export function RelatedCalculators({ entries }: Props) {
 
   return (
     <section id="related" className="scroll-mt-24">
-      <h2 className="section-title mb-3 font-bold text-xl ">Related Calculators</h2>
+      <h2 className="section-title text-xl mb-4 font-bold">Related Calculators</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {entries.map((e) => (
           <Link

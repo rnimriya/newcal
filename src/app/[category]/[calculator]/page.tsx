@@ -150,7 +150,7 @@ export default async function CalculatorPage({ params }: Props) {
 
           {/* ── SECTION 2: Description ────────────────────────────────────── */}
           <section id="description" className="scroll-mt-20">
-            <h2 className="section-title">What is the {entry.name}?</h2>
+            <h2 className="section-title text-xl mb-4 font-bold">What is the {entry.name}?</h2>
             <div className="space-y-3">
               {content.description.split("\n\n").map((para, i) => (
                 para.trim() ? (
@@ -162,7 +162,7 @@ export default async function CalculatorPage({ params }: Props) {
 
           {/* ── SECTION 3: How to Use ─────────────────────────────────────── */}
           <section id="how-to-use" className="scroll-mt-20">
-            <h2 className="section-title">How to Use the {entry.name}</h2>
+            <h2 className="section-title text-xl mb-4 font-bold">How to Use the {entry.name}</h2>
             <ol className="space-y-3">
               {content.howToSteps.map((step, i) => (
                 <li key={i} className="flex items-start gap-3">
@@ -186,7 +186,7 @@ export default async function CalculatorPage({ params }: Props) {
           {/* ── SECTION 5: 10-Row Value Reference Table ───────────────────────── */}
           {dynamicContent.table && (
             <section id="reference-table-10" className="scroll-mt-20 space-y-4">
-              <h2 className="section-title">Value Reference Table</h2>
+              <h2 className="section-title text-xl mb-4 font-bold">Value Reference Table</h2>
               <p className="text-base text-slate-600">
                 Explore calculated outputs for standard inputs. Calculated in real time using the formula.
               </p>
@@ -217,7 +217,7 @@ export default async function CalculatorPage({ params }: Props) {
 
           {/* ── SECTION 6: Practice Problems ────────────────────────────────── */}
           <section id="practice-problems" className="scroll-mt-20 space-y-4">
-            <h2 className="section-title">Practice Problems</h2>
+            <h2 className="section-title text-xl mb-4 font-bold">Practice Problems</h2>
             <p className="text-base text-slate-600">
               Check your understanding with these practice problems. Click a problem to reveal its correct calculated answer.
             </p>
@@ -249,7 +249,7 @@ export default async function CalculatorPage({ params }: Props) {
 
           {/* ── SECTION 7: Progression Chart ─────────────────────────────────── */}
           <section id="progression-chart" className="scroll-mt-20 space-y-4">
-            <h2 className="section-title">Calculation Progression Roadmap</h2>
+            <h2 className="section-title text-xl mb-4 font-bold">Calculation Progression Roadmap</h2>
             <p className="text-base text-slate-600">
               The internal flow diagram outlining how the calculator processes and solves input values.
             </p>
@@ -275,7 +275,7 @@ export default async function CalculatorPage({ params }: Props) {
 
           {/* ── SECTION 8: Real-World Power 5 Examples ───────────────────────── */}
           <section id="real-world-examples" className="scroll-mt-20 space-y-4">
-            <h2 className="section-title">Real-World Examples</h2>
+            <h2 className="section-title text-xl mb-4 font-bold">Real-World Examples</h2>
             <p className="text-base text-slate-600">
               Discover how this formula applies to active professional, academic, and industrial workflows.
             </p>

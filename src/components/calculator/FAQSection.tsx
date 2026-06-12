@@ -17,7 +17,7 @@ export function FAQSection({ faqs }: Props) {
 
   return (
     <section id="faq" className="scroll-mt-24">
-      <h2 className="section-title mb-3 font-bold text-xl ">Frequently Asked Questions</h2>
+      <h2 className="section-title text-xl mb-4 font-bold">Frequently Asked Questions</h2>
       <div className="space-y-2">
         {faqs.map((faq, i) => (
           <div

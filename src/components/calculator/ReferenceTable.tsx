@@ -12,7 +12,7 @@ export function ReferenceTable({ sqrtTable, examples, formulaText, name }: Props
     <>
       {/* Formula section */}
       <section id="formula" className="scroll-mt-24 space-y-3">
-        <h2 className="section-title mb-3 font-bold text-xl ">Formula</h2>
+        <h2 className="section-title text-xl mb-4 font-bold">Formula</h2>
         <div className="formula-block text-base">{formulaText}</div>
         <p className="text-base text-muted-foreground">
           This is the core equation the {name} uses to calculate results.
@@ -23,7 +23,7 @@ export function ReferenceTable({ sqrtTable, examples, formulaText, name }: Props
       {/* Examples */}
       {examples && examples.length > 0 && (
         <section id="examples" className="scroll-mt-24">
-          <h2 className="section-title mb-3 font-bold text-xl ">Common Examples</h2>
+          <h2 className="section-title text-xl mb-4 font-bold">Common Examples</h2>
           <div className="overflow-x-auto rounded-xl border border-border">
             <table className="calc-table">
               <thead>
@@ -50,7 +50,7 @@ export function ReferenceTable({ sqrtTable, examples, formulaText, name }: Props
       {/* Square root reference table */}
       {sqrtTable && (
         <section id="reference" className="scroll-mt-24">
-          <h2 className="section-title mb-3 font-bold text-xl ">Square Root Reference Table</h2>
+          <h2 className="section-title text-xl mb-4 font-bold">Square Root Reference Table</h2>
           <p className="text-base text-muted-foreground mb-3">
             Quick reference for the square roots of 1 through 30.
           </p>
