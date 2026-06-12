@@ -223,7 +223,7 @@ export default async function CalculatorPage({ params }: Props) {
             </p>
             <div className="space-y-3">
               {dynamicContent.practiceProblems.map((prob, i) => (
-                <div key={i} className="calc-card p-5 bg-white border border-slate-200 hover:border-indigo-200 transition-all">
+                <div key={i} className="calc-card p-5 bg-white border border-slate-200 hover:border-indigo-200 transition-all rounded-xl">
                   <div className="flex items-start gap-3">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-sm font-bold text-indigo-600 mt-0.5">
                       Q{i + 1}
