@@ -154,7 +154,7 @@ export default async function CalculatorPage({ params }: Props) {
             <div className="space-y-3">
               {content.description.split("\n\n").map((para, i) => (
                 para.trim() ? (
-                  <p key={i} className="text-sm text-slate-600 leading-relaxed">{para.trim()}</p>
+                  <p key={i} className="text-base text-slate-600 leading-relaxed">{para.trim()}</p>
                 ) : null
               ))}
             </div>
@@ -166,10 +166,10 @@ export default async function CalculatorPage({ params }: Props) {
             <ol className="space-y-3">
               {content.howToSteps.map((step, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700 mt-0.5">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700 mt-0.5">
                     {i + 1}
                   </span>
-                  <span className="text-sm text-slate-600 leading-relaxed">{step}</span>
+                  <span className="text-base text-slate-600 leading-relaxed">{step}</span>
                 </li>
               ))}
             </ol>
@@ -187,7 +187,7 @@ export default async function CalculatorPage({ params }: Props) {
           {dynamicContent.table && (
             <section id="reference-table-10" className="scroll-mt-20 space-y-4">
               <h2 className="section-title">Value Reference Table</h2>
-              <p className="text-sm text-slate-600">
+              <p className="text-base text-slate-600">
                 Explore calculated outputs for standard inputs. Calculated in real time using the formula.
               </p>
               <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
@@ -205,7 +205,7 @@ export default async function CalculatorPage({ params }: Props) {
                       <tr key={i} className="hover:bg-slate-50/50 odd:bg-white even:bg-slate-50/10">
                         <td className="px-4 py-3 font-medium text-slate-900">{row.inputVal}</td>
                         {row.outputs.map((out, j) => (
-                          <td key={j} className="px-4 py-3 font-mono text-sm text-indigo-600 dark:text-indigo-400 font-semibold">{out}</td>
+                          <td key={j} className="px-4 py-3 font-mono text-base text-indigo-600 dark:text-indigo-400 font-semibold">{out}</td>
                         ))}
                       </tr>
                     ))}
@@ -218,25 +218,25 @@ export default async function CalculatorPage({ params }: Props) {
           {/* ── SECTION 6: Practice Problems ────────────────────────────────── */}
           <section id="practice-problems" className="scroll-mt-20 space-y-4">
             <h2 className="section-title">Practice Problems</h2>
-            <p className="text-sm text-slate-600">
+            <p className="text-base text-slate-600">
               Check your understanding with these practice problems. Click a problem to reveal its correct calculated answer.
             </p>
             <div className="space-y-3">
               {dynamicContent.practiceProblems.map((prob, i) => (
                 <div key={i} className="calc-card p-5 bg-white border border-slate-200 hover:border-indigo-200 transition-all">
                   <div className="flex items-start gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-xs font-bold text-indigo-600 mt-0.5">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-sm font-bold text-indigo-600 mt-0.5">
                       Q{i + 1}
                     </span>
                     <div className="space-y-2.5 w-full">
-                      <h4 className="font-semibold text-slate-900 text-sm leading-relaxed">{prob.question}</h4>
+                      <h4 className="font-semibold text-slate-900 text-base leading-relaxed">{prob.question}</h4>
                       <details className="group">
-                        <summary className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer list-none flex items-center gap-1.5 focus:outline-none">
+                        <summary className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 cursor-pointer list-none flex items-center gap-1.5 focus:outline-none">
                           <HelpCircle size={14} className="text-indigo-600" />
                           <span className="group-open:hidden">Show Answer</span>
                           <span className="hidden group-open:inline">Hide Answer</span>
                         </summary>
-                        <div className="mt-3 text-xs bg-slate-50 border border-slate-100 rounded-xl p-3.5 text-slate-700 leading-relaxed font-medium">
+                        <div className="mt-3 text-sm bg-slate-50 border border-slate-100 rounded-xl p-3.5 text-slate-700 leading-relaxed font-medium">
                           {prob.answer}
                         </div>
                       </details>
@@ -250,7 +250,7 @@ export default async function CalculatorPage({ params }: Props) {
           {/* ── SECTION 7: Progression Chart ─────────────────────────────────── */}
           <section id="progression-chart" className="scroll-mt-20 space-y-4">
             <h2 className="section-title">Calculation Progression Roadmap</h2>
-            <p className="text-sm text-slate-600">
+            <p className="text-base text-slate-600">
               The internal flow diagram outlining how the calculator processes and solves input values.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -265,8 +265,8 @@ export default async function CalculatorPage({ params }: Props) {
                         </span>
                       )}
                     </div>
-                    <h4 className="font-bold text-slate-900 text-xs tracking-wide uppercase">{step.title}</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
+                    <h4 className="font-bold text-slate-900 text-sm tracking-wide uppercase">{step.title}</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -276,19 +276,19 @@ export default async function CalculatorPage({ params }: Props) {
           {/* ── SECTION 8: Real-World Power 5 Examples ───────────────────────── */}
           <section id="real-world-examples" className="scroll-mt-20 space-y-4">
             <h2 className="section-title">Real-World Examples</h2>
-            <p className="text-sm text-slate-600">
+            <p className="text-base text-slate-600">
               Discover how this formula applies to active professional, academic, and industrial workflows.
             </p>
             <div className="space-y-3">
               {dynamicContent.powerExamples.map((ex, i) => (
                 <div key={i} className="calc-card p-5 bg-white border border-slate-200 hover:border-slate-300 transition-colors">
                   <div className="flex items-start gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-xs font-bold text-emerald-700 mt-0.5">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-sm font-bold text-emerald-700 mt-0.5">
                       {i + 1}
                     </span>
                     <div>
-                      <h4 className="font-bold text-slate-900 text-sm">{ex.scenario}</h4>
-                      <p className="text-xs text-slate-600 mt-1 leading-relaxed">{ex.example}</p>
+                      <h4 className="font-bold text-slate-900 text-base">{ex.scenario}</h4>
+                      <p className="text-sm text-slate-600 mt-1 leading-relaxed">{ex.example}</p>
                     </div>
                   </div>
                 </div>
@@ -304,20 +304,20 @@ export default async function CalculatorPage({ params }: Props) {
             </h3>
             <ul className="space-y-2 pb-2">
               {entry.formula && (
-                <li className="text-sm text-slate-600 dark:text-zinc-400">
+                <li className="text-base text-slate-600 dark:text-zinc-400">
                   <span className="font-semibold text-slate-800 dark:text-zinc-200">Formula:</span>{" "}
-                  <code className="bg-white px-2 py-0.5 rounded text-indigo-700 text-xs dark:bg-zinc-800 dark:text-indigo-300">{entry.formula}</code>
+                  <code className="bg-white px-2 py-0.5 rounded text-indigo-700 text-sm dark:bg-zinc-800 dark:text-indigo-300">{entry.formula}</code>
                 </li>
               )}
-              <li className="text-sm text-slate-600 dark:text-zinc-400">
+              <li className="text-base text-slate-600 dark:text-zinc-400">
                 <span className="font-semibold text-slate-800 dark:text-zinc-200">Category:</span>{" "}
                 <span className="capitalize">{entry.category}</span>
               </li>
-              <li className="text-sm text-slate-600 dark:text-zinc-400">
+              <li className="text-base text-slate-600 dark:text-zinc-400">
                 <span className="font-semibold text-slate-800 dark:text-zinc-200">Uses:</span>{" "}
                 {entry.tags.slice(0, 4).join(", ")}
               </li>
-              <li className="text-sm text-slate-600 dark:text-zinc-400">
+              <li className="text-base text-slate-600 dark:text-zinc-400">
                 <span className="font-semibold text-slate-800 dark:text-zinc-200">Price:</span>{" "}
                 Free — no account needed
               </li>
@@ -350,19 +350,19 @@ function StaticCalculatorCard({ entry }: { entry: ReturnType<typeof getEntry> })
         <span className="text-4xl">{entry.icon}</span>
         <div>
           <h1 className="text-2xl font-bold text-slate-900 leading-tight">{entry.name}</h1>
-          <p className="text-slate-500 text-sm mt-1">{entry.shortDesc}</p>
+          <p className="text-slate-500 text-base mt-1">{entry.shortDesc}</p>
         </div>
       </div>
 
       {entry.formula && (
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Formula</p>
+          <p className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-2">Formula</p>
           <div className="formula-block">{entry.formula}</div>
         </div>
       )}
 
       <div className="rounded-xl bg-amber-50 border border-amber-100 px-4 py-3">
-        <p className="text-sm text-amber-800 font-medium">
+        <p className="text-base text-amber-800 font-medium">
           Full interactive calculator coming soon. Use the formula above or check the examples below.
         </p>
       </div>

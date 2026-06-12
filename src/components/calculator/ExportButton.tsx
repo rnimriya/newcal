@@ -65,7 +65,7 @@ export function ExportButton({ schema, fields, theme }: Props) {
         <div className="absolute left-0 top-full mt-1 z-30 w-44 rounded-xl border border-border bg-popover shadow-lg overflow-hidden">
           <button
             onClick={handleExportCSV}
-            className="flex w-full items-center gap-2 px-4 py-3 text-xs font-bold text-popover-foreground hover:bg-muted transition-colors"
+            className="flex w-full items-center gap-2 px-4 py-3 text-sm font-bold text-popover-foreground hover:bg-muted transition-colors"
           >
             <Download size={13} className={theme.textAccent} />
             Export CSV
@@ -73,7 +73,7 @@ export function ExportButton({ schema, fields, theme }: Props) {
           <div className="border-t border-border" />
           <button
             onClick={handleCopyText}
-            className="flex w-full items-center gap-2 px-4 py-3 text-xs font-bold text-popover-foreground hover:bg-muted transition-colors"
+            className="flex w-full items-center gap-2 px-4 py-3 text-sm font-bold text-popover-foreground hover:bg-muted transition-colors"
           >
             <Copy size={13} className={theme.textAccent} />
             Copy as Text

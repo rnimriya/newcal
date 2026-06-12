@@ -75,7 +75,7 @@ export function CalculatorLayout({ schema }: Props) {
       <div className="flex flex-wrap items-center gap-2">
         <button
           onClick={() => { setShowComparison((v) => !v); setShowBatch(false); }}
-          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-sm font-bold transition-all cursor-pointer ${
             showComparison
               ? `${theme.buttonAccent} border-transparent`
               : `border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800`
@@ -86,7 +86,7 @@ export function CalculatorLayout({ schema }: Props) {
         </button>
         <button
           onClick={() => { setShowBatch((v) => !v); setShowComparison(false); }}
-          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
+          className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-sm font-bold transition-all cursor-pointer ${
             showBatch
               ? `${theme.buttonAccent} border-transparent`
               : `border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800`
@@ -282,7 +282,7 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
             <h1 className="font-extrabold text-white text-2xl sm:text-3xl leading-tight drop-shadow-sm">
               {schema.name}
             </h1>
-            <p className="text-sm sm:text-base text-white/90 mt-1.5 leading-relaxed font-medium max-w-2xl drop-shadow-sm">
+            <p className="text-base sm:text-base text-white/90 mt-1.5 leading-relaxed font-medium max-w-2xl drop-shadow-sm">
               {schema.description}
             </p>
           </div>
@@ -292,12 +292,12 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
           <div className="flex flex-wrap gap-2 min-h-[36px]">
             {schema.examples && schema.examples.length > 0 && (
               <>
-                <span className="text-xs text-white/80 self-center font-bold tracking-wide uppercase">Examples:</span>
+                <span className="text-sm text-white/80 self-center font-bold tracking-wide uppercase">Examples:</span>
                 {schema.examples.map((ex) => (
                   <button
                     key={ex.label}
                     onClick={() => loadExample(ex.inputs)}
-                    className="rounded-xl border border-white/20 bg-black/10 backdrop-blur-md px-3 py-1.5 text-xs font-bold text-white hover:bg-white hover:text-slate-900 transition-all cursor-pointer shadow-sm"
+                    className="rounded-xl border border-white/20 bg-black/10 backdrop-blur-md px-3 py-1.5 text-sm font-bold text-white hover:bg-white hover:text-slate-900 transition-all cursor-pointer shadow-sm"
                   >
                     {ex.label}
                   </button>
@@ -360,7 +360,7 @@ function CalculatorFormConnected({ schema, state, isMobile, theme, setPreferredU
             key={group.id}
             className={`rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 transition-all ${theme.glowShadow}`}
           >
-            <h2 className={`mb-4 text-xs font-black uppercase tracking-wider border-b border-zinc-100 pb-2 dark:border-zinc-800 ${theme.textAccent}`}>
+            <h2 className={`mb-4 text-sm font-black uppercase tracking-wider border-b border-zinc-100 pb-2 dark:border-zinc-800 ${theme.textAccent}`}>
               {group.label}
             </h2>
             <div className="space-y-5">

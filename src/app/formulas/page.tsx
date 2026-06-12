@@ -53,7 +53,7 @@ export default function FormulasPage() {
                 <span className="font-medium text-foreground text-base group-hover:text-primary transition-colors line-clamp-1">
                   {calc.name.replace(" Calculator", "")} Formula
                 </span>
-                <span className="text-xs text-muted-foreground line-clamp-2">
+                <span className="text-sm text-muted-foreground line-clamp-2">
                   {calc.shortDesc}
                 </span>
               </Link>

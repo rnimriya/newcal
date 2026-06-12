@@ -64,12 +64,12 @@ export function ComparisonMode({ schema, theme }: Props) {
 
       {/* Table header */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 items-end">
-        <div className="hidden md:block font-bold text-muted-foreground uppercase tracking-wider text-xs px-2">Field</div>
+        <div className="hidden md:block font-bold text-muted-foreground uppercase tracking-wider text-sm px-2">Field</div>
         <div className={`rounded-lg border border-border bg-secondary/30 px-3 py-1.5 text-center`}>
-          <span className={`text-xs font-black uppercase tracking-widest ${theme.textAccent}`}>Scenario A</span>
+          <span className={`text-sm font-black uppercase tracking-widest ${theme.textAccent}`}>Scenario A</span>
         </div>
         <div className={`rounded-lg border border-border bg-secondary/30 px-3 py-1.5 text-center`}>
-          <span className={`text-xs font-black uppercase tracking-widest ${theme.textAccent}`}>Scenario B</span>
+          <span className={`text-sm font-black uppercase tracking-widest ${theme.textAccent}`}>Scenario B</span>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ export function ComparisonMode({ schema, theme }: Props) {
 
           return (
             <div key={field.id} className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 md:items-center py-2.5 first:pt-1">
-              <div className="text-sm font-semibold text-foreground/80 md:pr-4 mb-1 md:mb-0 px-2">
+              <div className="text-base font-semibold text-foreground/80 md:pr-4 mb-1 md:mb-0 px-2">
                 {field.label}
                 {field.helpText && (
                   <p className="text-[11px] text-muted-foreground mt-0.5 font-normal leading-tight">{field.helpText}</p>
@@ -116,7 +116,7 @@ export function ComparisonMode({ schema, theme }: Props) {
       {/* Comparison Summary */}
       {computedFields.length > 0 && (
         <div className="border-t border-border pt-3 space-y-2">
-          <h4 className="text-xs font-black uppercase tracking-wider text-muted-foreground px-2">
+          <h4 className="text-sm font-black uppercase tracking-wider text-muted-foreground px-2">
             Comparison Summary
           </h4>
           <div className="space-y-1.5">
@@ -140,10 +140,10 @@ export function ComparisonMode({ schema, theme }: Props) {
                   key={field.id}
                   className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-1.5 bg-secondary/50"
                 >
-                  <span className="text-sm font-semibold text-foreground/80 truncate px-1">
+                  <span className="text-base font-semibold text-foreground/80 truncate px-1">
                     {field.label}
                   </span>
-                  <div className="flex items-center gap-3 shrink-0 text-sm font-mono font-bold">
+                  <div className="flex items-center gap-3 shrink-0 text-base font-mono font-bold">
                     <span className="text-muted-foreground min-w-[60px] text-right">
                       {field.prefix ?? ""}{stA?.value || "—"}{field.suffix ? ` ${field.suffix}` : ""}
                     </span>
@@ -152,7 +152,7 @@ export function ComparisonMode({ schema, theme }: Props) {
                       {field.prefix ?? ""}{stB?.value || "—"}{field.suffix ? ` ${field.suffix}` : ""}
                     </span>
                     <span
-                      className={`min-w-[60px] text-right px-1.5 py-0.5 rounded-lg text-xs ${isPositive
+                      className={`min-w-[60px] text-right px-1.5 py-0.5 rounded-lg text-sm ${isPositive
                         ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
                         : isNegative
                           ? "bg-destructive/10 text-destructive"

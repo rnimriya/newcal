@@ -19,7 +19,7 @@ export function Breadcrumb({ crumbs, dark = false }: Props) {
 
   return (
     <nav aria-label="Breadcrumb" className="mb-2">
-      <ol className={`flex flex-wrap items-center gap-1 text-xs ${textSecondary}`}>
+      <ol className={`flex flex-wrap items-center gap-1 text-sm ${textSecondary}`}>
         <li>
           <Link
             href="/"
