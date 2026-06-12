@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { WifiOff, ShieldCheck, Sparkles, ArrowRight } from "lucide-react";
-import { TwitterXIcon, FacebookIcon, LinkedInIcon, GitHubIcon } from "@/components/ui/SocialIcons";
+import { TwitterXIcon, FacebookIcon, LinkedInIcon } from "@/components/ui/SocialIcons";
 import { SITE_NAME } from "@/lib/constants";
 
 export function Footer() {
@@ -21,10 +21,9 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3 pt-2">
               {[
-                { name: "Twitter/X", href: "https://x.com",                     icon: <TwitterXIcon /> },
-                { name: "Facebook",  href: "https://facebook.com",               icon: <FacebookIcon /> },
-                { name: "LinkedIn",  href: "https://linkedin.com",               icon: <LinkedInIcon /> },
-                { name: "GitHub",    href: "https://github.com/rnimriya/newcal", icon: <GitHubIcon /> },
+                { name: "Twitter/X", href: "https://x.com",       icon: <TwitterXIcon /> },
+                { name: "Facebook",  href: "https://facebook.com", icon: <FacebookIcon /> },
+                { name: "LinkedIn",  href: "https://linkedin.com", icon: <LinkedInIcon /> },
               ].map(({ name, href, icon }) => (
                 <a
                   key={name}

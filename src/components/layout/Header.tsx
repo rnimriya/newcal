@@ -8,7 +8,7 @@ import { CATEGORIES } from "@/lib/registry/categories";
 import { useCalcStore } from "@/store/calculatorStore";
 import { CategoryIcon } from "@/components/ui/FlatIcon";
 import { Button } from "@/components/ui/Button";
-import { TwitterXIcon, FacebookIcon, LinkedInIcon, GitHubIcon } from "@/components/ui/SocialIcons";
+import { TwitterXIcon, FacebookIcon, LinkedInIcon } from "@/components/ui/SocialIcons";
 
 export function Header() {
   const { query, setQuery, results } = useSearch();
@@ -127,10 +127,9 @@ export function Header() {
         {/* Social media icons */}
         <div className="hidden lg:flex items-center gap-1 border-l border-slate-200 pl-3">
           {[
-            { name: "Twitter / X",  href: "https://x.com",                      icon: <TwitterXIcon /> },
-            { name: "Facebook",     href: "https://facebook.com",                icon: <FacebookIcon /> },
-            { name: "LinkedIn",     href: "https://linkedin.com",                icon: <LinkedInIcon /> },
-            { name: "GitHub",       href: "https://github.com/rnimriya/newcal",  icon: <GitHubIcon /> },
+            { name: "Twitter / X",  href: "https://x.com",       icon: <TwitterXIcon /> },
+            { name: "Facebook",     href: "https://facebook.com", icon: <FacebookIcon /> },
+            { name: "LinkedIn",     href: "https://linkedin.com", icon: <LinkedInIcon /> },
           ].map(({ name, href, icon }) => (
             <a
               key={name}
