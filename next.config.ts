@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const nextConfig: NextConfig = {
   output: 'export',
@@ -7,9 +6,6 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     unoptimized: true,
-  },
-  turbopack: {
-    root: path.join(__dirname, "..", ".."),
   },
 };
 
