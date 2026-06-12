@@ -14,6 +14,8 @@ import { JsonLD } from "@/components/seo/JsonLD";
 import { CheckCircle2, HelpCircle } from "lucide-react";
 import { generateDynamicContent } from "@/lib/seo/dynamic-content";
 import { ShareButtons } from "@/components/calculator/ShareButtons";
+import { ViewTracker } from "@/components/calculator/ViewTracker";
+import { Suspense } from "react";
 
 interface Props {
   params: Promise<{ category: string; calculator: string }>;
@@ -117,8 +119,11 @@ export default async function CalculatorPage({ params }: Props) {
 
           {/* ── SECTION 1: Calculator ──────────────────────────────────────── */}
           <section id="calculator" className="scroll-mt-20">
+            <ViewTracker slug={calcSlug} />
             {schema ? (
-              <CalculatorLayout schema={schema} />
+              <Suspense fallback={null}>
+                <CalculatorLayout schema={schema} />
+              </Suspense>
             ) : (
               <StaticCalculatorCard entry={entry} />
             )}

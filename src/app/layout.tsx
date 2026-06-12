@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
+import { EmbedDetector } from "@/components/layout/EmbedDetector";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -65,6 +66,22 @@ export default function RootLayout({
         <meta name="theme-color" content="#6366f1" />
         <meta name="msvalidate.01" content="XXXXXXXXXXXXXXXXXXX" />
 
+        {/* Theme: prevent flash of wrong color scheme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('omni-calc-store');
+                  var theme = stored ? JSON.parse(stored).state?.theme : 'system';
+                  if (theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
 
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-2EHPV7HS8K" />
@@ -80,6 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white">
+        <EmbedDetector />
         <AppShell>{children}</AppShell>
         <script
           dangerouslySetInnerHTML={{

@@ -89,6 +89,15 @@ export interface CalculatorState {
   lastModified?: string;                  // fieldId of last user-typed field
 }
 
+// ─── History ───────────────────────────────────────────────────────────────────
+
+export interface HistoryEntry {
+  id: string;
+  timestamp: number;
+  inputs: Record<string, string>;
+  outputs: Record<string, string>;
+}
+
 // ─── Store Shape ───────────────────────────────────────────────────────────────
 
 export interface CalcStore {
@@ -97,6 +106,19 @@ export interface CalcStore {
   isOffline: boolean;
   unitSystem: "metric" | "imperial";
   savedCalculators: string[];            // array of calculator slugs
+  // History
+  calcHistory: Record<string, HistoryEntry[]>;
+  addHistoryEntry: (slug: string, entry: HistoryEntry) => void;
+  // Recently Viewed
+  recentlyViewed: string[];
+  addRecentlyViewed: (slug: string) => void;
+  // Theme
+  theme: "light" | "dark" | "system";
+  setTheme: (theme: "light" | "dark" | "system") => void;
+  // Custom Units
+  preferredUnits: Record<string, string>;
+  setPreferredUnit: (slug: string, fieldId: string, unit: string) => void;
+  // Core
   setSchema: (schema: CalculatorSchema) => void;
   setFieldValue: (fieldId: string, value: string) => void;
   setFieldUnit: (fieldId: string, unit: string) => void;

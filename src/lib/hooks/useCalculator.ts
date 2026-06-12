@@ -1,15 +1,5 @@
 "use client";
 
-/**
- * useCalculator — schema-driven bi-directional solver hook.
- *
- * Given a CalculatorSchema, this hook maintains per-field state and runs
- * the dependency-ordered formula graph on every input change.
- *
- * Bi-directional logic: when the user edits a "computed" field we flip it
- * to manual-mode and recompute the other computed fields instead.
- */
-
 import { useCallback, useEffect, useReducer, useMemo, useTransition } from "react";
 import type {
   CalculatorSchema,
@@ -28,11 +18,17 @@ import {
 
 interface HookState {
   fields: Record<string, FieldState>;
-  userLocked: Set<string>;   // fields the user has manually typed into
+  userLocked: Set<string>;
 }
 
 type HookAction =
-  | { type: "INIT"; schema: CalculatorSchema }
+  | {
+      type: "INIT";
+      schema: CalculatorSchema;
+      initialValues?: Record<string, string>;
+      preferredUnits?: Record<string, string>;
+      slug?: string;
+    }
   | { type: "SET_VALUE"; fieldId: string; value: string }
   | { type: "SET_UNIT"; fieldId: string; unit: string; convertedValue: string }
   | { type: "LOAD_EXAMPLE"; inputs: Record<string, number>; schema: CalculatorSchema };
@@ -43,40 +39,39 @@ function defaultUnit(field: CalculatorField): string {
   return field.defaultUnit ?? field.units?.[0]?.value ?? "";
 }
 
-function initFieldStates(schema: CalculatorSchema): Record<string, FieldState> {
+function initFieldStates(
+  schema: CalculatorSchema,
+  preferredUnits?: Record<string, string>,
+  slug?: string
+): Record<string, FieldState> {
   const states: Record<string, FieldState> = {};
   for (const field of schema.fields) {
+    const key = slug ? `${slug}_${field.id}` : undefined;
+    const preferredUnit = key && preferredUnits ? preferredUnits[key] : undefined;
     states[field.id] = {
       value: field.defaultValue !== undefined ? String(field.defaultValue) : "",
-      unit: defaultUnit(field),
+      unit: preferredUnit ?? defaultUnit(field),
       computed: field.type === "computed",
     };
   }
   return states;
 }
 
-/**
- * Runs the full solver pass over all computed fields.
- * The `userLocked` set determines which fields are treated as known inputs.
- */
 function runSolver(
   schema: CalculatorSchema,
   fields: Record<string, FieldState>,
   orderedIds: string[]
 ): Record<string, FieldState> {
-
-  // Build numeric scope: base-unit values for all known (non-empty) fields
   const scope: Record<string, unknown> = {};
   for (const field of schema.fields) {
     const state = fields[field.id];
     const raw = parseFloat(state.value);
     if (!isNaN(raw)) {
-      // Convert to base unit before putting into scope
       const unitDef = field.units?.find((u) => u.value === state.unit);
       const base = unitDef ? convertToBase(raw, unitDef.toBase) : raw;
       scope[field.id] = base;
     } else if (typeof state.value === "string" && state.value !== "") {
-      scope[field.id] = state.value; // non-numeric string fields (category labels, etc.)
+      scope[field.id] = state.value;
     }
   }
 
@@ -95,24 +90,20 @@ function runSolver(
     }
 
     if (typeof result === "number") {
-      // Convert from base unit to the field's currently-selected display unit
       const unitDef = field?.units?.find((u) => u.value === next[id].unit);
       const displayValue = unitDef
         ? convertFromBase(result, unitDef.fromBase)
         : result;
 
-      // Round if precision is set
       const precision = field?.precision;
       const rounded =
         precision !== undefined
           ? parseFloat(displayValue.toFixed(precision))
           : displayValue;
 
-      // Update scope with base value for downstream formulas
       scope[id] = result;
       next[id] = { ...next[id], value: String(rounded), error: undefined };
     } else {
-      // String result (e.g. category label)
       scope[id] = result;
       next[id] = { ...next[id], value: String(result), error: undefined };
     }
@@ -126,14 +117,20 @@ function runSolver(
 function reducer(state: HookState, action: HookAction): HookState {
   switch (action.type) {
     case "INIT": {
-      return {
-        fields: initFieldStates(action.schema),
-        userLocked: new Set(
-          action.schema.fields
-            .filter((f) => f.type !== "computed")
-            .map((f) => f.id)
-        ),
-      };
+      const baseFields = initFieldStates(action.schema, action.preferredUnits, action.slug);
+      const userLocked = new Set(
+        action.schema.fields
+          .filter((f) => f.type !== "computed")
+          .map((f) => f.id)
+      );
+      if (action.initialValues) {
+        for (const [id, val] of Object.entries(action.initialValues)) {
+          if (baseFields[id] !== undefined) {
+            baseFields[id] = { ...baseFields[id], value: val };
+          }
+        }
+      }
+      return { fields: baseFields, userLocked };
     }
 
     case "SET_VALUE": {
@@ -165,7 +162,6 @@ function reducer(state: HookState, action: HookAction): HookState {
       const locked = new Set<string>();
       for (const [id, val] of Object.entries(inputs)) {
         if (nextFields[id]) {
-          // Also reset the unit to the field's default so example values are interpreted correctly
           const fieldDef = schema.fields.find((f) => f.id === id);
           const unit = fieldDef ? defaultUnit(fieldDef) : nextFields[id].unit;
           nextFields[id] = { ...nextFields[id], value: String(val), unit };
@@ -187,25 +183,37 @@ export interface UseCalculatorReturn {
   reset: () => void;
 }
 
-export function useCalculator(schema: CalculatorSchema): UseCalculatorReturn {
+export function useCalculator(
+  schema: CalculatorSchema,
+  options?: {
+    initialValues?: Record<string, string>;
+    slug?: string;
+    preferredUnits?: Record<string, string>;
+  }
+): UseCalculatorReturn {
+  const initialValues = options?.initialValues;
+  const slug = options?.slug;
+  const preferredUnits = options?.preferredUnits;
+
   const [state, dispatch] = useReducer(reducer, null, () =>
-    reducer({ fields: {}, userLocked: new Set() }, { type: "INIT", schema })
+    reducer(
+      { fields: {}, userLocked: new Set() },
+      { type: "INIT", schema, initialValues, preferredUnits, slug }
+    )
   );
 
   const [, startTransition] = useTransition();
 
-  // Re-initialize when schema changes
   useEffect(() => {
-    dispatch({ type: "INIT", schema });
+    dispatch({ type: "INIT", schema, preferredUnits, slug });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schema]);
 
-  // Memoize the static dependency graph parsing
   const depGraph = useMemo(() => {
     const allIds = schema.fields.map((f) => f.id);
     return buildDependencyGraph(schema.formulas, allIds);
   }, [schema.formulas, schema.fields]);
 
-  // TopoSort the currently unlocked computed fields
   const orderedIds = useMemo(() => {
     const computedIds = schema.fields
       .filter((f) => f.type === "computed" && !state.userLocked.has(f.id))
@@ -213,7 +221,6 @@ export function useCalculator(schema: CalculatorSchema): UseCalculatorReturn {
     return topoSort(depGraph, computedIds);
   }, [schema.fields, state.userLocked, depGraph]);
 
-  // Run solver after every state change using the memoized evaluation order
   const solvedFields = useMemo(() => {
     return runSolver(schema, state.fields, orderedIds);
   }, [schema, state.fields, orderedIds]);
@@ -224,38 +231,40 @@ export function useCalculator(schema: CalculatorSchema): UseCalculatorReturn {
     });
   }, []);
 
-  const setUnit = useCallback((fieldId: string, unit: string) => {
-    startTransition(() => {
-      // Reconvert the current displayed value from old unit to new unit
-      // so the underlying physical quantity stays the same.
-      const fieldDef = schema.fields.find((f) => f.id === fieldId);
-      const currentState = state.fields[fieldId];
-      let convertedValue = currentState?.value ?? "";
+  const setUnit = useCallback(
+    (fieldId: string, unit: string) => {
+      startTransition(() => {
+        const fieldDef = schema.fields.find((f) => f.id === fieldId);
+        const currentState = state.fields[fieldId];
+        let convertedValue = currentState?.value ?? "";
 
-      if (fieldDef?.units && currentState) {
-        const raw = parseFloat(currentState.value);
-        if (!isNaN(raw)) {
-          const oldUnitDef = fieldDef.units.find((u) => u.value === currentState.unit);
-          const newUnitDef = fieldDef.units.find((u) => u.value === unit);
-          if (oldUnitDef && newUnitDef) {
-            // old display value -> base -> new display value
-            const baseValue = convertToBase(raw, oldUnitDef.toBase);
-            const newDisplayValue = convertFromBase(baseValue, newUnitDef.fromBase);
-            // Preserve reasonable precision: up to 6 sig figs
-            convertedValue = parseFloat(newDisplayValue.toPrecision(6)).toString();
+        if (fieldDef?.units && currentState) {
+          const raw = parseFloat(currentState.value);
+          if (!isNaN(raw)) {
+            const oldUnitDef = fieldDef.units.find((u) => u.value === currentState.unit);
+            const newUnitDef = fieldDef.units.find((u) => u.value === unit);
+            if (oldUnitDef && newUnitDef) {
+              const baseValue = convertToBase(raw, oldUnitDef.toBase);
+              const newDisplayValue = convertFromBase(baseValue, newUnitDef.fromBase);
+              convertedValue = parseFloat(newDisplayValue.toPrecision(6)).toString();
+            }
           }
         }
-      }
 
-      dispatch({ type: "SET_UNIT", fieldId, unit, convertedValue });
-    });
-  }, [schema.fields, state.fields]);
+        dispatch({ type: "SET_UNIT", fieldId, unit, convertedValue });
+      });
+    },
+    [schema.fields, state.fields]
+  );
 
-  const loadExample = useCallback((inputs: Record<string, number>) => {
-    startTransition(() => {
-      dispatch({ type: "LOAD_EXAMPLE", inputs, schema });
-    });
-  }, [schema]);
+  const loadExample = useCallback(
+    (inputs: Record<string, number>) => {
+      startTransition(() => {
+        dispatch({ type: "LOAD_EXAMPLE", inputs, schema });
+      });
+    },
+    [schema]
+  );
 
   const reset = useCallback(() => {
     startTransition(() => {

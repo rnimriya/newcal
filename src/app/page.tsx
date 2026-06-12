@@ -6,6 +6,7 @@ import { SITE_URL, SITE_DISPLAY_NAME } from "@/lib/constants";
 import { ArrowRight, Zap, Wifi, Smartphone } from "lucide-react";
 import { ScientificCalculator } from "@/components/calculator/ScientificCalculator";
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
+import { RecentlyViewedSection } from "@/components/calculator/RecentlyViewedSection";
 
 export const metadata: Metadata = {
   title: `Free Online Calculators - Math, Finance, Health | ${SITE_DISPLAY_NAME}`,
@@ -73,6 +74,9 @@ export default function HomePage() {
           <ScientificCalculator />
         </div>
       </section>
+
+      {/* ── Recently Viewed ─────────────────────────────────────────────────── */}
+      <RecentlyViewedSection />
 
       {/* ── Category Grid ───────────────────────────────────────────────────── */}
       <section>
