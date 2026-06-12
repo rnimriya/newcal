@@ -50,11 +50,7 @@ export function Header() {
             placeholder="Search calculators or describe your problem…"
             className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-9 pr-4 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 focus:bg-white transition-all"
           />
-          {query === "" && (
-            <p className="absolute top-full mt-1 left-9 text-[11px] text-slate-400 pointer-events-none hidden sm:block">
-              Try: &ldquo;monthly payment&rdquo;, &ldquo;retirement savings&rdquo;, &ldquo;percent off&rdquo;
-            </p>
-          )}
+
 
           {results.length > 0 && (
             <div className="absolute top-full mt-1.5 w-full rounded-xl border border-slate-200 bg-white shadow-xl z-50 overflow-hidden">
