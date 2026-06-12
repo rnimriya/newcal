@@ -14,16 +14,6 @@ import { CrossLinks } from "./CrossLinks";
 import { ComparisonMode } from "./ComparisonMode";
 import { BatchProcessor } from "./BatchProcessor";
 
-const YouTubeSection = dynamic(
-  () => import("./YouTubeSection").then((m) => m.YouTubeSection),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="rounded-2xl border border-zinc-200 bg-white dark:bg-zinc-900 dark:border-zinc-800 h-48 animate-pulse" />
-    ),
-  }
-);
-
 const FormulaChart = dynamic(
   () => import("@/components/charts/FormulaChart").then((m) => m.FormulaChart),
   { ssr: false, loading: () => null }
@@ -121,11 +111,8 @@ export function CalculatorLayout({ schema }: Props) {
         <FormulaChart schema={schema} fields={calculatorState.fields} />
       )}
 
-      {/* Bottom: Infographic + YouTube */}
-      <div className={`${isMobile ? "flex flex-col gap-6" : "grid grid-cols-2 gap-6"}`}>
-        <InfoGraphic schema={schema} fields={calculatorState.fields} theme={theme} />
-        <YouTubeSection calcName={schema.name} category={schema.category} theme={theme} />
-      </div>
+      {/* Infographic */}
+      <InfoGraphic schema={schema} fields={calculatorState.fields} theme={theme} />
 
       {/* Cross-links */}
       <CrossLinks slug={schema.slug} fields={calculatorState.fields} category={schema.category} />
