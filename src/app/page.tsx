@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CATEGORIES } from "@/lib/registry/categories";
 import { ALL_CALCULATORS, BY_CATEGORY } from "@/lib/registry";
 import { SITE_URL, SITE_DISPLAY_NAME } from "@/lib/constants";
-import { ArrowRight, Zap, Wifi, Smartphone, Sparkles } from "lucide-react";
+import { ArrowRight, Zap, Wifi, Smartphone, Sparkles, BadgePlus } from "lucide-react";
 import { ScientificCalculator } from "@/components/calculator/ScientificCalculator";
 import { CategoryIcon, CalculatorIcon } from "@/components/ui/FlatIcon";
 import { RecentlyViewedSection } from "@/components/calculator/RecentlyViewedSection";
@@ -26,25 +26,8 @@ export const metadata: Metadata = {
   keywords: "free online calculator, math calculator, finance calculator, BMI calculator, compound interest calculator, unit converter, loan calculator",
 };
 
-// Featured calculators with schema (interactive)
-const FEATURED_SLUGS = [
-  "bmi-calculator",
-  "compound-interest-calculator",
-  "celsius-to-fahrenheit",
-  "km-to-miles",
-  "quadratic-formula-calculator",
-  "discount-calculator",
-  "loan-calculator",
-  "percentage-calculator",
-  "square-root-calculator",
-  "slope-calculator",
-  "kg-to-pounds",
-  "simple-interest-calculator",
-];
-
-const featuredCalcs = FEATURED_SLUGS
-  .map((slug) => ALL_CALCULATORS.find((c) => c.slug === slug))
-  .filter(Boolean);
+// Last 12 added calculators — newest entries sit at the top of ALL_CALCULATORS
+const trendingCalcs = ALL_CALCULATORS.slice(0, 12);
 
 export default function HomePage() {
   return (
@@ -134,36 +117,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Featured Calculators ─────────────────────────────────────────────── */}
+      {/* ── Trending / Newly Added Calculators ──────────────────────────────── */}
       <section className="px-4">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-extrabold text-foreground tracking-tight">Trending Calculators</h2>
+          <h2 className="text-2xl font-extrabold text-foreground tracking-tight flex items-center gap-2">
+            <BadgePlus size={22} className="text-primary" /> Trending Calculators
+          </h2>
           <Link href="/categories" className="text-base font-bold text-primary hover:text-primary/80 flex items-center gap-1 bg-primary/10 px-3 py-1.5 rounded-full transition-colors">
             View all <ArrowRight size={14} />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {featuredCalcs.map((calc) => (
-            calc && (
-              <Link
-                key={calc.slug}
-                href={`/${calc.category}/${calc.slug}`}
-                className="calc-card border border-border rounded-2xl  p-2 bg-card border border-border hover:border-primary/50 transition-colors rounded-2xl  border border-border group flex items-start gap-4 p-5 hover:border-primary transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-              >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-primary shadow-sm">
-                  <CalculatorIcon slug={calc.slug} category={calc.category} size={22} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="font-bold text-foreground text-base group-hover:text-primary transition-colors leading-tight mb-1">
-                    {calc.name}
-                  </p>
-                  <p className="text-base text-muted-foreground line-clamp-2 leading-relaxed">
-                    {calc.shortDesc}
-                  </p>
-                </div>
-              </Link>
-            )
+          {trendingCalcs.map((calc) => (
+            <Link
+              key={calc.slug}
+              href={`/${calc.category}/${calc.slug}`}
+              className="calc-card group relative flex items-start gap-4 p-5 bg-card border border-border rounded-2xl hover:border-primary transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+            >
+              <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-bold text-emerald-700">
+                New
+              </span>
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-primary shadow-sm">
+                <CalculatorIcon slug={calc.slug} category={calc.category} size={22} />
+              </span>
+              <div className="min-w-0 flex-1 pr-10">
+                <p className="font-bold text-foreground text-base group-hover:text-primary transition-colors leading-tight mb-1">
+                  {calc.name}
+                </p>
+                <p className="text-base text-muted-foreground line-clamp-2 leading-relaxed">
+                  {calc.shortDesc}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
