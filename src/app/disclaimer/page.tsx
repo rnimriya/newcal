@@ -31,7 +31,7 @@ export default function DisclaimerPage() {
           <div>
             <h4 className="font-bold text-sm">For reference only - not a substitute for expert advice</h4>
             <p className="text-xs text-amber-800/90 dark:text-amber-400 mt-1 leading-relaxed">
-              All results on CalcHub are computed in your browser. Do not rely on them alone for structural designs, medical decisions, financial investments, or high-stakes exams. Always verify with a qualified professional.
+              All results on CalcUnit are computed in your browser. Do not rely on them alone for structural designs, medical decisions, financial investments, or high-stakes exams. Always verify with a qualified professional.
             </p>
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function DisclaimerPage() {
             1. Accuracy of Calculations
           </h2>
           <p className="text-sm leading-relaxed">
-            We write every formula based on standard reference books, NIST parameters, and accepted math conventions. Even so, errors can occur. Floating-point arithmetic in browsers has small precision limits. CalcHub does not guarantee that every result is correct to the last decimal.
+            We write every formula based on standard reference books, NIST parameters, and accepted math conventions. Even so, errors can occur. Floating-point arithmetic in browsers has small precision limits. CalcUnit does not guarantee that every result is correct to the last decimal.
           </p>
         </section>
 
@@ -82,7 +82,7 @@ export default function DisclaimerPage() {
             3. Limitation of Liability
           </h2>
           <p className="text-sm leading-relaxed">
-            CalcHub, its contributors, and hosting providers are not responsible for any loss, penalty, or damage that results from using results from this site. That includes financial loss, academic penalties, or any structural failure.
+            CalcUnit, its contributors, and hosting providers are not responsible for any loss, penalty, or damage that results from using results from this site. That includes financial loss, academic penalties, or any structural failure.
           </p>
         </section>
       </div>

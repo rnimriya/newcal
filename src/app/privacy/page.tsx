@@ -47,7 +47,7 @@ export default function PrivacyPage() {
             <h3 className="font-bold text-zinc-900 dark:text-white text-sm">No Ads or Tracking</h3>
           </div>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            CalcHub has no ads, no third-party trackers, no cookies, and no sign-up system.
+            CalcUnit has no ads, no third-party trackers, no cookies, and no sign-up system.
           </p>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             1. Information We Do NOT Collect
           </h2>
           <p className="text-sm leading-relaxed">
-            CalcHub works without an account. We do not log the numbers you enter, store your IP address, or create any user profile.
+            CalcUnit works without an account. We do not log the numbers you enter, store your IP address, or create any user profile.
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-sm">
             <li>We do not log or store values you enter in the inputs.</li>

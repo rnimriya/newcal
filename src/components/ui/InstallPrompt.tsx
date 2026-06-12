@@ -19,7 +19,7 @@ export function InstallPrompt({ show, onInstall }: Props) {
         <Download size={20} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-semibold text-sm">Install CalcHub</p>
+        <p className="font-semibold text-sm">Install CalcUnit</p>
         <p className="text-xs text-indigo-200 mt-0.5">
           Add to home screen for offline access
         </p>

@@ -24,7 +24,7 @@ export default function SitemapPage() {
           Sitemap
         </h1>
         <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-xl leading-relaxed">
-          Browse all specialized solvers, math calculators, and unit converters available on CalcHub. Grouped by core categories.
+          Browse all specialized solvers, math calculators, and unit converters available on CalcUnit. Grouped by core categories.
         </p>
       </div>
 

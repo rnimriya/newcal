@@ -1,5 +1,5 @@
 /**
- * CalcHub Service Worker — Cache-first strategy for app shell + schemas.
+ * CalcUnit Service Worker — Cache-first strategy for app shell + schemas.
  * Network-first for Next.js RSC data and API routes.
  */
 

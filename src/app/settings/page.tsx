@@ -51,7 +51,7 @@ export default function SettingsPage() {
       )}
 
       <p className="text-center text-xs text-zinc-400">
-        CalcHub · Schema-driven calculator platform
+        CalcUnit · Schema-driven calculator platform
       </p>
     </div>
   );
