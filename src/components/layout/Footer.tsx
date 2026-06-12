@@ -147,6 +147,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-3 text-sm">
               {[
+                { label: "Blog & Articles", href: "/blog" },
                 { label: "HTML Sitemap", href: "/sitemap" },
                 { label: "Keyboard Shortcuts", href: "/settings" },
                 { label: "Calculators Directory", href: "/categories" },

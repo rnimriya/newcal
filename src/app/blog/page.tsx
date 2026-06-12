@@ -8,49 +8,64 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndex() {
-  const posts = getAllPosts(['title', 'date', 'excerpt', 'slug']);
+  const posts = getAllPosts(['title', 'date', 'excerpt', 'slug', 'image', 'tags', 'author']);
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mb-12 border-b border-slate-200 pb-8">
-        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">
+    <main className="min-h-screen bg-white dark:bg-zinc-950">
+      <section className="border-b border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-zinc-900 py-14 px-6 text-center">
+        <h1 className="font-display text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           CalcUnit Blog
         </h1>
-        <p className="mt-4 text-xl text-slate-600 max-w-2xl">
+        <p className="mt-3 text-base text-slate-500 dark:text-zinc-400 max-w-xl mx-auto">
           Deep dives, step-by-step formulas, and expert financial/mathematical guides.
+          <span className="ml-1 font-medium">{posts.length} articles and counting.</span>
         </p>
-      </div>
+      </section>
 
-      <div className="grid gap-10 sm:grid-cols-2 lg:gap-12">
-        {posts.map((post) => (
-          <article key={post.slug} className="group relative flex flex-col items-start justify-between rounded-2xl border border-slate-200 p-6 shadow-sm transition-all hover:shadow-md hover:border-indigo-200 bg-white">
-            <div className="flex items-center gap-x-4 text-xs">
-              <time dateTime={post.date} className="text-slate-500 font-medium">
-                {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-              </time>
-            </div>
-            <div className="group relative mt-4">
-              <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
-                <Link href={`/blog/${post.slug}`}>
-                  <span className="absolute inset-0" />
-                  {post.title}
-                </Link>
-              </h3>
-              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">
-                {post.excerpt}
-              </p>
-            </div>
-            <div className="mt-6 flex items-center gap-x-4">
-              <Link href={`/blog/${post.slug}`} className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                Read full article <span aria-hidden="true">&rarr;</span>
+      <section className="mx-auto max-w-6xl px-6 py-12">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <article key={post.slug} className="group flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-zinc-900 overflow-hidden hover:shadow-lg dark:hover:shadow-white/5 transition-shadow">
+              <Link href={`/blog/${post.slug}`} className="block overflow-hidden h-48 bg-zinc-100 dark:bg-zinc-800">
+                {post.image && (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img 
+                    src={post.image} 
+                    alt={post.title} 
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                  />
+                )}
               </Link>
-            </div>
-          </article>
-        ))}
+              <div className="flex flex-1 flex-col p-5">
+                {post.tags && post.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {post.tags.map(tag => (
+                      <span key={tag} className="rounded-full bg-indigo-50 dark:bg-indigo-900/20 px-2 py-0.5 text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <Link href={`/blog/${post.slug}`}>
+                  <h2 className="font-display font-bold text-slate-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-lg">
+                    {post.title}
+                  </h2>
+                </Link>
+                <p className="mt-2 text-sm text-slate-500 dark:text-zinc-400 line-clamp-3 flex-1">
+                  {post.excerpt}
+                </p>
+                <div className="mt-4 flex items-center justify-between text-xs text-slate-400 dark:text-zinc-500 font-medium">
+                  <span>{post.author || 'CalcUnit Expert'}</span>
+                  <span>{new Date(post.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
         {posts.length === 0 && (
-          <p className="text-slate-500">No articles published yet.</p>
+          <p className="text-center text-slate-500 mt-10">No articles published yet.</p>
         )}
-      </div>
+      </section>
     </main>
   );
 }

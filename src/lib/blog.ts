@@ -16,7 +16,20 @@ export interface BlogPost {
   author?: string;
   toolSlug?: string;
   toolCategory?: string;
+  image?: string;
 }
+
+const categoryImages: Record<string, string> = {
+  finance: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&auto=format&q=80",
+  math: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&h=450&fit=crop&auto=format&q=80",
+  health: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=450&fit=crop&auto=format&q=80",
+  loans: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=450&fit=crop&auto=format&q=80",
+  converters: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=450&fit=crop&auto=format&q=80",
+  physics: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=450&fit=crop&auto=format&q=80",
+  time: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=800&h=450&fit=crop&auto=format&q=80",
+  algebra: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=450&fit=crop&auto=format&q=80",
+  default: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=450&fit=crop&auto=format&q=80"
+};
 
 export function getPostSlugs() {
   if (!fs.existsSync(postsDirectory)) return [];
@@ -47,6 +60,19 @@ export function getPostBySlug(slug: string, fields: string[] = []): BlogPost {
       items[field as keyof BlogPost] = data[field];
     }
   });
+
+  // Assign deterministic fallback image
+  if (fields.includes('image') && !items.image) {
+    const cat = (items.toolCategory || data.toolCategory || 'default').toLowerCase();
+    items.image = categoryImages[cat] || categoryImages.default;
+  }
+
+  // Assign tags from category/tool if not present
+  if (fields.includes('tags') && !items.tags) {
+    items.tags = [];
+    if (items.toolCategory || data.toolCategory) items.tags.push((items.toolCategory || data.toolCategory).toLowerCase());
+    if (items.toolSlug || data.toolSlug) items.tags.push((items.toolSlug || data.toolSlug).replace(/-/g, ' '));
+  }
 
   return items as BlogPost;
 }
