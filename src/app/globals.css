@@ -35,7 +35,7 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #f0f9ff; /* sky-50 — soft sky tint; white cards lift off the page */
     --foreground: #0f172a; /* slate-900 */
     --card: #ffffff;
     --card-foreground: #0f172a;
@@ -43,11 +43,11 @@
     --popover-foreground: #0f172a;
     --primary: #0369a1; /* sky-700 — 5.9:1 contrast on white, passes WCAG AA */
     --primary-foreground: #ffffff;
-    --secondary: #f8fafc; /* slate-50 */
-    --secondary-foreground: #475569; /* slate-600 */
-    --muted: #f1f5f9; /* slate-100 */
+    --secondary: #e0f2fe; /* sky-100 */
+    --secondary-foreground: #0369a1; /* sky-700 */
+    --muted: #e0f2fe; /* sky-100 */
     --muted-foreground: #475569; /* slate-600 */
-    --accent: #f1f5f9; /* slate-100 */
+    --accent: #e0f2fe; /* sky-100 */
     --accent-foreground: #0f172a;
     --destructive: #ef4444; /* red-500 */
     --destructive-foreground: #ffffff;
@@ -55,8 +55,8 @@
     --success-foreground: #ffffff;
     --warning: #f59e0b; /* amber-500 */
     --warning-foreground: #ffffff;
-    --border: #e2e8f0; /* slate-200 */
-    --input: #cbd5e1; /* slate-300 for visible input borders */
+    --border: #bae6fd; /* sky-200 — complements the background tint */
+    --input: #7dd3fc; /* sky-300 — visible input borders */
     --ring: #0369a1; /* sky-700 */
     --radius: 1.25rem;
   }
