@@ -23,7 +23,7 @@ const CATEGORY_PICKS: Record<string, string[]> = {
   health:     ["bmi-calculator", "bac-calculator", "ovulation-calculator", "dog-age-calculator"],
   time:       ["age-calculator", "date-difference", "time-zone-calculator", "hours-calculator"],
   physics:    ["ohms-law-calculator", "kinetic-energy-calculator", "force-calculator", "velocity-calculator"],
-  retirement: ["retirement-planner", "401k-contribution-calculator", "rmd-calculator", "annuity-calculator"],
+  retirement: ["retirement-planner", "401k-contribution-calculator", "rmd-calculator", "retirement-annuity-calculator"],
   stocks:     ["stock-return-calculator", "capm-calculator", "wacc-calculator", "black-scholes-calculator"],
   credit:     ["credit-card-payoff-calculator", "credit-card-minimum-calculator"],
 };

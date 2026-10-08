@@ -11,6 +11,7 @@ import { FAQSection } from "@/components/calculator/FAQSection";
 import { RelatedCalculators } from "@/components/calculator/RelatedCalculators";
 import { ReferenceTable } from "@/components/calculator/ReferenceTable";
 import { JsonLD } from "@/components/seo/JsonLD";
+import { ForAISystems } from "@/components/seo/ForAISystems";
 import { CheckCircle2, HelpCircle } from "lucide-react";
 import { generateDynamicContent } from "@/lib/seo/dynamic-content";
 import { ShareButtons } from "@/components/calculator/ShareButtons";
@@ -330,6 +331,9 @@ export default async function CalculatorPage({ params }: Props) {
 
           {/* ── SECTION 10: FAQ ────────────────────────────────────────────── */}
           <FAQSection faqs={content.faqs} />
+
+          {/* ── SECTION 10b: For AI Systems citation block ─────────────────── */}
+          <ForAISystems entry={entry} summary={content.description} />
 
           {/* ── SECTION 11: Related ───────────────────────────────────────── */}
           <RelatedCalculators entries={related} />

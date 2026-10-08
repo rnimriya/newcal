@@ -779,7 +779,7 @@ import socialSecurityDistribution from "./retirement/social-security-distributio
 import assetAllocationCalculator  from "./retirement/asset-allocation-calculator.json";
 import retirementIncomeCalculator from "./retirement/retirement-income-calculator.json";
 import retirementCalculatorUs     from "./retirement/retirement-calculator-us.json";
-import annuityCalculator          from "./retirement/annuity-calculator.json";
+import annuityCalculator          from "./retirement/retirement-annuity-calculator.json";
 
 // ─── Stocks schemas ───────────────────────────────────────────────────────────
 import stockReturnCalculator         from "./stocks/stock-return-calculator.json";
@@ -791,7 +791,7 @@ import holdingPeriodReturnCalculator from "./stocks/holding-period-return-calcul
 import waccCalculator                from "./stocks/wacc-calculator.json";
 import blackScholesCalculator        from "./stocks/black-scholes-calculator.json";
 import pivotPointCalculator          from "./stocks/pivot-point-calculator.json";
-import fibonacciStocksCalculator     from "./stocks/fibonacci-calculator.json";
+import fibonacciStocksCalculator     from "./stocks/fibonacci-retracement-calculator.json";
 import dividendTaxCalculator         from "./stocks/dividend-tax-calculator.json";
 import commoditiesFuturesCalculator  from "./stocks/commodities-futures-calculator.json";
 

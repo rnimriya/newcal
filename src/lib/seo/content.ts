@@ -20,6 +20,7 @@ import { BATCH_13 } from "./custom-content/batch-13-physics-a";
 import { BATCH_14 } from "./custom-content/batch-14-physics-b";
 import { BATCH_15 } from "./custom-content/batch-15-algebra";
 import { BATCH_16 } from "./custom-content/batch-16-statistics";
+import { BATCH_17 } from "./custom-content/batch-17-slug-repairs";
 
 // ─── SEO Content Generator ────────────────────────────────────────────────────
 // Produces structured content for every calculator page:
@@ -234,6 +235,7 @@ Type the original retail price and the discount percentage. The tool outputs the
   ...BATCH_14,
   ...BATCH_15,
   ...BATCH_16,
+  ...BATCH_17,
 };
 
 // ─── Deterministic helpers ────────────────────────────────────────────────────

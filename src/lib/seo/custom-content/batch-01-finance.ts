@@ -909,7 +909,7 @@ Analysts use this trio everywhere: pricing stocks, sizing positions, and buildin
       { q: "Can I use more than three scenarios?", a: "This calculator models three. For finer analysis, split your most uncertain scenario into two and reweight, or run the tool twice with different scenario sets." },
     ],
   },
-  "fibonacci-calculator": {
+  "fibonacci-retracement-calculator": {
     description: `Traders hunting for where a pullback might end reach for ratios found in sunflower spirals. After a stock surges from $100 to $200, Fibonacci retracement levels mark the prices where buyers historically step back in: 23.6, 38.2, 50, 61.8, and 78.6 percent of the way back down the swing. The 61.8 percent level -- the golden ratio's complement -- gets watched most closely, and because thousands of traders watch it, it often works as a self-fulfilling prophecy.
 
 This calculator draws the map from your swing points. Enter the swing high and the swing low -- 200 and 100 in the example -- and it computes each retracement level as a price: the 38.2 percent retracement of that swing sits at $161.80, the 61.8 percent at $138.20. Day traders and swing traders place limit orders, stop losses, and profit targets around these lines, especially when they cluster with round numbers or moving averages.
