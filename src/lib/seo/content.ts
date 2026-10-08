@@ -11,6 +11,9 @@ import { BATCH_05 } from "./custom-content/batch-05-converters-b";
 import { BATCH_06 } from "./custom-content/batch-06-converters-c";
 import { BATCH_07 } from "./custom-content/batch-07-mixed-a";
 import { BATCH_08 } from "./custom-content/batch-08-math-a";
+import { BATCH_09 } from "./custom-content/batch-09-math-b";
+import { BATCH_10 } from "./custom-content/batch-10-math-c";
+import { BATCH_11 } from "./custom-content/batch-11-math-d";
 import { BATCH_12 } from "./custom-content/batch-12-math-e";
 
 // ─── SEO Content Generator ────────────────────────────────────────────────────
@@ -218,6 +221,9 @@ Type the original retail price and the discount percentage. The tool outputs the
   ...BATCH_06,
   ...BATCH_07,
   ...BATCH_08,
+  ...BATCH_09,
+  ...BATCH_10,
+  ...BATCH_11,
   ...BATCH_12,
 };
 
