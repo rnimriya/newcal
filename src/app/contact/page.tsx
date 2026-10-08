@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SITE_DISPLAY_NAME } from '@/lib/constants';
-import { Mail, MessageSquare } from 'lucide-react';
+import { Mail, MapPin, MessageSquare } from 'lucide-react';
 import { TwitterXIcon, GitHubIcon } from '@/components/ui/SocialIcons';
 
 export const metadata: Metadata = {
@@ -92,6 +92,16 @@ export default function ContactPage() {
                   <a href="https://twitter.com" className="text-primary font-medium hover:underline mt-2 inline-block">
                     @CalcUnit
                   </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400">
+                  <MapPin size={24} />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground text-lg">Mailing Address</h3>
+                  <p className="text-muted-foreground mt-1">[US mailing address — to be provided]</p>
                 </div>
               </div>
 
