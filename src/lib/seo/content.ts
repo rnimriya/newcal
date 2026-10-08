@@ -12,9 +12,14 @@ import { BATCH_06 } from "./custom-content/batch-06-converters-c";
 import { BATCH_07 } from "./custom-content/batch-07-mixed-a";
 import { BATCH_08 } from "./custom-content/batch-08-math-a";
 import { BATCH_09 } from "./custom-content/batch-09-math-b";
+import { BATCH_09B } from "./custom-content/batch-09b-math-b2";
 import { BATCH_10 } from "./custom-content/batch-10-math-c";
 import { BATCH_11 } from "./custom-content/batch-11-math-d";
 import { BATCH_12 } from "./custom-content/batch-12-math-e";
+import { BATCH_13 } from "./custom-content/batch-13-physics-a";
+import { BATCH_14 } from "./custom-content/batch-14-physics-b";
+import { BATCH_15 } from "./custom-content/batch-15-algebra";
+import { BATCH_16 } from "./custom-content/batch-16-statistics";
 
 // ─── SEO Content Generator ────────────────────────────────────────────────────
 // Produces structured content for every calculator page:
@@ -222,9 +227,13 @@ Type the original retail price and the discount percentage. The tool outputs the
   ...BATCH_07,
   ...BATCH_08,
   ...BATCH_09,
-  ...BATCH_10,
+  ...BATCH_09B,  ...BATCH_10,
   ...BATCH_11,
   ...BATCH_12,
+  ...BATCH_13,
+  ...BATCH_14,
+  ...BATCH_15,
+  ...BATCH_16,
 };
 
 // ─── Deterministic helpers ────────────────────────────────────────────────────
