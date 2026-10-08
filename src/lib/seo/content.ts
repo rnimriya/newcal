@@ -1,9 +1,17 @@
 import type { RegistryEntry } from "@/lib/registry";
 import { SITE_DISPLAY_NAME } from "@/lib/constants";
+import { getSchemaBySlug } from "@/lib/schemas";
+import { evalExpression, buildDependencyGraph, topoSort } from "@/lib/engine/solver";
+import type { CalculatorSchema, CalculatorField } from "@/types/calculator";
 
 // ─── SEO Content Generator ────────────────────────────────────────────────────
 // Produces structured content for every calculator page:
 //   description, steps, formula block, examples table, FAQs, sqrt table
+//
+// The generators below build calculator-SPECIFIC copy from each entry's schema
+// (name, formula, units, category, shortDesc, field labels, help text, and the
+// schema's own worked examples). Sentence patterns are picked deterministically
+// from the slug hash so neighboring pages don't read like templates.
 
 export interface SEOContent {
   description: string;
@@ -192,50 +200,695 @@ Type the original retail price and the discount percentage. The tool outputs the
   },
 };
 
-// ─── Generate FAQs for any calculator from its metadata ───────────────────────
-function generateFAQs(entry: RegistryEntry): Array<{ q: string; a: string }> {
-  const formulaAns = entry.formula
-    ? `This calculator runs the math formula ${entry.formula}.`
-    : `This calculator uses standard math equations checked for absolute correctness.`;
+// ─── Deterministic helpers ────────────────────────────────────────────────────
+// Variant selection is hashed from the slug so each calculator gets a stable,
+// unique mix of sentence patterns (no two sibling pages read identically).
 
+function hashStr(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return Math.abs(h);
+}
+
+function pick<T>(arr: T[], seed: number, salt = 0): T {
+  return arr[(seed + salt) % arr.length];
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// ─── Schema field helpers ─────────────────────────────────────────────────────
+
+function inputFields(schema?: CalculatorSchema): CalculatorField[] {
+  return (schema?.fields ?? []).filter((f) => f.type !== "computed");
+}
+
+function computedFields(schema?: CalculatorSchema): CalculatorField[] {
+  return (schema?.fields ?? []).filter((f) => f.type === "computed");
+}
+
+function fmtNum(n: number, minDec: number, maxDec: number): string {
+  if (!isFinite(n)) return "—";
+  return n.toLocaleString("en-US", {
+    minimumFractionDigits: minDec,
+    maximumFractionDigits: maxDec,
+  });
+}
+
+/** Format an input value the way a US user would read it: $80, 18%, 2 people. */
+function fmtInputValue(f: CalculatorField, v: unknown): string {
+  if (f.type === "select" && f.selectOptions) {
+    const opt = f.selectOptions.find((o) => String(o.value) === String(v));
+    if (opt) return opt.label;
+  }
+  if (typeof v === "number") {
+    return `${f.prefix ?? ""}${fmtNum(v, 0, 6)}${f.suffix ?? ""}`;
+  }
+  return `${f.prefix ?? ""}${String(v ?? "")}${f.suffix ?? ""}`;
+}
+
+/** True when a computed value actually solved (not null/missing/non-finite). */
+function isSolvedOutput(v: unknown): boolean {
+  if (v === null || v === undefined) return false;
+  if (typeof v === "number") return isFinite(v);
+  return String(v).length > 0;
+}
+
+/** Format a computed output with the field's own precision. */
+function fmtOutputValue(f: CalculatorField, v: unknown): string {
+  if (v === null || v === undefined) return "—";
+  if (typeof v === "number") {
+    const p = f.precision ?? 2;
+    return `${f.prefix ?? ""}${fmtNum(v, p, p)}${f.suffix ?? ""}`;
+  }
+  return `${f.prefix ?? ""}${String(v)}${f.suffix ?? ""}`;
+}
+
+function joinLabels(labels: string[]): string {
+  if (labels.length === 0) return "";
+  if (labels.length === 1) return labels[0];
+  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
+  return `${labels.slice(0, -1).join(", ")}, and ${labels[labels.length - 1]}`;
+}
+
+/** Default input set: schema defaults, falling back to sensible values. */
+function defaultInputs(schema: CalculatorSchema): Record<string, unknown> {
+  const vals: Record<string, unknown> = {};
+  for (const f of schema.fields ?? []) {
+    if (f.type === "computed") continue;
+    if (f.defaultValue !== undefined) vals[f.id] = f.defaultValue;
+    else if (f.type === "select" && f.selectOptions?.length) vals[f.id] = f.selectOptions[0].value;
+    else vals[f.id] = 10;
+  }
+  return vals;
+}
+
+/** Evaluate every computed field for a given input set. Never throws. */
+function computeOutputs(
+  schema: CalculatorSchema,
+  inputs: Record<string, unknown>
+): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  try {
+    const fields = schema.fields ?? [];
+    const computedIds = fields.filter((f) => f.type === "computed").map((f) => f.id);
+    const allIds = fields.map((f) => f.id);
+    const scope: Record<string, unknown> = { ...defaultInputs(schema), ...inputs };
+    const ordered = topoSort(buildDependencyGraph(schema.formulas ?? {}, allIds), computedIds);
+    for (const id of ordered) {
+      const formula = (schema.formulas ?? {})[id];
+      if (!formula) continue;
+      const r = evalExpression(formula, scope);
+      if (r !== null && r !== undefined) scope[id] = r;
+    }
+    for (const id of computedIds) out[id] = scope[id] ?? null;
+  } catch {
+    /* leave outputs empty on solver failure */
+  }
+  return out;
+}
+
+// ─── What-does-it-do phrasing ─────────────────────────────────────────────────
+// Many registry entries carry a thin placeholder shortDesc
+// ("Performs mathematical evaluation of variables for X"); derive something
+// specific from the name instead of repeating the placeholder.
+
+const THIN_DESC_RE = /performs mathematical evaluation of variables for/i;
+
+function describeWhat(entry: RegistryEntry): string {
+  const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
+  const sd = (entry.shortDesc || "").trim();
+  // Infinitive, lowercased: openers embed it as "Use the X to {what}".
+  // Multi-sentence descriptions are folded into one flowing phrase.
+  if (sd && !THIN_DESC_RE.test(sd)) {
+    const one = sd
+      .replace(/\.\s*$/, "")
+      .replace(/\.\s+([A-Z])/g, (_, c: string) => `, ${c.toLowerCase()}`);
+    return lowerFirst(one);
+  }
+  const toMatch = entry.name.match(/^(.+?)\s+to\s+(.+?)(?:\s+(?:converter|calculator))?$/i);
+  if (entry.category === "converters" && toMatch) {
+    return `convert ${lowerFirst(toMatch[1].trim())} to ${toMatch[2].trim()}`;
+  }
+  const thing = entry.name.replace(/\s*(calculator|converter)\s*$/i, "").trim().toLowerCase();
+  return `calculate ${thing}`;
+}
+
+/** Render the formula with real field labels: "Bill Amount × Tip Percentage ÷ 100". */
+function plainFormula(entry: RegistryEntry, schema?: CalculatorSchema): string {
+  const raw = entry.formula ?? Object.values(schema?.formulas ?? {})[0] ?? "";
+  const cleaned = raw.replace(/\s+/g, " ").trim();
+  if (!cleaned || cleaned.length > 140 || /[?:]/.test(cleaned)) return "the standard formula";
+  let s = cleaned;
+  const labels: Array<[string, string]> = (schema?.fields ?? [])
+    .map((f) => [f.id, f.label] as [string, string])
+    .sort((a, b) => b[0].length - a[0].length);
+  for (const [id, label] of labels) {
+    s = s.replace(new RegExp(`\\b${escapeRegExp(id)}\\b`, "g"), label);
+  }
+  s = s
+    .replace(/\bPI\b/g, "π")
+    .replace(/\bsqrt\(/g, "√(")
+    .replace(/\*/g, " × ")
+    .replace(/\//g, " ÷ ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return s;
+}
+
+// ─── Per-category voice ───────────────────────────────────────────────────────
+// Each category gets its own openers, usage guidance, common mistakes and
+// scenarios so a finance page never reads like a physics page.
+
+interface CatVoice {
+  openers: string[];
+  tips: string[];
+  mistakes: string[];
+  when: string[];
+  scenarios: string[];
+}
+
+const VOICES: Record<string, CatVoice> = {
+  finance: {
+    openers: [
+      "Money questions rarely have obvious answers. Use the {name} to {what} — and decide with real numbers instead of gut feeling.",
+      "Before you sign, borrow, or buy, run the numbers: the {name} lets you {what} in seconds, with the same math a professional would do by hand.",
+      "Nobody enjoys surprise costs. The {name} is the fastest way to {what} before money changes hands.",
+    ],
+    tips: [
+      "Run it twice — once with your best guess, once with a pessimistic one. If the numbers still work in the pessimistic case, you have got a solid plan.",
+      "Compare at least two scenarios side by side. The gap between a good choice and a great one is usually smaller — and more findable — than people think.",
+    ],
+    mistakes: [
+      "Mixing up annual and monthly figures — a 12% annual rate is 1% a month, not 12%. Check what the {input} field actually expects before trusting the answer.",
+      "Forgetting the add-ons: taxes, fees, and tips on top of the headline number. Fold them into your inputs for a total you can trust.",
+    ],
+    when: [
+      "When a dollar decision is on the line — comparing two offers, checking whether you can afford something, or seeing the true total before you commit.",
+      "Anytime you would otherwise guess: budgeting a bill, splitting costs with others, or sanity-checking a quote before money changes hands.",
+    ],
+    scenarios: ["Splitting a bill with friends", "Planning a monthly budget", "Comparing two offers", "Checking a quote", "Planning ahead"],
+  },
+  converters: {
+    openers: [
+      "Unit mix-ups cause more mistakes than bad math. Use the {name} to {what} instantly — type a number, get the answer, no lookup tables.",
+      "With the {name}, you can {what} in one step: type your value once and read off every equivalent.",
+      "Memorizing conversion factors is a waste of brain space. The {name} exists to {what} for you, instantly and exactly.",
+    ],
+    tips: [
+      "For critical uses — engineering, cooking at scale, anything safety-related — note the decimal places shown and round only at the very end.",
+      "Bookmark conversions you use often. A two-second check here beats a misremembered factor every time.",
+    ],
+    mistakes: [
+      "Converting in the wrong direction — typing miles where kilometers belong is the classic slip. Glance at the unit labels before trusting the answer.",
+      "Mixing similarly named units, like US vs. imperial gallons. The dropdown spells out each option — pick the exact one you mean.",
+    ],
+    when: [
+      "Whenever two unit systems collide — traveling abroad, following a foreign recipe, reading a spec sheet, or doing homework with mixed units.",
+      "Anytime you catch yourself searching for a conversion factor. Typing the number here is faster, and you cannot misremember the factor.",
+    ],
+    scenarios: ["Travel planning", "Following a recipe", "Reading a spec sheet", "Homework help", "Everyday conversions"],
+  },
+  health: {
+    openers: [
+      "Your body runs on numbers, and guessing is not a strategy. Use the {name} to {what} — turning raw measurements into something you can act on.",
+      "Small inputs, big insight: the {name} helps you {what} from just a few measurements.",
+      "It is hard to improve what you do not measure. The {name} gives you a concrete starting point to {what}.",
+    ],
+    tips: [
+      "Recheck monthly rather than daily. Trends over weeks tell the real story; daily noise just causes stress.",
+      "Pair the number with how you actually feel. Data plus self-awareness beats either one alone.",
+    ],
+    mistakes: [
+      "Measuring sloppily. Being off by a couple of inches or pounds on {input} moves the result more than you would expect — measure carefully.",
+      "Treating the output as a diagnosis. It is a screening number: great for tracking trends, not a substitute for professional advice.",
+    ],
+    when: [
+      "When you want a baseline: starting a fitness plan, tracking progress month to month, or preparing numbers for a doctor's visit.",
+      "Anytime curiosity strikes about your own metrics — it is a quick check, not a medical verdict.",
+    ],
+    scenarios: ["Morning routine check", "Fitness tracking", "Preparing for a checkup", "Setting a goal", "Curious comparison"],
+  },
+  math: {
+    openers: [
+      "Some calculations are too tedious to do by hand and too important to guess. Use the {name} to {what} — accurately, every time.",
+      "Math homework goes faster with a reliable checker. The {name} helps you {what} in seconds.",
+      "You could work it out longhand, or you could be done already. The {name} is here to {what} instantly.",
+    ],
+    tips: [
+      "Solve it yourself first, then verify here. You will catch your own patterns of mistakes much faster that way.",
+      "If an answer surprises you, change one input at a time — you will see exactly which part of the math drives the result.",
+    ],
+    mistakes: [
+      "Rounding too early. Keep full precision through every step and let the calculator round only the final display.",
+      "Forgetting the order of operations when checking by hand — brackets and exponents before multiplication and division.",
+    ],
+    when: [
+      "When you need the right number, not a guess: checking homework, verifying a spreadsheet, or settling a debate with arithmetic.",
+      "Anytime the calculation is too tedious for mental math but too important to eyeball.",
+    ],
+    scenarios: ["Homework check", "Double-checking a spreadsheet", "Settling a debate", "Quick mental-math verify", "Class assignment"],
+  },
+  algebra: {
+    openers: [
+      "Algebra is unforgiving of small slips — one dropped sign ruins the whole problem. Use the {name} to {what} and check each step.",
+      "Stuck on a problem that will not simplify? The {name} helps you {what}, handling the mechanical parts while you focus on understanding.",
+      "Nobody learns algebra by staring at a wrong answer. The {name} lets you {what} so you can verify your work line by line.",
+    ],
+    tips: [
+      "Use the result to work backward: plug the answer into the original problem and confirm it holds. That is how mathematicians check themselves.",
+      "When stuck, simplify in smaller jumps. Big leaps hide sign errors; small steps expose them.",
+    ],
+    mistakes: [
+      "Dropping a negative sign mid-problem — the single most common algebra error. If an answer looks off, check signs first.",
+      "Only checking the final answer. Verify each step and you will find the slip in seconds instead of redoing everything.",
+    ],
+    when: [
+      "When you are working through problems and want to verify each step, not just the final answer.",
+      "During homework, exam prep, or anytime a simplification does not look right and you need a second opinion.",
+    ],
+    scenarios: ["Homework check", "Step-by-step practice", "Exam prep", "Checking your work", "Class assignment"],
+  },
+  physics: {
+    openers: [
+      "Physics problems live or die on setup and units. The {name} applies the standard equations to {what} from your measurements.",
+      "Lab reports and problem sets do not grade effort — they grade the right number. Use the {name} to {what} with proper precision.",
+      "Real-world physics means real numbers with real units. The {name} is built to {what} while keeping the dimensions straight.",
+    ],
+    tips: [
+      "Always do a reality check on the magnitude. If the answer is off by a factor of 1,000, a unit slipped somewhere.",
+      "Write down your inputs before calculating. When a result looks wrong, the input list is the first place to look.",
+    ],
+    mistakes: [
+      "Mixing unit systems — meters with feet, grams with pounds. Convert every input to one consistent system first.",
+      "Applying the formula outside its assumptions. Textbook equations assume ideal conditions; real setups add friction, heat loss, and noise.",
+    ],
+    when: [
+      "When a lab report, problem set, or design check needs the number done right — with units kept straight.",
+      "Anytime you are applying a textbook equation to real measurements and want to skip the arithmetic slips.",
+    ],
+    scenarios: ["Lab calculation", "Homework problem", "Design sanity check", "Quick estimate", "Class assignment"],
+  },
+  statistics: {
+    openers: [
+      "Raw data tells you nothing until you summarize it. Use the {name} to {what} — turning a pile of numbers into insight.",
+      "Averages lie when you compute them wrong. The {name} helps you {what} carefully, using the textbook definitions.",
+      "Before you draw conclusions, describe your data — use the {name} to {what} and get the summary statistics that matter.",
+    ],
+    tips: [
+      "Plot your data if you can — a quick look catches outliers that silently warp every statistic.",
+      "Report the median alongside the mean when data is skewed. Together they tell a more honest story.",
+    ],
+    mistakes: [
+      "Trusting tiny samples. Five data points can fake a pattern — the more values you enter, the more the result means.",
+      "Letting one typo poison everything. A single misplaced decimal drags the mean, range, and deviation all off course.",
+    ],
+    when: [
+      "When you have raw numbers and need the story: survey results, experiment data, or a class dataset.",
+      "Before drawing conclusions from data — summarize first, interpret second.",
+    ],
+    scenarios: ["Summarizing survey data", "Checking an assignment", "Quick data overview", "Experiment results", "Class project"],
+  },
+  time: {
+    openers: [
+      "Time math is deceptively tricky — zones, formats, and daylight saving all conspire against you. Use the {name} to {what} without the headache.",
+      "Missed meetings and botched conversions usually come down to arithmetic, not intent. The {name} lets you {what} in one step.",
+      "When the clock matters, do not do the conversion in your head. Use the {name} to {what} — fast and exact.",
+    ],
+    tips: [
+      "For anything important, state times with their zone attached — “3 PM ET” leaves no room for confusion.",
+      "Add a buffer around converted times when daylight-saving boundaries are near. Clocks change; plans should not break.",
+    ],
+    mistakes: [
+      "Ignoring daylight saving. If a result is off by exactly one hour, DST is almost always the culprit — confirm it for your dates.",
+      "Doing hour/minute rollover as base-100 math. Remember: 60 minutes make an hour, so 1:45 plus 0:30 is 2:15, not 1:75.",
+    ],
+    when: [
+      "When zones, formats, or daylight saving threaten to scramble a schedule — meetings, travel, and deadlines.",
+      "Anytime you are converting between time representations and cannot afford an off-by-one-hour mistake.",
+    ],
+    scenarios: ["Scheduling a call", "Planning a trip", "Converting a timestamp", "Coordinating across zones", "Daily planning"],
+  },
+  loans: {
+    openers: [
+      "Borrowing money is really about one question: what will it cost me in total? Use the {name} to {what} — no surprises later.",
+      "Lenders quote the numbers that flatter them. The {name} helps you {what} and see the full picture — payments, interest, and timeline.",
+      "A loan decision you make in ten minutes can cost you for ten years. Use the {name} to {what} before you commit.",
+    ],
+    tips: [
+      "Ask the lender for every fee in writing, then add them to your inputs. Headline rates never include the full picture.",
+      "If you can afford even $50 extra a month toward principal, model it — the interest savings are usually eye-opening.",
+    ],
+    mistakes: [
+      "Shopping by monthly payment alone. Two loans can share a payment and hide wildly different total interest — always compare total cost.",
+      "Ignoring fees and points. A lower rate with heavy fees often costs more than a slightly higher no-fee rate.",
+    ],
+    when: [
+      "Before signing anything: comparing offers, testing what you can afford, or planning how fast to pay down debt.",
+      "When the monthly payment looks fine but you want to see the total cost hiding behind it.",
+    ],
+    scenarios: ["Comparing loan offers", "Planning a payoff", "Affordability check", "Refinance math", "Budget planning"],
+  },
+  retirement: {
+    openers: [
+      "Retirement planning rewards the early and the consistent. Use the {name} to {what} and see what your savings could become.",
+      "Will you have enough? That is not a feeling — it is arithmetic. The {name} helps you {what} so you can plan with confidence.",
+      "Small changes now compound into big differences later. Use the {name} to {what} and make the trade-offs concrete.",
+    ],
+    tips: [
+      "Automate your contributions. The best plan is the one that happens without willpower.",
+      "Revisit the numbers yearly. Income, expenses, and goals drift — your plan should drift with them, deliberately.",
+    ],
+    mistakes: [
+      "Forgetting inflation. A result in future dollars buys less than the same number today — mentally discount it.",
+      "Assuming you will “catch up later.” Starting five years earlier usually beats saving 20% more later — time does the heavy lifting.",
+    ],
+    when: [
+      "When you ask “will I have enough?” — once a year at minimum, and whenever income, savings, or goals change.",
+      "When comparing strategies: saving more now vs. later, or testing what different return assumptions do to your plan.",
+    ],
+    scenarios: ["On-track check", "What-if scenario", "Catch-up planning", "Comparing strategies", "Annual review"],
+  },
+  stocks: {
+    openers: [
+      "Investing runs on scenarios, not certainties. Use the {name} to {what} before you commit cash.",
+      "Headline returns hide the details that matter. The {name} helps you {what}, breaking the math down clearly.",
+      "Never invest in what you cannot quantify. The {name} lets you {what} so you know exactly what the numbers imply.",
+    ],
+    tips: [
+      "Decide your exit criteria before you enter. A plan made calmly beats decisions made mid-panic.",
+      "Size positions so that being wrong does not hurt. Survival first, optimization second.",
+    ],
+    mistakes: [
+      "Treating a modeled return as a promise. Use the calculator for scenarios — best, worst, and middle — not forecasts.",
+      "Leaving out fees, taxes, and dividends. The headline price move is only part of your real return.",
+    ],
+    when: [
+      "When you are sizing up an investment: modeling scenarios, comparing two opportunities, or checking what a return really means.",
+      "Before committing cash — quantify the upside and the downside first.",
+    ],
+    scenarios: ["Sizing a position", "Modeling returns", "Comparing investments", "Quick sanity check", "Portfolio review"],
+  },
+  credit: {
+    openers: [
+      "Credit card math is designed to confuse — minimums, APRs, and compounding all at once. Use the {name} to {what} in plain numbers.",
+      "Debt feels abstract until you see the total cost. Use the {name} to {what} and turn statements into a payoff plan.",
+      "A few percentage points on a card balance cost real money. Use the {name} to {what} — and see exactly how much.",
+    ],
+    tips: [
+      "Set payments to autopay at least the minimum — one late fee plus interest wipes out months of progress.",
+      "Tackle the highest-rate balance first while keeping everything else current. The math favors it every time.",
+    ],
+    mistakes: [
+      "Paying only the minimum. Even a small extra each month slashes total interest — test it in the calculator and see.",
+      "Maxing out utilization. Balances near your limit hurt both the math and your credit score — stay under 30%.",
+    ],
+    when: [
+      "When debt needs a plan: comparing payoff strategies, understanding what a balance truly costs, or choosing between cards.",
+      "Anytime you are tempted by the minimum payment — run the total cost first.",
+    ],
+    scenarios: ["Payoff planning", "Comparing cards", "Understanding the true cost", "Monthly budget check", "Debt strategy"],
+  },
+};
+
+const DEFAULT_VOICE: CatVoice = {
+  openers: [
+    "Some calculations are too tedious to do by hand and too important to guess. Use the {name} to {what} — accurately, every time.",
+    "You could work it out longhand, or you could be done already. The {name} is here to {what} instantly.",
+    "Getting the right number matters more than showing the work. Use the {name} to {what} in seconds.",
+  ],
+  tips: [
+      "If an answer surprises you, change one input at a time — you will see exactly which part of the math drives the result.",
+      "Try the worked examples below first. They show realistic numbers you can sanity-check your own inputs against.",
+  ],
+  mistakes: [
+    "Typing a value into the wrong box — especially {input}. A quick glance at the field labels before calculating prevents most bad answers.",
+    "Rounding too early. Enter full-precision numbers and let the calculator round only the final display.",
+  ],
+  when: [
+    "Whenever you need the answer without the arithmetic — quick checks, homework, planning, or settling a debate with real numbers.",
+    "Anytime doing it by hand would take longer than typing the numbers in here.",
+  ],
+  scenarios: ["Everyday use", "Quick check", "Planning ahead", "Comparing options", "Double-checking"],
+};
+
+function voiceFor(category: string): CatVoice {
+  return VOICES[category] ?? DEFAULT_VOICE;
+}
+
+const HOW_IT_WORKS = [
+  "Here is how it works: enter your {inputs}, and the calculator evaluates {formula} to produce {outputs}.",
+  "The mechanics are simple — {formula} — applied to the {inputs} you provide, returning {outputs}.",
+  "You supply the {inputs}; the calculator runs {formula} and hands back {outputs}, updating live as you type.",
+  "Behind the scenes it is {formula}. Feed in your {inputs} and out come {outputs} — no manual arithmetic, no spreadsheet formulas.",
+];
+
+function fill(tpl: string, vars: Record<string, string>): string {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? `{${k}}`);
+}
+
+/**
+ * Reference form of a field label for "your X" phrasing.
+ * "Your Birth Day" -> "birth day" (avoids "your Your Birth Day").
+ */
+function refLabel(label: string): string {
+  const m = label.match(/^(your|my)\s+(.+)$/i);
+  if (m) return m[2].toLowerCase();
+  return label;
+}
+
+// ─── Description ──────────────────────────────────────────────────────────────
+// Unique, calculator-specific intro assembled from: a category-voiced opener,
+// a plain-words explanation of the actual formula, and practical guidance.
+
+function generateDescription(entry: RegistryEntry, schema?: CalculatorSchema): string {
+  const h = hashStr(entry.slug);
+  const voice = voiceFor(entry.category);
+  const what = describeWhat(entry);
+  const inputs = schema ? inputFields(schema) : [];
+  const computed = schema ? computedFields(schema) : [];
+
+  const p1 = fill(pick(voice.openers, h, 0), { name: entry.name, what });
+
+  const inputStr = inputs.length ? joinLabels(inputs.map((f) => refLabel(f.label))) : "your values";
+  const outputStr = computed.length
+    ? joinLabels(computed.map((f) => f.label))
+    : "the answer";
+  const formula = plainFormula(entry, schema);
+  const p2 = fill(pick(HOW_IT_WORKS, h, 1), {
+    inputs: inputStr,
+    outputs: outputStr,
+    formula,
+  });
+
+  const paras = [p1, p2];
+  // Vary paragraph count so pages don't share an identical skeleton.
+  if (h % 4 !== 0) {
+    paras.push(fill(pick(voice.tips, h, 2), { name: entry.name }));
+  }
+  return paras.join("\n\n");
+}
+
+// ─── How-to steps ─────────────────────────────────────────────────────────────
+// Steps name the calculator's actual fields (with example values), instead of
+// the old generic "type your numbers in the input boxes".
+
+function generateSteps(entry: RegistryEntry, schema?: CalculatorSchema): string[] {
+  const h = hashStr(entry.slug);
+  const inputs = schema ? inputFields(schema) : [];
+  const computed = schema ? computedFields(schema) : [];
+
+  if (!inputs.length) {
+    return [
+      `Open the ${entry.name} on ${SITE_DISPLAY_NAME}.`,
+      "Type your values into the input fields.",
+      "If a unit menu is available, pick the units your numbers are in.",
+      "Read the calculated results, which update as you type.",
+      "Try the worked examples below to see the math in action.",
+    ];
+  }
+
+  const verbs = ["Enter", "Type in", "Fill in", "Add"];
+  const steps: string[] = [];
+  for (const f of inputs.slice(0, 3)) {
+    const hint =
+      f.defaultValue !== undefined && f.type !== "select"
+        ? ` — try ${fmtInputValue(f, f.defaultValue)} to start`
+        : "";
+    const verb = pick(verbs, h, steps.length);
+    steps.push(`${verb} your ${refLabel(f.label)}${hint}.`);
+  }
+  const withUnits = inputs.find((f) => f.units && f.units.length > 1);
+  if (withUnits && steps.length < 5) {
+    steps.push(
+      `Use the dropdown next to ${withUnits.label} to switch between ${joinLabels(
+        withUnits.units!.map((u) => u.label)
+      )} — conversion is automatic.`
+    );
+  }
+  if (computed.length && steps.length < 6) {
+    steps.push(
+      `Read your ${joinLabels(computed.map((f) => f.label))} — results update instantly as you type, no submit button needed.`
+    );
+  }
+  if (steps.length < 6) {
+    steps.push("Try a preset example below to see realistic numbers and check your understanding.");
+  }
+  return steps.slice(0, 6);
+}
+
+// ─── Worked examples ──────────────────────────────────────────────────────────
+// Built from the schema's own examples with REAL computed results —
+// e.g. "Boiling point of water: Celsius (°C) = 100 → Fahrenheit (°F) = 212.00 °F".
+
+function generateExamples(
+  entry: RegistryEntry,
+  schema?: CalculatorSchema
+): SEOContent["examples"] {
+  if (schema?.examples?.length) {
+    const inputs = inputFields(schema);
+    const computed = computedFields(schema);
+    return schema.examples.slice(0, 4).map((ex) => {
+      const known = inputs.filter((f) => (ex.inputs as Record<string, unknown>)[f.id] !== undefined);
+      const calculation = known
+        .map((f) => `${f.label} = ${fmtInputValue(f, (ex.inputs as Record<string, unknown>)[f.id])}`)
+        .join(", ");
+      const outs = computeOutputs(schema, ex.inputs as Record<string, unknown>);
+      const solved = computed.filter((f) => isSolvedOutput(outs[f.id]));
+      const result =
+        solved.length > 0
+          ? solved.map((f) => `${f.label} = ${fmtOutputValue(f, outs[f.id])}`).join("; ")
+          : "See the calculator above";
+      return { label: ex.label, calculation, result };
+    });
+  }
+  // Entries without a schema: explain the formula instead of filler rows.
+  const formula = plainFormula(entry, schema);
   return [
     {
-      q: `What is the ${entry.name}?`,
-      a: `The ${entry.name} is a free online solver. It helps you ${entry.shortDesc.toLowerCase().replace(/\.$/, "")}. You do not need to register or install files.`,
+      label: "How it works",
+      calculation: formula === "the standard formula" ? (entry.formula ?? "See the formula above") : formula,
+      result: "Computed instantly from your inputs",
     },
     {
-      q: `How do I use the ${entry.name}?`,
-      a: `Type your values in the empty boxes. The solver calculates outputs in real time. Select new units from the menu if you want to convert.`,
-    },
-    {
-      q: `Is this ${entry.name} free?`,
-      a: `Yes, this tool is free. There are no limits, no sign-ups, and no hidden costs.`,
-    },
-    {
-      q: `What formula does this calculator use?`,
-      a: formulaAns,
-    },
-    {
-      q: `Can I use this on my mobile phone?`,
-      a: `Yes, it works on mobile phones, tablets, and computers. You can also save it to your home screen to run it offline.`,
-    },
-    {
-      q: `How accurate is the calculation?`,
-      a: `The calculator uses standard 64-bit math checks. This guarantees accurate results up to 15 digits. Double check your numbers for critical choices.`,
+      label: "Your turn",
+      calculation: "Enter your own numbers in the calculator above",
+      result: "Results update live as you type",
     },
   ];
 }
 
-// ─── Generate How-To steps for any calculator ─────────────────────────────────
-function generateSteps(entry: RegistryEntry): string[] {
-  return [
-    `Open the ${entry.name} on ${SITE_DISPLAY_NAME}.`,
-    `Type your numbers in the input boxes. The calculator computes the outputs automatically.`,
-    `Click the unit selector to switch units if needed.`,
-    `Watch the results update instantly as you type. You do not need to click solve.`,
-    `Click the bookmark icon to save this page for later.`,
-    `Click the examples buttons to load preset numbers and see how calculations work.`,
-  ];
+// ─── FAQs ─────────────────────────────────────────────────────────────────────
+// Derived from the calculator's actual inputs, formula, units and category —
+// never the old generic "Is this free? / Can I use it on mobile?" set.
+
+function generateFAQs(entry: RegistryEntry, schema?: CalculatorSchema): Array<{ q: string; a: string }> {
+  const h = hashStr(entry.slug);
+  const voice = voiceFor(entry.category);
+  const inputs = schema ? inputFields(schema) : [];
+  const computed = schema ? computedFields(schema) : [];
+  const faqs: Array<{ q: string; a: string }> = [];
+
+  // What to enter — names the real fields.
+  if (inputs.length > 0) {
+    const first = inputs[0];
+    const prefill =
+      first.defaultValue !== undefined && first.type !== "select"
+        ? ` Sensible starting values are pre-filled — ${first.label} starts at ${fmtInputValue(first, first.defaultValue)} — so adjust from there.`
+        : "";
+    faqs.push({
+      q: `What do I need to enter in the ${entry.name}?`,
+      a: `You will enter your ${joinLabels(inputs.map((f) => refLabel(f.label)))}.${prefill}`,
+    });
+  }
+
+  // How the result is calculated — the actual formula in plain words.
+  const outLabel = computed[0]?.label ?? "result";
+  const formula = plainFormula(entry, schema);
+  faqs.push({
+    q: `How is the ${outLabel} calculated?`,
+    a:
+      formula === "the standard formula"
+        ? `The calculator applies the standard published equation for this calculation to the numbers you enter. Because it recalculates on every keystroke, you can nudge any input and watch the answer change in real time.`
+        : `It evaluates ${formula} using the values you enter. Because it recalculates on every keystroke, you can nudge any input and watch the answer change in real time.`,
+  });
+
+  // Candidate pool — only applicable ones are added.
+  const pool: Array<{ q: string; a: string }> = [];
+
+  const withHelp = inputs.find((f) => f.helpText && f.helpText.trim().length > 4);
+  if (withHelp?.helpText) {
+    pool.push({ q: `What does "${withHelp.label}" mean?`, a: withHelp.helpText.trim() });
+  }
+
+  const withUnits = inputs.find((f) => f.units && f.units.length > 1);
+  if (withUnits?.units) {
+    pool.push({
+      q: `Which units can I use for ${withUnits.label}?`,
+      a: `You can enter ${withUnits.label} in ${joinLabels(withUnits.units.map((u) => u.label))}. Pick your unit from the dropdown and the calculator converts everything behind the scenes.`,
+    });
+  }
+
+  const withSelect = inputs.find((f) => f.type === "select" && f.selectOptions?.length);
+  if (withSelect?.selectOptions) {
+    pool.push({
+      q: `What should I choose for "${withSelect.label}"?`,
+      a: `Pick the option that matches your situation: ${withSelect.selectOptions.map((o) => o.label).join(", ")}. The math adjusts automatically for each choice.`,
+    });
+  }
+
+  // Exact conversion factor — only for pure multiplicative conversions, where
+  // probing with an input of 1 yields a truthful per-unit factor.
+  if (entry.category === "converters" && schema && inputs.length > 0 && computed.length > 0) {
+    const raw = entry.formula ?? Object.values(schema.formulas ?? {})[0] ?? "";
+    const firstId = inputs[0].id;
+    const multiplicative = new RegExp(
+      `^[\\s\\(]*${escapeRegExp(firstId)}[\\s\\*\\/\\d\\.\\(\\)\\^]*$`
+    ).test(raw.replace(/\s+/g, ""));
+    if (multiplicative && !/[+-]/.test(raw.replace(firstId, "").replace(/e[+-]?\d+/gi, ""))) {
+      const probe = computeOutputs(schema, { [firstId]: 1 });
+      const v = probe[computed[0].id];
+      if (typeof v === "number" && isFinite(v) && v !== 0) {
+        pool.push({
+          q: `What is the exact ${inputs[0].label} to ${computed[0].label} conversion factor?`,
+          a: `One ${inputs[0].label} equals ${fmtNum(v, 0, 6)} ${computed[0].label}. The calculator uses the full-precision factor, so it stays accurate for very large and very small values alike.`,
+        });
+      }
+    }
+  }
+
+  const firstInputLabel = inputs[0]?.label ?? "the first field";
+  pool.push({
+    q: pick(
+      ["What is the most common mistake people make here?", "What should I watch out for?"],
+      h,
+      3
+    ),
+    a: fill(pick(voice.mistakes, h, 4), { name: entry.name, input: firstInputLabel }),
+  });
+
+  pool.push({
+    q: `When should I use the ${entry.name}?`,
+    a: pick(voice.when, h, 5),
+  });
+
+  pool.push({
+    q: "Why does my result differ slightly from another calculator?",
+    a: "Small differences almost always come from rounding or from slightly different input assumptions — for example, monthly vs. annual rates, or which units were used. This calculator keeps full precision internally and rounds only the displayed result.",
+  });
+
+  // Deterministic shuffle of the pool, then fill up to 5–6 FAQs.
+  const target = 5 + (h % 2);
+  const ordered = [...pool].sort((a, b) => hashStr(a.q + h) - hashStr(b.q + h));
+  for (const f of ordered) {
+    if (faqs.length >= target) break;
+    if (!faqs.some((x) => x.q === f.q)) faqs.push(f);
+  }
+  return faqs.slice(0, 6);
 }
 
 // ─── Square root reference table ──────────────────────────────────────────────
@@ -249,28 +902,14 @@ export function generateSqrtTable(max = 30): Array<{ n: number; sqrt: string }> 
 // ─── Public API ───────────────────────────────────────────────────────────────
 export function getSEOContent(entry: RegistryEntry): SEOContent {
   const custom = CUSTOM_CONTENT[entry.slug] ?? {};
+  const schema = getSchemaBySlug(entry.slug);
 
   return {
-    description: custom.description ?? generateDescription(entry),
-    howToSteps:  custom.howToSteps ?? generateSteps(entry),
+    description: custom.description ?? generateDescription(entry, schema),
+    howToSteps:  custom.howToSteps ?? generateSteps(entry, schema),
     formulaText: entry.formula ?? "See the explanation section below.",
-    examples:    custom.examples  ?? generateExamples(entry),
-    faqs:        custom.faqs      ?? generateFAQs(entry),
+    examples:    custom.examples  ?? generateExamples(entry, schema),
+    faqs:        custom.faqs      ?? generateFAQs(entry, schema),
     sqrtTable:   entry.slug.includes("square-root") ? generateSqrtTable() : undefined,
   };
-}
-
-function generateDescription(entry: RegistryEntry): string {
-  const formulaStr = entry.formula ? ` It runs the formula ${entry.formula} to compute results.` : "";
-  return `Use the free ${entry.name} to solve your problems. This online tool requires no accounts or downloads. Type your input values. The calculator outputs precise answers in real time.${formulaStr}
-
-You can use this tool for school work, homework, or quick everyday calculations. Every solver on ${SITE_DISPLAY_NAME} is built to be accurate and fast. It works on mobile screens and computers.`;
-}
-
-function generateExamples(entry: RegistryEntry): SEOContent["examples"] {
-  return [
-    { label: "Standard Calculation",   calculation: `Calculate ${entry.name.toLowerCase()} using common values`, result: "Check the outputs above" },
-    { label: "Custom Input",  calculation: "Change the numbers to match your specific problem", result: "Result updates instantly" },
-    { label: "Extreme Values",       calculation: "Type zero or large values to test formulas", result: "Solver handles edge cases correctly" },
-  ];
 }
