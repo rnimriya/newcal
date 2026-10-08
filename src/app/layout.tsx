@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { EmbedDetector } from "@/components/layout/EmbedDetector";
@@ -58,6 +59,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -101,18 +103,19 @@ export default function RootLayout({
           }}
         />
 
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2EHPV7HS8K" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-2EHPV7HS8K');
-            `,
-          }}
+        {/* Google Analytics — deferred to browser idle time so it never slows page load */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-2EHPV7HS8K"
+          strategy="lazyOnload"
         />
+        <Script id="ga-init" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-2EHPV7HS8K');
+          `}
+        </Script>
       </head>
       <body className={`${inter.variable}`}>
         <ThemeProvider
