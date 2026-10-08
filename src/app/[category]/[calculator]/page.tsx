@@ -45,14 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type:        "website",
       url:         `https://calcunit.net/${entry.category}/${entry.slug}`,
       siteName:    "CalcUnit.net",
-      images: [
-        {
-          url:    `https://calcunit.net/og-image.png`,
-          width:  1200,
-          height: 630,
-          alt:    `${entry.name} - Free Calculator on CalcUnit.net`,
-        },
-      ],
+      // og:image is auto-generated per page by opengraph-image.tsx
     },
     twitter: {
       card:        "summary_large_image",
