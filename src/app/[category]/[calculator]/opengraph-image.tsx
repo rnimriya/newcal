@@ -1,11 +1,19 @@
 import { ImageResponse } from "next/og";
-import { getEntry } from "@/lib/registry";
+import { getEntry, ALL_CALCULATORS } from "@/lib/registry";
 import { CATEGORY_MAP } from "@/lib/registry/categories";
 
 export const alt = "CalcUnit.net — free online calculator";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const dynamic = "force-static";
+
+// Pre-generate OG images for ALL calculator pages (required for static export)
+export async function generateStaticParams() {
+  return ALL_CALCULATORS.map((c) => ({
+    category:   c.category,
+    calculator: c.slug,
+  }));
+}
 
 export default async function Image({
   params,
