@@ -3,6 +3,10 @@ import { SITE_DISPLAY_NAME } from "@/lib/constants";
 import { getSchemaBySlug } from "@/lib/schemas";
 import { evalExpression, buildDependencyGraph, topoSort } from "@/lib/engine/solver";
 import type { CalculatorSchema, CalculatorField } from "@/types/calculator";
+import { BATCH_01 } from "./custom-content/batch-01-finance";
+import { BATCH_02 } from "./custom-content/batch-02-loans";
+import { BATCH_03 } from "./custom-content/batch-03-health";
+import { BATCH_04 } from "./custom-content/batch-04-converters-a";
 
 // ─── SEO Content Generator ────────────────────────────────────────────────────
 // Produces structured content for every calculator page:
@@ -198,6 +202,13 @@ Type the original retail price and the discount percentage. The tool outputs the
       { q: "How do I calculate a double discount?", a: "Apply the first discount to the price. Then apply the second discount to the new price. Do not add the percentages together." },
     ],
   },
+
+  // ─── Hand-written batches (Phase 3) — spread after the originals so batch
+  // entries never override the 9 curated entries above ──────────────────────
+  ...BATCH_01,
+  ...BATCH_02,
+  ...BATCH_03,
+  ...BATCH_04,
 };
 
 // ─── Deterministic helpers ────────────────────────────────────────────────────
