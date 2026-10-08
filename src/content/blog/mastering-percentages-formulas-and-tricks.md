@@ -65,4 +65,4 @@ In business, people often confuse markup with profit margin. They are not the sa
 To quickly calculate the total price including tax, add the tax percentage to 100% and multiply. If the item is $50 and tax is 8%, multiply `$50 x 1.08 = $54`.
 
 ---
-*For complex business margins or multi-step percentage changes, use the free, ad-free [CalcUnit Percentage Calculator](/math/percentage-calculator).*
+*For complex business margins or multi-step percentage changes, use the free [CalcUnit Percentage Calculator](/math/percentage-calculator).*

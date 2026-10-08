@@ -51,4 +51,4 @@ DEG stands for Degrees, and RAD stands for Radians. These are two different ways
 A syntax error usually means you have opened a parenthesis without closing it, or you have entered an invalid mathematical operation, such as trying to divide by zero or finding the square root of a negative number.
 
 ---
-*For a fast, ad-free, browser-based mathematical engine, use the [CalcUnit Scientific Calculator](/math/scientific-calculator). It works fully offline and respects your privacy.*
+*For a fast, free, browser-based mathematical engine, use the [CalcUnit Scientific Calculator](/math/scientific-calculator). It works fully offline and respects your privacy.*

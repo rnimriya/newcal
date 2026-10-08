@@ -17,7 +17,7 @@ export function Footer() {
           <div className="lg:col-span-5 space-y-3">
 
             <p className="text-base text-muted-foreground leading-relaxed max-w-md">
-              A premium, comprehensive calculator engine hosting 1,000+ specialized conversion and mathematical solvers. Free, offline-first, and ad-free.
+              A premium, comprehensive calculator engine hosting 1,000+ specialized conversion and mathematical solvers. Free, offline-first, and supported by minimal, non-intrusive ads.
             </p>
             <div className="flex items-center gap-3 pt-2">
               {[
@@ -55,17 +55,17 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Zero Ads / Privacy badge */}
+            {/* Minimal Ads / Privacy badge */}
             <div className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/20 transition-colors">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <ShieldCheck size={18} />
               </span>
               <div>
                 <h4 className="text-base font-semibold text-card-foreground">
-                  Zero Ads & Tracking
+                  Minimal Ads, Your Privacy
                 </h4>
                 <p className="text-base text-muted-foreground mt-1 leading-relaxed">
-                  Fast, clean experience with no pop-ups, logins, or cookies. All calculations run strictly in your browser.
+                  Fast, clean experience with no pop-ups or logins. A few non-intrusive ads and privacy-respecting analytics keep the site free — see our <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
                 </p>
               </div>
             </div>

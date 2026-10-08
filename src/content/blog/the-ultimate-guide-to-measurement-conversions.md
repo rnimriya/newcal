@@ -61,4 +61,4 @@ The US Customary system is deeply ingrained in American manufacturing, infrastru
 No! This is a common source of confusion. A US liquid gallon is exactly 3.78541 liters. A UK Imperial gallon is exactly 4.54609 liters. Always double-check which system a recipe or fuel efficiency chart is using.
 
 ---
-*For fast, offline-capable, and completely ad-free unit conversions, bookmark the [CalcUnit Measurement Converter](/converters/measurement-converter).*
+*For fast, offline-capable, and free unit conversions, bookmark the [CalcUnit Measurement Converter](/converters/measurement-converter).*
