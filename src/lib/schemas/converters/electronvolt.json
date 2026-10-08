@@ -21,7 +21,7 @@
       "id": "joule",
       "label": "Joules (J)",
       "type": "computed",
-      "precision": 25
+      "precision": 20
     },
     {
       "id": "kev",

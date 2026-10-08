@@ -271,9 +271,12 @@ function computedFields(schema?: CalculatorSchema): CalculatorField[] {
 
 function fmtNum(n: number, minDec: number, maxDec: number): string {
   if (!isFinite(n)) return "—";
+  // toLocaleString only accepts 0–20 fraction digits; clamp defensively
+  const lo = Math.min(20, Math.max(0, Math.floor(minDec)));
+  const hi = Math.min(20, Math.max(0, Math.floor(maxDec)));
   return n.toLocaleString("en-US", {
-    minimumFractionDigits: minDec,
-    maximumFractionDigits: maxDec,
+    minimumFractionDigits: Math.min(lo, hi),
+    maximumFractionDigits: hi,
   });
 }
 
