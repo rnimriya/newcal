@@ -7,6 +7,10 @@ import { BATCH_01 } from "./custom-content/batch-01-finance";
 import { BATCH_02 } from "./custom-content/batch-02-loans";
 import { BATCH_03 } from "./custom-content/batch-03-health";
 import { BATCH_04 } from "./custom-content/batch-04-converters-a";
+import { BATCH_05 } from "./custom-content/batch-05-converters-b";
+import { BATCH_06 } from "./custom-content/batch-06-converters-c";
+import { BATCH_07 } from "./custom-content/batch-07-mixed-a";
+import { BATCH_08 } from "./custom-content/batch-08-math-a";
 
 // ─── SEO Content Generator ────────────────────────────────────────────────────
 // Produces structured content for every calculator page:
@@ -209,6 +213,10 @@ Type the original retail price and the discount percentage. The tool outputs the
   ...BATCH_02,
   ...BATCH_03,
   ...BATCH_04,
+  ...BATCH_05,
+  ...BATCH_06,
+  ...BATCH_07,
+  ...BATCH_08,
 };
 
 // ─── Deterministic helpers ────────────────────────────────────────────────────
