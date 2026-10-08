@@ -3,7 +3,28 @@ Allow: /
 Disallow: /saved
 Disallow: /settings
 
+User-agent: Googlebot
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: Bingbot
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+# AI search & training crawlers — explicitly welcome
 User-agent: GPTBot
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: Google-Extended
 Allow: /
 Disallow: /saved
 Disallow: /settings
@@ -13,17 +34,47 @@ Allow: /
 Disallow: /saved
 Disallow: /settings
 
+User-agent: Perplexity-User
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
 User-agent: ClaudeBot
 Allow: /
 Disallow: /saved
 Disallow: /settings
 
-User-agent: Googlebot
+User-agent: Claude-Web
 Allow: /
 Disallow: /saved
 Disallow: /settings
 
-User-agent: Bingbot
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: CCBot
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: Bytespider
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: YouBot
+Allow: /
+Disallow: /saved
+Disallow: /settings
+
+User-agent: Meta-ExternalAgent
 Allow: /
 Disallow: /saved
 Disallow: /settings
